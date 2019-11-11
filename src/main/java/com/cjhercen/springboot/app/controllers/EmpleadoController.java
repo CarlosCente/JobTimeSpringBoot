@@ -68,7 +68,7 @@ public class EmpleadoController {
 		}
 
 		model.put("empleado", empleado);
-		model.put("titulo", "Detalle empleado: " + empleado.getNombre());
+		model.put("titulo", "Detalle empleado: " + empleado.getNombre() + " " + empleado.getApellido1() + " " + empleado.getApellido2());
 
 		return "ver";
 	}
