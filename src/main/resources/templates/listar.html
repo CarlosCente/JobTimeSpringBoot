@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+<body>
+
+	<header th:replace="layout/layout :: header"></header>
+
+	<div class="container py-4">
+
+		<div class="card bg-light">
+			<div class="card-header" th:text="${titulo}"></div>
+			<div class="card-body">
+
+				<h4 class="card-title">
+					<a th:href="@{/form}" class="btn btn-primary">crear empleado</a>
+				</h4>
+
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>DNI</th>
+							<th>nombre</th>
+							<th>apellido1</th>
+							<th>apellido2</th>
+							<th>fecha nacimiento</th>
+							<th>editar</th>
+							<th>eliminar</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="empleado : ${empleados}">
+							<td><a class="btn btn-primary btn-xs" th:href="@{/ver/} + ${empleado.cod_empl}" th:text="${empleado.cod_empl}"></a></td>
+							<td th:text="${empleado.DNI}"></td>
+							<td th:text="${empleado.nombre}"></td>
+							<td th:text="${empleado.apellido1}"></td>
+							<td th:text="${empleado.apellido2}"></td>
+							<td th:text="${empleado.fechaNacim}"></td>
+							<td><a class="btn btn-primary btn-sm"
+								th:href="@{/form/} + ${empleado.cod_empl}" th:text="'editar'"></a></td>
+							<td><a class="btn btn-danger btn-sm"
+								th:href="@{/eliminar/} + ${empleado.cod_empl}" th:text="'eliminar'"
+								onclick="return confirm('Estás seguro que quieres eliminar?');"></a></td>
+						</tr>
+					</tbody>
+
+				</table>
+				<nav th:replace="paginator-nav :: paginator"></nav>
+			</div>
+		</div>
+		
+	</div>
+	
+	<footer th:replace="layout/layout :: footer"></footer>
+</body>
+</html>
