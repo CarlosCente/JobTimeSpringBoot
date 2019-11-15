@@ -71,8 +71,8 @@ public class EmpleadoController {
 		return "form";
 	}
 
-	@RequestMapping(value = "/editar/{cod_empl}")
-	public String editar(@PathVariable(value = "cod_empl") Long id, Map<String, Object> model, RedirectAttributes flash) {
+	@GetMapping(value = "/editar/{id}")
+	public String editar(@PathVariable(value = "id") Long id, Map<String, Object> model, RedirectAttributes flash) {
 
 		Empleado empleado = null;
 
@@ -107,7 +107,7 @@ public class EmpleadoController {
 		return "redirect:listar";
 	}
 
-	@RequestMapping(value = "/eliminar/{cod_empl}")
+	@RequestMapping(value = "/eliminar/{id}")
 	public String eliminar(@PathVariable(value = "id") Long id, RedirectAttributes flash) {
 
 		if (id > 0) {
