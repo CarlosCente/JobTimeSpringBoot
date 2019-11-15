@@ -19,4 +19,5 @@ public interface IEmpleadoService {
 	
 	public void delete(Long id);
 	
+	
 }

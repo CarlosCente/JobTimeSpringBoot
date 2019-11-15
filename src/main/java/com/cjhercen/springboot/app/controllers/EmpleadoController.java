@@ -1,18 +1,13 @@
 package com.cjhercen.springboot.app.controllers;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.Map;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -28,7 +23,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.cjhercen.springboot.app.models.entity.Empleado;
 import com.cjhercen.springboot.app.models.service.IEmpleadoService;
-import com.cjhercen.springboot.app.models.service.IUploadFileService;
 import com.cjhercen.springboot.app.util.paginator.PageRender;
 
 @Controller
@@ -37,26 +31,6 @@ public class EmpleadoController {
 
 	@Autowired
 	private IEmpleadoService empleadoService;
-
-	@Autowired
-	private IUploadFileService uploadFileService;
-
-	@GetMapping(value = "/uploads/{filename:.+}")
-	public ResponseEntity<Resource> verFoto(@PathVariable String filename) {
-
-		Resource recurso = null;
-		try {
-			recurso = uploadFileService.load(filename);
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		return ResponseEntity.ok()
-				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + recurso.getFilename() + "\"")
-				.body(recurso);
-
-	}
 
 	@GetMapping(value = "/ver/{id}")
 	public String ver(@PathVariable(value = "id") Long id, Map<String, Object> model, RedirectAttributes flash) {
@@ -97,8 +71,8 @@ public class EmpleadoController {
 		return "form";
 	}
 
-	@RequestMapping(value = "/form/{id}")
-	public String editar(@PathVariable(value = "id") Long id, Map<String, Object> model, RedirectAttributes flash) {
+	@RequestMapping(value = "/editar/{cod_empl}")
+	public String editar(@PathVariable(value = "cod_empl") Long id, Map<String, Object> model, RedirectAttributes flash) {
 
 		Empleado empleado = null;
 
@@ -114,7 +88,7 @@ public class EmpleadoController {
 		}
 		model.put("empleado", empleado);
 		model.put("titulo", "Editar Empleado");
-		return "form";
+		return "editar";
 	}
 
 	@RequestMapping(value = "/form", method = RequestMethod.POST)
@@ -124,28 +98,8 @@ public class EmpleadoController {
 			model.addAttribute("titulo", "Formulario de Empleado");
 			return "form";
 		}
-		if (!foto.isEmpty()) {
 
-			if (empleado.getCod_empl() != null && empleado.getCod_empl() > 0 && empleado.getFoto() != null
-					&& empleado.getFoto().length() > 0) {
-
-				uploadFileService.delete(empleado.getFoto());
-			}
-
-			String uniqueFileName = null;
-			try {
-				uniqueFileName = uploadFileService.copy(foto);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-			flash.addFlashAttribute("info", "Has subido correctamente '" + uniqueFileName + "'");
-
-			empleado.setFoto(uniqueFileName);
-
-		}
-		String mensajeFlash = (empleado.getCod_empl() != null) ? "Empleado editado con éxito!" : "Empleado creado con éxito!";
+		String mensajeFlash = "Empleado creado con éxito!";
 
 		empleadoService.save(empleado);
 		status.setComplete();
@@ -153,19 +107,12 @@ public class EmpleadoController {
 		return "redirect:listar";
 	}
 
-	@RequestMapping(value = "/eliminar/{id}")
+	@RequestMapping(value = "/eliminar/{cod_empl}")
 	public String eliminar(@PathVariable(value = "id") Long id, RedirectAttributes flash) {
 
 		if (id > 0) {
-			Empleado empleado = empleadoService.findOne(id);
-
 			empleadoService.delete(id);
 			flash.addFlashAttribute("success", "Empleado eliminado con éxito!");
-
-			if (uploadFileService.delete(empleado.getFoto())) {
-				flash.addFlashAttribute("info", "Foto " + empleado.getFoto() + "eliminada con éxito");
-			}
-
 		}
 		return "redirect:/listar";
 	}

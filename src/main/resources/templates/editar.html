@@ -5,7 +5,7 @@
 
 	<header th:replace="layout/layout :: header"></header>
 
-	<div class="container py-4">
+<div class="container py-4">
 
 		<div class="card bg-dark text-white">
 			<div class="card-header" th:text="${titulo}"></div>
@@ -16,12 +16,12 @@
 						<li th:each="err: ${#fields.errors('*')}" th:text="${err}"></li>
 					</ul>
 				</div>
-				<form th:action="@{/form}" th:object="${empleado}" method="post"
+				<form th:action="@{/editar}" th:object="${empleado}" method="post"
 					enctype="multipart/form-data">
 					<div class="form-group row">
 						<label class="col-sm-2 col-form-label">Nombre</label>
 						<div class="col-sm-6">
-							<input type="text" class="form-control"
+							<input type="text" th:field="*{nombre}" class="form-control"
 								th:errorclass="'form-control alert-danger'" /> <small
 								class="form-text text-danger"
 								th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></small>
@@ -30,7 +30,7 @@
 					<div class="form-group row">
 						<label class="col-sm-2 col-form-label">Primer Apellido</label>
 						<div class="col-sm-6">
-							<input type="text" class="form-control"
+							<input type="text" th:field="*{apellido1}" class="form-control"
 								th:errorclass="'form-control alert-danger'" /> <small
 								class="form-text text-danger"
 								th:if="${#fields.hasErrors('apellido1')}"
@@ -40,7 +40,7 @@
 					<div class="form-group row">
 						<label class="col-sm-2 col-form-label">Segundo Apellido</label>
 						<div class="col-sm-6">
-							<input type="text" class="form-control"
+							<input type="text" th:field="*{apellido2}" class="form-control"
 								th:errorclass="'form-control alert-danger'" /> <small
 								class="form-text text-danger"
 								th:if="${#fields.hasErrors('apellido2')}"
@@ -50,7 +50,7 @@
 					<div class="form-group row">
 						<label class="col-sm-2 col-form-label">Fecha Nacimiento</label>
 						<div class="col-sm-6">
-							<input type="text" class="form-control"
+							<input type="text" class="form-control" th:field="*{fechaNacim}"
 								th:errorclass="'form-control alert-danger'" /> <small
 								class="form-text text-danger"
 								th:if="${#fields.hasErrors('fechaNacim')}"
@@ -58,9 +58,9 @@
 						</div>
 					</div>
 					<div class="form-group row">
-						<label class="col-sm-2 col-form-label">Dirección</label>
+						<label class="col-sm-2 col-form-label">DirecciÃ³n</label>
 						<div class="col-sm-6">
-							<input type="text" class="form-control"
+							<input type="text" class="form-control" th:field="*{direccion}"
 								th:errorclass="'form-control alert-danger'" /> <small
 								class="form-text text-danger"
 								th:if="${#fields.hasErrors('direccion')}"
@@ -68,9 +68,9 @@
 						</div>
 					</div>
 					<div class="form-group row">
-						<label class="col-sm-2 col-form-label">País</label>
+						<label class="col-sm-2 col-form-label">PaÃ­s</label>
 						<div class="col-sm-6">
-							<input type="text" class="form-control"
+							<input type="text" class="form-control" th:field="*{pais}"
 								th:errorclass="'form-control alert-danger'" /> <small
 								class="form-text text-danger"
 								th:if="${#fields.hasErrors('pais')}" th:errors="*{pais}"></small>
@@ -79,7 +79,7 @@
 					<div class="form-group row">
 						<label class="col-sm-2 col-form-label">Provincia</label>
 						<div class="col-sm-6">
-							<input type="text" class="form-control"
+							<input type="text" class="form-control" th:field="*{provincia}"
 								th:errorclass="'form-control alert-danger'" /> <small
 								class="form-text text-danger"
 								th:if="${#fields.hasErrors('provincia')}"
@@ -89,7 +89,7 @@
 					<div class="form-group row">
 						<label class="col-sm-2 col-form-label">Localidad</label>
 						<div class="col-sm-6">
-							<input type="text" class="form-control"
+							<input type="text" class="form-control" th:field="*{localidad}"
 								th:errorclass="'form-control alert-danger'" /> <small
 								class="form-text text-danger"
 								th:if="${#fields.hasErrors('localidad')}"
@@ -107,7 +107,7 @@
 
 					<div class="form-group row">
 						<div class="col-sm-6">
-							<input th:value="Crear Empleado" type="submit"
+						<input th:value="Editar Empleado" type="submit"
 								class="btn btn-secondary" />
 						</div>
 					</div>
@@ -116,6 +116,7 @@
 			</div>
 		</div>
 	</div>
+
 	<footer th:replace="layout/layout :: footer"></footer>
 </body>
 </html>

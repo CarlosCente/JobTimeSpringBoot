@@ -32,11 +32,6 @@ public class Empleado implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long cod_empl;
 	
-	@NotNull
-	@Column(unique = true, name = "DNI")
-	@Length(min = 9, max = 9)
-	private String DNI;
-
 	@NotEmpty
 	@Length(min = 2, max = 20)
 	private String nombre;
@@ -61,21 +56,11 @@ public class Empleado implements Serializable {
 	
 	private String localidad;
 
-	private String foto;
-
 	@OneToMany(mappedBy = "empleado" ,fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Fichaje> fichajes;	
 	
 	public Empleado() {
 		fichajes = new ArrayList<Fichaje>();
-	}
-
-	public String getDNI() {
-		return DNI;
-	}
-
-	public void setDNI(String dNI) {
-		DNI = dNI;
 	}
 
 	public String getNombre() {
@@ -140,14 +125,6 @@ public class Empleado implements Serializable {
 
 	public void setLocalidad(String localidad) {
 		this.localidad = localidad;
-	}
-
-	public String getFoto() {
-		return foto;
-	}
-
-	public void setFoto(String foto) {
-		this.foto = foto;
 	}
 
 	public Long getCod_empl() {
