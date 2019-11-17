@@ -14,8 +14,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -54,7 +52,7 @@ public class EmpleadoController {
 	@RequestMapping(value = "/listar", method = RequestMethod.GET)
 	public String listar(@RequestParam(name = "page", defaultValue = "0") int page, Model model) {
 
-		Pageable pageRequest = PageRequest.of(page, 5);
+		Pageable pageRequest = PageRequest.of(page, 10);
 
 		Page<Empleado> empleados = empleadoService.findAll(pageRequest);
 
@@ -128,16 +126,8 @@ public class EmpleadoController {
 			return "form";
 		}
 
-		Empleado empleado2 = null;
-		empleado2 = empleadoService.findOne(empleado.getCod_empl());
-		String mensajeFlash = "";
-		
-		if(empleado2 != null) {
-			mensajeFlash = "Empleado Editado con éxito!";
-		} else {
-			mensajeFlash = "Empleado creado con éxito!";
-		}
-		
+		String 	mensajeFlash = "Empleado creado con éxito!";
+			
 		empleadoService.save(empleado);
 		status.setComplete();
 		flash.addFlashAttribute("success", mensajeFlash);

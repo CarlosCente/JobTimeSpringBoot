@@ -4,11 +4,12 @@
 <meta charset="UTF-8" />
 <title th:text="'Spring Boot: MVC + Thymeleaf + Data JPA - ' + ${titulo}"></title>
 <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{/css/fontawesome.min.css}" />
 </head>
 <body>
 	<header th:fragment="header">
 		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-			<a class="navbar-brand" href="#">Spring Boot</a>
+			<a class="navbar-brand" href="#">JobTime</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#navbarNav" aria-controls="navbarNav"
 				aria-expanded="false" aria-label="Toggle navigation">
@@ -16,7 +17,7 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarNav">
 				<ul class="navbar-nav">
-					<li class="nav-item active"><a class="nav-link" href="#">Home
+					<li class="nav-item active"><a class="nav-link" href="#">Inicio
 							<span class="sr-only">(current)</span>
 					</a></li>
 					<li class="nav-item"><a class="nav-link" th:href="@{/listar}">Empleados</a>
@@ -35,11 +36,6 @@
 	
 	<footer th:fragment="footer" class="container">
 		<hr />
-		<img th:src="@{/images/spring.png}" alt="Spring logo" />
-		<p>
-			Powered by <a href="https://projects.spring.io/spring-boot/">Spring
-				Boot</a> y <a href="http://www.thymeleaf.org">Thymeleaf</a>.
-		</p>
 		<p>
 			Este proyecto fue desarrollado por Carlos Javier Hernández Centenero.<br /> &copy; 2020
 		</p>
