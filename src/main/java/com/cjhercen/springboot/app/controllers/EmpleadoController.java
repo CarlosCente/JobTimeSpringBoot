@@ -1,23 +1,21 @@
 package com.cjhercen.springboot.app.controllers;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.Map;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,7 +26,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.cjhercen.springboot.app.models.entity.Empleado;
 import com.cjhercen.springboot.app.models.service.IEmpleadoService;
-import com.cjhercen.springboot.app.models.service.IUploadFileService;
 import com.cjhercen.springboot.app.util.paginator.PageRender;
 
 @Controller
@@ -37,26 +34,6 @@ public class EmpleadoController {
 
 	@Autowired
 	private IEmpleadoService empleadoService;
-
-	@Autowired
-	private IUploadFileService uploadFileService;
-
-	@GetMapping(value = "/uploads/{filename:.+}")
-	public ResponseEntity<Resource> verFoto(@PathVariable String filename) {
-
-		Resource recurso = null;
-		try {
-			recurso = uploadFileService.load(filename);
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		return ResponseEntity.ok()
-				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + recurso.getFilename() + "\"")
-				.body(recurso);
-
-	}
 
 	@GetMapping(value = "/ver/{id}")
 	public String ver(@PathVariable(value = "id") Long id, Map<String, Object> model, RedirectAttributes flash) {
@@ -68,7 +45,8 @@ public class EmpleadoController {
 		}
 
 		model.put("empleado", empleado);
-		model.put("titulo", "Detalle empleado: " + empleado.getNombre() + " " + empleado.getApellido1() + " " + empleado.getApellido2());
+		model.put("titulo", "Detalle empleado: " + empleado.getNombre() + " " + 
+					empleado.getApellido1() + " " + empleado.getApellido2());
 
 		return "ver";
 	}
@@ -96,7 +74,7 @@ public class EmpleadoController {
 		return "form";
 	}
 
-	@RequestMapping(value = "/form/{id}")
+	@GetMapping(value = "/editar/{id}")
 	public String editar(@PathVariable(value = "id") Long id, Map<String, Object> model, RedirectAttributes flash) {
 
 		Empleado empleado = null;
@@ -111,11 +89,37 @@ public class EmpleadoController {
 			flash.addFlashAttribute("error", "El ID del empleado no puede ser cero!");
 			return "redirect:/listar";
 		}
+		
 		model.put("empleado", empleado);
 		model.put("titulo", "Editar Empleado");
-		return "form";
+		return "editar";
 	}
-
+	
+	@RequestMapping(value = "/save/{id}", method = RequestMethod.POST)
+	public String saveEmpleado(@PathVariable(value = "id") Long id, @ModelAttribute("empleado") Empleado empleado, RedirectAttributes flash) {
+		Empleado empleadoBD = null;
+						
+		empleadoBD = empleadoService.findOne(id);
+		
+		if(empleadoBD != null) {
+			empleadoBD.setApellido1(empleado.getApellido1());
+			empleadoBD.setApellido2(empleado.getApellido2());
+			empleadoBD.setDireccion(empleado.getDireccion());
+			empleadoBD.setLocalidad(empleado.getLocalidad());
+			empleadoBD.setNombre(empleado.getNombre());
+			empleadoBD.setPais(empleado.getPais());
+			empleadoBD.setProvincia(empleado.getProvincia());
+			empleadoBD.setFechaNacim(empleado.getFechaNacim());
+			empleadoService.save(empleadoBD);
+			
+			flash.addFlashAttribute("success", "El empleado se ha editado correctamente!");	
+		} else {
+			flash.addFlashAttribute("error", "No se encuentra el ID del empleado");
+		}
+						
+		return "redirect:/listar";
+	}
+	
 	@RequestMapping(value = "/form", method = RequestMethod.POST)
 	public String guardar(@Valid Empleado empleado, BindingResult result, Model model,
 			@RequestParam("file") MultipartFile foto, RedirectAttributes flash, SessionStatus status) {
@@ -123,29 +127,17 @@ public class EmpleadoController {
 			model.addAttribute("titulo", "Formulario de Empleado");
 			return "form";
 		}
-		if (!foto.isEmpty()) {
 
-			if (empleado.getCod_empl() != null && empleado.getCod_empl() > 0 && empleado.getFoto() != null
-					&& empleado.getFoto().length() > 0) {
-
-				uploadFileService.delete(empleado.getFoto());
-			}
-
-			String uniqueFileName = null;
-			try {
-				uniqueFileName = uploadFileService.copy(foto);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-			flash.addFlashAttribute("info", "Has subido correctamente '" + uniqueFileName + "'");
-
-			empleado.setFoto(uniqueFileName);
-
+		Empleado empleado2 = null;
+		empleado2 = empleadoService.findOne(empleado.getCod_empl());
+		String mensajeFlash = "";
+		
+		if(empleado2 != null) {
+			mensajeFlash = "Empleado Editado con éxito!";
+		} else {
+			mensajeFlash = "Empleado creado con éxito!";
 		}
-		String mensajeFlash = (empleado.getCod_empl() != null) ? "Empleado editado con éxito!" : "Empleado creado con éxito!";
-
+		
 		empleadoService.save(empleado);
 		status.setComplete();
 		flash.addFlashAttribute("success", mensajeFlash);
@@ -156,16 +148,10 @@ public class EmpleadoController {
 	public String eliminar(@PathVariable(value = "id") Long id, RedirectAttributes flash) {
 
 		if (id > 0) {
-			Empleado empleado = empleadoService.findOne(id);
-
 			empleadoService.delete(id);
 			flash.addFlashAttribute("success", "Empleado eliminado con éxito!");
-
-			if (uploadFileService.delete(empleado.getFoto())) {
-				flash.addFlashAttribute("info", "Foto " + empleado.getFoto() + "eliminada con éxito");
-			}
-
 		}
 		return "redirect:/listar";
 	}
+
 }

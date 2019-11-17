@@ -10,14 +10,8 @@
 			<div class="card-header" th:text="${titulo}"></div>
 			<div class="card-body">
 
-				<img th:if="${#strings.length(empleado.foto) > 0}"
-					class="img-thumbnail rounded float-left" style="max-width: 25%;"
-					th:src="@{'/uploads/' + ${empleado.foto}}"
-					th:alt="${empleado.foto}" />
-
 				<ul class="list-group">
-					<li class="list-group-item active" th:text="${empleado.DNI}"></li>
-					<li class="list-group-item" th:text="${empleado.nombre}"></li>
+					<li class="list-group-item active" th:text="${empleado.nombre}"></li>
 					<li class="list-group-item" th:text="${empleado.apellido1}"></li>
 					<li class="list-group-item" th:text="${empleado.apellido2}"></li>
 					<li class="list-group-item" th:text="${empleado.fechaNacim}"></li>
