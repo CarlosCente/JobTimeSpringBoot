@@ -12,7 +12,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -86,11 +89,37 @@ public class EmpleadoController {
 			flash.addFlashAttribute("error", "El ID del empleado no puede ser cero!");
 			return "redirect:/listar";
 		}
+		
 		model.put("empleado", empleado);
 		model.put("titulo", "Editar Empleado");
 		return "editar";
 	}
-
+	
+	@RequestMapping(value = "/save/{id}", method = RequestMethod.POST)
+	public String saveEmpleado(@PathVariable(value = "id") Long id, @ModelAttribute("empleado") Empleado empleado, RedirectAttributes flash) {
+		Empleado empleadoBD = null;
+						
+		empleadoBD = empleadoService.findOne(id);
+		
+		if(empleadoBD != null) {
+			empleadoBD.setApellido1(empleado.getApellido1());
+			empleadoBD.setApellido2(empleado.getApellido2());
+			empleadoBD.setDireccion(empleado.getDireccion());
+			empleadoBD.setLocalidad(empleado.getLocalidad());
+			empleadoBD.setNombre(empleado.getNombre());
+			empleadoBD.setPais(empleado.getPais());
+			empleadoBD.setProvincia(empleado.getProvincia());
+			empleadoBD.setFechaNacim(empleado.getFechaNacim());
+			empleadoService.save(empleadoBD);
+			
+			flash.addFlashAttribute("success", "El empleado se ha editado correctamente!");	
+		} else {
+			flash.addFlashAttribute("error", "No se encuentra el ID del empleado");
+		}
+						
+		return "redirect:/listar";
+	}
+	
 	@RequestMapping(value = "/form", method = RequestMethod.POST)
 	public String guardar(@Valid Empleado empleado, BindingResult result, Model model,
 			@RequestParam("file") MultipartFile foto, RedirectAttributes flash, SessionStatus status) {
@@ -99,8 +128,16 @@ public class EmpleadoController {
 			return "form";
 		}
 
-		String mensajeFlash = "Empleado creado con éxito!";
-
+		Empleado empleado2 = null;
+		empleado2 = empleadoService.findOne(empleado.getCod_empl());
+		String mensajeFlash = "";
+		
+		if(empleado2 != null) {
+			mensajeFlash = "Empleado Editado con éxito!";
+		} else {
+			mensajeFlash = "Empleado creado con éxito!";
+		}
+		
 		empleadoService.save(empleado);
 		status.setComplete();
 		flash.addFlashAttribute("success", mensajeFlash);
@@ -116,4 +153,5 @@ public class EmpleadoController {
 		}
 		return "redirect:/listar";
 	}
+
 }

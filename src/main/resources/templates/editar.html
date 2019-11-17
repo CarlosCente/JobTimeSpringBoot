@@ -16,8 +16,7 @@
 						<li th:each="err: ${#fields.errors('*')}" th:text="${err}"></li>
 					</ul>
 				</div>
-				<form th:action="@{/editar}" th:object="${empleado}" method="post"
-					enctype="multipart/form-data">
+				<form th:action="@{/save/} + ${empleado.cod_empl}" th:object="${empleado}" method="post">
 					<div class="form-group row">
 						<label class="col-sm-2 col-form-label">Nombre</label>
 						<div class="col-sm-6">
@@ -58,7 +57,7 @@
 						</div>
 					</div>
 					<div class="form-group row">
-						<label class="col-sm-2 col-form-label">DirecciÃ³n</label>
+						<label class="col-sm-2 col-form-label">Dirección</label>
 						<div class="col-sm-6">
 							<input type="text" class="form-control" th:field="*{direccion}"
 								th:errorclass="'form-control alert-danger'" /> <small
@@ -68,7 +67,7 @@
 						</div>
 					</div>
 					<div class="form-group row">
-						<label class="col-sm-2 col-form-label">PaÃ­s</label>
+						<label class="col-sm-2 col-form-label">País</label>
 						<div class="col-sm-6">
 							<input type="text" class="form-control" th:field="*{pais}"
 								th:errorclass="'form-control alert-danger'" /> <small
