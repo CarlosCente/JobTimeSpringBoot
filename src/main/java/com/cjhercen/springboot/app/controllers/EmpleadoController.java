@@ -52,6 +52,9 @@ public class EmpleadoController {
 	@RequestMapping(value = "/listar", method = RequestMethod.GET)
 	public String listar(@RequestParam(name = "page", defaultValue = "0") int page, Model model) {
 
+		/*
+		 * CAMBIO FUTURO, añadir el numero de elementos a mostrar en la tabla a través de la configuración
+		 */
 		Pageable pageRequest = PageRequest.of(page, 10);
 
 		Page<Empleado> empleados = empleadoService.findAll(pageRequest);
