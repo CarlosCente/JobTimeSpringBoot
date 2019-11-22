@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+<body>
+
+	<header th:replace="layout/layout :: header"></header>
+	<div class="container-fluid py-4">
+		<div class="card bg-light">
+			<div class="card-body">
+				<h5 class="card-title" th:text="${titulo}"></h5>
+				
+				<div>
+				<br><br><br>
+					<p>Aquí ira todo el contenido cuando el programa este listo</p>
+				<br><br><br>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<footer th:replace="layout/layout :: footer"></footer>
+
+</body>
+</html>
