@@ -46,6 +46,10 @@ public class Fichaje implements Serializable {
 	@NotNull
 	@Column(name = "tipo_fichaje")
 	private String tipoFichaje;
+	
+	@NotNull
+	@Column(name = "ip_origen")
+	private String ip;
 
 	@PrePersist
 	public void prePersist() {
@@ -100,6 +104,16 @@ public class Fichaje implements Serializable {
 
 	public void setTipoFichaje(String tipoFichaje) {
 		this.tipoFichaje = tipoFichaje;
+	}
+
+
+	public String getIp() {
+		return ip;
+	}
+
+
+	public void setIp(String ip) {
+		this.ip = ip;
 	}
 
 	

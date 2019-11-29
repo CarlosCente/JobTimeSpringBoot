@@ -18,5 +18,5 @@ INSERT INTO empleados (apellido1, apellido2, direccion, fecha_nacim, localidad, 
 
 
 /* Populate table Fichaje */
-INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, tipo_fichaje) VALUES (1, '2019-11-04', '08:00:00', '', 'ENTRADA');
+INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, tipo_fichaje, ip_origen) VALUES (1, '2019-11-04', '08:00:00', '', 'ENTRADA', '192.168.1.1');
  

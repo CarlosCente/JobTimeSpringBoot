@@ -1,4 +1,4 @@
-package com.cjhercen.springboot.app.models.service;
+package com.cjhercen.springboot.app.models.service.interfaces;
 
 import java.io.IOException;
 import java.net.MalformedURLException;

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cjhercen.springboot.app.models.entity.Empleado;
-import com.cjhercen.springboot.app.models.service.IEmpleadoService;
+import com.cjhercen.springboot.app.models.service.interfaces.IEmpleadoService;
 import com.cjhercen.springboot.app.util.paginator.PageRender;
 
 
