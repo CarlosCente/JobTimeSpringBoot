@@ -1,19 +1,23 @@
 package com.cjhercen.springboot.app;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.cjhercen.springboot.app.auth.handler.LoginSuccessHandler;
 import com.cjhercen.springboot.app.models.service.JpaUserDetailsService;
 
-@EnableGlobalMethodSecurity(securedEnabled=true, prePostEnabled=true)
 @Configuration
+@EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled=true)
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
 
 	@Autowired
@@ -23,7 +27,16 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
 	private JpaUserDetailsService userDetailsService;
 	
 	@Autowired
-	private BCryptPasswordEncoder passwordEncoder;
+	public void configureAuthentication(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
+	      authenticationManagerBuilder
+	              .userDetailsService(userDetailsService)
+	              .passwordEncoder(passwordEncoder());
+	}
+	
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+	    return new BCryptPasswordEncoder();
+	}
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -47,11 +60,4 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
 
 	}
 
-	@Autowired
-	public void configurerGlobal(AuthenticationManagerBuilder build) throws Exception
-	{
-		build.userDetailsService(userDetailsService)
-		.passwordEncoder(passwordEncoder);
-
-	}
 }
