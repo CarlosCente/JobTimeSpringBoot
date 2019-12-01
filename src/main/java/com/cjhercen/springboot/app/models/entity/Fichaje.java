@@ -26,7 +26,7 @@ public class Fichaje implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int cod_fic;
+	private Long cod_fic;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
     private Empleado empleado;
@@ -57,11 +57,11 @@ public class Fichaje implements Serializable {
 	}
 
 	
-	public int getCod_fic() {
+	public Long getCod_fic() {
 		return cod_fic;
 	}
 
-	public void setCod_fic(int cod_fic) {
+	public void setCod_fic(Long cod_fic) {
 		this.cod_fic = cod_fic;
 	}
 

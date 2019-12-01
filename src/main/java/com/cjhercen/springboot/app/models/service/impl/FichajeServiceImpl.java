@@ -11,7 +11,7 @@ import com.cjhercen.springboot.app.models.entity.Fichaje;
 import com.cjhercen.springboot.app.models.service.interfaces.IFichajeService;
 
 @Service
-public class IFichajeServiceImpl implements IFichajeService {
+public class FichajeServiceImpl implements IFichajeService {
 
 	@Autowired
 	private IFichajeDao fichajeDao;

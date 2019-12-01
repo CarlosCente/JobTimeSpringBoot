@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -27,16 +28,16 @@ public class Empleado implements Serializable {
 	private static final long serialVersionUID = -7273881145340481070L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long cod_empl;
-	
+
 	@NotEmpty
 	@Length(min = 2, max = 20)
 	private String nombre;
 
 	@NotEmpty
 	private String apellido1;
-	
+
 	@NotEmpty
 	private String apellido2;
 
@@ -44,19 +45,21 @@ public class Empleado implements Serializable {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name = "fecha_nacim")
 	private Date fechaNacim;
-	
+
 	private String direccion;
-	
+
 	private String pais;
-	
+
 	private String provincia;
-	
+
 	private String localidad;
 
-	@OneToMany(mappedBy = "empleado" ,fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Fichaje> fichajes;	
-	
-	
+	@OneToMany(mappedBy = "empleado", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Fichaje> fichajes;
+
+	@OneToOne(mappedBy = "empleado", cascade = CascadeType.ALL)
+	private Usuario usuario;
+
 	public Empleado() {
 
 	}
@@ -140,18 +143,26 @@ public class Empleado implements Serializable {
 	public void setFichajes(List<Fichaje> fichajes) {
 		this.fichajes = fichajes;
 	}
-	
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
 	/*
 	 * Para añadir un fichaje en la lista de fichajes
 	 */
 	public void addFichaje(Fichaje fichaje) {
 		fichajes.add(fichaje);
 	}
-	
+
 	public String toString() {
-		
+
 		String mensaje = this.cod_empl + "  -  " + this.nombre + " " + this.apellido1 + " " + this.apellido2;
 		return mensaje;
 	}
-	
+
 }

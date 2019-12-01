@@ -9,16 +9,27 @@
 		<hr>
 
 		<div class="row">
-			<div class="col-md-9">
+			<div class="col-md-6">
 				<div class="card bg-light">
 					<div class="card-header text-center font-weight-bold">INFORMACIÓN
 						DEL EMPLEADO</div>
 					<div class="card-body">
 
-						<div class="m-2">Nombre del empleado + apellidos</div>
-
-						<div class="m-2">Fecha y hora actuales + IP origen</div>
-
+						<div class="row text-center">
+							<div class="col-md-6">Nombre y apellidos: </div>
+  							<div class="col-md-6 text-left " th:text="${empleado.nombre} +' '+ ${empleado.apellido1} +' ' + ${empleado.apellido2}"></div>						
+						</div>
+						
+						<div class="row text-center">
+							<div class="col-md-6">Fecha y hora actual: </div>
+  							<div class="col-md-6 text-left" th:text="'13/12/1992 14:15'"></div>						
+						</div>
+						
+						<div class="row text-center">
+							<div class="col-md-6">IP origen del fichaje: </div>
+  							<div class="col-md-6 text-left " th:text="${ip_cliente}"></div>						
+						</div>
+						
 					</div>
 				</div>
 
@@ -28,9 +39,40 @@
 					<div class="card-header text-center font-weight-bold">INFORMACIÓN
 						DEL FICHAJE</div>
 					<div class="card-body">
+						<div class="row">
+							<div class="col-md-6 ml-5">Hora Entrada: </div>
+  							<div class="col-md-4" th:text="${horaEntrada}"></div>						
+						</div>
 
-						<div class="text-center m-2">Hora Entrada:</div>
-						<div class="text-center m-2">Hora Salida:</div>
+						<div class="row">
+							<div class="col-md-6 ml-5">Hora Salida: </div>
+  							<div class="col-md-4" th:text="${horaSalida}"></div>	
+						</div>
+
+						<div class="row">
+							<div class="col-md-6 ml-5">Total Tiempo: </div>
+  							<div class="col-md-4" th:text="${totalTiempo}"></div>	
+						</div>
+
+					</div>
+				</div>
+
+			</div>
+			<div class="col-md-3">
+				<div class="card bg-light">
+					<div class="card-header text-center font-weight-bold">INFORMES
+						DISPONIBLES</div>
+					<div class="card-body">
+						<div class="row text-center">
+							<div class="col-md-12">Informe semanal</div>
+						</div>
+						<div class="row text-center">
+							<div class="col-md-12">Informe mensual</div>
+						</div>
+						<div class="row text-center">
+							<div class="col-md-12">Seleccionar fechas</div>
+						</div>
+		
 					</div>
 				</div>
 
