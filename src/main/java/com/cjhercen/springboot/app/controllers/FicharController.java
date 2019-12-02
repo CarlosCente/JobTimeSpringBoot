@@ -15,6 +15,7 @@ import com.cjhercen.springboot.app.models.entity.Usuario;
 import com.cjhercen.springboot.app.models.service.impl.EmpleadoServiceImpl;
 import com.cjhercen.springboot.app.models.service.impl.FichajeServiceImpl;
 import com.cjhercen.springboot.app.models.service.impl.UsuarioServiceImpl;
+import com.cjhercen.springboot.app.util.FechaUtils;
 
 @Controller
 public class FicharController {
@@ -68,12 +69,13 @@ public class FicharController {
 			model.put("horaSalida", "-");
 			model.put("totalTiempo", "-");
 		}
-				
+		
 		model.put("titulo", "Fichaje del Empleado");
 		model.put("empleado", empleado);
 		model.put("ip_cliente", ipCliente);
 		
 		return "fichar";
 	}
+	
 	
 }
