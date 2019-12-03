@@ -18,7 +18,9 @@ INSERT INTO empleados (apellido1, apellido2, direccion, fecha_nacim, localidad, 
 
 
 /* Populate table Fichaje */
-INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, tipo_fichaje, ip_origen) VALUES (1, '2019-11-04', '08:00:00', '16:00:00', 'ENTRADA', '192.168.1.1');
+INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, tipo_fichaje, ip_origen) VALUES (1, '2019-11-04', '08:00:00', '', 'ENTRADA', '192.168.1.1');
+INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, tipo_fichaje, ip_origen) VALUES (2, '2019-11-04', '08:00:00', '', 'ENTRADA', '192.168.1.1');
+
  
 /* Populate table Users and roles */
 INSERT INTO users (username, password, enabled, cod_empl) VALUES ('admin', '$2y$12$6vxcbhYOgxlfFQxbPuApwuIobHyJHfppJqja/ZNPJjO9yYDovSXpa', 1, 1);

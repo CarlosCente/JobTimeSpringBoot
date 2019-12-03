@@ -32,6 +32,8 @@ public class FicharController {
 	@Autowired
 	IUsuarioDao usuarioDao;
 	
+	FechaUtils fechaUtils = new FechaUtils();
+	
 	
 	@RequestMapping(value = "/fichar")
 	public String fichar(Map<String, Object> model,  HttpServletRequest request) {
@@ -50,7 +52,7 @@ public class FicharController {
             }
         }
 		
-		//Datos del fichaje
+		//Datos del fichaje (Hora entrada y hora de salida)
 		Fichaje fichajeEmpleado = fichajeService.findOne(empleado.getCod_empl());
 		if(fichajeEmpleado != null) {
 			if(fichajeEmpleado.getHoraEntrada() == null | "".equals(fichajeEmpleado.getHoraEntrada())) {
@@ -70,12 +72,16 @@ public class FicharController {
 			model.put("totalTiempo", "-");
 		}
 		
+		//Cálculo del tiempo transcurrido del fichaje
+		model.put("totalTiempo" ,fechaUtils.obtenerTiempoTranscurrido(fichajeEmpleado.getHoraEntrada(), fichajeEmpleado.getHoraSalida()));
+		
+		
 		model.put("titulo", "Fichaje del Empleado");
 		model.put("empleado", empleado);
 		model.put("ip_cliente", ipCliente);
 		
 		return "fichar";
 	}
-	
+		
 	
 }
