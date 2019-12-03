@@ -1,6 +1,9 @@
 package com.cjhercen.springboot.app.util;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Utilidades para trabajar con las fechas y horas de los fichajes
@@ -15,7 +18,7 @@ public class FechaUtils {
 	}
 
 	/**
-	 * Obtener la hora en formado hh:mm como un String
+	 * Obtener la hora en formato hh:mm como un String
 	 * @return hora en el formato hh:mm
 	 */
 	public String obtenerHoraEnFormatoCadena() {
@@ -25,8 +28,40 @@ public class FechaUtils {
 		hora = calendario.get(Calendar.HOUR_OF_DAY);
 		minutos = calendario.get(Calendar.MINUTE);
 		
-		return hora + ":" + minutos;
+		String minutosString = "";
+		
+		if( minutos < 10) {
+			minutosString = "0"+minutos;
+		} else {
+			minutosString = String.valueOf(minutos);
+		}
+		
+		return hora + ":" + minutosString;
 	}
+	
+	/**
+	 * Obtener la hora en formato dd-MM-yyyy como un String
+	 * @return hora en el formato dd-MM-yyyy
+	 */
+	public String obtenerFechaEnFormatoCadena() {
+		
+		Date date = new Date();
+		DateFormat dateFormat=new SimpleDateFormat("dd-MM-yyyy");
+		
+		return dateFormat.format(date);
+		
+	}
+	
+	/**
+	 * Obtener la fecha actual en formato dd-MM-yyyy como un Date
+	 * @return hora en el formato dd-MM-yyyy
+	 */
+	public Date obtenerFechaActual() {
+		
+		Date date = new Date();
+		return date;		
+	}
+	
 	
 	
 	/**

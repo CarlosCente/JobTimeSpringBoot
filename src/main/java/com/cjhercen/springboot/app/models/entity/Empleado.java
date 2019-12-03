@@ -42,7 +42,7 @@ public class Empleado implements Serializable {
 	private String apellido2;
 
 	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@DateTimeFormat(pattern = "dd-MM-yyyy")
 	@Column(name = "fecha_nacim")
 	private Date fechaNacim;
 

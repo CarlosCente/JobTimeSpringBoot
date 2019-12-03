@@ -27,26 +27,28 @@ public class Fichaje implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long cod_fic;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
-    private Empleado empleado;
-		
+	private Empleado empleado;
+
 	@NotNull
 	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@DateTimeFormat(pattern = "dd-MM-yyyy")
 	@Column(name = "fecha")
 	private Date fecha;
-	
+
 	@Column(name = "hora_entrada")
-	private String horaEntrada;
+	private String horaEntrada = "";
 
 	@Column(name = "hora_salida")
-	private String horaSalida;
-	
-	@NotNull
-	@Column(name = "tipo_fichaje")
-	private String tipoFichaje;
-	
+	private String horaSalida = "";
+
+	@Column(name = "hora_inicio_descanso")
+	private String horaInicioDescanso = "";
+
+	@Column(name = "hora_fin_descanso")
+	private String horaFinDescanso = "";
+
 	@NotNull
 	@Column(name = "ip_origen")
 	private String ip;
@@ -56,7 +58,6 @@ public class Fichaje implements Serializable {
 		fecha = new Date();
 	}
 
-	
 	public Long getCod_fic() {
 		return cod_fic;
 	}
@@ -73,7 +74,6 @@ public class Fichaje implements Serializable {
 		this.fecha = fecha;
 	}
 
-	
 	public Empleado getEmpleado() {
 		return empleado;
 	}
@@ -98,24 +98,28 @@ public class Fichaje implements Serializable {
 		this.horaSalida = horaSalida;
 	}
 
-	public String getTipoFichaje() {
-		return tipoFichaje;
-	}
-
-	public void setTipoFichaje(String tipoFichaje) {
-		this.tipoFichaje = tipoFichaje;
-	}
-
-
 	public String getIp() {
 		return ip;
 	}
-
 
 	public void setIp(String ip) {
 		this.ip = ip;
 	}
 
-	
-	
+	public String getHoraInicioDescanso() {
+		return horaInicioDescanso;
+	}
+
+	public void setHoraInicioDescanso(String horaInicioDescanso) {
+		this.horaInicioDescanso = horaInicioDescanso;
+	}
+
+	public String getHoraFinDescanso() {
+		return horaFinDescanso;
+	}
+
+	public void setHoraFinDescanso(String horaFinDescanso) {
+		this.horaFinDescanso = horaFinDescanso;
+	}
+
 }

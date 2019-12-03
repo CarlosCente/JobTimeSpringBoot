@@ -16,20 +16,21 @@
 					<div class="card-body">
 
 						<div class="row text-center">
-							<div class="col-md-6">Nombre y apellidos: </div>
-  							<div class="col-md-6 text-left " th:text="${empleado.nombre} +' '+ ${empleado.apellido1} +' ' + ${empleado.apellido2}"></div>						
+							<div class="col-md-6">Nombre y apellidos:</div>
+							<div class="col-md-6 text-left "
+								th:text="${empleado.nombre} +' '+ ${empleado.apellido1} +' ' + ${empleado.apellido2}"></div>
 						</div>
-						
+
 						<div class="row text-center">
-							<div class="col-md-6">Fecha y hora actual: </div>
-  							<div class="col-md-6 text-left" th:text="'13/12/1992 14:15'"></div>						
+							<div class="col-md-6">Fecha y hora actual:</div>
+							<div class="col-md-6 text-left" th:text="'13/12/1992 14:15'"></div>
 						</div>
-						
+
 						<div class="row text-center">
-							<div class="col-md-6">IP origen del fichaje: </div>
-  							<div class="col-md-6 text-left " th:text="${ip_cliente}"></div>						
+							<div class="col-md-6">IP origen del fichaje:</div>
+							<div class="col-md-6 text-left " th:text="${ip_cliente}"></div>
 						</div>
-						
+
 					</div>
 				</div>
 
@@ -40,18 +41,18 @@
 						DEL FICHAJE</div>
 					<div class="card-body">
 						<div class="row">
-							<div class="col-md-6 ml-5">Hora Entrada: </div>
-  							<div class="col-md-4" th:text="${horaEntrada}"></div>						
+							<div class="col-md-6 ml-5">Hora Entrada:</div>
+							<div class="col-md-4" th:text="${horaEntrada}"></div>
 						</div>
 
 						<div class="row">
-							<div class="col-md-6 ml-5">Hora Salida: </div>
-  							<div class="col-md-4" th:text="${horaSalida}"></div>	
+							<div class="col-md-6 ml-5">Hora Salida:</div>
+							<div class="col-md-4" th:text="${horaSalida}"></div>
 						</div>
 
 						<div class="row">
-							<div class="col-md-6 ml-5">Total Tiempo: </div>
-  							<div class="col-md-4" th:text="${totalTiempo}"></div>	
+							<div class="col-md-6 ml-5">Total Tiempo:</div>
+							<div class="col-md-4 font-weight-bold" th:text="${totalTiempo}"></div>
 						</div>
 
 					</div>
@@ -72,7 +73,7 @@
 						<div class="row text-center">
 							<div class="col-md-12">Seleccionar fechas</div>
 						</div>
-		
+
 					</div>
 				</div>
 
@@ -88,21 +89,46 @@
 			<div class="card-header text-center font-weight-bold">OPERACIONES
 				DISPONIBLES</div>
 			<div class="card-body">
-				<div class="row">
+
+				<div class="row mt-3 mb-3">
+
 					<div class="col-md-3 text-center">
-						<button type="button" class="btn btn-primary">Entrada</button>
+						<button class="btn btn-primary w-75 m-1" th:href="@{/fichar/entrada/}">
+							<h3>
+								<i class="fas fa-sign-in-alt"></i>
+							</h3>
+							<strong>Entrada</strong>
+						</button>
+					</div>
+
+					<div class="col-md-3 text-center">
+						<button class="btn btn-danger w-75 m-1">
+							<h3>
+								<i class="fas fa-sign-out-alt"></i>
+							</h3>
+							<strong>Salida</strong>
+						</button>
+					</div>
+
+					<div class="col-md-3 text-center">
+						<button type="button" class="btn btn-success w-75 m-1">
+							<h3>
+								<i class="fas fa-play"></i>
+							</h3>
+							<strong>Inicio Descanso</strong>
+						</button>
 					</div>
 					<div class="col-md-3 text-center">
-						<button type="button" class="btn btn-danger">Salida</button>
+						<button type="button" class="btn btn-danger w-75 m-1">
+							<h3>
+								<i class="fas fa-stop"></i>
+							</h3>
+							<strong>Fin Descanso</strong>
+						</button>
 					</div>
-					<div class="col-md-3 text-center">
-						<button type="button" class="btn btn-success">Inicio
-							Descanso</button>
-					</div>
-					<div class="col-md-3 text-center">
-						<button type="button" class="btn btn-danger">Fin Descanso</button>
-					</div>
+
 				</div>
+
 			</div>
 		</div>
 	</div>

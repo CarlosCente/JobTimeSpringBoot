@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.cjhercen.springboot.app.models.dao.IUsuarioDao;
 import com.cjhercen.springboot.app.models.entity.Empleado;
@@ -43,15 +44,6 @@ public class FicharController {
 		Usuario usuario = usuarioDao.findByUsername(username);
 		Empleado empleado = usuario.getEmpleado();
 		
-		//Se obtiene la IP del cliente
-		String ipCliente = "-";
-		if (request != null) {
-			ipCliente = request.getHeader("X-FORWARDED-FOR");
-            if (ipCliente == null || "-".equals(ipCliente)) {
-            	ipCliente = request.getRemoteAddr();
-            }
-        }
-		
 		//Datos del fichaje (Hora entrada y hora de salida)
 		Fichaje fichajeEmpleado = fichajeService.findOne(empleado.getCod_empl());
 		if(fichajeEmpleado != null) {
@@ -74,14 +66,39 @@ public class FicharController {
 		
 		//Cálculo del tiempo transcurrido del fichaje
 		model.put("totalTiempo" ,fechaUtils.obtenerTiempoTranscurrido(fichajeEmpleado.getHoraEntrada(), fichajeEmpleado.getHoraSalida()));
-		
-		
 		model.put("titulo", "Fichaje del Empleado");
 		model.put("empleado", empleado);
-		model.put("ip_cliente", ipCliente);
+		model.put("ip_cliente", request.getRemoteAddr());
 		
 		return "fichar";
 	}
+	
+	
+	@RequestMapping(value = "/fichar/entrada/")
+	public String ficharEntrada(RedirectAttributes flash, Map<String, Object> model, HttpServletRequest request) {
+
+		//Se obtiene primero el usuario conectado para obtener los datos del empleado
+		String username = usuarioService.getUsername();
+		Usuario usuario = usuarioDao.findByUsername(username);
+		Empleado empleado = usuario.getEmpleado();
+
+		//Como es el fichaje de entrada se supone que no puede haber ningun fichaje existente
+		Fichaje fichajeEntrada = new Fichaje();
 		
+		fichajeEntrada.setEmpleado(empleado);
+		fichajeEntrada.setFecha(fechaUtils.obtenerFechaActual());
+		fichajeEntrada.setHoraEntrada(fechaUtils.obtenerHoraEnFormatoCadena());
+		fichajeEntrada.setIp(request.getRemoteAddr());
+		
+		fichajeService.save(fichajeEntrada);
+		
+		model.put("titulo", "Fichaje del Empleado");
+		model.put("empleado", empleado);
+		model.put("ip_cliente", request.getRemoteAddr());
+		
+		return "fichar";
+	}
+	
+	
 	
 }
