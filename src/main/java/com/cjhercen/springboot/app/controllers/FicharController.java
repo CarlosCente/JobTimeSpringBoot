@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.cjhercen.springboot.app.models.dao.IFichajeDao;
 import com.cjhercen.springboot.app.models.dao.IUsuarioDao;
 import com.cjhercen.springboot.app.models.entity.Empleado;
 import com.cjhercen.springboot.app.models.entity.Fichaje;
@@ -33,6 +34,9 @@ public class FicharController {
 	@Autowired
 	IUsuarioDao usuarioDao;
 	
+	@Autowired
+	IFichajeDao fichajeDao;
+	
 	FechaUtils fechaUtils = new FechaUtils();
 	
 	
@@ -43,9 +47,9 @@ public class FicharController {
 		String username = usuarioService.getUsername();
 		Usuario usuario = usuarioDao.findByUsername(username);
 		Empleado empleado = usuario.getEmpleado();
-		
+			
 		//Datos del fichaje (Hora entrada y hora de salida)
-		Fichaje fichajeEmpleado = fichajeService.findOne(empleado.getCod_empl());
+		Fichaje fichajeEmpleado = fichajeDao.findByEmpleadoAndFecha(empleado, fechaUtils.obtenerFechaActual());
 		if(fichajeEmpleado != null) {
 			if(fichajeEmpleado.getHoraEntrada() == null | "".equals(fichajeEmpleado.getHoraEntrada())) {
 				model.put("horaEntrada", "-");
@@ -58,14 +62,16 @@ public class FicharController {
 			} else {
 				model.put("horaSalida", fichajeEmpleado.getHoraSalida());
 			}			
+			
+			//Cálculo del tiempo transcurrido del fichaje
+			model.put("totalTiempo" ,fechaUtils.obtenerTiempoTranscurrido(fichajeEmpleado.getHoraEntrada(), fichajeEmpleado.getHoraSalida()));
+			
 		} else {
 			model.put("horaEntrada", "-");
 			model.put("horaSalida", "-");
 			model.put("totalTiempo", "-");
 		}
 		
-		//Cálculo del tiempo transcurrido del fichaje
-		model.put("totalTiempo" ,fechaUtils.obtenerTiempoTranscurrido(fichajeEmpleado.getHoraEntrada(), fichajeEmpleado.getHoraSalida()));
 		model.put("titulo", "Fichaje del Empleado");
 		model.put("empleado", empleado);
 		model.put("ip_cliente", request.getRemoteAddr());

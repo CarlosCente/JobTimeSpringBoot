@@ -1,7 +1,5 @@
 package com.cjhercen.springboot.app.models.service.impl;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,22 +21,9 @@ public class FichajeServiceImpl implements IFichajeService {
 	}
 
 	@Override
-	@Transactional(readOnly = true)
-	public Fichaje findOne(Long id) {
-		return fichajeDao.findById(id).orElse(null);
-	}
-
-	@Override
-	@Transactional(readOnly = true)
-	public List<Fichaje> findAll() {
-		// TODO Auto-generated method stub
-		return (List<Fichaje>) fichajeDao.findAll();
-	}
-
-	@Override
-	@Transactional
 	public void delete(Long id) {
-		fichajeDao.deleteById(id);
+		// TODO Auto-generated method stub
+		
 	}
 
 }
