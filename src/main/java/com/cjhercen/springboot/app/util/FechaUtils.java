@@ -28,7 +28,6 @@ public class FechaUtils {
 		int hora, minutos;
 		hora = calendario.get(Calendar.HOUR_OF_DAY);
 		minutos = calendario.get(Calendar.MINUTE);
-		System.out.println(minutos);
 		String minutosString = "";
 
 		if (minutos < 10) {
@@ -147,13 +146,10 @@ public class FechaUtils {
 
 		if (horas.length() == 1) {
 			horas = "0" + horas;
-			System.out.println(horas);
 		}
 
 		if (minutos.length() == 1) {
 			minutos = "0" + minutos;
-			System.out.println(minutos);
-
 		}
 		
 		return horas + " : " + minutos;
