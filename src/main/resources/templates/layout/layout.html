@@ -28,10 +28,12 @@
 					</li>
 					<li class="nav-item"><a class="nav-link" th:href="@{/fichar}">Fichaje</a>
 					</li>
-					<li class="nav-item"><a class="nav-link" href="#">Incidencias</a>
+					<li class="nav-item"><a class="nav-link" th:href="@{/logout}">Incidencias</a>
 					</li>
 				</ul>
 			</div>
+			<a class="navbar-brand text-white" href="/logout"><small>Cerrar Sesión</small></a>
+			
 		</nav>
 		
 		<div class="alert alert-success" th:if="${success != null}" th:text="${success}"></div>
