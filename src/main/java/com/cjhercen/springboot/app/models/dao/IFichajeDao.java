@@ -17,5 +17,6 @@ public interface IFichajeDao extends CrudRepository<Fichaje, FichajeId> {
 	public List<Fichaje> findByEmpleado(Empleado empleado);
 	
 	public Fichaje findByEmpleadoAndFecha(Empleado empleado, Date fecha);
+
 	
 }

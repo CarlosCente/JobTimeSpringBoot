@@ -64,7 +64,8 @@ public class FicharController {
 			}			
 			
 			//Cálculo del tiempo transcurrido del fichaje
-			model.put("totalTiempo" ,fechaUtils.obtenerTiempoTranscurrido(fichajeEmpleado.getHoraEntrada(), fichajeEmpleado.getHoraSalida()));
+			String totalTiempo = fechaUtils.obtenerTiempoTranscurrido(fichajeEmpleado.getHoraEntrada(), fichajeEmpleado.getHoraSalida());
+			model.put("totalTiempo" , fechaUtils.formatearFechas2digitos(totalTiempo));
 			
 		} else {
 			model.put("horaEntrada", "-");
@@ -81,30 +82,31 @@ public class FicharController {
 	
 	
 	@RequestMapping(value = "/fichar/entrada/")
-	public String ficharEntrada(RedirectAttributes flash, Map<String, Object> model, HttpServletRequest request) {
+	public String ficharEntrada(RedirectAttributes flash, HttpServletRequest request) {
 
 		//Se obtiene primero el usuario conectado para obtener los datos del empleado
 		String username = usuarioService.getUsername();
 		Usuario usuario = usuarioDao.findByUsername(username);
 		Empleado empleado = usuario.getEmpleado();
 
-		//Como es el fichaje de entrada se supone que no puede haber ningun fichaje existente
-		Fichaje fichajeEntrada = new Fichaje();
+		Fichaje fichajeComprueba = fichajeDao.findByEmpleadoAndFecha(empleado, fechaUtils.obtenerFechaActual());
 		
-		fichajeEntrada.setEmpleado(empleado);
-		fichajeEntrada.setFecha(fechaUtils.obtenerFechaActual());
-		fichajeEntrada.setHoraEntrada(fechaUtils.obtenerHoraEnFormatoCadena());
-		fichajeEntrada.setIp(request.getRemoteAddr());
+		if(fichajeComprueba != null) {
+			flash.addFlashAttribute("error", "Ya has realizado el fichaje de entrada hoy!");
+		} else {
+			Fichaje fichajeEntrada = new Fichaje();
+			fichajeEntrada.setEmpleado(empleado);
+			fichajeEntrada.setFecha(fechaUtils.obtenerFechaActual());
+			fichajeEntrada.setHoraEntrada(fechaUtils.obtenerHoraEnFormatoCadena());
+			fichajeEntrada.setIp(request.getRemoteAddr());
+			
+			fichajeService.save(fichajeEntrada);	
+			
+			flash.addFlashAttribute("success", "Has fichado correctamente a las " + fechaUtils.obtenerHoraEnFormatoCadena());	
+		}
 		
-		fichajeService.save(fichajeEntrada);
-		
-		model.put("titulo", "Fichaje del Empleado");
-		model.put("empleado", empleado);
-		model.put("ip_cliente", request.getRemoteAddr());
-		
-		return "fichar";
+		return "redirect:/fichar";
 	}
-	
-	
+		
 	
 }

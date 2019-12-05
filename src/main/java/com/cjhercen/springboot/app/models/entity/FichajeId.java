@@ -7,23 +7,23 @@ public class FichajeId implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	Empleado empleado;
+	Long empleado;
 	Date fecha;
 	
 	public FichajeId() {
 		
 	}
 	
-	public FichajeId(Empleado empleado, Date fecha) {
+	public FichajeId(Long empleado, Date fecha) {
 		this.empleado = empleado;
 		this.fecha = fecha;
 	}
 
-	public Empleado getEmpleado() {
+	public Long getEmpleado() {
 		return empleado;
 	}
 
-	public void setEmpleado(Empleado empleado) {
+	public void setEmpleado(Long empleado) {
 		this.empleado = empleado;
 	}
 
