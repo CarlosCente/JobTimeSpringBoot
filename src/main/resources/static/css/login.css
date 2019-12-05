@@ -1,0 +1,94 @@
+@charset "UTF-8";
+
+html,body{
+background-image: url(../images/timeLogin.jpg);
+background-size: cover;
+background-repeat: no-repeat;
+height: 100%;
+font-family: "Tahoma", "Geneva", sans-serif;
+}
+
+.container{
+height: 100%;
+align-content: center;
+}
+
+.card{
+height: 400px;
+margin-top: auto;
+margin-bottom: auto;
+width: 400px;
+background-color: rgba(0,0,0,0.7) !important;
+}
+
+.card-header{
+color: white;
+}
+
+.input-group-prepend span{
+width: 50px;
+background-color: #FFC312;
+color: black;
+border:0 !important;
+}
+
+input:focus{
+outline: 0 0 0 0  !important;
+box-shadow: 0 0 0 0 !important;
+
+}
+
+.remember{
+color: white;
+}
+
+.remember input
+{
+width: 25px;
+height: 25px;
+margin-left: 15px;
+margin-right: 5px;
+}
+
+.login_btn{
+color: black;
+background-color: #FFC312;
+width: 100px;
+}
+
+.login_btn:hover{
+color: black;
+background-color: white;
+}
+
+.container-logout{
+height: 100%;
+align-content: center;
+vertical-align: center;
+}
+
+.card-header-logout{
+color: white;
+}
+
+
+.logout_btn{
+color: black;
+background-color: #FFC312;
+width: 200px;
+}
+
+.logout_btn:hover{
+color: black;
+background-color: white;
+}
+
+
+.links{
+color: white;
+}
+
+.links a{
+margin-left: 4px;
+}
+

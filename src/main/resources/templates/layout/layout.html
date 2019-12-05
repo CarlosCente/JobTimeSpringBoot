@@ -6,6 +6,8 @@
 <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
 <link rel="stylesheet" th:href="@{/css/fontawesome.min.css}" />
 <link rel="stylesheet" th:href="@{/css/style.css}" />
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
 </head>
 <body>
 	<header th:fragment="header">
@@ -18,10 +20,15 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarNav">
 				<ul class="navbar-nav">
-					<li class="nav-item active"><a class="nav-link" href="#">Inicio
+					<li class="nav-item active"><a class="nav-link" th:href="@{/index}">Inicio
 							<span class="sr-only">(current)</span>
-					</a></li>
+					</a>
+					</li>
 					<li class="nav-item"><a class="nav-link" th:href="@{/listar}">Empleados</a>
+					</li>
+					<li class="nav-item"><a class="nav-link" th:href="@{/fichar}">Fichaje</a>
+					</li>
+					<li class="nav-item"><a class="nav-link" href="#">Incidencias</a>
 					</li>
 				</ul>
 			</div>
@@ -35,7 +42,7 @@
 	
 	<div class="container"></div>
 	
-	<footer th:fragment="footer" class="container-fluid text-center bg-dark text-white">
+	<footer th:fragment="footer" class="container-fluid navbar-fixed-bottom text-center bg-dark text-white">
 		<hr />
 		<p>
 			Este proyecto fue desarrollado por Carlos Javier Hernández Centenero.<br /> &copy; 2020

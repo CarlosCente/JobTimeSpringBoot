@@ -6,9 +6,8 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
@@ -19,46 +18,41 @@ import javax.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
+@IdClass(FichajeId.class)
 @Table(name = "fichajes")
 public class Fichaje implements Serializable {
 
 	private static final long serialVersionUID = -8420871906339868654L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int cod_fic;
-	
 	@ManyToOne(fetch = FetchType.LAZY)
-    private Empleado empleado;
-		
-	@NotNull
+	private Empleado empleado;
+
+	@Id
 	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@DateTimeFormat(pattern = "dd-MM-yyyy")
 	@Column(name = "fecha")
 	private Date fecha;
-	
+
 	@Column(name = "hora_entrada")
-	private String horaEntrada;
+	private String horaEntrada = "";
 
 	@Column(name = "hora_salida")
-	private String horaSalida;
-	
+	private String horaSalida = "";
+
+	@Column(name = "hora_inicio_descanso")
+	private String horaInicioDescanso = "";
+
+	@Column(name = "hora_fin_descanso")
+	private String horaFinDescanso = "";
+
 	@NotNull
-	@Column(name = "tipo_fichaje")
-	private String tipoFichaje;
+	@Column(name = "ip_origen")
+	private String ip;
 
 	@PrePersist
 	public void prePersist() {
 		fecha = new Date();
-	}
-
-	
-	public int getCod_fic() {
-		return cod_fic;
-	}
-
-	public void setCod_fic(int cod_fic) {
-		this.cod_fic = cod_fic;
 	}
 
 	public Date getFecha() {
@@ -69,7 +63,6 @@ public class Fichaje implements Serializable {
 		this.fecha = fecha;
 	}
 
-	
 	public Empleado getEmpleado() {
 		return empleado;
 	}
@@ -94,14 +87,28 @@ public class Fichaje implements Serializable {
 		this.horaSalida = horaSalida;
 	}
 
-	public String getTipoFichaje() {
-		return tipoFichaje;
+	public String getIp() {
+		return ip;
 	}
 
-	public void setTipoFichaje(String tipoFichaje) {
-		this.tipoFichaje = tipoFichaje;
+	public void setIp(String ip) {
+		this.ip = ip;
 	}
 
-	
-	
+	public String getHoraInicioDescanso() {
+		return horaInicioDescanso;
+	}
+
+	public void setHoraInicioDescanso(String horaInicioDescanso) {
+		this.horaInicioDescanso = horaInicioDescanso;
+	}
+
+	public String getHoraFinDescanso() {
+		return horaFinDescanso;
+	}
+
+	public void setHoraFinDescanso(String horaFinDescanso) {
+		this.horaFinDescanso = horaFinDescanso;
+	}
+
 }

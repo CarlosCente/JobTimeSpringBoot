@@ -1,4 +1,4 @@
-package com.cjhercen.springboot.app.models.service;
+package com.cjhercen.springboot.app.models.service.impl;
 
 import java.util.List;
 
@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cjhercen.springboot.app.models.dao.IEmpleadoDao;
 import com.cjhercen.springboot.app.models.entity.Empleado;
+import com.cjhercen.springboot.app.models.service.interfaces.IEmpleadoService;
 
 @Service
 public class EmpleadoServiceImpl implements IEmpleadoService {
