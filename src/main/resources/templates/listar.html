@@ -6,16 +6,11 @@
 	<header th:replace="layout/layout :: header"></header>
 
 	<div class="container-fluid py-4">
-		<h5 th:text="${titulo}"></h5>
-				<hr>
-		
+
 		<div class="card bg-light">
 			<div class="card-body">
 			
 			<div class="row">
-					<div class="ml-3 mt-2 col-2" id="reloj">
-   							00 : 00 : 00
- 					</div>
 					<input class="form-control col-2 mb-3 mr-3 float-right text-center border border-info font-weight-bold col ml-auto" 
 					id="myInput" type="text" placeholder="Buscar...">
 				</div>
@@ -25,11 +20,12 @@
 				<table class="table table-striped table-sm text-center">
 					<thead class="thead-dark">
 						<tr>
-							<th>ID</th>
 							<th>Nombre</th>
 							<th>Primer Apellido</th>
 							<th>Segundo Apellido</th>
 							<th>Fecha Nacimiento</th>
+							<th>Provincia</th>
+							<th>Pa√≠s</th>
 							<th>Incidencias</th>
 							<th>Editar</th>
 							<th>Eliminar</th>
@@ -37,20 +33,19 @@
 					</thead>
 					<tbody id="myTable">
 						<tr th:each="empleado : ${empleados}">
-							<td><a class="btn btn-dark btn-xs"
-								th:href="@{/ver/} + ${empleado.cod_empl}"
-								th:text="${empleado.cod_empl}"></a></td>
 							<td th:text="${empleado.nombre}"></td>
 							<td th:text="${empleado.apellido1}"></td>
 							<td th:text="${empleado.apellido2}"></td>
 							<td th:text="${empleado.fechaNacim}"></td>
+							<td th:text="${empleado.provincia}"></td>
+							<td th:text="${empleado.pais}"></td>
 							<td></td>
 							<td><a class="btn btn-primary btn-sm"
 								th:href="@{/editar/} + ${empleado.cod_empl}" th:text="'Editar'"></a></td>
 							<td><a class="btn btn-danger btn-sm"
 								th:href="@{/eliminar/} + ${empleado.cod_empl}"
 								th:text="'Eliminar'"
-								onclick="return confirm('Est·s seguro que quieres eliminar?');"></a></td>
+								onclick="return confirm('EstÔøΩs seguro que quieres eliminar?');"></a></td>
 
 						</tr>
 					</tbody>

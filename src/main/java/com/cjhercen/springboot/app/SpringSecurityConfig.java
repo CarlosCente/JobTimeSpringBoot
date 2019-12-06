@@ -42,11 +42,10 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
 	protected void configure(HttpSecurity http) throws Exception {
 
 		http.authorizeRequests().antMatchers("/css/**", "/js/**", "/images/**").permitAll()
-		/*.antMatchers("/ver/**").hasAnyRole("USER")*/
+		.antMatchers("/listar/**").hasAnyRole("ADMIN")
 		/*.antMatchers("/uploads/**").hasAnyRole("USER")*/
 		/*.antMatchers("/form/**").hasAnyRole("ADMIN")*/
 		/*.antMatchers("/eliminar/**").hasAnyRole("ADMIN")*/
-		/*.antMatchers("/factura/**").hasAnyRole("ADMIN")*/
 		.anyRequest().authenticated()
 		.and()
 		    .formLogin()
@@ -54,10 +53,11 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
 		        .loginPage("/login")
 		    .permitAll()
 		.and()
-		.logout().permitAll()
-		.and()
-		.exceptionHandling().accessDeniedPage("/error_403");
-
+		.logout()
+        	.permitAll()
+        	.logoutSuccessUrl("/login")
+        	.invalidateHttpSession(true)
+        	.deleteCookies("JSESSIONID");
 	}
 
 }

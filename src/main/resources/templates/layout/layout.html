@@ -12,7 +12,7 @@
 <body>
 	<header th:fragment="header">
 		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-			<a class="navbar-brand" href="#">JobTime</a>
+			<span class="navbar-brand ml-2 mr-4" >JobTime</span>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#navbarNav" aria-controls="navbarNav"
 				aria-expanded="false" aria-label="Toggle navigation">
@@ -20,19 +20,23 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarNav">
 				<ul class="navbar-nav">
-					<li class="nav-item active"><a class="nav-link" th:href="@{/index}">Inicio
+					<li class="nav-item active"><a class="nav-link ml-2 mr-2" th:href="@{/index}">Dashboard
 							<span class="sr-only">(current)</span>
 					</a>
 					</li>
-					<li class="nav-item"><a class="nav-link" th:href="@{/listar}">Empleados</a>
+					<li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item ml-2 mr-2"><a class="nav-link" th:href="@{/listar}">Gestión de Usuarios</a>
 					</li>
-					<li class="nav-item"><a class="nav-link" th:href="@{/fichar}">Fichaje</a>
+					<li class="nav-item"><a class="nav-link ml-2 mr-2" th:href="@{/fichar}">Fichaje de la jornada</a>
 					</li>
-					<li class="nav-item"><a class="nav-link" th:href="@{/logout}">Incidencias</a>
+					<li class="nav-item"><a class="nav-link ml-2 mr-2" href="#">Control Horario</a>
+					</li>
+					<li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item ml-2 mr-2"><a class="nav-link" href="#">Incidencias</a>
+					</li>
+					<li class="nav-item"><a class="nav-link ml-2 mr-2" href="#">Ajustes</a>
 					</li>
 				</ul>
 			</div>
-			<a class="navbar-brand text-white" href="/logout"><small>Cerrar Sesión</small></a>
+			<a class="navbar-brand text-white" th:href="@{/logout}"><small>Cerrar Sesión</small></a>
 			
 		</nav>
 		
@@ -44,9 +48,9 @@
 	
 	<div class="container"></div>
 	
-	<footer th:fragment="footer" class="container-fluid navbar-fixed-bottom text-center bg-dark text-white">
+	<footer th:fragment="footer" class="container-fluid navbar navbar-fixed-bottom text-center bg-dark text-white">
 		<hr />
-		<p>
+		<p class="mt-1">
 			Este proyecto fue desarrollado por Carlos Javier Hernández Centenero.<br /> &copy; 2020
 		</p>
 		<!-- Optional JavaScript -->

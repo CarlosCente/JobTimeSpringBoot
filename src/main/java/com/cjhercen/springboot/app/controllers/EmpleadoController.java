@@ -31,34 +31,17 @@ public class EmpleadoController {
 	@Autowired
 	private IEmpleadoService empleadoService;
 
-	@GetMapping(value = "/ver/{id}")
-	public String ver(@PathVariable(value = "id") Long id, Map<String, Object> model, RedirectAttributes flash) {
-
-		Empleado empleado = empleadoService.findOne(id);
-		if (empleado == null) {
-			flash.addFlashAttribute("error", "El empleado no existe en la base de datos");
-			return "redirect:/listar";
-		}
-
-		model.put("empleado", empleado);
-		model.put("titulo", "Detalle empleado: " + empleado.getNombre() + " " + 
-					empleado.getApellido1() + " " + empleado.getApellido2());
-
-		return "ver";
-	}
-
 	@RequestMapping(value = "/listar", method = RequestMethod.GET)
 	public String listar(@RequestParam(name = "page", defaultValue = "0") int page, Model model) {
 
 		/*
 		 * CAMBIO FUTURO, añadir el numero de elementos a mostrar en la tabla a través de la configuración
 		 */
-		Pageable pageRequest = PageRequest.of(page, 10);
+		Pageable pageRequest = PageRequest.of(page, 8);
 
 		Page<Empleado> empleados = empleadoService.findAll(pageRequest);
 
 		PageRender<Empleado> pageRender = new PageRender<>("/listar", empleados);
-		model.addAttribute("titulo", "Listado de empleados");
 		model.addAttribute("empleados", empleados);
 		model.addAttribute("page", pageRender);
 		return "listar";

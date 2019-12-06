@@ -11,6 +11,7 @@ public class ConstantesUtils {
 	private static final String TIPO_SALIDA = "SALIDA";
 	private static final String TIPO_RECUPERA_ENTRADA = "RECUPERA_ENTRADA";
 	private static final String TIPO_RECUPERA_SALIDA = "RECUPERA_SALIDA";
+
 	
 	
 	public static String getTipoEntrada() {

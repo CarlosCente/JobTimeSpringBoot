@@ -141,8 +141,8 @@ public class FechaUtils {
 
 	public String formatearFechas2digitos(String tiempoTotalFichaje) {
 		String[] partes = tiempoTotalFichaje.split(":");
-		String horas = partes[0].strip();
-		String minutos = partes[1].strip();
+		String horas = partes[0].trim();
+		String minutos = partes[1].trim();
 
 		if (horas.length() == 1) {
 			horas = "0" + horas;

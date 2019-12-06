@@ -18,6 +18,7 @@ import com.cjhercen.springboot.app.models.service.impl.EmpleadoServiceImpl;
 import com.cjhercen.springboot.app.models.service.impl.FichajeServiceImpl;
 import com.cjhercen.springboot.app.models.service.impl.UsuarioServiceImpl;
 import com.cjhercen.springboot.app.util.FechaUtils;
+import com.cjhercen.springboot.app.util.FuncionesUtiles;
 
 @Controller
 public class FicharController {
@@ -78,7 +79,7 @@ public class FicharController {
 		model.put("horaActual", horaActual);
 		model.put("titulo", "Fichaje del Empleado");
 		model.put("empleado", empleado);
-		model.put("ip_cliente", request.getRemoteAddr());
+		model.put("ip_cliente", FuncionesUtiles.obtenerIp(request));
 		
 		return "fichar";
 	}
@@ -132,8 +133,14 @@ public class FicharController {
 				flash.addFlashAttribute("error", "Ya has realizado el fichaje de salida hoy");	
 				
 			} else {
+				//Una vez que se han realizado los dos fichajes, se guarda el tiempo total en la BBDD y marcamos el fichaje
+				//de dia como finalizado.
+				
+				String totalTiempo = fechaUtils.obtenerTiempoTranscurrido(fichajeComprueba.getHoraEntrada(), fichajeComprueba.getHoraSalida());
 				fichajeComprueba.setHoraSalida(fechaUtils.obtenerHoraEnFormatoCadena());
-				fichajeComprueba.setIp(request.getRemoteAddr());
+				fichajeComprueba.setIp(FuncionesUtiles.obtenerIp(request));
+				fichajeComprueba.setTiempoTotal(fechaUtils.formatearFechas2digitos(totalTiempo));
+				fichajeComprueba.setFinalizado(true);
 				
 				fichajeService.save(fichajeComprueba);	
 				
