@@ -22,22 +22,24 @@
 				<table class="table table-bordered table-striped my-4">
 					<thead>
 						<tr>
-							<th>ID Fichaje</th>
 							<th>Fecha</th>
 							<th>Hora Entrada</th>
 							<th>Hora Salida</th>
+							<th>Inicio Descanso</th>
+							<th>Fin Descanso</th>
 							<th>IP Origen</th>
 							<th>Total</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr th:each="fichaje : ${empleado.fichajes}">
-						<td th:text="${fichaje.cod_fic}"></td>
 						<td th:text="${fichaje.fecha}"></td>
 						<td th:text="${fichaje.horaEntrada}"></td>
 						<td th:text="${fichaje.horaSalida}"></td>
+						<td th:text="${fichaje.horaInicioDescanso}"></td>
+						<td th:text="${fichaje.horaFinDescanso}"></td>
 						<td th:text="${fichaje.ip}"></td>
-						<td>Hay que calcularlo mas adelante</td>
+						<td th:text="${fichaje.totalTiempo}"></td>
 					</tbody>
 				</table>
 

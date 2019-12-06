@@ -23,7 +23,7 @@
 
 						<div class="row text-center">
 							<div class="col-md-6">Fecha y hora actual:</div>
-							<div class="col-md-6 text-left" th:text="'13/12/1992 14:15'"></div>
+							<div class="col-md-6 text-left" th:text="${fechaHora}"></div>
 						</div>
 
 						<div class="row text-center">
@@ -82,27 +82,91 @@
 
 		</div>
 
-
-
+		<!-- #######################################################################################  -->
+		<!-- ########################## OPERACIONES DISPONIBLES FICHAJE ############################  -->
+		<!-- #######################################################################################  -->
 
 		<div class="card bg-light mt-3">
 			<div class="card-header text-center font-weight-bold">OPERACIONES
 				DISPONIBLES</div>
 			<div class="card-body">
 
+
+				<!-- #######################################################################################  -->
+				<!-- ########################## OPCION PARA EL FICHAJE DE ENTRADA ##########################  -->
+				<!-- #######################################################################################  -->
+				<hr>
 				<div class="row mt-3 mb-3">
 
 					<div class="col-md-3 text-center">
-						<a class="btn btn-primary w-75 m-1 rounded-pill" th:href="@{/fichar/entrada/}">
-							<h3>
+						<button class="btn btn-primary w-75 m-1 rounded-pill"
+							data-toggle="modal" data-target="#modalEntrada">
+							<h4>
 								<i class="fas fa-sign-in-alt"></i>
-							</h3>
+							</h4>
 							<strong>Entrada</strong>
-						</a>
+						</button>
 					</div>
 
+					<div class="modal fade" id="modalEntrada" tabindex="-1"
+						role="dialog" aria-labelledby="modalEntrada" aria-hidden="true">
+						<div class="modal-dialog modal-dialog-centered modal-md"
+							role="document">
+							<div class="modal-content">
+								<div class="modal-header bg-dark text-white">
+									<p class="modal-title w-100 text-center"
+										id="exampleModalLongTitle">¿Está seguro de realizar el
+										fichaje de entrada?</p>
+									<button type="button" class="close text-white"
+										data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+
+									<div class="row text-center">
+										<div class="col-md-12 text-center">
+											<h2>
+												<i class="fas fa-user-clock"></i>
+											</h2>
+
+											<div
+												th:text="${empleado.nombre} +' '+ ${empleado.apellido1} +' ' + ${empleado.apellido2}"></div>
+										</div>
+									</div>
+									<br>
+									<div class="row text-center">
+										<div class="col-md-12 font-weight-bold text-primary">
+											<p>Fichaje de Entrada</p>
+										</div>
+									</div>
+
+									<div class="row text-center">
+										<div class="col-md-12" th:text="${fechaHora}"></div>
+									</div>
+
+									<div class="row text-center">
+										<div class="col-md-12" th:text="${ip_cliente}"></div>
+									</div>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-danger"
+										data-dismiss="modal">Cerrar</button>
+									<a type="button" class="btn btn-primary"
+										th:href="@{/fichar/entrada/}">Aceptar</a>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+					<!-- #######################################################################################  -->
+					<!-- ########################## OPCION PARA EL FICHAJE DE SALIDA ##########################  -->
+					<!-- #######################################################################################  -->
+
 					<div class="col-md-3 text-center">
-						<button class="btn btn-danger w-75 m-1 rounded-pill">
+						<button class="btn btn-danger w-75 m-1 rounded-pill"
+							data-toggle="modal" data-target="#modalSalida">
 							<h3>
 								<i class="fas fa-sign-out-alt"></i>
 							</h3>
@@ -110,8 +174,65 @@
 						</button>
 					</div>
 
+					<div class="modal fade" id="modalSalida" tabindex="-1"
+						role="dialog" aria-labelledby="modalSalida" aria-hidden="true">
+						<div class="modal-dialog modal-dialog-centered modal-md"
+							role="document">
+							<div class="modal-content">
+								<div class="modal-header bg-dark text-white">
+									<p class="modal-title w-100 text-center"
+										id="exampleModalLongTitle">¿Está seguro de realizar el
+										fichaje de salida?</p>
+									<button type="button" class="close text-white"
+										data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+
+									<div class="row text-center">
+										<div class="col-md-12 text-center">
+											<h2>
+												<i class="fas fa-user-clock"></i>
+											</h2>
+
+											<div
+												th:text="${empleado.nombre} +' '+ ${empleado.apellido1} +' ' + ${empleado.apellido2}"></div>
+										</div>
+									</div>
+									<br>
+									<div class="row text-center">
+										<div class="col-md-12 font-weight-bold text-danger">
+											<p>Fichaje de Salida</p>
+										</div>
+									</div>
+
+									<div class="row text-center">
+										<div class="col-md-12" th:text="${fechaHora}"></div>
+									</div>
+
+									<div class="row text-center">
+										<div class="col-md-12" th:text="${ip_cliente}"></div>
+									</div>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-danger"
+										data-dismiss="modal">Cerrar</button>
+									<a type="button" class="btn btn-primary"
+										th:href="@{/fichar/salida/}">Aceptar</a>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+					<!-- #######################################################################################  -->
+					<!-- ######################## OPCION PARA EL INICIO DEL DESCANSO ###########################  -->
+					<!-- #######################################################################################  -->
+
 					<div class="col-md-3 text-center">
-						<button type="button" class="btn btn-success w-75 m-1 rounded-pill">
+						<button type="button"
+							class="btn btn-success w-75 m-1 rounded-pill">
 							<h3>
 								<i class="fas fa-play"></i>
 							</h3>
@@ -128,7 +249,7 @@
 					</div>
 
 				</div>
-
+				<hr>
 			</div>
 		</div>
 	</div>

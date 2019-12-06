@@ -18,6 +18,7 @@ import com.cjhercen.springboot.app.models.service.impl.EmpleadoServiceImpl;
 import com.cjhercen.springboot.app.models.service.impl.FichajeServiceImpl;
 import com.cjhercen.springboot.app.models.service.impl.UsuarioServiceImpl;
 import com.cjhercen.springboot.app.util.FechaUtils;
+import com.cjhercen.springboot.app.util.FuncionesUtiles;
 
 @Controller
 public class FicharController {
@@ -39,6 +40,7 @@ public class FicharController {
 	
 	FechaUtils fechaUtils = new FechaUtils();
 	
+	String horaActual = fechaUtils.obtenerHoraEnFormatoCadena();
 	
 	@RequestMapping(value = "/fichar")
 	public String fichar(Map<String, Object> model,  HttpServletRequest request) {
@@ -73,9 +75,11 @@ public class FicharController {
 			model.put("totalTiempo", "-");
 		}
 		
+		model.put("fechaHora", fechaUtils.obtenerFechaEnFormatoCadena() + " " + horaActual);
+		model.put("horaActual", horaActual);
 		model.put("titulo", "Fichaje del Empleado");
 		model.put("empleado", empleado);
-		model.put("ip_cliente", request.getRemoteAddr());
+		model.put("ip_cliente", FuncionesUtiles.obtenerIp(request));
 		
 		return "fichar";
 	}
@@ -102,11 +106,51 @@ public class FicharController {
 			
 			fichajeService.save(fichajeEntrada);	
 			
-			flash.addFlashAttribute("success", "Has fichado correctamente a las " + fechaUtils.obtenerHoraEnFormatoCadena());	
+			flash.addFlashAttribute("success", "Has fichado la entrada correctamente a las " + fechaUtils.obtenerHoraEnFormatoCadena());	
 		}
 		
 		return "redirect:/fichar";
 	}
 		
+	
+	@RequestMapping(value = "/fichar/salida/")
+	public String ficharSalida(RedirectAttributes flash, HttpServletRequest request) {
+
+		//Se obtiene primero el usuario conectado para obtener los datos del empleado
+		String username = usuarioService.getUsername();
+		Usuario usuario = usuarioDao.findByUsername(username);
+		Empleado empleado = usuario.getEmpleado();
+
+		//Se comprueba si existe el fichaje de entrada, sino devolvería error
+		Fichaje fichajeComprueba = fichajeDao.findByEmpleadoAndFecha(empleado, fechaUtils.obtenerFechaActual());
+		
+		if(fichajeComprueba == null) {
+			flash.addFlashAttribute("error", "No has fichado aún la entrada de hoy");
+		} else {
+			
+			if(fichajeComprueba.getHoraSalida() != null && !"".equals(fichajeComprueba.getHoraSalida())){
+				
+				flash.addFlashAttribute("error", "Ya has realizado el fichaje de salida hoy");	
+				
+			} else {
+				//Una vez que se han realizado los dos fichajes, se guarda el tiempo total en la BBDD y marcamos el fichaje
+				//de dia como finalizado.
+				
+				String totalTiempo = fechaUtils.obtenerTiempoTranscurrido(fichajeComprueba.getHoraEntrada(), fichajeComprueba.getHoraSalida());
+				fichajeComprueba.setHoraSalida(fechaUtils.obtenerHoraEnFormatoCadena());
+				fichajeComprueba.setIp(FuncionesUtiles.obtenerIp(request));
+				fichajeComprueba.setTiempoTotal(fechaUtils.formatearFechas2digitos(totalTiempo));
+				fichajeComprueba.setFinalizado(true);
+				
+				fichajeService.save(fichajeComprueba);	
+				
+				flash.addFlashAttribute("success", "Has fichado la salida correctamente a las " + fechaUtils.obtenerHoraEnFormatoCadena());	
+			}
+	
+		}
+		
+		return "redirect:/fichar";
+	}
+	
 	
 }

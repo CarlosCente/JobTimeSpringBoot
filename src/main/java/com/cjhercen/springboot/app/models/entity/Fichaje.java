@@ -50,6 +50,12 @@ public class Fichaje implements Serializable {
 	@Column(name = "ip_origen")
 	private String ip;
 
+	@Column(name = "tiempo_total")
+	private String tiempoTotal;
+	
+	@Column(name= "finalizado")
+	private boolean finalizado = false;
+
 	@PrePersist
 	public void prePersist() {
 		fecha = new Date();
@@ -110,5 +116,23 @@ public class Fichaje implements Serializable {
 	public void setHoraFinDescanso(String horaFinDescanso) {
 		this.horaFinDescanso = horaFinDescanso;
 	}
+
+	public String getTiempoTotal() {
+		return tiempoTotal;
+	}
+
+	public void setTiempoTotal(String tiempoTotal) {
+		this.tiempoTotal = tiempoTotal;
+	}
+
+	public boolean isFinalizado() {
+		return finalizado;
+	}
+
+	public void setFinalizado(boolean finalizado) {
+		this.finalizado = finalizado;
+	}
+	
+	
 
 }
