@@ -36,13 +36,15 @@ public class Empleado implements Serializable {
 	private String nombre;
 
 	@NotEmpty
+	@Length(min = 2, max = 20)
 	private String apellido1;
 
 	@NotEmpty
+	@Length(min = 2, max = 20)
 	private String apellido2;
 
 	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern = "dd-MM-yyyy")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name = "fecha_nacim")
 	private Date fechaNacim;
 

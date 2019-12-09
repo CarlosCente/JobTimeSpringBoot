@@ -5,114 +5,160 @@
 
 	<header th:replace="layout/layout :: header"></header>
 
-<div class="container-fluid py-4">
+	<div class="container-fluid py-4">
 
-		<div class="card">
+		<div class="card bg-light">
 			<div class="card-header" th:text="${titulo}"></div>
 			<div class="card-body">
 
-				<div th:object="${empleado}" th:remove="tag">
-					<ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
-						<li th:each="err: ${#fields.errors('*')}" th:text="${err}"></li>
-					</ul>
+				<div class="row">
+					<div class="col-md-3">
+						<div class="card bg-light">
+							<div class="card-body text-center">
+								<!-- FALTA CARGAR LA IMAGEN DEL USUARIO AQUI -->
+								<img th:src="@{/images/user-empty.png}"
+									class="img-thumbnail rounded img-fluid w-75" alt="Messi">
+								<div class="custom-file mt-4">
+									<input type="file" class="custom-file-input"
+										id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+									<label class="custom-file-label" for="inputGroupFile01"
+										data-browse="Elegir">Seleccionar archivo</label>
+								</div>
+								<button class="btn btn-primary btn-sm mt-5 float-right">Modificar
+									imagen</button>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-9">
+						<div class="card bg-light">
+							<div class="card-body">
+
+								
+								<form th:action="@{/save/} + ${empleado.cod_empl}"
+									th:object="${empleado}" method="post">
+									
+
+
+									<div class="row">
+										<div class="col">
+											<div class="form-group row mt-4">
+												<label class="col-sm-4 col-form-label">Nombre: </label> <input
+													type="text" th:field="*{nombre}"
+													class="form-control col-md-7"
+													th:errorclass="'form-control alert-danger'"
+													placeholder="Nombre" /> <small
+													class="form-text text-danger"
+													th:if="${#fields.hasErrors('nombre')}"
+													th:errors="*{nombre}"></small>
+											</div>
+											<div class="form-group row mt-4">
+												<label class="col-sm-4 col-form-label">Primer
+													Apellido: </label> <input type="text" th:field="*{apellido1}"
+													class="form-control col-md-7"
+													th:errorclass="'form-control alert-danger'"
+													placeholder="Primer Apellido" /> <small
+													class="form-text text-danger"
+													th:if="${#fields.hasErrors('apellido1')}"
+													th:errors="*{apellido1}"></small>
+											</div>
+											<div class="form-group row mt-4">
+												<label class="col-sm-4 col-form-label">Segundo
+													Apellido: </label> <input type="text" th:field="*{apellido2}"
+													class="form-control col-md-7"
+													th:errorclass="'form-control alert-danger'"
+													placeholder="Segundo Apellido" /> <small
+													class="form-text text-danger"
+													th:if="${#fields.hasErrors('apellido2')}"
+													th:errors="*{apellido2}"></small>
+											</div>
+											<div class="form-group row mt-4">
+												<label class="col-sm-5 col-form-label">Fecha de
+													Nacimiento: </label> <input type="date"
+													class="form-control col-md-6" th:field="*{fechaNacim}"
+													th:errorclass="'form-control alert-danger'" /> <small
+													class="form-text text-danger"
+													th:if="${#fields.hasErrors('fechaNacim')}"
+													th:errors="*{fechaNacim}"></small>
+											</div>
+
+										</div>
+										<div clasS="col">
+											<div class="form-group row mt-4">
+												<label class="col-sm-4 col-form-label">Direccion: </label> <input
+													type="text" class="form-control col-md-7"
+													th:field="*{direccion}"
+													th:errorclass="'form-control alert-danger'"
+													placeholder="Dirección" /> <small
+													class="form-text text-danger"
+													th:if="${#fields.hasErrors('direccion')}"
+													th:errors="*{direccion}"></small>
+											</div>
+											<div class="form-group row mt-4">
+												<label class="col-sm-4 col-form-label">Pais: </label> <input
+													type="text" class="form-control col-md-7"
+													th:field="*{pais}"
+													th:errorclass="'form-control alert-danger'"
+													placeholder="País" /> <small class="form-text text-danger"
+													th:if="${#fields.hasErrors('pais')}" th:errors="*{pais}"></small>
+											</div>
+											<div class="form-group row mt-4">
+												<label class="col-sm-4 col-form-label">Provincia: </label> <input
+													type="text" class="form-control col-md-7"
+													th:field="*{provincia}"
+													th:errorclass="'form-control alert-danger'"
+													placeholder="Provincia" /> <small
+													class="form-text text-danger"
+													th:if="${#fields.hasErrors('provincia')}"
+													th:errors="*{provincia}"></small>
+											</div>
+											<div class="form-group row mt-4">
+												<label class="col-sm-4 col-form-label">Localidad: </label> <input
+													type="text" class="form-control col-md-7 "
+													th:field="*{localidad}"
+													th:errorclass="'form-control alert-danger'"
+													placeholder="Localidad" /> <small
+													class="form-text text-danger"
+													th:if="${#fields.hasErrors('localidad')}"
+													th:errors="*{localidad}"></small>
+											</div>
+
+
+
+										</div>
+									</div>
+									<div class="row py-2 mt-4">
+										<div class="col-md-11">
+											<div class="row float-right ">
+												<div class="form-group">
+													<input value="Volver" type="button"
+														class="btn btn-danger mr-4" onclick="history.back()" />
+												</div>
+												<div class="form-group">
+													<input value="Editar Empleado" type="submit"
+														class="btn btn-primary" />
+												</div>
+											</div>
+
+										</div>
+
+
+									</div>
+
+								</form>
+							</div>
+						</div>
+					</div>
+
 				</div>
-				<form th:action="@{/save/} + ${empleado.cod_empl}" th:object="${empleado}" method="post">
-					<div class="form-group row">
-						<label class="col-sm-2 col-form-label">Nombre</label>
-						<div class="col-sm-6">
-							<input type="text" th:field="*{nombre}" class="form-control"
-								th:errorclass="'form-control alert-danger'" /> <small
-								class="form-text text-danger"
-								th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></small>
-						</div>
-					</div>
-					<div class="form-group row">
-						<label class="col-sm-2 col-form-label">Primer Apellido</label>
-						<div class="col-sm-6">
-							<input type="text" th:field="*{apellido1}" class="form-control"
-								th:errorclass="'form-control alert-danger'" /> <small
-								class="form-text text-danger"
-								th:if="${#fields.hasErrors('apellido1')}"
-								th:errors="*{apellido1}"></small>
-						</div>
-					</div>
-					<div class="form-group row">
-						<label class="col-sm-2 col-form-label">Segundo Apellido</label>
-						<div class="col-sm-6">
-							<input type="text" th:field="*{apellido2}" class="form-control"
-								th:errorclass="'form-control alert-danger'" /> <small
-								class="form-text text-danger"
-								th:if="${#fields.hasErrors('apellido2')}"
-								th:errors="*{apellido2}"></small>
-						</div>
-					</div>
-					<div class="form-group row">
-						<label class="col-sm-2 col-form-label">Fecha Nacimiento</label>
-						<div class="col-sm-6">
-							<input type="text" class="form-control" th:field="*{fechaNacim}"
-								th:errorclass="'form-control alert-danger'" /> <small
-								class="form-text text-danger"
-								th:if="${#fields.hasErrors('fechaNacim')}"
-								th:errors="*{fechaNacim}"></small>
-						</div>
-					</div>
-					<div class="form-group row">
-						<label class="col-sm-2 col-form-label">Dirección</label>
-						<div class="col-sm-6">
-							<input type="text" class="form-control" th:field="*{direccion}"
-								th:errorclass="'form-control alert-danger'" /> <small
-								class="form-text text-danger"
-								th:if="${#fields.hasErrors('direccion')}"
-								th:errors="*{direccion}"></small>
-						</div>
-					</div>
-					<div class="form-group row">
-						<label class="col-sm-2 col-form-label">País</label>
-						<div class="col-sm-6">
-							<input type="text" class="form-control" th:field="*{pais}"
-								th:errorclass="'form-control alert-danger'" /> <small
-								class="form-text text-danger"
-								th:if="${#fields.hasErrors('pais')}" th:errors="*{pais}"></small>
-						</div>
-					</div>
-					<div class="form-group row">
-						<label class="col-sm-2 col-form-label">Provincia</label>
-						<div class="col-sm-6">
-							<input type="text" class="form-control" th:field="*{provincia}"
-								th:errorclass="'form-control alert-danger'" /> <small
-								class="form-text text-danger"
-								th:if="${#fields.hasErrors('provincia')}"
-								th:errors="*{provincia}"></small>
-						</div>
-					</div>
-					<div class="form-group row">
-						<label class="col-sm-2 col-form-label">Localidad</label>
-						<div class="col-sm-6">
-							<input type="text" class="form-control" th:field="*{localidad}"
-								th:errorclass="'form-control alert-danger'" /> <small
-								class="form-text text-danger"
-								th:if="${#fields.hasErrors('localidad')}"
-								th:errors="*{localidad}"></small>
-						</div>
-					</div>
 
-					<div class="form-group row">
-						<label for="file" class="col-sm-2 col-form-label"></label>
-						<div class="col-sm-6">
-							<input type="file" name="file" class="form-control" />
-						</div>
 
-					</div>
 
-					<div class="form-group row">
-						<div class="col-sm-6">
-						<input value="Editar Empleado" type="submit"
-								class="btn btn-secondary" />
-						</div>
-					</div>
 
-				</form>
 			</div>
+
+
+
+
 		</div>
 	</div>
 

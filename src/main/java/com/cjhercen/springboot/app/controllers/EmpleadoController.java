@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.cjhercen.springboot.app.models.entity.Empleado;
@@ -52,7 +51,7 @@ public class EmpleadoController {
 
 		Empleado empleado = new Empleado();
 		model.put("empleado", empleado);
-		model.put("titulo", "Formulario de Empleado");
+		model.put("titulo", "Formulario para la creación de un Empleado");
 		return "form";
 	}
 
@@ -73,7 +72,7 @@ public class EmpleadoController {
 		}
 		
 		model.put("empleado", empleado);
-		model.put("titulo", "Editar Empleado");
+		model.put("titulo", "Modificar los datos del empleado");
 		return "editar";
 	}
 	
@@ -103,8 +102,7 @@ public class EmpleadoController {
 	}
 	
 	@RequestMapping(value = "/form", method = RequestMethod.POST)
-	public String guardar(@Valid Empleado empleado, BindingResult result, Model model,
-			@RequestParam("file") MultipartFile foto, RedirectAttributes flash, SessionStatus status) {
+	public String guardar(@Valid Empleado empleado, BindingResult result, Model model, RedirectAttributes flash, SessionStatus status) {
 		if (result.hasErrors()) {
 			model.addAttribute("titulo", "Formulario de Empleado");
 			return "form";
