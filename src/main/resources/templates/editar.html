@@ -16,12 +16,12 @@
 						<div class="card bg-light">
 							<div class="card-body text-center">
 								<!-- FALTA CARGAR LA IMAGEN DEL USUARIO AQUI -->
-								<img th:src="@{/images/user-empty.png}"
+								<img th:src="@{/images/user-empty.jpg}"
 									class="img-thumbnail rounded img-fluid w-75" alt="Messi">
 								<div class="custom-file mt-4">
 									<input type="file" class="custom-file-input"
 										id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
-									<label class="custom-file-label" for="inputGroupFile01"
+									<label class="custom-file-label text-left" for="inputGroupFile01"
 										data-browse="Elegir">Seleccionar archivo</label>
 								</div>
 								<button class="btn btn-primary btn-sm mt-5 float-right">Modificar
@@ -37,48 +37,34 @@
 								<form th:action="@{/save/} + ${empleado.cod_empl}"
 									th:object="${empleado}" method="post">
 									
-
-
 									<div class="row">
 										<div class="col">
 											<div class="form-group row mt-4">
-												<label class="col-sm-4 col-form-label">Nombre: </label> <input
+												<label class="col-sm-5 col-form-label">Nombre: </label> <input
 													type="text" th:field="*{nombre}"
-													class="form-control col-md-7"
+													class="form-control col-md-6"
 													th:errorclass="'form-control alert-danger'"
-													placeholder="Nombre" /> <small
-													class="form-text text-danger"
-													th:if="${#fields.hasErrors('nombre')}"
-													th:errors="*{nombre}"></small>
+													placeholder="Nombre" /> 
 											</div>
 											<div class="form-group row mt-4">
-												<label class="col-sm-4 col-form-label">Primer
+												<label class="col-sm-5 col-form-label">Primer
 													Apellido: </label> <input type="text" th:field="*{apellido1}"
-													class="form-control col-md-7"
+													class="form-control col-md-6"
 													th:errorclass="'form-control alert-danger'"
-													placeholder="Primer Apellido" /> <small
-													class="form-text text-danger"
-													th:if="${#fields.hasErrors('apellido1')}"
-													th:errors="*{apellido1}"></small>
+													placeholder="Primer Apellido" /> 
 											</div>
 											<div class="form-group row mt-4">
-												<label class="col-sm-4 col-form-label">Segundo
+												<label class="col-sm-5 col-form-label">Segundo
 													Apellido: </label> <input type="text" th:field="*{apellido2}"
-													class="form-control col-md-7"
+													class="form-control col-md-6"
 													th:errorclass="'form-control alert-danger'"
-													placeholder="Segundo Apellido" /> <small
-													class="form-text text-danger"
-													th:if="${#fields.hasErrors('apellido2')}"
-													th:errors="*{apellido2}"></small>
+													placeholder="Segundo Apellido" />
 											</div>
 											<div class="form-group row mt-4">
 												<label class="col-sm-5 col-form-label">Fecha de
 													Nacimiento: </label> <input type="date"
 													class="form-control col-md-6" th:field="*{fechaNacim}"
-													th:errorclass="'form-control alert-danger'" /> <small
-													class="form-text text-danger"
-													th:if="${#fields.hasErrors('fechaNacim')}"
-													th:errors="*{fechaNacim}"></small>
+													th:errorclass="'form-control alert-danger'" /> 
 											</div>
 
 										</div>
@@ -88,38 +74,28 @@
 													type="text" class="form-control col-md-7"
 													th:field="*{direccion}"
 													th:errorclass="'form-control alert-danger'"
-													placeholder="Dirección" /> <small
-													class="form-text text-danger"
-													th:if="${#fields.hasErrors('direccion')}"
-													th:errors="*{direccion}"></small>
+													placeholder="Dirección" /> 
 											</div>
 											<div class="form-group row mt-4">
 												<label class="col-sm-4 col-form-label">Pais: </label> <input
 													type="text" class="form-control col-md-7"
 													th:field="*{pais}"
 													th:errorclass="'form-control alert-danger'"
-													placeholder="País" /> <small class="form-text text-danger"
-													th:if="${#fields.hasErrors('pais')}" th:errors="*{pais}"></small>
+													placeholder="País" /> 
 											</div>
 											<div class="form-group row mt-4">
 												<label class="col-sm-4 col-form-label">Provincia: </label> <input
 													type="text" class="form-control col-md-7"
 													th:field="*{provincia}"
 													th:errorclass="'form-control alert-danger'"
-													placeholder="Provincia" /> <small
-													class="form-text text-danger"
-													th:if="${#fields.hasErrors('provincia')}"
-													th:errors="*{provincia}"></small>
+													placeholder="Provincia" /> 
 											</div>
 											<div class="form-group row mt-4">
 												<label class="col-sm-4 col-form-label">Localidad: </label> <input
 													type="text" class="form-control col-md-7 "
 													th:field="*{localidad}"
 													th:errorclass="'form-control alert-danger'"
-													placeholder="Localidad" /> <small
-													class="form-text text-danger"
-													th:if="${#fields.hasErrors('localidad')}"
-													th:errors="*{localidad}"></small>
+													placeholder="Localidad" /> 
 											</div>
 
 

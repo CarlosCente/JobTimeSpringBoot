@@ -48,12 +48,16 @@ public class Empleado implements Serializable {
 	@Column(name = "fecha_nacim")
 	private Date fechaNacim;
 
+	@Length(max = 50)
 	private String direccion;
 
+	@Length(max = 35)
 	private String pais;
 
+	@Length(max = 35)
 	private String provincia;
 
+	@Length(max = 35)
 	private String localidad;
 
 	@OneToMany(mappedBy = "empleado", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)

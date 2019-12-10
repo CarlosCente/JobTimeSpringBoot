@@ -15,23 +15,23 @@
 
 					<div class="row">
 
-						<div class="col-sm-2">
+						<div class="col-sm-3 text-center">
 
-							<img th:src="@{/images/user-empty.png}"
-								class="img-thumbnail rounded img-fluid">
+							<img th:src="@{/images/user-empty.jpg}"
+								class="img-thumbnail rounded img-fluid w-75">
 							<div class="custom-file mt-4">
 								<input type="file" class="custom-file-input"
 									id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
-								<label class="custom-file-label" for="inputGroupFile01"
+								<label class="custom-file-label text-left" for="inputGroupFile01"
 									data-browse="Elegir">Seleccionar archivo</label>
 							</div>
 
 						</div>
 
 
-						<div class="col-sm-5">
+						<div class="col-sm-4">
 							<div class="form-group row">
-								<label class="col-sm-4 ml-3 col-form-label">Nombre</label>
+								<label class="col-sm-5 ml-3 col-form-label">Nombre</label>
 								<div class="col-sm-6">
 									<input type="text" class="form-control" th:field="*{nombre}"
 										th:errorclass="'form-control alert-danger'" /> <small
@@ -40,7 +40,7 @@
 								</div>
 							</div>
 							<div class="form-group row">
-								<label class="col-sm-4 ml-3 col-form-label">Primer
+								<label class="col-sm-5 ml-3 col-form-label">Primer
 									Apellido</label>
 								<div class="col-sm-6">
 									<input type="text" class="form-control" th:field="*{apellido1}"
@@ -51,7 +51,7 @@
 								</div>
 							</div>
 							<div class="form-group row">
-								<label class="col-sm-4 ml-3 col-form-label">Segundo
+								<label class="col-sm-5 ml-3 col-form-label">Segundo
 									Apellido</label>
 								<div class="col-sm-6">
 									<input type="text" class="form-control" th:field="*{apellido2}"
@@ -62,7 +62,7 @@
 								</div>
 							</div>
 							<div class="form-group row">
-								<label class="col-sm-4 ml-3 col-form-label">Fecha
+								<label class="col-sm-5 ml-3 col-form-label">Fecha
 									Nacimiento</label>
 								<div class="col-sm-6">
 									<input type="date" class="form-control"
@@ -76,10 +76,10 @@
 
 						</div>
 
-						<div class="col-sm-5">
+						<div class="col-sm-4">
 							<div class="form-group row">
-								<label class="col-sm-3 ml-3 col-form-label">Dirección</label>
-								<div class="col-sm-7">
+								<label class="col-sm-4 ml-3 col-form-label">Dirección</label>
+								<div class="col-sm-6">
 									<input type="text" class="form-control" th:field="*{direccion}"
 										th:errorclass="'form-control alert-danger'" /> <small
 										class="form-text text-danger"
@@ -88,8 +88,8 @@
 								</div>
 							</div>
 							<div class="form-group row">
-								<label class="col-sm-3 ml-3 col-form-label">País</label>
-								<div class="col-sm-7">
+								<label class="col-sm-4 ml-3 col-form-label">País</label>
+								<div class="col-sm-6">
 									<input type="text" class="form-control" th:field="*{pais}"
 										th:errorclass="'form-control alert-danger'" /> <small
 										class="form-text text-danger"
@@ -97,8 +97,8 @@
 								</div>
 							</div>
 							<div class="form-group row">
-								<label class="col-sm-3 ml-3 col-form-label">Provincia</label>
-								<div class="col-sm-7">
+								<label class="col-sm-4 ml-3 col-form-label">Provincia</label>
+								<div class="col-sm-6">
 									<input type="text" class="form-control" th:field="*{provincia}"
 										th:errorclass="'form-control alert-danger'" /> <small
 										class="form-text text-danger"
@@ -107,8 +107,8 @@
 								</div>
 							</div>
 							<div class="form-group row">
-								<label class="col-sm-3 ml-3 col-form-label">Localidad</label>
-								<div class="col-sm-7">
+								<label class="col-sm-4 ml-3 col-form-label">Localidad</label>
+								<div class="col-sm-6">
 									<input type="text" class="form-control" th:field="*{localidad}"
 										th:errorclass="'form-control alert-danger'" /> <small
 										class="form-text text-danger"

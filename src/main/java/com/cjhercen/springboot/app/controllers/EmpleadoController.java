@@ -34,7 +34,8 @@ public class EmpleadoController {
 	public String listar(@RequestParam(name = "page", defaultValue = "0") int page, Model model) {
 
 		/*
-		 * CAMBIO FUTURO, añadir el numero de elementos a mostrar en la tabla a través de la configuración
+		 * CAMBIO FUTURO, añadir el numero de elementos a mostrar en la tabla a través
+		 * de la configuración
 		 */
 		Pageable pageRequest = PageRequest.of(page, 8);
 
@@ -70,19 +71,38 @@ public class EmpleadoController {
 			flash.addFlashAttribute("error", "El ID del empleado no puede ser cero!");
 			return "redirect:/listar";
 		}
-		
+
 		model.put("empleado", empleado);
 		model.put("titulo", "Modificar los datos del empleado");
 		return "editar";
 	}
-	
+
 	@RequestMapping(value = "/save/{id}", method = RequestMethod.POST)
-	public String saveEmpleado(@PathVariable(value = "id") Long id, @ModelAttribute("empleado") Empleado empleado, RedirectAttributes flash) {
+	public String saveEmpleado(@PathVariable(value = "id") Long id, @ModelAttribute("empleado") Empleado empleado,
+			RedirectAttributes flash) {
 		Empleado empleadoBD = null;
-						
+
 		empleadoBD = empleadoService.findOne(id);
-		
-		if(empleadoBD != null) {
+
+		if (empleadoBD != null) {
+
+			if (empleado.getNombre() == null || "".equals(empleado.getNombre()) || empleado.getNombre().length() < 2 || empleado.getNombre().length() > 20) {
+				flash.addFlashAttribute("error", "El campo nombre no puede estar vacío y debe tener entre 2 y 20 caracteres");
+				return "redirect:/editar/" + id;
+			}
+
+			if (empleado.getApellido1() == null || "".equals(empleado.getApellido1()) || empleado.getApellido1().length() < 2 || empleado.getApellido1().length() > 20) {
+				flash.addFlashAttribute("error", "El primer apellido no puede estar vacío y debe tener entre 2 y 20 caracteres");
+				return "redirect:/editar/" + id;
+			}
+			
+			if (empleado.getApellido2() == null || "".equals(empleado.getApellido2()) || empleado.getApellido2().length() < 2 || empleado.getApellido2().length() > 20) {
+				flash.addFlashAttribute("error", "El segundo apellido no puede estar vacío y debe tener entre 2 y 20 caracteres");
+				return "redirect:/editar/" + id;
+			}
+			
+			//Una vez se hayan hecho las comprobaciones si todos los campos están correctos se edita el empleado correctamente
+
 			empleadoBD.setApellido1(empleado.getApellido1());
 			empleadoBD.setApellido2(empleado.getApellido2());
 			empleadoBD.setDireccion(empleado.getDireccion());
@@ -92,24 +112,26 @@ public class EmpleadoController {
 			empleadoBD.setProvincia(empleado.getProvincia());
 			empleadoBD.setFechaNacim(empleado.getFechaNacim());
 			empleadoService.save(empleadoBD);
-			
-			flash.addFlashAttribute("success", "El empleado se ha editado correctamente!");	
+
+			flash.addFlashAttribute("success", "El empleado se ha editado correctamente!");
+
 		} else {
 			flash.addFlashAttribute("error", "No se encuentra el ID del empleado");
 		}
-						
+
 		return "redirect:/listar";
 	}
-	
+
 	@RequestMapping(value = "/form", method = RequestMethod.POST)
-	public String guardar(@Valid Empleado empleado, BindingResult result, Model model, RedirectAttributes flash, SessionStatus status) {
+	public String guardar(@Valid Empleado empleado, BindingResult result, Model model, RedirectAttributes flash,
+			SessionStatus status) {
 		if (result.hasErrors()) {
 			model.addAttribute("titulo", "Formulario de Empleado");
 			return "form";
 		}
 
-		String 	mensajeFlash = "Empleado creado con éxito!";
-			
+		String mensajeFlash = "Empleado creado con éxito!";
+
 		empleadoService.save(empleado);
 		status.setComplete();
 		flash.addFlashAttribute("success", mensajeFlash);
