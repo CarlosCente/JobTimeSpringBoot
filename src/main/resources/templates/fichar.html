@@ -99,7 +99,7 @@
 				<div class="row mt-3 mb-3">
 
 					<div class="col-md-3 text-center">
-						<button class="btn btn-primary w-50 m-1 rounded-pill"
+						<button th:disabled="${hayEntrada}" class="btn btn-primary w-50 m-1 rounded-pill"
 							data-toggle="modal" data-target="#modalEntrada">
 							<h4>
 								<i class="fas fa-sign-in-alt"></i>
@@ -165,7 +165,7 @@
 					<!-- #######################################################################################  -->
 
 					<div class="col-md-3 text-center">
-						<button class="btn btn-danger w-50 m-1 rounded-pill"
+						<button th:disabled="${haySalida}" class="btn btn-danger w-50 m-1 rounded-pill"
 							data-toggle="modal" data-target="#modalSalida">
 							<h3>
 								<i class="fas fa-sign-out-alt"></i>

@@ -50,6 +50,10 @@ public class FicharController {
 		Usuario usuario = usuarioDao.findByUsername(username);
 		Empleado empleado = usuario.getEmpleado();		
 				
+		//Comprobación si ya se ha hecho el fichaje de entrada o de salida
+		Boolean hayEntrada = false;
+		Boolean haySalida = false;
+		
 		//Datos del fichaje (Hora entrada y hora de salida)
 		Fichaje fichajeEmpleado = fichajeDao.findByEmpleadoAndFecha(empleado, fechaUtils.obtenerFechaActual());
 		if(fichajeEmpleado != null) {
@@ -57,12 +61,14 @@ public class FicharController {
 				model.put("horaEntrada", "-");
 			} else {
 				model.put("horaEntrada", fichajeEmpleado.getHoraEntrada());
+				hayEntrada = true;
 			}
 			
 			if(fichajeEmpleado.getHoraSalida() == null | "".equals(fichajeEmpleado.getHoraSalida())) {
 				model.put("horaSalida", "-");
 			} else {
 				model.put("horaSalida", fichajeEmpleado.getHoraSalida());
+				haySalida = true;
 			}			
 			
 			//Cálculo del tiempo transcurrido del fichaje
@@ -81,6 +87,8 @@ public class FicharController {
 		model.put("empleado", empleado);
 		model.put("ip_cliente", FuncionesUtiles.obtenerIp(request));
 		model.put("esAdmin", FuncionesUtiles.esAdmin(usuario));
+		model.put("hayEntrada", hayEntrada);
+		model.put("haySalida", haySalida);
 		
 		return "fichar";
 	}
