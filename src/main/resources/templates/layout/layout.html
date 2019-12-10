@@ -28,7 +28,7 @@
 					</li>
 					<li class="nav-item"><a class="nav-link ml-2 mr-2" th:href="@{/fichar}">Fichaje de la jornada</a>
 					</li>
-					<li class="nav-item"><a class="nav-link ml-2 mr-2" href="#">Control Horario</a>
+					<li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item"><a class="nav-link ml-2 mr-2" href="#">Control Horario</a>
 					</li>
 					<li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item ml-2 mr-2"><a class="nav-link" href="#">Incidencias</a>
 					</li>
