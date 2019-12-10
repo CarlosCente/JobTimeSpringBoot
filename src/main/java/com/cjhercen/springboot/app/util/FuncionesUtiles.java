@@ -2,6 +2,9 @@ package com.cjhercen.springboot.app.util;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.cjhercen.springboot.app.models.entity.Role;
+import com.cjhercen.springboot.app.models.entity.Usuario;
+
 public class FuncionesUtiles {
 
 	/**
@@ -20,6 +23,25 @@ public class FuncionesUtiles {
 		}
 		
 		return ip;
+		
+	}
+	
+	/**
+	 * Método que nos devuelve true si el usuario es admin y false si no lo es
+	 * @param usuario usuario que esta conectado a la aplicación
+	 * @return true si es admin, false sino
+	 */
+	public static boolean esAdmin (Usuario usuario) {
+		
+		boolean esAdmin = false;
+		
+		for(Role role : usuario.getRoles()) {
+			if(role.getAuthority().equals("ROLE_ADMIN")) {
+				esAdmin = true;
+			}
+		}
+		
+		return esAdmin;
 		
 	}
 	

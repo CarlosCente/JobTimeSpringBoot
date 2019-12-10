@@ -252,22 +252,49 @@
 				<hr>
 			</div>
 		</div>
-		
-		<div class="card bg-light mt-3 mb-5">
-					<div class="card-header text-center font-weight-bold">¿TIENES ALGUN PROBLEMA CON EL FICHAJE?</div>
-					<div class="card-body">
 
-							<div class="text-center">Si tiene algún problema con el fichaje o necesita mandar una incidencia al administrador relacionada con el mismo, pulse en el siguiente botón</div>
-						
-							<div class="text-center mt-3">
-									<button class="btn btn-info">Enviar Incidencia</button>
-							</div>
-					
+		<div th:if="!${esAdmin}" class="card bg-light mt-3 mb-5">
+			<div class="card-header text-center font-weight-bold">¿TIENES
+				ALGUN PROBLEMA CON EL FICHAJE?</div>
+			<div class="card-body">
+
+				<div class="text-center">Si tiene algún problema con el
+					fichaje o necesita mandar una incidencia al administrador
+					relacionada con el mismo, pulse en el siguiente botón</div>
+
+				<div class="text-center mt-3">
+					<button class="btn btn-primary" data-toggle="modal"
+						data-target="#modalIncidencia">Enviar Incidencia</button>
+				</div>
+
+			</div>
+
+		</div>
+
+		<div class="modal fade" id="modalIncidencia" tabindex="-1"
+			role="dialog" aria-labelledby="modalIncidencia" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered modal-md"
+				role="document">
+				<div class="modal-content">
+					<div class="modal-header bg-dark text-white">
+						<p class="modal-title w-100 text-center"
+							id="exampleModalLongTitle">Crear incidencia al administrador</p>
+						<button type="button" class="close text-white"
+							data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
 					</div>
-		
-		
-	</div>
-	<footer th:replace="layout/layout :: footer"></footer>
+					<div class="modal-body"></div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+						<a type="button" class="btn btn-primary">Aceptar</a>
+					</div>
+				</div>
+			</div>
+		</div>
 
+
+
+		<footer th:replace="layout/layout :: footer"></footer>
 </body>
 </html>

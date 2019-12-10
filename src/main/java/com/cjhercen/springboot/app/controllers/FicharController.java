@@ -48,8 +48,8 @@ public class FicharController {
 		//Se obtiene primero el usuario conectado para obtener los datos del empleado
 		String username = usuarioService.getUsername();
 		Usuario usuario = usuarioDao.findByUsername(username);
-		Empleado empleado = usuario.getEmpleado();
-			
+		Empleado empleado = usuario.getEmpleado();		
+				
 		//Datos del fichaje (Hora entrada y hora de salida)
 		Fichaje fichajeEmpleado = fichajeDao.findByEmpleadoAndFecha(empleado, fechaUtils.obtenerFechaActual());
 		if(fichajeEmpleado != null) {
@@ -80,6 +80,7 @@ public class FicharController {
 		model.put("titulo", "Fichaje del Empleado");
 		model.put("empleado", empleado);
 		model.put("ip_cliente", FuncionesUtiles.obtenerIp(request));
+		model.put("esAdmin", FuncionesUtiles.esAdmin(usuario));
 		
 		return "fichar";
 	}
