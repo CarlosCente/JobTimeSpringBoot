@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+<body>
+
+	<header th:replace="layout/layout :: header"></header>
+
+	<div class="container-fluid py-4">
+		<div class="card bg-light">
+			<div class="card-header font-weight-bold" th:text="${titulo}"></div>
+			<div class="card-body">
+			
+				<table id="table" class="table table-striped my-4 text-center">
+					<thead class="bg-dark text-white">
+						<tr>
+							<th>Usuario</th>
+							<th>Nombre</th>
+							<th>Primer Apellido</th>
+							<th>Segundo Apellido</th>
+							<th>Fecha de la incidencia</th>
+							<th>Estado</th>
+							<th>Tipo</th>
+							<th>Mensaje</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="incidencia : ${incidencias}">
+							<td th:class="${incidencia.estado == '1'} ? 'bg-danger' : 'bg-success'" th:text="${incidencia.empleado.usuario.username}"></td>
+							<td th:class="${incidencia.estado == '1'} ? 'bg-danger' : 'bg-success'" th:text="${incidencia.empleado.nombre}"></td>
+							<td th:class="${incidencia.estado == '1'} ? 'bg-danger' : 'bg-success'" th:text="${incidencia.empleado.apellido1}"></td>
+							<td th:class="${incidencia.estado == '1'} ? 'bg-danger' : 'bg-success'" th:text="${incidencia.empleado.apellido2}"></td>
+							<td th:class="${incidencia.estado == '1'} ? 'bg-danger' : 'bg-success'" th:text="${incidencia.fecha}"></td>
+							<td th:class="${incidencia.estado == '1'} ? 'bg-danger' : 'bg-success'" th:text="${incidencia.estado == '1' ? 'Incidencia abierta' : 'Resuelta y cerrada'}"></td>
+							<td th:class="${incidencia.estado == '1'} ? 'bg-danger' : 'bg-success'" th:text="${incidencia.tipo == '1' ? 'Error' : 'Advertencia'}"></td>
+							<td th:class="${incidencia.estado == '1'} ? 'bg-danger' : 'bg-success'" th:text="${incidencia.mensaje}"></td>
+						</tr>
+					</tbody>
+				</table>
+
+			</div>
+		</div>
+	</div>
+	
+<script>
+	$(document).ready(function() {
+	    $("#table").DataTable({
+	    	 "dom": '<"top"flp>rt<"bottom"i><"clear">'    
+	    });
+	});
+</script>
+
+</body>
+
+</html>

@@ -3,8 +3,16 @@
 <head th:fragment="head">
 <meta charset="UTF-8" />
 <title th:text="'Spring Boot: MVC + Thymeleaf + Data JPA - ' + ${titulo}"></title>
+<script th:src="@{/js/jquery-3.3.1.min.js}"></script>
+<script th:src="@{/js/popper.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/bootstrap-sortable.js}"></script>
+<script th:src="@{/js/jquery.dataTables.min.js}"></script>
+<script th:src="@{/js/dataTables.bootstrap.min.js}"></script>
+
 <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
 <link rel="stylesheet" th:href="@{/css/fontawesome.min.css}" />
+<link rel="stylesheet" th:href="@{/css/dataTables.bootstrap4.min.css}" />
 <link rel="stylesheet" th:href="@{/css/style.css}" />
 <link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
@@ -32,7 +40,7 @@
 					</li>
 					<li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item"><a class="nav-link ml-2 mr-2" href="#">Control Horario</a>
 					</li>
-					<li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item ml-2 mr-2"><a class="nav-link" href="#">Incidencias</a>
+					<li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item ml-2 mr-2"><a class="nav-link" th:href="@{/incidencias}">Incidencias</a>
 					</li>
 					<li class="nav-item"><a class="nav-link ml-2 mr-2" href="#">Ajustes</a>
 					</li>
@@ -57,11 +65,8 @@
 		</p>
 		<!-- Optional JavaScript -->
 		<!-- jQuery first, then Bootstrap JS -->
-		<script th:src="@{/js/jquery-3.3.1.min.js}"></script>
-		<script th:src="@{/js/popper.min.js}"></script>
-		<script th:src="@{/js/bootstrap.min.js}"></script>
 		<script th:src="@{/js/funciones.js}"></script>
-		<script th:src="@{/js/bootstrap-sortable.js}"></script>
+		
 		<hr />
 	</footer>
 </body>

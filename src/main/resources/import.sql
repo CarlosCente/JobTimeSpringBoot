@@ -32,3 +32,10 @@ INSERT INTO users (username, password, enabled, cod_empl) VALUES ('miguel', '$2a
 INSERT INTO authorities (user_id, authority) VALUES (1,'ROLE_USER');
 INSERT INTO authorities (user_id, authority) VALUES (1,'ROLE_ADMIN');
 INSERT INTO authorities (user_id, authority) VALUES (2,'ROLE_USER');
+
+/* Populate table incidencias */
+INSERT INTO incidencias (estado, fecha, mensaje, tipo, cod_empl) VALUES ('1', '2019-12-11', 'Esto es una incidencia abierta de prueba ', '1', 2);
+INSERT INTO incidencias (estado, fecha, mensaje, tipo, cod_empl) VALUES ('2', '2019-12-11', 'Esto es una incidencia resuelta de prueba', '1', 2);
+INSERT INTO incidencias (estado, fecha, mensaje, tipo, cod_empl) VALUES ('2', '2019-12-11', 'Esto es una incidencia abierta de prueba ', '2', 2);
+INSERT INTO incidencias (estado, fecha, mensaje, tipo, cod_empl) VALUES ('2', '2019-12-11', 'Esto es una incidencia abierta de prueba ', '2', 2);
+INSERT INTO incidencias (estado, fecha, mensaje, tipo, cod_empl) VALUES ('2', '2019-12-11', 'Esto es una incidencia abierta de prueba ', '1', 2);
