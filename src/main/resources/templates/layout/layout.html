@@ -4,6 +4,10 @@
 <meta charset="UTF-8" />
 <title
 	th:text="'Spring Boot: MVC + Thymeleaf + Data JPA - ' + ${titulo}"></title>
+<script th:src="@{/js/jquery-3.3.1.min.js}"></script>
+<script th:src="@{/js/jquery.dataTables.min.js}"></script>
+
+<link rel="stylesheet" th:href="@{/css/jquery.dataTables.min.css}" />
 <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
 <link rel="stylesheet" th:href="@{/css/dataTables.bootstrap.min.css}" />
 <link rel="stylesheet" th:href="@{/css/buttons.bootstrap.min.css}" />
@@ -68,19 +72,8 @@
 		</p>
 		<!-- Optional JavaScript -->
 		<!-- jQuery first, then Bootstrap JS -->
-		<script th:src="@{/js/jquery-3.3.1.min.js}"></script>
-		<script th:src="@{/js/jquery.dataTables.min.js}"></script>
 		<script th:src="@{/js/dataTables.bootstrap.min.js}"></script>
-		<script th:src="@{/js/dataTables.buttons.min.js}"></script>
-		<script th:src="@{/js/buttons.bootstrap.min.js}"></script>
-		<script th:src="@{/js/jszip.min.js}"></script>
-		
-		<script th:src="@{/js/pdfmake.min.js}"></script>
-		<script th:src="@{/js/vfs_fonts.js}"></script>
-		<script th:src="@{/js/buttons.html5.min.js}"></script>
-		<script th:src="@{/js/buttons.print.min.js}"></script>
-		<script th:src="@{/js/buttons.colVis.min.js}"></script>
-		
+		<script th:src="@{/js/dataTables.buttons.min.js}"></script>		
 		<script th:src="@{/js/popper.min.js}"></script>
 		<script th:src="@{/js/bootstrap.min.js}"></script>
 		<script th:src="@{/js/bootstrap-sortable.js}"></script>
