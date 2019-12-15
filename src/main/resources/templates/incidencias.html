@@ -5,7 +5,7 @@
 
 	<header th:replace="layout/layout :: header"></header>
 
-	<div class="container-fluid py-4 col-md-10 col-sm-12">
+	<div class="container-fluid py-4 col-md-11 col-sm-12">
 		<div class="card bg-light">
 			<div class="card-header font-weight-bold" th:text="${titulo}"></div>
 			<div class="card-body">
@@ -42,8 +42,30 @@
 	
 <script>
 $(document).ready(function () {
-	$('#table').DataTable();
-	$('.dataTables_length').addClass('bs-select');
+	$('#table').DataTable({
+		 language: {
+		        processing:     "Tratamiento en curso...",
+		        search:         "Buscar&nbsp;:",
+		        lengthMenu:     "Mostrar _MENU_ elementos",
+		        info:           "Mostrar los elementos _START_ - _END_ de _TOTAL_ elementos",
+		        infoEmpty:      "No hay elementos para mostrar",
+		        infoFiltered:   "(filtro de _TOTAL_ elementos en total)",
+		        infoPostFix:    "",
+		        loadingRecords: "Cargando...",
+		        zeroRecords:    "Ning&uacute;n elemento a mostrar",
+		        emptyTable:     "Ning&uacute;n dato disponible en la tabla",
+		        paginate: {
+		            first:      "Primera",
+		            previous:   "Anterior",
+		            next:       "Siguiente",
+		            last:       "&uacute;ltima"
+		        },
+		        aria: {
+		            sortAscending:  ": active para ordenar la columna en orden ascendente",
+		            sortDescending: ": active para ordenar la columna en orden descendente"
+		        }
+		    }
+	});
 	});
 </script>
 
