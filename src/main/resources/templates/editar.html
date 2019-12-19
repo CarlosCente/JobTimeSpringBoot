@@ -15,8 +15,7 @@
 					<div class="col-md-3">
 						<div class="card bg-light">
 							<div class="card-body text-center">
-								<!-- FALTA CARGAR LA IMAGEN DEL USUARIO AQUI -->
-								<img th:src="@{/images/user-empty.jpg}"
+								<img th:src="@{/uploads/} + ${empleado.foto}"
 									class="img-thumbnail rounded img-fluid w-75" alt="Messi">
 								<div class="custom-file mt-4">
 									<input type="file" class="custom-file-input"

@@ -17,7 +17,7 @@
 
 						<div class="col-sm-3 text-center">
 
-							<img th:src="@{/images/user-empty.jpg}"
+							<img th:src="@{/images/user-empty.jpg}" id="prev"
 								class="img-thumbnail rounded img-fluid w-75">
 							<div class="custom-file mt-4">
 								<input type="file" class="custom-file-input"
@@ -144,5 +144,16 @@
 		</div>
 	</div>
 	<footer th:replace="layout/layout :: footer"></footer>
+	<script>
+	var reader = new FileReader();
+	reader.onload = function(r_event) {
+	  document.getElementById('prev').setAttribute('src', r_event.target.result);
+	}
+
+	document.getElementsByName('file')[0].addEventListener('change', function(event) {
+	    reader.readAsDataURL(this.files[0]);
+	});
+	
+	</script>
 </body>
 </html>
