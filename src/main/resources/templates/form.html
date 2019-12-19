@@ -11,7 +11,7 @@
 			<div class="card-header" th:text="${titulo}"></div>
 			<div class="card-body">
 
-				<form th:action="@{/form}" th:object="${empleado}" method="post">
+				<form th:action="@{/form}" th:object="${empleado}" method="post" enctype="multipart/form-data">
 
 					<div class="row">
 
@@ -21,7 +21,7 @@
 								class="img-thumbnail rounded img-fluid w-75">
 							<div class="custom-file mt-4">
 								<input type="file" class="custom-file-input"
-									id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+									id="inputGroupFile01" name="file" aria-describedby="inputGroupFileAddon01">
 								<label class="custom-file-label text-left" for="inputGroupFile01"
 									data-browse="Elegir">Seleccionar archivo</label>
 							</div>
