@@ -1,5 +1,6 @@
 package com.cjhercen.springboot.app.controllers;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -42,7 +43,7 @@ public class EmpleadoController {
 		 * CAMBIO FUTURO, añadir el numero de elementos a mostrar en la tabla a través
 		 * de la configuración
 		 */
-		Pageable pageRequest = PageRequest.of(page, 8);
+		Pageable pageRequest = PageRequest.of(page, 5);
 
 		Page<Empleado> empleados = empleadoService.findAll(pageRequest);
 
@@ -164,6 +165,22 @@ public class EmpleadoController {
 	public String eliminar(@PathVariable(value = "id") Long id, RedirectAttributes flash) {
 
 		if (id > 0) {
+			
+			Empleado empleado = empleadoService.findOne(id);
+			String foto = empleado.getFoto();
+			
+			Path directorioRecursos = Paths.get("src//main//resources//static//uploads");
+			String rootPath = directorioRecursos.toFile().getAbsolutePath();
+			
+			File fotoBorrar = new File(rootPath + '/' + foto);
+			
+			try {
+				Files.delete(fotoBorrar.toPath());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 			empleadoService.delete(id);
 			flash.addFlashAttribute("success", "Empleado eliminado con éxito!");
 		}
