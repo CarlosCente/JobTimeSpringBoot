@@ -5,10 +5,10 @@
 
 	<header th:replace="layout/layout :: header"></header>
 
-	<div class="container-fluid py-4">
+	<div class="container-fluid py-5 col-md-10 col-sm-12">
 
 		<div class="card bg-light">
-			<div class="card-header" th:text="${titulo}"></div>
+			<div class="card-header text-center font-weight-bold" th:text="${titulo}"></div>
 			<div class="card-body">
 
 				<div class="row">
@@ -17,11 +17,11 @@
 							<div class="card-body text-center">
 								<img th:if="${#strings.length(empleado.foto) > 0}" th:src="@{/uploads/} + ${empleado.foto}" id="prev"
 									class="img-thumbnail rounded img-fluid w-75">
-								<img  th:if="${#strings.isEmpty(empleado.foto)}" th:src="@{/images/user-empty.jpg}"
+								<img  th:if="${#strings.isEmpty(empleado.foto)}" th:src="@{/images/user-empty.jpg}" id="prev"
 									class="img-thumbnail rounded img-fluid w-75">
 								<div class="custom-file mt-4">
 									<input type="file" class="custom-file-input"
-										id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+										id="inputGroupFile01" name="file" aria-describedby="inputGroupFileAddon01">
 									<label class="custom-file-label text-left" for="inputGroupFile01"
 										data-browse="Elegir">Seleccionar archivo</label>
 								</div>
@@ -138,8 +138,8 @@
 
 		</div>
 	</div>
-
 	<footer th:replace="layout/layout :: footer"></footer>
+
 	<script>
 	var reader = new FileReader();
 	reader.onload = function(r_event) {

@@ -5,14 +5,14 @@
 
 	<header th:replace="layout/layout :: header"></header>
 
-	<div class="container-fluid py-3 col-md-11 col-sm-12">
+	<div class="container-fluid py-5 col-md-10 col-sm-12">
 
 		<div class="card bg-light">
 			<div class="card-body">
 			
 			<div class="row">
 					<input
-						class="form-control col-md-2 mb-2 mr-3 text-center border border-info font-weight-bold col ml-auto"
+						class="form-control col-md-2 mb-4 mr-3 text-center border font-weight-bold col ml-auto"
 						id="myInput" type="text" placeholder="Buscar...">
 				</div>
 		
@@ -32,17 +32,17 @@
 					</thead>
 					<tbody id="myTable">
 						<tr th:each="empleado : ${empleados}">
-							<td> <img class="img-thumbnail img-fluid" width="120px" height="120px" th:if="${#strings.length(empleado.foto) > 0}" th:src="@{/uploads/} + ${empleado.foto}" />
-								 <img class="img-thumbnail img-fluid" width="120px" height="120px" th:if="${#strings.isEmpty(empleado.foto)}" th:src="@{/images/user-empty.jpg}" />
+							<td > <img class="img-thumbnail img-fluid" width="80px" height="80px" th:if="${#strings.length(empleado.foto) > 0}" th:src="@{/uploads/} + ${empleado.foto}" />
+								 <img class="img-thumbnail img-fluid" width="80px" height="80px" th:if="${#strings.isEmpty(empleado.foto)}" th:src="@{/images/user-empty.jpg}" />
 							</td>
-							<td th:text="${empleado.nombre}"></td>
-							<td th:text="${empleado.apellido1}"></td>
-							<td th:text="${empleado.apellido2}"></td>
-							<td th:text="${empleado.fechaNacim}"></td>
-							<td th:text="${empleado.localidad}"></td>
-							<td><a class="btn btn-primary btn-sm"
+							<td class="align-middle" th:text="${empleado.nombre}"></td>
+							<td class="align-middle" th:text="${empleado.apellido1}"></td>
+							<td class="align-middle" th:text="${empleado.apellido2}"></td>
+							<td class="align-middle" th:text="${empleado.fechaNacim}"></td>
+							<td class="align-middle" th:text="${empleado.localidad}"></td>
+							<td class="align-middle"><a class="btn btn-primary btn-sm"
 								th:href="@{/editar/} + ${empleado.cod_empl}" th:text="'Editar'"></a></td>
-							<td><a class="btn btn-danger btn-sm"
+							<td class="align-middle"><a class="btn btn-danger btn-sm"
 								th:href="@{/eliminar/} + ${empleado.cod_empl}"
 								th:text="'Eliminar'"
 								onclick="return confirm('Est�s seguro que quieres eliminar?');"></a></td>
@@ -67,9 +67,7 @@
 		</div>
 
 	</div>
-
 	<footer th:replace="layout/layout :: footer"></footer>
-
 	<script>
 		$(document).ready(function() {
 			$("#myInput").on("keyup",function() {
