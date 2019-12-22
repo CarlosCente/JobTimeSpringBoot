@@ -84,7 +84,7 @@ public class EmpleadoController {
 	}
 
 	@RequestMapping(value = "/save/{id}", method = RequestMethod.POST)
-	public String saveEmpleado(@PathVariable(value = "id") Long id, @ModelAttribute("empleado") Empleado empleado,
+	public String saveEmpleado(@PathVariable(value = "id") Long id, @ModelAttribute("empleado") Empleado empleado, @RequestParam("file") MultipartFile foto,
 			RedirectAttributes flash) {
 		Empleado empleadoBD = null;
 
@@ -109,6 +109,14 @@ public class EmpleadoController {
 			
 			//Una vez se hayan hecho las comprobaciones si todos los campos están correctos se edita el empleado correctamente
 
+			//Comprobación de foto
+			String fotoActual = empleadoBD.getFoto();
+			System.out.println(fotoActual + " !!!ACTUAL!!!");
+			Path directorioRecursos = Paths.get("src//main//resources//static//uploads");
+			String rootPath = directorioRecursos.toFile().getAbsolutePath();
+			
+			System.out.println(foto.getOriginalFilename() + " !!!!NUEVA!!!!");
+			
 			empleadoBD.setApellido1(empleado.getApellido1());
 			empleadoBD.setApellido2(empleado.getApellido2());
 			empleadoBD.setDireccion(empleado.getDireccion());

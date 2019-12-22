@@ -11,24 +11,23 @@
 		<div class="row">
 			<div class="col-md-6">
 				<div class="card bg-light">
-					<div class="card-header text-center font-weight-bold">INFORMACIÓN
-						DEL EMPLEADO</div>
-					<div class="card-body text-center">
+					<div class="card-header text-center font-weight-bold">EMPLEADO</div>
+					<div class="card-body">
 
 						<div class="row">
-							<div class="col-md-6">Nombre y apellidos:</div>
-							<div class="col-md-6"
+							<div class="col-md-5">Nombre completo:</div>
+							<div class="col-md-7 font-weight-bold"
 								th:text="${empleado.nombre} +' '+ ${empleado.apellido1} +' ' + ${empleado.apellido2}"></div>
 						</div>
 
 						<div class="row">
-							<div class="col-md-6">Fecha y hora actual:</div>
-							<div class="col-md-6" th:text="${fechaHora}"></div>
+							<div class="col-md-5">Fecha y hora:</div>
+							<div class="col-md-7 font-weight-bold" th:text="${fechaHora}"></div>
 						</div>
 
 						<div class="row">
-							<div class="col-md-6">IP origen del fichaje:</div>
-							<div class="col-md-6" th:text="${ip_cliente}"></div>
+							<div class="col-md-5">IP de origen:</div>
+							<div class="col-md-7 font-weight-bold" th:text="${ip_cliente}"></div>
 						</div>
 
 					</div>
@@ -37,22 +36,21 @@
 			</div>
 			<div class="col-md-3">
 				<div class="card bg-light">
-					<div class="card-header text-center font-weight-bold">INFORMACIÓN
-						DEL FICHAJE</div>
-					<div class="card-body text-center">
+					<div class="card-header text-center font-weight-bold">FICHAJES</div>
+					<div class="card-body">
 						<div class="row">
-							<div class="col-md-6">Hora Entrada:</div>
-							<div class="col-md-4" th:text="${horaEntrada}"></div>
+							<div class="col-md-5">Entrada:</div>
+							<div class="col-md-7 font-weight-bold" th:text="${horaEntrada}"></div>
 						</div>
 
 						<div class="row">
-							<div class="col-md-6">Hora Salida:</div>
-							<div class="col-md-4" th:text="${horaSalida}"></div>
+							<div class="col-md-5">Salida:</div>
+							<div class="col-md-7 font-weight-bold" th:text="${horaSalida}"></div>
 						</div>
 
 						<div class="row">
-							<div class="col-md-6">Total Tiempo:</div>
-							<div class="col-md-4 font-weight-bold" th:text="${totalTiempo}"></div>
+							<div class="col-md-5">Total:</div>
+							<div class="col-md-7 font-weight-bold" th:text="${totalTiempo}"></div>
 						</div>
 
 					</div>
@@ -61,8 +59,7 @@
 			</div>
 			<div class="col-md-3">
 				<div class="card bg-light">
-					<div class="card-header text-center font-weight-bold">INFORMES
-						DISPONIBLES</div>
+					<div class="card-header text-center font-weight-bold">INFORMES</div>
 					<div class="card-body">
 						<div class="row text-center">
 							<div class="col-md-12">Informe semanal</div>
@@ -87,8 +84,7 @@
 		<!-- #######################################################################################  -->
 
 		<div class="card bg-light mt-3">
-			<div class="card-header text-center font-weight-bold">OPERACIONES
-				DISPONIBLES</div>
+			<div class="card-header text-center font-weight-bold">OPERACIONES</div>
 			<div class="card-body">
 
 
