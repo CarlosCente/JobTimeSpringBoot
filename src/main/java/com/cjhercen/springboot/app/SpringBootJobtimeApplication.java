@@ -1,7 +1,5 @@
 package com.cjhercen.springboot.app;
 
-import java.io.File;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -24,10 +22,6 @@ public class SpringBootJobtimeApplication implements CommandLineRunner{
 	public void run(String... args) throws Exception {
 		uploadFileService.deleteAll();
 		uploadFileService.init();
-		
-		//Crea el directorio donde se suben las imagenes nada mas iniciar la aplicacion
-		File directorio = new File("C:\\jobtime\\uploads\\imagenes");
-		directorio.mkdirs();
 		
 	}
 

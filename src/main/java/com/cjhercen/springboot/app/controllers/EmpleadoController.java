@@ -1,6 +1,5 @@
 package com.cjhercen.springboot.app.controllers;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -30,6 +29,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.cjhercen.springboot.app.models.entity.Empleado;
 import com.cjhercen.springboot.app.models.service.interfaces.IEmpleadoService;
+import com.cjhercen.springboot.app.models.service.interfaces.IUploadFileService;
 import com.cjhercen.springboot.app.util.ConstantesUtils;
 import com.cjhercen.springboot.app.util.paginator.PageRender;
 
@@ -38,6 +38,9 @@ public class EmpleadoController implements ConstantesUtils {
 
 	@Autowired
 	private IEmpleadoService empleadoService;
+	
+	@Autowired
+	private IUploadFileService uploadService;
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
@@ -129,16 +132,7 @@ public class EmpleadoController implements ConstantesUtils {
 			// Se borra la foto actual del servidor, a no ser que sea la misma, que se
 			// mantiene
 			if (fotoActual != null && !"".equals(fotoActual)) {
-				File fotoBorrar = new File(rootPath + '/' + fotoActual);
-				
-					try {
-						Files.delete(fotoBorrar.toPath());
-						log.info("Se borra la anterior foto del empleado al modificar sus datos: " + fotoBorrar);
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-		
+				uploadService.delete(fotoActual);
 			}
 
 			try {
@@ -182,16 +176,9 @@ public class EmpleadoController implements ConstantesUtils {
 		}
 
 		if (!foto.isEmpty()) {
-			Path directorioRecursos = Paths.get(RUTA_IMAGENES_EMPLEADOS);
-			String rootPath = directorioRecursos.toFile().getAbsolutePath();
 			try {
-				byte[] bytes = foto.getBytes();
-				Path rutaCompleta = Paths.get(rootPath + "//" + foto.getOriginalFilename());
-				Files.write(rutaCompleta, bytes);
+				uploadService.copy(foto);
 				flash.addFlashAttribute("info", "Has subido correctamente '" + foto.getOriginalFilename() + "'");
-
-				empleado.setFoto(foto.getOriginalFilename());
-
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -213,18 +200,9 @@ public class EmpleadoController implements ConstantesUtils {
 
 			Empleado empleado = empleadoService.findOne(id);
 			String foto = empleado.getFoto();
-
-			Path directorioRecursos = Paths.get(RUTA_IMAGENES_EMPLEADOS);
-			String rootPath = directorioRecursos.toFile().getAbsolutePath();
-
-			File fotoBorrar = new File(rootPath + '/' + foto);
-
-			try {
-				Files.delete(fotoBorrar.toPath());
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			
+			uploadService.delete(foto);
+			log.info("Se ha borrado correctamente la imagen '" + foto + "'");
 
 			empleadoService.delete(id);
 			flash.addFlashAttribute("success", "Empleado eliminado con éxito!");
