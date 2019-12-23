@@ -20,4 +20,9 @@ public interface ConstantesUtils {
 	public static final String INCIDENCIA_RESUELTA = "2";
 
 	
+	/*
+	 * Ruta para las imagenes subidas al servidor
+	 */
+	public static final String RUTA_IMAGENES_EMPLEADOS = "C://jobtime//uploads//imagenes";
+	
 }

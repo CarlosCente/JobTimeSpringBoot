@@ -22,7 +22,7 @@ public class UploadFileServiceImpl implements IUploadFileService {
 
 	private final Logger log = org.slf4j.LoggerFactory.getLogger(getClass());
 
-	private final static String UPLOADS_FOLDER = "uploads";
+	private final static String UPLOADS_FOLDER = "C:\\jobtime\\uploads\\imagenes";
 
 	@Override
 	public Resource load(String filename) throws MalformedURLException {

@@ -30,10 +30,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.cjhercen.springboot.app.models.entity.Empleado;
 import com.cjhercen.springboot.app.models.service.interfaces.IEmpleadoService;
+import com.cjhercen.springboot.app.util.ConstantesUtils;
 import com.cjhercen.springboot.app.util.paginator.PageRender;
 
 @Controller
-public class EmpleadoController {
+public class EmpleadoController implements ConstantesUtils {
 
 	@Autowired
 	private IEmpleadoService empleadoService;
@@ -122,7 +123,7 @@ public class EmpleadoController {
 
 			// Comprobación de foto
 			String fotoActual = empleadoBD.getFoto();
-			Path directorioRecursos = Paths.get("src//main//resources//static//uploads");
+			Path directorioRecursos = Paths.get(RUTA_IMAGENES_EMPLEADOS);
 			String rootPath = directorioRecursos.toFile().getAbsolutePath();
 
 			// Se borra la foto actual del servidor, a no ser que sea la misma, que se
@@ -181,7 +182,7 @@ public class EmpleadoController {
 		}
 
 		if (!foto.isEmpty()) {
-			Path directorioRecursos = Paths.get("src//main//resources//static//uploads");
+			Path directorioRecursos = Paths.get(RUTA_IMAGENES_EMPLEADOS);
 			String rootPath = directorioRecursos.toFile().getAbsolutePath();
 			try {
 				byte[] bytes = foto.getBytes();
@@ -213,7 +214,7 @@ public class EmpleadoController {
 			Empleado empleado = empleadoService.findOne(id);
 			String foto = empleado.getFoto();
 
-			Path directorioRecursos = Paths.get("src//main//resources//static//uploads");
+			Path directorioRecursos = Paths.get(RUTA_IMAGENES_EMPLEADOS);
 			String rootPath = directorioRecursos.toFile().getAbsolutePath();
 
 			File fotoBorrar = new File(rootPath + '/' + foto);
