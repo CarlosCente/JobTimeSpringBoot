@@ -32,7 +32,7 @@
 					</thead>
 					<tbody id="myTable">
 						<tr th:each="empleado : ${empleados}">
-							<td > <img class="img-thumbnail img-fluid" width="80px" height="80px" th:if="${#strings.length(empleado.foto) > 0}" th:src="@{/uploads/} + ${empleado.foto}" />
+							<td > <img class="img-thumbnail img-fluid" width="80px" height="80px" th:if="${#strings.length(empleado.foto) > 0}" th:src="@{/uploads/imagenes/} + ${empleado.foto}" />
 								 <img class="img-thumbnail img-fluid" width="80px" height="80px" th:if="${#strings.isEmpty(empleado.foto)}" th:src="@{/images/user-empty.jpg}" />
 							</td>
 							<td class="align-middle" th:text="${empleado.nombre}"></td>
