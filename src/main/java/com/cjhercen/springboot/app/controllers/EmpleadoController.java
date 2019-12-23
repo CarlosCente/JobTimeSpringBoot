@@ -9,6 +9,8 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -35,6 +37,8 @@ public class EmpleadoController {
 
 	@Autowired
 	private IEmpleadoService empleadoService;
+
+	private final Logger log = LoggerFactory.getLogger(getClass());
 
 	@RequestMapping(value = "/listar", method = RequestMethod.GET)
 	public String listar(@RequestParam(name = "page", defaultValue = "0") int page, Model model) {
@@ -84,39 +88,71 @@ public class EmpleadoController {
 	}
 
 	@RequestMapping(value = "/save/{id}", method = RequestMethod.POST)
-	public String saveEmpleado(@PathVariable(value = "id") Long id, @ModelAttribute("empleado") Empleado empleado, @RequestParam("file") MultipartFile foto,
-			RedirectAttributes flash) {
+	public String saveEmpleado(@PathVariable(value = "id") Long id, @ModelAttribute("empleado") Empleado empleado,
+			@RequestParam("file") MultipartFile foto, RedirectAttributes flash) {
 		Empleado empleadoBD = null;
 
 		empleadoBD = empleadoService.findOne(id);
 
 		if (empleadoBD != null) {
 
-			if (empleado.getNombre() == null || "".equals(empleado.getNombre()) || empleado.getNombre().length() < 2 || empleado.getNombre().length() > 20) {
-				flash.addFlashAttribute("error", "El campo nombre no puede estar vacío y debe tener entre 2 y 20 caracteres");
+			if (empleado.getNombre() == null || "".equals(empleado.getNombre()) || empleado.getNombre().length() < 2
+					|| empleado.getNombre().length() > 20) {
+				flash.addFlashAttribute("error",
+						"El campo nombre no puede estar vacío y debe tener entre 2 y 20 caracteres");
 				return "redirect:/editar/" + id;
 			}
 
-			if (empleado.getApellido1() == null || "".equals(empleado.getApellido1()) || empleado.getApellido1().length() < 2 || empleado.getApellido1().length() > 20) {
-				flash.addFlashAttribute("error", "El primer apellido no puede estar vacío y debe tener entre 2 y 20 caracteres");
+			if (empleado.getApellido1() == null || "".equals(empleado.getApellido1())
+					|| empleado.getApellido1().length() < 2 || empleado.getApellido1().length() > 20) {
+				flash.addFlashAttribute("error",
+						"El primer apellido no puede estar vacío y debe tener entre 2 y 20 caracteres");
 				return "redirect:/editar/" + id;
 			}
-			
-			if (empleado.getApellido2() == null || "".equals(empleado.getApellido2()) || empleado.getApellido2().length() < 2 || empleado.getApellido2().length() > 20) {
-				flash.addFlashAttribute("error", "El segundo apellido no puede estar vacío y debe tener entre 2 y 20 caracteres");
-				return "redirect:/editar/" + id;
-			}
-			
-			//Una vez se hayan hecho las comprobaciones si todos los campos están correctos se edita el empleado correctamente
 
-			//Comprobación de foto
+			if (empleado.getApellido2() == null || "".equals(empleado.getApellido2())
+					|| empleado.getApellido2().length() < 2 || empleado.getApellido2().length() > 20) {
+				flash.addFlashAttribute("error",
+						"El segundo apellido no puede estar vacío y debe tener entre 2 y 20 caracteres");
+				return "redirect:/editar/" + id;
+			}
+
+			// Una vez se hayan hecho las comprobaciones si todos los campos están correctos
+			// se edita el empleado correctamente
+
+			// Comprobación de foto
 			String fotoActual = empleadoBD.getFoto();
-			System.out.println(fotoActual + " !!!ACTUAL!!!");
 			Path directorioRecursos = Paths.get("src//main//resources//static//uploads");
 			String rootPath = directorioRecursos.toFile().getAbsolutePath();
-			
-			System.out.println(foto.getOriginalFilename() + " !!!!NUEVA!!!!");
-			
+
+			// Se borra la foto actual del servidor, a no ser que sea la misma, que se
+			// mantiene
+			if (fotoActual != null && !"".equals(fotoActual)) {
+				File fotoBorrar = new File(rootPath + '/' + fotoActual);
+				
+					try {
+						Files.delete(fotoBorrar.toPath());
+						log.info("Se borra la anterior foto del empleado al modificar sus datos: " + fotoBorrar);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+		
+			}
+
+			try {
+				byte[] bytes = foto.getBytes();
+				Path rutaCompleta = Paths.get(rootPath + "//" + foto.getOriginalFilename());
+				Files.write(rutaCompleta, bytes);
+				flash.addFlashAttribute("info", "Has subido correctamente '" + foto.getOriginalFilename() + "'");
+
+				empleadoBD.setFoto(foto.getOriginalFilename());
+				log.info("Se modifica la foto del empleado por: " + foto.getOriginalFilename());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
 			empleadoBD.setApellido1(empleado.getApellido1());
 			empleadoBD.setApellido2(empleado.getApellido2());
 			empleadoBD.setDireccion(empleado.getDireccion());
@@ -137,14 +173,14 @@ public class EmpleadoController {
 	}
 
 	@RequestMapping(value = "/form", method = RequestMethod.POST)
-	public String guardar(@Valid Empleado empleado, BindingResult result, Model model, @RequestParam("file") MultipartFile foto, RedirectAttributes flash,
-			SessionStatus status) {
+	public String guardar(@Valid Empleado empleado, BindingResult result, Model model,
+			@RequestParam("file") MultipartFile foto, RedirectAttributes flash, SessionStatus status) {
 		if (result.hasErrors()) {
 			model.addAttribute("titulo", "Formulario de Empleado");
 			return "form";
 		}
 
-		if(!foto.isEmpty()) {
+		if (!foto.isEmpty()) {
 			Path directorioRecursos = Paths.get("src//main//resources//static//uploads");
 			String rootPath = directorioRecursos.toFile().getAbsolutePath();
 			try {
@@ -152,15 +188,15 @@ public class EmpleadoController {
 				Path rutaCompleta = Paths.get(rootPath + "//" + foto.getOriginalFilename());
 				Files.write(rutaCompleta, bytes);
 				flash.addFlashAttribute("info", "Has subido correctamente '" + foto.getOriginalFilename() + "'");
-				
+
 				empleado.setFoto(foto.getOriginalFilename());
-				
+
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-		
+
 		String mensajeFlash = "Empleado creado con éxito!";
 
 		empleadoService.save(empleado);
@@ -173,22 +209,22 @@ public class EmpleadoController {
 	public String eliminar(@PathVariable(value = "id") Long id, RedirectAttributes flash) {
 
 		if (id > 0) {
-			
+
 			Empleado empleado = empleadoService.findOne(id);
 			String foto = empleado.getFoto();
-			
+
 			Path directorioRecursos = Paths.get("src//main//resources//static//uploads");
 			String rootPath = directorioRecursos.toFile().getAbsolutePath();
-			
+
 			File fotoBorrar = new File(rootPath + '/' + foto);
-			
+
 			try {
 				Files.delete(fotoBorrar.toPath());
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
 			empleadoService.delete(id);
 			flash.addFlashAttribute("success", "Empleado eliminado con éxito!");
 		}
