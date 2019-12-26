@@ -25,7 +25,7 @@
 									<div class="col-md-3 pt-2">
 								
 												<img th:if="${#strings.length(empleado.foto) > 0}"
-													th:src="@{/uploads/} + ${empleado.foto}" id="prev"
+													th:src="@{/uploads/imagenes/} + ${empleado.foto}" id="prev"
 													class="img-thumbnail rounded img-fluid w-75"> <img
 													th:if="${#strings.isEmpty(empleado.foto)}"
 													th:src="@{/images/user-empty.jpg}" id="prev"
