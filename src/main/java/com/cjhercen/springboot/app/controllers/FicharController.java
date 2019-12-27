@@ -9,8 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.cjhercen.springboot.app.models.dao.IFichajeDao;
-import com.cjhercen.springboot.app.models.dao.IUsuarioDao;
 import com.cjhercen.springboot.app.models.entity.Empleado;
 import com.cjhercen.springboot.app.models.entity.Fichaje;
 import com.cjhercen.springboot.app.models.entity.Usuario;
@@ -31,13 +29,7 @@ public class FicharController {
 
 	@Autowired
 	FichajeServiceImpl fichajeService;
-	
-	@Autowired
-	IUsuarioDao usuarioDao;
-	
-	@Autowired
-	IFichajeDao fichajeDao;
-	
+		
 	FechaUtils fechaUtils = new FechaUtils();
 	
 	String horaActual = fechaUtils.obtenerHoraEnFormatoCadena();
@@ -47,7 +39,7 @@ public class FicharController {
 
 		//Se obtiene primero el usuario conectado para obtener los datos del empleado
 		String username = usuarioService.getUsername();
-		Usuario usuario = usuarioDao.findByUsername(username);
+		Usuario usuario = usuarioService.findByUsername(username);
 		Empleado empleado = usuario.getEmpleado();		
 				
 		//Comprobación si ya se ha hecho el fichaje de entrada o de salida
@@ -55,7 +47,7 @@ public class FicharController {
 		Boolean haySalida = false;
 		
 		//Datos del fichaje (Hora entrada y hora de salida)
-		Fichaje fichajeEmpleado = fichajeDao.findByEmpleadoAndFecha(empleado, fechaUtils.obtenerFechaActual());
+		Fichaje fichajeEmpleado = fichajeService.findByEmpleadoAndFecha(empleado, fechaUtils.obtenerFechaActual());
 		if(fichajeEmpleado != null) {
 			if(fichajeEmpleado.getHoraEntrada() == null | "".equals(fichajeEmpleado.getHoraEntrada())) {
 				model.put("horaEntrada", "-");
@@ -99,10 +91,10 @@ public class FicharController {
 
 		//Se obtiene primero el usuario conectado para obtener los datos del empleado
 		String username = usuarioService.getUsername();
-		Usuario usuario = usuarioDao.findByUsername(username);
+		Usuario usuario = usuarioService.findByUsername(username);
 		Empleado empleado = usuario.getEmpleado();
 
-		Fichaje fichajeComprueba = fichajeDao.findByEmpleadoAndFecha(empleado, fechaUtils.obtenerFechaActual());
+		Fichaje fichajeComprueba = fichajeService.findByEmpleadoAndFecha(empleado, fechaUtils.obtenerFechaActual());
 		
 		if(fichajeComprueba != null) {
 			flash.addFlashAttribute("error", "Ya has realizado el fichaje de entrada hoy!");
@@ -127,11 +119,11 @@ public class FicharController {
 
 		//Se obtiene primero el usuario conectado para obtener los datos del empleado
 		String username = usuarioService.getUsername();
-		Usuario usuario = usuarioDao.findByUsername(username);
+		Usuario usuario = usuarioService.findByUsername(username);
 		Empleado empleado = usuario.getEmpleado();
 
 		//Se comprueba si existe el fichaje de entrada, sino devolvería error
-		Fichaje fichajeComprueba = fichajeDao.findByEmpleadoAndFecha(empleado, fechaUtils.obtenerFechaActual());
+		Fichaje fichajeComprueba = fichajeService.findByEmpleadoAndFecha(empleado, fechaUtils.obtenerFechaActual());
 		
 		if(fichajeComprueba == null) {
 			flash.addFlashAttribute("error", "No has fichado aún la entrada de hoy");
