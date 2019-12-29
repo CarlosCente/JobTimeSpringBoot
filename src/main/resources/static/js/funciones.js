@@ -1,3 +1,8 @@
+$(document).ready(function() {
+  $('[data-toggle="tooltip"]').tooltip()
+});
+
+
 function actual() {
          fecha=new Date(); //Actualizar fecha.
      	var meses = new Array ("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
