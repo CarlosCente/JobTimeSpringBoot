@@ -38,4 +38,3 @@ INSERT INTO incidencias (estado, fecha, mensaje, tipo, cod_empl) VALUES ('1', '2
 INSERT INTO incidencias (estado, fecha, mensaje, tipo, cod_empl) VALUES ('2', '2019-12-11', 'Esto es una incidencia resuelta de prueba', '1', 1);
 INSERT INTO incidencias (estado, fecha, mensaje, tipo, cod_empl) VALUES ('2', '2019-12-11', 'Esto es una incidencia abierta de prueba ', '2', 1);
 INSERT INTO incidencias (estado, fecha, mensaje, tipo, cod_empl) VALUES ('2', '2019-12-11', 'Esto es una incidencia abierta de prueba ', '2', 2);
-INSERT INTO incidencias (estado, fecha, mensaje, tipo, cod_empl) VALUES ('2', '2019-12-11', 'Esto es una incidencia abierta de prueba ', '1', 2);
