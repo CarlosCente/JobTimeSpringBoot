@@ -1,31 +1,28 @@
 package com.cjhercen.springboot.app.util;
 
-public class ConstantesUtils {
+public interface ConstantesUtils {
 	
 	
 	/*
 	 * Constantes que definen los diferentes tipos de fichajes que se pueden dar
 	 */
 	
-	private static final String TIPO_ENTRADA = "ENTRADA";
-	private static final String TIPO_SALIDA = "SALIDA";
-	private static final String TIPO_RECUPERA_ENTRADA = "RECUPERA_ENTRADA";
-	private static final String TIPO_RECUPERA_SALIDA = "RECUPERA_SALIDA";
+	public static final String TIPO_ENTRADA = "ENTRADA";
+	public static final String TIPO_SALIDA = "SALIDA";
+	public static final String TIPO_RECUPERA_ENTRADA = "RECUPERA_ENTRADA";
+	public static final String TIPO_RECUPERA_SALIDA = "RECUPERA_SALIDA";
 
 	
+	/*
+	 * Constantes que definen los tipos de estado de las incidencias
+	 */
+	public static final String INCIDENCIA_ABIERTA = "1";
+	public static final String INCIDENCIA_RESUELTA = "2";
+
 	
-	public static String getTipoEntrada() {
-		return TIPO_ENTRADA;
-	}
-	public static String getTipoSalida() {
-		return TIPO_SALIDA;
-	}
-	public static String getTipoRecuperaEntrada() {
-		return TIPO_RECUPERA_ENTRADA;
-	}
-	public static String getTipoRecuperaSalida() {
-		return TIPO_RECUPERA_SALIDA;
-	}
-	
+	/*
+	 * Ruta para las imagenes subidas al servidor
+	 */
+	public static final String RUTA_IMAGENES_EMPLEADOS = "C://jobtime//uploads//imagenes";
 	
 }

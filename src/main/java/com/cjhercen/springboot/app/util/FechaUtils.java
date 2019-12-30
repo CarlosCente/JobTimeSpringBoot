@@ -55,6 +55,20 @@ public class FechaUtils {
 		return dateFormat.format(date);
 
 	}
+	
+	/**
+	 * Obtener la hora en formato dd-MM-yyyy como un String
+	 * 
+	 * @param fecha fecha que se quiere transformar en cadena al formato dd-MM-yyyy
+	 * @return hora en el formato dd-MM-yyyy
+	 */
+	public String obtenerFechaParametroEnFormatoCadena(Date fecha) {
+
+		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+
+		return dateFormat.format(fecha);
+
+	}
 
 	/**
 	 * Obtener la fecha actual en formato dd-MM-yyyy como un Date

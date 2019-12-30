@@ -1,5 +1,6 @@
 package com.cjhercen.springboot.app.models.dao;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -17,6 +18,10 @@ public interface IFichajeDao extends CrudRepository<Fichaje, FichajeId> {
 	public List<Fichaje> findByEmpleado(Empleado empleado);
 	
 	public Fichaje findByEmpleadoAndFecha(Empleado empleado, Date fecha);
+	
+	public ArrayList <Fichaje> findAll();
+	
+	public ArrayList<Fichaje> findByFecha(Date fecha);
 
 	
 }
