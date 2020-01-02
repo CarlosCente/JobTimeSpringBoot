@@ -93,8 +93,8 @@ public class FechaUtils {
 		int minutosTotales = 0;
 
 		String[] partes = hora.split(":");
-		String horas = partes[0];
-		String minutos = partes[1];
+		String horas = partes[0].trim();
+		String minutos = partes[1].trim();
 		minutosTotales = Integer.parseInt(horas) * 60 + Integer.parseInt(minutos);
 
 		return minutosTotales;

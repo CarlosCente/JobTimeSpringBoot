@@ -40,12 +40,6 @@ public class Fichaje implements Serializable {
 	@Column(name = "hora_salida")
 	private String horaSalida = "";
 
-	@Column(name = "hora_inicio_descanso")
-	private String horaInicioDescanso = "";
-
-	@Column(name = "hora_fin_descanso")
-	private String horaFinDescanso = "";
-
 	@NotNull
 	@Column(name = "ip_origen")
 	private String ip;
@@ -101,21 +95,6 @@ public class Fichaje implements Serializable {
 		this.ip = ip;
 	}
 
-	public String getHoraInicioDescanso() {
-		return horaInicioDescanso;
-	}
-
-	public void setHoraInicioDescanso(String horaInicioDescanso) {
-		this.horaInicioDescanso = horaInicioDescanso;
-	}
-
-	public String getHoraFinDescanso() {
-		return horaFinDescanso;
-	}
-
-	public void setHoraFinDescanso(String horaFinDescanso) {
-		this.horaFinDescanso = horaFinDescanso;
-	}
 
 	public String getTiempoTotal() {
 		return tiempoTotal;
