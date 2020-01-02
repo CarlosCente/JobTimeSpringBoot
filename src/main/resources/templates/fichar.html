@@ -9,68 +9,61 @@
 		<hr>
 
 		<div class="row">
-			<div class="col-md-6">
+			<div class="col-md-6 col-xs-12 col-xl-6">
 				<div class="card bg-light">
 					<div class="card-header text-center font-weight-bold">EMPLEADO</div>
 					<div class="card-body">
-
-						<div class="row">
-							<div class="col-md-5">Nombre completo:</div>
-							<div class="col-md-7 font-weight-bold"
-								th:text="${empleado.nombre} +' '+ ${empleado.apellido1} +' ' + ${empleado.apellido2}"></div>
+					<div class="row">
+						<div class="col-md-4">
+							<div class="row">
+								<div class="col-md-12 col-xs-12 col-lg-12 text-center">
+								<img th:if="${#strings.length(empleado.foto) > 0}"
+											th:src="@{/uploads/imagenes/} + ${empleado.foto}" id="prev"
+											class="img-thumbnail rounded img-fluid w-75"> <img
+											th:if="${#strings.isEmpty(empleado.foto)}"
+											th:src="@{/images/user-empty.jpg}" id="prev"
+											class="img-thumbnail rounded img-fluid w-75">
+								</div>
+								
+							</div>
 						</div>
-
-						<div class="row">
-							<div class="col-md-5">Fecha y hora:</div>
-							<div class="col-md-7 font-weight-bold" th:text="${fechaHora}"></div>
+						<div class="col-md-8 text-center">
+							<div class="row">
+								<div class="col-md-12 mt-2 h5"
+									th:text="${empleado.nombre} +' '+ ${empleado.apellido1} +' ' + ${empleado.apellido2}"></div>
+							</div>
+	
+							<div class="row">
+								<div class="col-md-12" th:text="${fechaHora}"></div>
+							</div>
+	
+							<div class="row">
+								<div class="col-md-12" th:text="'(IP : &nbsp;' + ${ip_cliente} + ')'"></div>
+							</div>
 						</div>
-
-						<div class="row">
-							<div class="col-md-5">IP de origen:</div>
-							<div class="col-md-7 font-weight-bold" th:text="${ip_cliente}"></div>
-						</div>
-
+						
+					</div>
 					</div>
 				</div>
 
 			</div>
-			<div class="col-md-3">
-				<div class="card bg-light">
+			<div class="col-md-6 col-xs-12 col-xl-6">
+				<div class="card bg-light h-100">
 					<div class="card-header text-center font-weight-bold">FICHAJES</div>
 					<div class="card-body">
+						
+						<div class="row mt-2">
+							<div class="col-md-6 col-xs-12 font-weight-bold text-center h3 text-success " th:text="${horaEntrada}"></div>
+						
+							<div class="col-md-6 col-xs-12 font-weight-bold text-center h3 text-danger" th:text="${horaSalida}"></div>
+						</div>
 						<div class="row">
-							<div class="col-md-5">Entrada:</div>
-							<div class="col-md-7 font-weight-bold" th:text="${horaEntrada}"></div>
+							<div class="col-md-12 col-xs-12 col-lg-12 mt-2">
+								<div class="progress" style="height: 25px">
+								  <div class=" bg-primary progress-bar progress-bar-striped progress-bar-animated text-dark font-weight-bold" role="progressbar" th:style="'width:' + ${porcentaje} + ';'" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" th:text="${totalTiempo} + ' (' + ${porcentaje} + ')'"></div>
+								</div>
+							</div>	
 						</div>
-
-						<div class="row">
-							<div class="col-md-5">Salida:</div>
-							<div class="col-md-7 font-weight-bold" th:text="${horaSalida}"></div>
-						</div>
-
-						<div class="row">
-							<div class="col-md-5">Total:</div>
-							<div class="col-md-7 font-weight-bold" th:text="${totalTiempo}"></div>
-						</div>
-
-					</div>
-				</div>
-
-			</div>
-			<div class="col-md-3">
-				<div class="card bg-light">
-					<div class="card-header text-center font-weight-bold">INFORMES</div>
-					<div class="card-body">
-						<div class="row text-center">
-							<div class="col-md-12">Informe semanal</div>
-						</div>
-						<div class="row text-center">
-							<div class="col-md-12">Informe mensual</div>
-						</div>
-						<div class="row text-center">
-							<div class="col-md-12">Seleccionar fechas</div>
-						</div>
-
 					</div>
 				</div>
 
@@ -82,8 +75,9 @@
 		<!-- #######################################################################################  -->
 		<!-- ########################## OPERACIONES DISPONIBLES FICHAJE ############################  -->
 		<!-- #######################################################################################  -->
-
-		<div class="card bg-light mt-3">
+		<div class="row">
+		<div class="col-md-9 col-sm-12">
+		<div class="card bg-light mt-3 h-100">
 			<div class="card-header text-center font-weight-bold">OPERACIONES</div>
 			<div class="card-body">
 
@@ -91,16 +85,13 @@
 				<!-- #######################################################################################  -->
 				<!-- ########################## OPCION PARA EL FICHAJE DE ENTRADA ##########################  -->
 				<!-- #######################################################################################  -->
-				<hr>
-				<div class="row mt-3 mb-3">
+				<div class="row mt-3" >
 
-					<div class="col-md-3 text-center">
-						<button th:disabled="${hayEntrada}" class="btn btn-primary w-75 m-1 rounded-pill"
-							data-toggle="modal" data-target="#modalEntrada">
-							<h4>
-								<i class="fas fa-sign-in-alt"></i>
-							</h4>
-							<strong>Entrada</strong>
+					<div class="col-md-6 text-center">
+						<button th:disabled="${hayEntrada}" class="btn btn-primary btn-lg rounded-lg w-100 rounded-pill"
+							data-toggle="modal" data-target="#modalEntrada"> 
+							<span class="fas fa-sign-in-alt h2"></span> &nbsp; ENTRADA
+							
 						</button>
 					</div>
 
@@ -160,13 +151,11 @@
 					<!-- ########################## OPCION PARA EL FICHAJE DE SALIDA ##########################  -->
 					<!-- #######################################################################################  -->
 
-					<div class="col-md-3 text-center">
-						<button th:disabled="${haySalida}" class="btn btn-danger w-75 m-1 rounded-pill"
-							data-toggle="modal" data-target="#modalSalida">
-							<h3>
-								<i class="fas fa-sign-out-alt"></i>
-							</h3>
-							<strong>Salida</strong>
+					<div class="col-md-6 text-center">
+						<button th:disabled="${haySalida}" class="btn btn-danger btn-lg w-100 rounded-pill"
+							data-toggle="modal" data-target="#modalSalida"> 
+							<span class="fas fa-sign-out-alt h2"></span> &nbsp; SALIDA
+							
 						</button>
 					</div>
 
@@ -222,33 +211,36 @@
 					</div>
 
 
-					<!-- #######################################################################################  -->
-					<!-- ######################## OPCION PARA EL INICIO DEL DESCANSO ###########################  -->
-					<!-- #######################################################################################  -->
-
-					<div class="col-md-3 text-center">
-						<button type="button"
-							class="btn btn-success w-75 m-1 rounded-pill">
-							<h3>
-								<i class="fas fa-play"></i>
-							</h3>
-							<strong>Inicio Descanso</strong>
-						</button>
-					</div>
-					<div class="col-md-3 text-center">
-						<button type="button" class="btn btn-danger w-75 m-1 rounded-pill">
-							<h3>
-								<i class="fas fa-stop"></i>
-							</h3>
-							<strong>Fin Descanso</strong>
-						</button>
-					</div>
-
+					
 				</div>
-				<hr>
 			</div>
 		</div>
+		</div>
+		
+		<div class="col-md-3">
+				<div class="card bg-light mt-3 h-100	">
+					<div class="card-header text-center font-weight-bold">INFORMES</div>
+					<div class="card-body">
+						<div class="row text-center">
+							<div class="col-md-12">Informe semanal</div>
+						</div>
+						<div class="row text-center">
+							<div class="col-md-12">Informe mensual</div>
+						</div>
+						<div class="row text-center">
+							<div class="col-md-12">Seleccionar fechas</div>
+						</div>
 
+					</div>
+				</div>
+
+			</div>
+		
+		
+		
+	</div>
+	<div class="row mt-3">
+		<div class="col-md-12 col-lg-12 col-xs-12">
 		<div th:if="!${esAdmin}" class="card bg-light mt-3 mb-5">
 			<div class="card-header text-center font-weight-bold">¿TIENES
 				ALGUN PROBLEMA CON EL FICHAJE?</div>
@@ -264,9 +256,9 @@
 				</div>
 
 			</div>
-
 		</div>
-
+		</div>	
+		</div>
 		<div class="modal fade" id="modalIncidencia" tabindex="-1"
 			role="dialog" aria-labelledby="modalIncidencia" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered modal-md"

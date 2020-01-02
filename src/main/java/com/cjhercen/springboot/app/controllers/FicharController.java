@@ -1,5 +1,6 @@
 package com.cjhercen.springboot.app.controllers;
 
+import java.text.DecimalFormat;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -45,6 +46,7 @@ public class FicharController {
 		//Comprobación si ya se ha hecho el fichaje de entrada o de salida
 		Boolean hayEntrada = false;
 		Boolean haySalida = false;
+		String porcentaje = "0%";
 		
 		//Datos del fichaje (Hora entrada y hora de salida)
 		Fichaje fichajeEmpleado = fichajeService.findByEmpleadoAndFecha(empleado, fechaUtils.obtenerFechaActual());
@@ -66,13 +68,19 @@ public class FicharController {
 			//Cálculo del tiempo transcurrido del fichaje
 			String totalTiempo = fechaUtils.obtenerTiempoTranscurrido(fichajeEmpleado.getHoraEntrada(), fichajeEmpleado.getHoraSalida());
 			model.put("totalTiempo" , fechaUtils.formatearFechas2digitos(totalTiempo));
+			porcentaje = calcularPorcentajeFichado(totalTiempo);
+
 			
 		} else {
 			model.put("horaEntrada", "-");
 			model.put("horaSalida", "-");
-			model.put("totalTiempo", "-");
+			model.put("totalTiempo", "00:00");
 		}
 		
+		if("-".equals(porcentaje)) {
+			porcentaje = "0%";
+		}
+		model.put("porcentaje", porcentaje);
 		model.put("fechaHora", fechaUtils.obtenerFechaEnFormatoCadena() + " " + horaActual);
 		model.put("horaActual", horaActual);
 		model.put("titulo", "Fichaje del Empleado");
@@ -153,5 +161,20 @@ public class FicharController {
 		return "redirect:/fichar";
 	}
 	
+	
+	public String calcularPorcentajeFichado(String tiempoTotal) {
+		DecimalFormat df = new DecimalFormat("#");
+		int totalTiempo = fechaUtils.obtenerHoraEnMinutos(tiempoTotal);
+		String value = "0";
+		double totalJornada = 480;
+		double porcentajeInt;
+		
+		if(totalTiempo > 0) {
+			porcentajeInt = totalTiempo / totalJornada*100;
+			value = df.format(porcentajeInt);
+		} 
+		
+		return value +'%';
+	}
 	
 }
