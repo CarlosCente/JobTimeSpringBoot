@@ -69,10 +69,10 @@
 						</div>
 					</div>
 				</div>
-				<div class="row pt-4">
-					<div class="col-lg-8 col-md-8 col-sm-12 text-center ">
+				<div class="row pt-3">
+					<div class="col-lg-8 col-md-12 col-sm-12 text-center ">
 
-						<div class="card shadow mb-4">
+						<div class="card shadow mb-4 h-100">
 							<div
 								class="card-header py-3 text-center">
 								<h6 class="m-0 font-weight-bold">Datos de las incidencias</h6>
@@ -107,10 +107,10 @@
 							</table>
 						</div>
 					</div>
-					<div class="col-lg-4 col-md-4 col-sm-12">
+					<div class="col-lg-4 col-md-12 col-sm-12">
 
 
-						<div class="card shadow mb-4">
+						<div class="card shadow mb-4 h-100">
 							<!-- Card Header - Dropdown -->
 							<div
 								class="card-header py-3 text-center">
@@ -129,8 +129,8 @@
 										</div>
 									</div>
 									<canvas id="myChart"
-										style="display: block; width: 301px; height: 245px;"
-										width="301" height="245" class="chartjs-render-monitor"></canvas>
+										style="position:relative; display: flex; width: 25rem; height: 20rem;"
+									 	class="chartjs-render-monitor"></canvas>
 								</div>
 
 							</div>
@@ -153,9 +153,12 @@ var totalErrores = [[${totalErrores}]];
 var totalAdvertencias = [[${totalAdvertencias}]];
 var totalAbiertas = [[${totalAbiertas}]];
 var totalSolucionadas = [[${totalSolucionadas}]];
-
+var option = {
+		  responsive: true
+		};
 var myChart = new Chart(ctx, {
     type: 'doughnut',
+    options: option,
     data: {
         labels: ['Errores', 'Advertencias', 'Abiertas', 'Resueltas'],
         datasets: [{

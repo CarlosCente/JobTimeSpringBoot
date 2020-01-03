@@ -1,13 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Numans');
 @charset "UTF-8";
-
-
-
-#reloj { width: 160px; height: 30px; padding: 5px 10px;  
-         font: bold 1.0em dotum, "lucida sans", arial; text-align: center;
-         float: right; margin: 1em 3em 1em 1em; }
-         
-               
+              
                
 .my-custom-scrollbar {
 position: relative;
