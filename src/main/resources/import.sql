@@ -20,7 +20,7 @@ INSERT INTO empleados (apellido1, apellido2, direccion, fecha_nacim, localidad, 
 /* Populate table Fichaje */
 INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, ip_origen, tiempo_total, finalizado) VALUES (1, '2019-11-04', '08:00', '', '192.168.1.1', '', false);
 INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, ip_origen, tiempo_total, finalizado) VALUES (2, '2019-11-04', '08:00', '', '192.168.1.1', '', false);
-INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, ip_origen, tiempo_total, finalizado) VALUES (2, '2020-01-02', '08:00', '', '192.168.1.1', '', false);
+INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, ip_origen, tiempo_total, finalizado) VALUES (2, '2020-01-02', '12:00', '', '192.168.1.1', '', false);
 
  
 /* Populate table Users and roles */
@@ -38,4 +38,3 @@ INSERT INTO authorities (user_id, authority) VALUES (2,'ROLE_USER');
 INSERT INTO incidencias (estado, fecha, mensaje, tipo, cod_empl) VALUES ('1', '2019-12-11', 'Se ha realizado mal el fichaje del dia 01/12/2019, no se ha realizado el correspondiente fichaje de salida pero si el de entrada del empleado ', '1', 2);
 INSERT INTO incidencias (estado, fecha, mensaje, tipo, cod_empl) VALUES ('2', '2019-12-11', 'Esto es una incidencia resuelta de prueba', '1', 1);
 INSERT INTO incidencias (estado, fecha, mensaje, tipo, cod_empl) VALUES ('2', '2019-12-11', 'Esto es una incidencia abierta de prueba ', '2', 1);
-INSERT INTO incidencias (estado, fecha, mensaje, tipo, cod_empl) VALUES ('2', '2019-12-11', 'Esto es una incidencia abierta de prueba ', '2', 2);
