@@ -5,11 +5,10 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.IdClass;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -19,21 +18,17 @@ import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
+@IdClass(IncidenciaId.class)
 @Table(name = "incidencias")
 public class Incidencia implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-
-	@NotEmpty
-	@OneToOne
-	@JoinColumn(name = "cod_empl", updatable = false, nullable = false)
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Empleado empleado;
 
-	@NotEmpty
+	@Id
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name = "fecha")
@@ -47,18 +42,11 @@ public class Incidencia implements Serializable {
 	@Column(name = "tipo")
 	private String tipo;
 	
+	@Id
 	@NotEmpty
 	@Column(name = "mensaje")
 	@Length(max = 255)
 	private String mensaje;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 	public Empleado getEmpleado() {
 		return empleado;

@@ -14,4 +14,6 @@ public interface IIncidenciaService {
 	
 	public List<Incidencia> findAll();
 	
+	public void save(Incidencia incidencia);
+	
 }

@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cjhercen.springboot.app.models.dao.IIncidenciaDao;
 import com.cjhercen.springboot.app.models.entity.Empleado;
@@ -30,6 +31,12 @@ public class IncidenciaServiceImpl implements IIncidenciaService {
 	@Override
 	public List<Incidencia> findAll() {
 		return (List<Incidencia>) incidenciaDao.findAll();
+	}
+
+	@Override
+	@Transactional
+	public void save(Incidencia incidencia) {
+		incidenciaDao.save(incidencia);	
 	}
 
 }
