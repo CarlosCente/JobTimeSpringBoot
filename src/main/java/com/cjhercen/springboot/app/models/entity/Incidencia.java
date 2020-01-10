@@ -14,7 +14,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotEmpty;
 
-import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -45,7 +44,6 @@ public class Incidencia implements Serializable {
 	@Id
 	@NotEmpty
 	@Column(name = "mensaje")
-	@Length(max = 255)
 	private String mensaje;
 
 	public Empleado getEmpleado() {

@@ -210,51 +210,73 @@
 											<div class="modal-body text-left">		
 												<small>Seleccione los campos que se encuentran con errores e introduzca
 												en la caja de texto el valor que sería correcto.</small>
-												<form th:action="@{/perfil/incidencia/} + ${empleado.cod_empl}"
-													th:object="${incidenciaDatosPersonales}" method="post">	
+												
+												<form th:object="${incidenciaDatosPersonales}"
+												 th:action="@{/perfil/incidencia}"
+													method="post">	
 													
-															<!-- Default checked -->
-															<div class="custom-control custom-checkbox mt-4">
-																<input type="checkbox" class="custom-control-input"
-																	id="check1"> <label
-																	class="custom-control-label" for="check1">Nombre</label>
-																<input type="text" class="form-control col-md-6" th:field="*{nombre}"
-																		/>
+														<div class="custom-control custom-checkbox mt-5">
+															<div class="row">
+																<div class="col-md-6 mt-1">
+																	<input type="checkbox" class="custom-control-input"
+																		id="check1" th:field="*{hayNombre}"> <label
+																		class="custom-control-label" for="check1">Nombre</label>
+																</div>
+																<div class="col-md-6">
+																	<input type="text" class="form-control text-center"
+																			th:field="*{nombre}" />
+																</div>
 															</div>
-														
-															<!-- Default checked -->
-															<div class="custom-control custom-checkbox">
-																<input type="checkbox" class="custom-control-input"
-																	id="check2"> <label
-																	class="custom-control-label" for="check2">Primer Apellido</label>
-																<input type="text" class="form-control col-md-8"
-																		/>
-															</div>
-														
-															<!-- Default checked -->
-															<div class="custom-control custom-checkbox">
-																<input type="checkbox" class="custom-control-input"
-																	id="check3"> <label
-																	class="custom-control-label" for="check3">Segundo Apellido</label>
-																<input type="text" class="form-control col-md-8"
-																		/>
-															</div>
-														
-															<!-- Default checked -->
-															<div class="custom-control custom-checkbox mb-4">
-																<input type="checkbox" class="custom-control-input"
-																	id="check4"> <label
-																	class="custom-control-label" for="check4">Fecha de Nacimiento</label>
-																<input type="date" class="form-control col-md-6"
-																		/>
-															</div>
-														
-															<div class="modal-footer">
-														<button type="button" class="btn btn-danger"
-															data-dismiss="modal">Cerrar</button>
-														<button type="submit" class="btn btn-primary text-white" >Aceptar</button>
 														</div>
-													</form>
+														<div class="custom-control custom-checkbox mt-4">
+																<div class="row">
+																<div class="col-md-6 mt-1">
+																	<input type="checkbox" class="custom-control-input"
+																		id="check2" th:field="*{hayApellido1}"> <label
+																		class="custom-control-label" for="check2">Primer Apellido</label>
+																</div>
+																<div class="col-md-6">
+																	<input type="text" class="form-control text-center"
+																			th:field="*{apellido1}" />
+																</div>
+															</div>
+														</div>
+														<div class="custom-control custom-checkbox mt-4">
+																<div class="row">
+																<div class="col-md-6 mt-1">
+																	<input type="checkbox" class="custom-control-input"
+																		id="check3" th:field="*{hayApellido2}"> <label
+																		class="custom-control-label" for="check3">Segundo Apellido</label>
+																</div>
+																<div class="col-md-6">
+																	<input type="text" class="form-control text-center"
+																			th:field="*{apellido2}" />
+																</div>
+															</div>
+														</div>
+														<div class="custom-control custom-checkbox mt-4">
+																<div class="row">
+																<div class="col-md-6 mt-1">
+																	<input type="checkbox" class="custom-control-input"
+																		id="check4" th:field="*{hayFechaNacimiento}"> <label
+																		class="custom-control-label" for="check4">Fecha de Nacimiento</label>
+																</div>
+																<div class="col-md-6">
+																	<input type="date" class="form-control text-center"
+																			th:field="*{fechaNacimiento}" />
+																</div>
+															</div>
+															
+														</div>
+															
+														
+														<div class="modal-footer mt-5">
+															<button type="button" class="btn btn-danger"
+																data-dismiss="modal">Cerrar</button>
+															<button type="submit" class="btn btn-primary text-white">Aceptar</button>
+														</div>
+												</form>
+												
 											</div>
 											
 											

@@ -6,8 +6,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -56,6 +54,10 @@ public class PerfilController implements ConstantesUtils {
 		Usuario usuario = usuarioService.findByUsername(username);
 		Empleado empleado = usuario.getEmpleado();		
 
+		//Introduzco en el modelo el objeto para poder crear las incidencias
+		IncidenciaDatosPersonales incidenciaDatosPersonales = new IncidenciaDatosPersonales();	
+		model.put("incidenciaDatosPersonales", incidenciaDatosPersonales);
+		
 		model.put("empleado", empleado);
 		model.put("titulo", "Pefil del empleado");
 		return "perfil";
@@ -111,12 +113,11 @@ public class PerfilController implements ConstantesUtils {
 		return "redirect:/perfil";
 	}
 	
+	@RequestMapping(value = "/perfil/incidencia", method = RequestMethod.POST)
+	public String saveIncidencia(@ModelAttribute("incidenciaDatosPersonales") IncidenciaDatosPersonales incidenciaDatosPersonales,
+			BindingResult bindingResult, RedirectAttributes flash) {
 	
-	@RequestMapping(value = "/perfil/incidencia/{id}", method = RequestMethod.POST)
-	public String saveIncidencia(@PathVariable(value = "id") Long id,
-			@ModelAttribute("incidenciaDatosPersonales") IncidenciaDatosPersonales incidenciaDatosPersonales,
-			RedirectAttributes flash) {
-	
+		
 		Empleado empleadoBD = null;
 		
 		//Se obtiene primero el usuario conectado para obtener los datos del empleado
@@ -131,12 +132,26 @@ public class PerfilController implements ConstantesUtils {
 		 * Se crea la incidencia con estado abierta y con tipo ERROR para el empleado que se encuentra conectado
 		 */
 			System.out.println(fechaUtils.obtenerFechaActual());
+			System.out.println(incidenciaDatosPersonales.getNombre());
+			System.out.println(incidenciaDatosPersonales.isHayNombre());
+
+			System.out.println(incidenciaDatosPersonales.isHayApellido1());
+			System.out.println(incidenciaDatosPersonales.getApellido1());
+
+			System.out.println(incidenciaDatosPersonales.isHayApellido2());
+			System.out.println(incidenciaDatosPersonales.getApellido2());
+
+			System.out.println(incidenciaDatosPersonales.isHayFechaNacimiento());
+			System.out.println(incidenciaDatosPersonales.getFechaNacimiento());
+
+			
+			
 			Incidencia incidenciaNueva = new Incidencia();
 			incidenciaNueva.setEmpleado(empleadoBD);
 			incidenciaNueva.setTipo(INCIDENCIA_ERROR);
 			incidenciaNueva.setEstado(INCIDENCIA_ABIERTA);
 			incidenciaNueva.setFecha(fechaUtils.obtenerFechaActual());
-			incidenciaNueva.setMensaje("PRUEBA");
+			incidenciaNueva.setMensaje(generarMensaje(empleadoBD, incidenciaDatosPersonales));
 					
 			incidenciaService.save(incidenciaNueva);
 
@@ -151,7 +166,33 @@ public class PerfilController implements ConstantesUtils {
 	
 	public String generarMensaje(Empleado empleado, IncidenciaDatosPersonales incidenciaDatosPersonales) {
 		
-		return "";
+		String mensaje = "";
+		String anadirNombre = "";
+		String anadirApellido1 = "";
+		String anadirApellido2 = "";
+		String anadirFecha = "";
+		
+		
+		if(incidenciaDatosPersonales.isHayNombre()) {
+			anadirNombre = " Nombre: el valor correcto sería "+incidenciaDatosPersonales.getNombre();
+		}
+		
+		if(incidenciaDatosPersonales.isHayApellido1()) {
+			anadirApellido1 = " Primer Apellido: el valor correcto sería "+incidenciaDatosPersonales.getApellido1();
+		}
+		
+		if(incidenciaDatosPersonales.isHayApellido2()) {
+			anadirApellido2 = " Segundo Apellido: el valor correcto sería "+incidenciaDatosPersonales.getApellido2();
+		}
+		
+		if(incidenciaDatosPersonales.isHayFechaNacimiento()) {
+			anadirFecha = " Fecha de Nacimiento: el valor correcto sería "+incidenciaDatosPersonales.getFechaNacimiento();
+		}
+		
+		mensaje = "El usuario "+empleado.getUsuario().getUsername() +" tiene un error en sus datos personales en el siguiente campo: "
+				+ anadirNombre + anadirApellido1 + anadirApellido2 + anadirFecha;
+		
+		return mensaje;
 	}
 	
 }
