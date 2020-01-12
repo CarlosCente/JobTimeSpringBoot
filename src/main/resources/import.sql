@@ -37,6 +37,6 @@ INSERT INTO authorities (user_id, authority) VALUES (3,'ROLE_USER');
 INSERT INTO authorities (user_id, authority) VALUES (4,'ROLE_USER');
 
 /* Populate table incidencias */
-INSERT INTO incidencias (estado, fecha, mensaje, tipo, empleado_cod_empl) VALUES ('1', '2019-12-11', 'Se ha realizado mal el fichaje del dia 01/12/2019, no se ha realizado el correspondiente fichaje de salida pero si el de entrada del empleado ', '1', 2);
-INSERT INTO incidencias (estado, fecha, mensaje, tipo, empleado_cod_empl) VALUES ('2', '2019-12-11', 'Esto es una incidencia resuelta de prueba', '1', 1);
-INSERT INTO incidencias (estado, fecha, mensaje, tipo, empleado_cod_empl) VALUES ('2', '2019-12-11', 'Esto es una incidencia abierta de prueba ', '2', 1);
+INSERT INTO incidencias (estado, fecha, mensaje, tipo, empleado_cod_empl,descripcion) VALUES ('1', '2019-12-11', 'Se ha realizado mal el fichaje del dia 01/12/2019, no se ha realizado el correspondiente fichaje de salida pero si el de entrada del empleado ', '1', 2,'');
+INSERT INTO incidencias (estado, fecha, mensaje, tipo, empleado_cod_empl,descripcion) VALUES ('2', '2019-12-11', 'Esto es una incidencia resuelta de prueba', '1', 1,'');
+INSERT INTO incidencias (estado, fecha, mensaje, tipo, empleado_cod_empl,descripcion) VALUES ('2', '2019-12-11', 'Esto es una incidencia abierta de prueba ', '2', 1,'');

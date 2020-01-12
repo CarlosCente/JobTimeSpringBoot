@@ -117,6 +117,16 @@ public class PerfilController implements ConstantesUtils {
 	public String saveIncidencia(@ModelAttribute("incidenciaDatosPersonales") IncidenciaDatosPersonales incidenciaDatosPersonales,
 			BindingResult bindingResult, RedirectAttributes flash) {
 	
+		/*
+		 * Se controla que no vaya la incidencia completamente vacía
+		 */
+		if(!incidenciaDatosPersonales.isHayNombre() && !incidenciaDatosPersonales.isHayApellido1() && 
+				!incidenciaDatosPersonales.isHayApellido2() && !incidenciaDatosPersonales.isHayFechaNacimiento()) {
+			
+			flash.addFlashAttribute("error", "Error, no se puede crear una incidencia vacía");
+			return "redirect:/perfil";
+			
+		}
 		
 		Empleado empleadoBD = null;
 		
@@ -131,27 +141,14 @@ public class PerfilController implements ConstantesUtils {
 		 * Si no ocurre ningún error con el empleado...
 		 * Se crea la incidencia con estado abierta y con tipo ERROR para el empleado que se encuentra conectado
 		 */
-			System.out.println(fechaUtils.obtenerFechaActual());
-			System.out.println(incidenciaDatosPersonales.getNombre());
-			System.out.println(incidenciaDatosPersonales.isHayNombre());
 
-			System.out.println(incidenciaDatosPersonales.isHayApellido1());
-			System.out.println(incidenciaDatosPersonales.getApellido1());
-
-			System.out.println(incidenciaDatosPersonales.isHayApellido2());
-			System.out.println(incidenciaDatosPersonales.getApellido2());
-
-			System.out.println(incidenciaDatosPersonales.isHayFechaNacimiento());
-			System.out.println(incidenciaDatosPersonales.getFechaNacimiento());
-
-			
-			
 			Incidencia incidenciaNueva = new Incidencia();
 			incidenciaNueva.setEmpleado(empleadoBD);
 			incidenciaNueva.setTipo(INCIDENCIA_ERROR);
 			incidenciaNueva.setEstado(INCIDENCIA_ABIERTA);
 			incidenciaNueva.setFecha(fechaUtils.obtenerFechaActual());
-			incidenciaNueva.setMensaje(generarMensaje(empleadoBD, incidenciaDatosPersonales));
+			incidenciaNueva.setMensaje(INCIDENCIA_PERFIL);
+			incidenciaNueva.setDescripcion(generarDescripcion(empleadoBD, incidenciaDatosPersonales));
 					
 			incidenciaService.save(incidenciaNueva);
 
@@ -164,7 +161,7 @@ public class PerfilController implements ConstantesUtils {
 		return "redirect:/perfil";
 	}
 	
-	public String generarMensaje(Empleado empleado, IncidenciaDatosPersonales incidenciaDatosPersonales) {
+	public String generarDescripcion(Empleado empleado, IncidenciaDatosPersonales incidenciaDatosPersonales) {
 		
 		String mensaje = "";
 		String anadirNombre = "";
@@ -174,22 +171,34 @@ public class PerfilController implements ConstantesUtils {
 		
 		
 		if(incidenciaDatosPersonales.isHayNombre()) {
-			anadirNombre = " Nombre: el valor correcto sería "+incidenciaDatosPersonales.getNombre();
+			anadirNombre = " Nombre, el valor correcto sería "+incidenciaDatosPersonales.getNombre();
 		}
 		
 		if(incidenciaDatosPersonales.isHayApellido1()) {
-			anadirApellido1 = " Primer Apellido: el valor correcto sería "+incidenciaDatosPersonales.getApellido1();
+			if(!"".equals(anadirNombre)){
+				anadirApellido1 = " , también en el campo Primer Apellido, el valor correcto sería "+incidenciaDatosPersonales.getApellido1();
+			} else {
+				anadirApellido1 = " Primer Apellido, el valor correcto sería "+incidenciaDatosPersonales.getApellido1();
+			}
 		}
 		
 		if(incidenciaDatosPersonales.isHayApellido2()) {
-			anadirApellido2 = " Segundo Apellido: el valor correcto sería "+incidenciaDatosPersonales.getApellido2();
+			if(!"".equals(anadirApellido1) || !"".equals(anadirNombre)) {
+				anadirApellido2 = " , también en el campo Segundo Apellido, el valor correcto sería "+incidenciaDatosPersonales.getApellido2();
+			} else {
+				anadirApellido2 = " Segundo Apellido, el valor correcto sería "+incidenciaDatosPersonales.getApellido2();
+			}
 		}
 		
 		if(incidenciaDatosPersonales.isHayFechaNacimiento()) {
-			anadirFecha = " Fecha de Nacimiento: el valor correcto sería "+incidenciaDatosPersonales.getFechaNacimiento();
+			if(!"".equals(anadirApellido1) || !"".equals(anadirNombre) || !"".equals(anadirApellido2)) {
+				anadirFecha = " , también en el campo Fecha de Nacimiento, el valor correcto sería "+ fechaUtils.obtenerFechaParametroEnFormatoCadena(incidenciaDatosPersonales.getFechaNacimiento());
+			}else {
+				anadirFecha = " Fecha de Nacimiento, el valor correcto sería "+fechaUtils.obtenerFechaParametroEnFormatoCadena(incidenciaDatosPersonales.getFechaNacimiento());
+			}
 		}
 		
-		mensaje = "El usuario "+empleado.getUsuario().getUsername() +" tiene un error en sus datos personales en el siguiente campo: "
+		mensaje = "El usuario "+empleado.getUsuario().getUsername() +" tiene un error en sus datos personales en el campo "
 				+ anadirNombre + anadirApellido1 + anadirApellido2 + anadirFecha;
 		
 		return mensaje;

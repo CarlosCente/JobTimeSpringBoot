@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -46,6 +47,11 @@ public class Incidencia implements Serializable {
 	@Column(name = "mensaje")
 	private String mensaje;
 
+	@NotEmpty
+	@Lob
+	@Column(name = "descripcion")
+	private String descripcion;
+	
 	public Empleado getEmpleado() {
 		return empleado;
 	}
@@ -85,5 +91,15 @@ public class Incidencia implements Serializable {
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+	
+	
 	
 }

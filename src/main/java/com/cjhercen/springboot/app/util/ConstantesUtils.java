@@ -20,6 +20,11 @@ public interface ConstantesUtils {
 	public static final String INCIDENCIA_ADVERTENCIA = "2";
 	
 	/*
+	 * Mensaje para las incidencias de perfil
+	 */
+	public static final String INCIDENCIA_PERFIL = "Incidencia sobre los datos personales del empleado";
+	
+	/*
 	 * Ruta para las imagenes subidas al servidor
 	 */
 	public static final String RUTA_IMAGENES_EMPLEADOS = "C://jobtime//uploads//imagenes";

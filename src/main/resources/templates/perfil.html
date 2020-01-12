@@ -219,12 +219,14 @@
 															<div class="row">
 																<div class="col-md-6 mt-1">
 																	<input type="checkbox" class="custom-control-input"
-																		id="check1" th:field="*{hayNombre}"> <label
+																		id="check1" th:field="*{hayNombre}"
+																		onchange="enable_disable('check1','cajaNombre')"> <label
 																		class="custom-control-label" for="check1">Nombre</label>
 																</div>
 																<div class="col-md-6">
 																	<input type="text" class="form-control text-center"
-																			th:field="*{nombre}" />
+																			id="cajaNombre" th:field="*{nombre}" disabled required/>
+																		
 																</div>
 															</div>
 														</div>
@@ -232,12 +234,13 @@
 																<div class="row">
 																<div class="col-md-6 mt-1">
 																	<input type="checkbox" class="custom-control-input"
+																	onchange="enable_disable('check2','cajaApellido1')"
 																		id="check2" th:field="*{hayApellido1}"> <label
 																		class="custom-control-label" for="check2">Primer Apellido</label>
 																</div>
 																<div class="col-md-6">
 																	<input type="text" class="form-control text-center"
-																			th:field="*{apellido1}" />
+																		id="cajaApellido1" th:field="*{apellido1}" disabled required/>
 																</div>
 															</div>
 														</div>
@@ -245,12 +248,13 @@
 																<div class="row">
 																<div class="col-md-6 mt-1">
 																	<input type="checkbox" class="custom-control-input"
+																	onchange="enable_disable('check3','cajaApellido2')"
 																		id="check3" th:field="*{hayApellido2}"> <label
 																		class="custom-control-label" for="check3">Segundo Apellido</label>
 																</div>
 																<div class="col-md-6">
 																	<input type="text" class="form-control text-center"
-																			th:field="*{apellido2}" />
+																		id="cajaApellido2" th:field="*{apellido2}" disabled required/>
 																</div>
 															</div>
 														</div>
@@ -258,12 +262,13 @@
 																<div class="row">
 																<div class="col-md-6 mt-1">
 																	<input type="checkbox" class="custom-control-input"
+																	onchange="enable_disable('check4','cajaFecha')"
 																		id="check4" th:field="*{hayFechaNacimiento}"> <label
 																		class="custom-control-label" for="check4">Fecha de Nacimiento</label>
 																</div>
 																<div class="col-md-6">
 																	<input type="date" class="form-control text-center"
-																			th:field="*{fechaNacimiento}" />
+																		id="cajaFecha" th:field="*{fechaNacimiento}" disabled required/>
 																</div>
 															</div>
 															
