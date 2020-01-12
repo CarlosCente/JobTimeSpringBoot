@@ -63,6 +63,9 @@ public class Empleado implements Serializable {
 	@OneToMany(mappedBy = "empleado", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Fichaje> fichajes;
 
+	@OneToMany(mappedBy = "empleado", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Incidencia> incidencias;
+	
 	@OneToOne(mappedBy = "empleado", cascade = CascadeType.ALL)
 	private Usuario usuario;
 
@@ -151,6 +154,14 @@ public class Empleado implements Serializable {
 
 	public void setFichajes(List<Fichaje> fichajes) {
 		this.fichajes = fichajes;
+	}
+	
+	public List<Incidencia> getIncidencias() {
+		return incidencias;
+	}
+
+	public void setIncidencias(List<Incidencia> incidencias) {
+		this.incidencias = incidencias;
 	}
 
 	public Usuario getUsuario() {

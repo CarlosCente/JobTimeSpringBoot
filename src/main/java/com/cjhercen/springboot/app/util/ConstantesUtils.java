@@ -9,16 +9,20 @@ public interface ConstantesUtils {
 	
 	public static final String TIPO_ENTRADA = "ENTRADA";
 	public static final String TIPO_SALIDA = "SALIDA";
-	public static final String TIPO_RECUPERA_ENTRADA = "RECUPERA_ENTRADA";
-	public static final String TIPO_RECUPERA_SALIDA = "RECUPERA_SALIDA";
 
 	
 	/*
-	 * Constantes que definen los tipos de estado de las incidencias
+	 * Constantes que definen los tipos de estado y los tipos de las incidencias
 	 */
 	public static final String INCIDENCIA_ABIERTA = "1";
 	public static final String INCIDENCIA_RESUELTA = "2";
-
+	public static final String INCIDENCIA_ERROR = "1";
+	public static final String INCIDENCIA_ADVERTENCIA = "2";
+	
+	/*
+	 * Mensaje para las incidencias de perfil
+	 */
+	public static final String INCIDENCIA_PERFIL = "Incidencia sobre los datos personales del empleado";
 	
 	/*
 	 * Ruta para las imagenes subidas al servidor

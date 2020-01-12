@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+<body>
+
+	<header th:replace="layout/layout :: header"></header>
+
+	<div
+		class="container-fluid py-3 col-md-10 col-sm-12 col-lg-10 col-xl-10">
+
+		<div class="card bg-light">
+			<div class="card-header text-center font-weight-bold"
+				th:text="${titulo}"></div>
+			<div class="card-body">
+
+				<div class="col-md-12 col-xs-12 col-lg-12 col-xl-12">
+					<div class="card bg-light">
+						<div class="card-body">
+
+
+							<form th:action="@{/perfil/editar/} + ${empleado.cod_empl}"
+								th:object="${empleado}" method="post"
+								enctype="multipart/form-data">
+
+								<div class="row">
+
+									<div
+										class="col-md-12 col-lg-3 col-xl-3 col-xs-3 pt-2 text-center mt-3">
+
+										<img th:if="${#strings.length(empleado.foto) > 0}"
+											th:src="@{/uploads/imagenes/} + ${empleado.foto}" id="prev"
+											class="img-thumbnail rounded img-fluid w-75"> <img
+											th:if="${#strings.isEmpty(empleado.foto)}"
+											th:src="@{/images/user-empty.jpg}" id="prev"
+											class="img-thumbnail rounded img-fluid w-75">
+										<div class="custom-file mt-4">
+											<input type="file" class="custom-file-input"
+												id="inputGroupFile01" name="file"
+												aria-describedby="inputGroupFileAddon01"> <label
+												class="custom-file-label text-left" for="inputGroupFile01"
+												data-browse="Elegir">Seleccionar archivo</label>
+
+										</div>
+									</div>
+
+									<div class="col-md-12 col-lg-4 mx-auto">
+										<div class="form-group row mb-0">
+											<div class="row col-md-12">
+
+												<label class="col-sm-10 col-form-label "><small
+													class="font-weight-bold">Nombre</small> </label>
+
+											</div>
+											<div class="row col-md-12">
+
+												<input th:disabled="!${esAdmin}" type="text"
+													th:field="*{nombre}" class="form-control col-md-10"
+													th:errorclass="'form-control alert-danger'"
+													placeholder="Nombre" />
+											</div>
+										</div>
+										<div class="form-group row mb-0">
+											<div class="row col-md-12">
+
+												<label class="col-sm-10 col-form-label"><small
+													class="font-weight-bold">Primer Apellido</small> </label>
+											</div>
+											<div class="row col-md-12">
+
+												<input th:disabled="!${esAdmin}" type="text"
+													th:field="*{apellido1}" class="form-control col-md-10"
+													th:errorclass="'form-control alert-danger'"
+													placeholder="Primer Apellido" />
+											</div>
+										</div>
+										<div class="form-group row mb-0">
+											<div class="row col-md-12">
+
+												<label class="col-sm-10 col-form-label "><small
+													class="font-weight-bold">Segundo Apellido</small></label>
+											</div>
+
+											<div class="row col-md-12">
+
+												<input th:disabled="!${esAdmin}" type="text"
+													th:field="*{apellido2}" class="form-control col-md-10"
+													th:errorclass="'form-control alert-danger'"
+													placeholder="Segundo Apellido" />
+											</div>
+										</div>
+										<div class="form-group row mb-0">
+											<div class="row col-md-12">
+
+												<label class="col-sm-10 col-form-label"><small
+													class="font-weight-bold">Fecha de Nacimiento</small> </label>
+											</div>
+
+											<div class="row col-md-12">
+
+												<input th:disabled="!${esAdmin}" type="date"
+													class="form-control col-md-7" th:field="*{fechaNacim}"
+													th:errorclass="'form-control alert-danger'" />
+											</div>
+										</div>
+
+									</div>
+									<div class="col-md-12 col-lg-4">
+										<div class="form-group row mb-0">
+											<div class="row col-md-12">
+												<label class="col-sm-10 col-form-label"><small
+													class="font-weight-bold">Direccion </small></label>
+											</div>
+											<div class="row col-md-12">
+												<input type="text" class="form-control col-md-10"
+													th:field="*{direccion}"
+													th:errorclass="'form-control alert-danger'"
+													placeholder="Direcci�n" />
+											</div>
+
+
+										</div>
+										<div class="form-group row mb-0">
+											<div class="row col-md-12">
+												<label class="col-sm-10 col-form-label"><small
+													class="font-weight-bold">Pais</small> </label>
+											</div>
+											<div class="row col-md-12">
+												<input type="text" class="form-control col-md-10"
+													th:field="*{pais}"
+													th:errorclass="'form-control alert-danger'"
+													placeholder="Pa�s" />
+											</div>
+										</div>
+										<div class="form-group row mb-0">
+											<div class="row col-md-12">
+												<label class="col-sm-10 col-form-label"><small
+													class="font-weight-bold">Provincia</small> </label>
+											</div>
+											<div class="row col-md-12">
+												<input type="text" class="form-control col-md-10"
+													th:field="*{provincia}"
+													th:errorclass="'form-control alert-danger'"
+													placeholder="Provincia" />
+											</div>
+										</div>
+										<div class="form-group row mb-0">
+											<div class="row col-md-12">
+												<label class="col-sm-10 col-form-label"><small
+													class="font-weight-bold">Localidad </small></label>
+											</div>
+											<div class="row col-md-12">
+												<input type="text" class="form-control col-md-10 "
+													th:field="*{localidad}"
+													th:errorclass="'form-control alert-danger'"
+													placeholder="Localidad" />
+											</div>
+										</div>
+
+
+
+									</div>
+								</div>
+
+								<div class="row mt-5">
+									<div class="col-md-11">
+										<div class="row float-right ">
+											<div class="form-group">
+												<input value="Volver" type="button"
+													class="btn btn-danger mr-4" onclick="history.back()" />
+											</div>
+											<div class="form-group">
+												<input value="Editar Empleado" type="submit"
+													class="btn btn-primary" />
+											</div>
+										</div>
+
+									</div>
+
+
+								</div>
+
+							</form>
+
+							<div class="row text-center mt-4 ">
+								<div class="col-md-12 col-lg-12 col-xs-12">
+									<small>Sólo dispone de permisos para cambiar los datos
+										de la dirección, si desea modificar algún dato personal por
+										cuestión de errores en los mismos, abra una incidencia al
+										administrador.<br>
+										<button class="btn btn-sm btn-primary mt-3"
+											data-toggle="modal" data-target="#modalIncidencia">Abrir
+											Incidencia</button>
+									</small>
+								</div>
+								<div class="modal fade" id="modalIncidencia" tabindex="-1"
+									role="dialog" aria-labelledby="modalIncidencia"
+									aria-hidden="true">
+									<div class="modal-dialog modal-dialog-centered modal-md"
+										role="document">
+										<div class="modal-content">
+											<div class="modal-header bg-dark text-white">
+												<p class="modal-title w-100 text-center"
+													id="exampleModalLongTitle">Incidencia sobre datos del
+													empleado</p>
+												<button type="button" class="close text-white"
+													data-dismiss="modal" aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+											</div>
+											<div class="modal-body text-left">		
+												<small>Seleccione los campos que se encuentran con errores e introduzca
+												en la caja de texto el valor que sería correcto.</small>
+												
+												<form th:object="${incidenciaDatosPersonales}"
+												 th:action="@{/perfil/incidencia}"
+													method="post">	
+													
+														<div class="custom-control custom-checkbox mt-5">
+															<div class="row">
+																<div class="col-md-6 mt-1">
+																	<input type="checkbox" class="custom-control-input"
+																		id="check1" th:field="*{hayNombre}"
+																		onchange="enable_disable('check1','cajaNombre')"> <label
+																		class="custom-control-label" for="check1">Nombre</label>
+																</div>
+																<div class="col-md-6">
+																	<input type="text" class="form-control text-center"
+																			id="cajaNombre" th:field="*{nombre}" disabled required/>
+																		
+																</div>
+															</div>
+														</div>
+														<div class="custom-control custom-checkbox mt-4">
+																<div class="row">
+																<div class="col-md-6 mt-1">
+																	<input type="checkbox" class="custom-control-input"
+																	onchange="enable_disable('check2','cajaApellido1')"
+																		id="check2" th:field="*{hayApellido1}"> <label
+																		class="custom-control-label" for="check2">Primer Apellido</label>
+																</div>
+																<div class="col-md-6">
+																	<input type="text" class="form-control text-center"
+																		id="cajaApellido1" th:field="*{apellido1}" disabled required/>
+																</div>
+															</div>
+														</div>
+														<div class="custom-control custom-checkbox mt-4">
+																<div class="row">
+																<div class="col-md-6 mt-1">
+																	<input type="checkbox" class="custom-control-input"
+																	onchange="enable_disable('check3','cajaApellido2')"
+																		id="check3" th:field="*{hayApellido2}"> <label
+																		class="custom-control-label" for="check3">Segundo Apellido</label>
+																</div>
+																<div class="col-md-6">
+																	<input type="text" class="form-control text-center"
+																		id="cajaApellido2" th:field="*{apellido2}" disabled required/>
+																</div>
+															</div>
+														</div>
+														<div class="custom-control custom-checkbox mt-4">
+																<div class="row">
+																<div class="col-md-6 mt-1">
+																	<input type="checkbox" class="custom-control-input"
+																	onchange="enable_disable('check4','cajaFecha')"
+																		id="check4" th:field="*{hayFechaNacimiento}"> <label
+																		class="custom-control-label" for="check4">Fecha de Nacimiento</label>
+																</div>
+																<div class="col-md-6">
+																	<input type="date" class="form-control text-center"
+																		id="cajaFecha" th:field="*{fechaNacimiento}" disabled required/>
+																</div>
+															</div>
+															
+														</div>
+															
+														
+														<div class="modal-footer mt-5">
+															<button type="button" class="btn btn-danger"
+																data-dismiss="modal">Cerrar</button>
+															<button type="submit" class="btn btn-primary text-white">Aceptar</button>
+														</div>
+												</form>
+												
+											</div>
+											
+											
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+	<footer th:replace="layout/layout :: footer"></footer>
+
+	<script>
+		var reader = new FileReader();
+		reader.onload = function(r_event) {
+			document.getElementById('prev').setAttribute('src',
+					r_event.target.result);
+		}
+
+		document.getElementsByName('file')[0].addEventListener('change',
+				function(event) {
+					reader.readAsDataURL(this.files[0]);
+				});
+	</script>
+</body>
+</html>
