@@ -161,6 +161,12 @@ public class PerfilController implements ConstantesUtils {
 		return "redirect:/perfil";
 	}
 	
+	/**
+	 * Método que genera la descripción de la incidencia según del tipo que sea y de los datos
+	 * @param empleado empleado que crea la incidencia (usuario conectado)
+	 * @param incidenciaDatosPersonales datos pasados en el modal
+	 * @return String con la descripcion de la incidencia
+	 */
 	public String generarDescripcion(Empleado empleado, IncidenciaDatosPersonales incidenciaDatosPersonales) {
 		
 		String mensaje = "";
