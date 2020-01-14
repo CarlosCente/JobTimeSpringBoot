@@ -22,11 +22,11 @@ public interface ConstantesUtils {
 	/*
 	 * Mensaje para las incidencias
 	 */
-	public static final String INCIDENCIA_PERFIL = "Incidencia sobre los datos personales del empleado";
-	public static final String INCIDENCIA_DATOS_DIRECCION = "Incidencia sobre los datos de dirección del empleado";
-	public static final String INCIDENCIA_FICHAJE_ENTRADA = "Incidencia sobre el fichaje de entrada del empleado";
-	public static final String INCIDENCIA_FICHAJE_SALIDA = "Incidencia sobre el fichaje de salida del empleado";
-	public static final String INCIDENCIA_FICHAJE_OTROS = "Incidencia sobre el fichaje del empleado (Otras)";
+	public static final String INCIDENCIA_PERFIL = "Incidencia de Datos personales";
+	public static final String INCIDENCIA_DATOS_DIRECCION = "Incidencia de Datos de dirección";
+	public static final String INCIDENCIA_FICHAJE_ENTRADA = "Incidencia de Fichaje de entrada";
+	public static final String INCIDENCIA_FICHAJE_SALIDA = "Incidencia de Fichaje de salida";
+	public static final String INCIDENCIA_FICHAJE_OTROS = "Incidencia de Fichaje (Otras)";
 	
 	/*
 	 * Tipos de incidencias
