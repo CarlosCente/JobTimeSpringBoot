@@ -17,7 +17,6 @@ import com.cjhercen.springboot.app.models.entity.Empleado;
 import com.cjhercen.springboot.app.models.entity.Fichaje;
 import com.cjhercen.springboot.app.models.entity.Incidencia;
 import com.cjhercen.springboot.app.models.entity.Usuario;
-import com.cjhercen.springboot.app.models.object.IncidenciaDatosPersonales;
 import com.cjhercen.springboot.app.models.object.IncidenciaFichaje;
 import com.cjhercen.springboot.app.models.service.impl.EmpleadoServiceImpl;
 import com.cjhercen.springboot.app.models.service.impl.FichajeServiceImpl;
@@ -209,17 +208,17 @@ public class FicharController implements ConstantesUtils {
 			incidenciaNueva.setEstado(INCIDENCIA_ABIERTA);
 			incidenciaNueva.setFecha(fechaUtils.obtenerFechaActual());
 			
-			//Se establece el mensaje, el tipo de incidencia que es
+			//Se establece el mensaje (el tipo de incidencia que es)
 			if(INCIDENCIA_ENTRADA.equals(incidenciaFichaje.getTipo())) {
 				incidenciaNueva.setMensaje(INCIDENCIA_FICHAJE_ENTRADA);
 			} else if (INCIDENCIA_SALIDA.equals(incidenciaFichaje.getTipo())) {
 				incidenciaNueva.setMensaje(INCIDENCIA_FICHAJE_SALIDA);
 			} else if (INCIDENCIA_OTROS.equals(incidenciaFichaje.getTipo())) {
-				incidenciaNueva.setMensaje(INCIDENCIA_OTROS);
+				incidenciaNueva.setMensaje(INCIDENCIA_FICHAJE_OTROS);
 			}
 			
 			//Se establece la descripcion dependiendo tambien del tipo de incidencia
-			incidenciaNueva.setDescripcion("PRUEBA");
+			incidenciaNueva.setDescripcion(generarDescripcion(empleadoBD, incidenciaFichaje));
 					
 			incidenciaService.save(incidenciaNueva);
 
@@ -256,25 +255,44 @@ public class FicharController implements ConstantesUtils {
 	public String generarDescripcion(Empleado empleado, IncidenciaFichaje incidenciaFichaje) {
 		
 		String mensaje = "";
-		String fechaHoraEntrada = "";
-		String fechaHoraSalida = "";
-		String comentarioEntrada = "";
-		String comentarioSalida = "";
-		String comentarioOtro = "";
-		
+				
 		if(INCIDENCIA_ENTRADA.equals(incidenciaFichaje.getTipo())) {
 			
+			String fechaHoraEntrada = incidenciaFichaje.getFechaHoraEntrada();
+			String comentarioEntrada = incidenciaFichaje.getComentarioEntrada();
+			
+			String [] partesEntrada = fechaHoraEntrada.split(" ");
+			String fechaEntrada = partesEntrada[0];
+			String horaEntrada = partesEntrada[1];
+			
+			mensaje = "El usuario "+empleado.getUsuario().getUsername() + " (" + empleado.getNombre() + " " +
+		empleado.getApellido1() + " " + empleado.getApellido2() +"), ha creado una incidencia con su fichaje de entrada del día "
+				+ fechaEntrada +" la hora correcta sería a las "+ horaEntrada +". Además el usuario ha añadido el siguiente comentario:"
+						+ " "+comentarioEntrada;
 		} 
 		
 		if(INCIDENCIA_SALIDA.equals(incidenciaFichaje.getTipo())) {
+			String fechaHoraSalida = incidenciaFichaje.getFechaHoraSalida();
+			String comentarioSalida = incidenciaFichaje.getComentarioSalida();
 			
+			String [] partesSalida = fechaHoraSalida.split(" ");
+			String fechaSalida = partesSalida[0];
+			String horaSalida = partesSalida[1];
+			
+			mensaje = "El usuario "+empleado.getUsuario().getUsername() + " (" + empleado.getNombre() + " " +
+					empleado.getApellido1() + " " + empleado.getApellido2() +"), ha creado una incidencia con su fichaje de salida del día "
+					+ fechaSalida + " la hora correcta sería a las "+ horaSalida + ". Además el usuario ha añadido el siguiente comentario:"
+					+ " " + comentarioSalida;
 		} 
 
 		if(INCIDENCIA_OTROS.equals(incidenciaFichaje.getTipo())) {
-		
+			String comentarioOtro = incidenciaFichaje.getComentarioOtro();
+			
+			mensaje = "El usuario "+empleado.getUsuario().getUsername() + " (" + empleado.getNombre() + " " +
+					empleado.getApellido1() + " " + empleado.getApellido2() +"), ha creado una incidencia con su fichaje y ha dejado el"
+							+ " siguiente comentario: " + comentarioOtro;
+
 		} 
-		
-		
 		
 		return mensaje;
 	}
