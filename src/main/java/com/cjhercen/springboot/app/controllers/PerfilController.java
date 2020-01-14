@@ -6,6 +6,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -31,6 +33,8 @@ import com.cjhercen.springboot.app.util.FechaUtils;
 
 @Controller
 public class PerfilController implements ConstantesUtils {
+	
+	private final Logger log = LoggerFactory.getLogger(getClass());
 	
 	@Autowired
 	private IEmpleadoService empleadoService;
@@ -74,6 +78,8 @@ public class PerfilController implements ConstantesUtils {
 		empleadoBD = usuario.getEmpleado();		
 
 		if (empleadoBD != null) {
+			
+			String descripcionInci = generarDescripcionAdvertencia(empleadoBD, empleado);
 
 			// Comprobación de foto
 			String fotoActual = empleadoBD.getFoto();
@@ -97,11 +103,17 @@ public class PerfilController implements ConstantesUtils {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
+			
 			empleadoBD.setDireccion(empleado.getDireccion());
 			empleadoBD.setLocalidad(empleado.getLocalidad());
 			empleadoBD.setPais(empleado.getPais());
 			empleadoBD.setProvincia(empleado.getProvincia());
+			
+			//Se genera la advertencia para el administrador (empleadoBDCopia guarda los datos que habia
+			// anteriormente en la BBDD antes de hacer la modificacion)
+			generarIncidenciaAdvertencia(empleadoBD, empleado, descripcionInci);
+			
+			//Se guardan las modificaciones
 			empleadoService.save(empleadoBD);
 
 			flash.addFlashAttribute("success", "Has editado tu información correctamente");
@@ -152,6 +164,9 @@ public class PerfilController implements ConstantesUtils {
 					
 			incidenciaService.save(incidenciaNueva);
 
+			log.info("Se ha generado una incidencia de tipo '"+ INCIDENCIA_PERFIL +"' al querer modificar "
+					+ "el empleado sus datos personales del perfil.");
+			
 			flash.addFlashAttribute("success", "Incidencia añadida correctamente");
 
 		} else {
@@ -206,6 +221,92 @@ public class PerfilController implements ConstantesUtils {
 		
 		mensaje = "El usuario "+empleado.getUsuario().getUsername() +" tiene un error en sus datos personales en el campo "
 				+ anadirNombre + anadirApellido1 + anadirApellido2 + anadirFecha;
+		
+		return mensaje;
+	}
+	
+	/**
+	 * Método que genera una incidencia de tipo advertencia para indicar que ha modificado sus datos
+	 * de direccion al administrador. Se comparan los datos de la BD con los que se pasan en el formulario
+	 * @param empleadoBD datos del empleado en la BBDD
+	 * @param empleadoForm datos del empleado en el formulario
+	 */
+	private void generarIncidenciaAdvertencia(Empleado empleadoBD, Empleado empleadoForm, String descripcion) {
+		
+		Incidencia incidenciaNueva = new Incidencia();
+		incidenciaNueva.setEmpleado(empleadoBD);
+		incidenciaNueva.setTipo(INCIDENCIA_ADVERTENCIA);
+		incidenciaNueva.setEstado(INCIDENCIA_ABIERTA);
+		incidenciaNueva.setFecha(fechaUtils.obtenerFechaActual());
+		incidenciaNueva.setMensaje(INCIDENCIA_DATOS_DIRECCION);
+		incidenciaNueva.setDescripcion(descripcion);
+				
+		incidenciaService.save(incidenciaNueva);
+
+		log.info("Se ha generado una incidencia de tipo '"+ INCIDENCIA_DATOS_DIRECCION +"' al modificar "
+				+ "el empleado sus datos de dirección");
+		
+	}
+	
+	private String generarDescripcionAdvertencia(Empleado empleadoBD, Empleado empleadoForm) {
+		
+		String anadirDireccion = "";
+		String anadirLocalidad = "";
+		String anadirPais = "";
+		String anadirProvincia = "";
+		String separador = ", ";
+		
+		String mensaje = "El usuario " + empleadoBD.getUsuario().getUsername() + " ("+ empleadoBD.getNombre() +
+				" " + empleadoBD.getApellido1() + " " + empleadoBD.getApellido2() + "), ha modificado los siguientes"
+					+ " datos de dirección: ";
+		
+		if(!empleadoBD.getDireccion().equals(empleadoForm.getDireccion())) {
+			anadirDireccion = " el campo 'Direccion', el nuevo valor es: " + empleadoForm.getDireccion();
+		}
+		
+		if(!empleadoBD.getLocalidad().equals(empleadoForm.getLocalidad())) {
+			anadirLocalidad = " el campo 'Localidad', el nuevo valor es: " + empleadoForm.getLocalidad();
+		}
+		
+		if(!empleadoBD.getPais().equals(empleadoForm.getPais())) {
+			anadirPais = " el campo 'Pais', el nuevo valor es: " + empleadoForm.getPais();
+		}
+		
+		if(!empleadoBD.getProvincia().equals(empleadoForm.getProvincia())) {
+			anadirProvincia = " el campo 'Provincia', el nuevo valor es: " + empleadoForm.getProvincia();
+		}
+		
+		if(!"".equals(anadirDireccion)) {
+			mensaje += anadirDireccion;
+		}
+		
+		if(!"".equals(anadirLocalidad)) {
+			if(!"".equals(anadirDireccion)){
+				mensaje += separador;
+				mensaje += anadirLocalidad;
+			} else {
+				mensaje += anadirLocalidad;
+			}
+			
+		}
+		
+		if(!"".equals(anadirPais)) {
+			if(!"".equals(anadirDireccion) || !"".equals(anadirLocalidad)){
+				mensaje += separador;
+				mensaje += anadirPais;
+			} else {
+				mensaje += anadirPais;
+			}
+		}
+		
+		if(!"".equals(anadirProvincia) || !"".equals(anadirLocalidad) || !"".equals(anadirPais)) {
+			if(!"".equals(anadirDireccion)){
+				mensaje += separador;
+				mensaje += anadirProvincia;
+			} else {
+				mensaje += anadirProvincia;
+			}
+		}
 		
 		return mensaje;
 	}
