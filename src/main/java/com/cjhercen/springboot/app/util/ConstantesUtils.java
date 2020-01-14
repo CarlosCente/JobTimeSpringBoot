@@ -20,9 +20,20 @@ public interface ConstantesUtils {
 	public static final String INCIDENCIA_ADVERTENCIA = "2";
 	
 	/*
-	 * Mensaje para las incidencias de perfil
+	 * Mensaje para las incidencias
 	 */
 	public static final String INCIDENCIA_PERFIL = "Incidencia sobre los datos personales del empleado";
+	public static final String INCIDENCIA_FICHAJE_ENTRADA = "Incidencia sobre el fichaje de entrada del empleado";
+	public static final String INCIDENCIA_FICHAJE_SALIDA = "Incidencia sobre el fichaje de salida del empleado";
+	public static final String INCIDENCIA_FICHAJE_OTROS = "Incidencia sobre el fichaje del empleado (Otras)";
+	
+	/*
+	 * Tipos de incidencias
+	 */
+	public static final String INCIDENCIA_ENTRADA = "entrada";
+	public static final String INCIDENCIA_SALIDA = "salida";
+	public static final String INCIDENCIA_OTROS = "otro";
+	public static final String INCIDENCIA_NO_SELECCION = "nada";
 	
 	/*
 	 * Ruta para las imagenes subidas al servidor

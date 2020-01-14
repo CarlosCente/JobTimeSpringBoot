@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="layout/layout :: head"></head>
+<head>
+
+<link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/fontawesome.min.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap-datetimepicker.min.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/all.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+
+</head>
 <body>
 
 	<header th:replace="layout/layout :: header"></header>
@@ -272,17 +281,104 @@
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
-					<div class="modal-body"></div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-						<a type="button" class="btn btn-primary">Aceptar</a>
+					<div class="modal-body text-center">
+																
+						<form th:object="${incidenciaFichaje}"
+								 th:action="@{/fichar/incidencia}"
+									method="post">														
+									 <div class="form-group mt-2">
+									  <label for="sel1">En caso de que haya un problema con la hora
+									  de entrada/salida, debe indicar la hora que sería correcta. Para Otro debe
+									  indicar el problema que tiene.</label>
+									  <select onChange="cargarSeleccionado()" class="form-control mt-2" id="sel1" th:field="*{tipo}">
+									  	<option value="nada">Seleccione una opción</option>
+									    <option value="entrada">Fichaje de entrada</option>
+									    <option value="salida">Fichaje de salida</option>
+									    <option value="otro">Otro</option>
+									  </select>
+									</div> 
+									
+									<div class="form-group text-center">
+										<input type='text' class="form-control text-center" id='horaEntrada' hidden="true" disabled required
+										placeholder="Introduce la fecha y la hora correcta" th:field="*{fechaHoraEntrada}" />		
+														              	 
+									</div>
+										
+									<div class="form-group">
+									  <textarea class="form-control rounded-0" id="comentarioEntrada" rows="5" placeholder="Indique el problema que ha tenido con su fichaje de entrada"
+									 	hidden="true" disabled required th:field="*{comentarioEntrada}"></textarea>
+									</div>
+									
+									<div class="form-group text-center">
+									
+										<input type='text' class="form-control text-center" id='horaSalida' hidden="true" disabled required
+										placeholder="Introduce la fecha y la hora correcta" th:field="*{fechaHoraSalida}"/>						              	 
+
+									</div>
+																
+									<div class="form-group">
+									  <textarea class="form-control rounded-0" id="comentarioSalida" rows="5" placeholder="Indique el problema que ha tenido con su fichaje de salida."
+									  	hidden="true" disabled required th:field="*{comentarioSalida}"></textarea>
+									</div>
+									
+									<div class="form-group">
+									  <textarea class="form-control rounded-0" id="tipoOtro" rows="5" placeholder="Indique su problema. En caso de tratarse de alguna hora del fichaje, indicar las horas a las que normalmente suele fichar a diario."
+									 	hidden="true" disabled required th:field="*{comentarioOtro}"></textarea>
+									</div>
+																							
+									<div class="modal-footer mt-5">
+										<button type="button" class="btn btn-danger"
+											data-dismiss="modal">Cerrar</button>
+										<button type="submit" class="btn btn-primary text-white">Aceptar</button>
+									</div>
+						</form>
+
 					</div>
+					
 				</div>
 			</div>
 		</div>
 </div>
-
+ 
 	<footer th:replace="layout/layout :: footer"></footer>
 
+        <script type="text/javascript">
+            $(function () {
+                $('#horaEntrada').datetimepicker({
+                	locale: 'es',
+                	icons: {
+                		time: 'fas fa-clock',
+                        date: 'fas fa-calendar',
+                		up: "fa fa-chevron-circle-up",
+                	    down: "fa fa-chevron-circle-down",
+                	    next: 'fa fa-chevron-circle-right',
+                	    previous: 'fa fa-chevron-circle-left'
+                	},
+                	widgetPositioning: {
+                		vertical: 'bottom'
+                	}
+                });
+                $('#horaSalida').datetimepicker({
+                	locale: 'es',
+                	icons: {
+                		time: 'fas fa-clock',
+                        date: 'fas fa-calendar',
+                		up: "fa fa-chevron-circle-up",
+                	    down: "fa fa-chevron-circle-down",
+                	    next: 'fa fa-chevron-circle-right',
+                	    previous: 'fa fa-chevron-circle-left'
+                	},
+                	widgetPositioning: {
+                		vertical: 'bottom'
+                	}
+                });
+            });
+        </script>
+
+		<script th:src="@{/js/jquery-3.3.1.min.js}"></script>
+		<script th:src="@{/js/popper.min.js}"></script>
+		<script th:src="@{/js/bootstrap.min.js}"></script>
+		<script th:src="@{/js/moment-with-locales.js}"></script>
+		<script th:src="@{/js/bootstrap-datetimepicker.min.js}"></script>
 </body>
 </html>
