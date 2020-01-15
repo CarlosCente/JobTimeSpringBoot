@@ -12,8 +12,12 @@ public interface IIncidenciaService {
 	
 	public Incidencia findByEmpleadoAndFecha(Empleado empleado, Date fecha);
 	
+	public Incidencia findByEmpleadoAndFechaAndMensaje(Empleado empleado, Date fecha, String mensaje);
+	
 	public List<Incidencia> findAll();
 	
 	public void save(Incidencia incidencia);
-	
+
+	void delete(Incidencia incidencia);
+		
 }

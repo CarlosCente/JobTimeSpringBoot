@@ -38,9 +38,9 @@ INSERT INTO authorities (user_id, authority) VALUES (4,'ROLE_USER');
 /* Populate table incidencias */
 INSERT INTO incidencias (estado, fecha, mensaje, tipo, empleado_cod_empl,descripcion) VALUES ('1', '2019-12-11', 'Incidencia Fichaje de salida', '1', 2,'');
 INSERT INTO incidencias (estado, fecha, mensaje, tipo, empleado_cod_empl,descripcion) VALUES ('2', '2019-12-14', 'Incidencia Fichaje de entrada', '1', 1,'');
-INSERT INTO incidencias (estado, fecha, mensaje, tipo, empleado_cod_empl,descripcion) VALUES ('2', '2019-12-13', 'Incidencia Fichaje de entrada', '2', 1,'');
-INSERT INTO incidencias (estado, fecha, mensaje, tipo, empleado_cod_empl,descripcion) VALUES ('2', '2019-12-12', 'Incidencia Fichaje de entrada', '2', 1,'');
-INSERT INTO incidencias (estado, fecha, mensaje, tipo, empleado_cod_empl,descripcion) VALUES ('2', '2019-12-16', 'Incidencia Fichaje de salida', '2', 1,'');
-INSERT INTO incidencias (estado, fecha, mensaje, tipo, empleado_cod_empl,descripcion) VALUES ('2', '2019-12-12', 'Incidencia Fichaje de entrada', '1', 3,'');
-INSERT INTO incidencias (estado, fecha, mensaje, tipo, empleado_cod_empl,descripcion) VALUES ('2', '2019-12-16', 'Incidencia datos personales', '2', 3,'');
-INSERT INTO incidencias (estado, fecha, mensaje, tipo, empleado_cod_empl,descripcion) VALUES ('2', '2019-12-12', 'Incidencia Fichaje de entrada', '2', 4,'');
+INSERT INTO incidencias (estado, fecha, mensaje, tipo, empleado_cod_empl,descripcion) VALUES ('1', '2019-12-13', 'Incidencia Fichaje de entrada', '2', 1,'');
+INSERT INTO incidencias (estado, fecha, mensaje, tipo, empleado_cod_empl,descripcion) VALUES ('1', '2019-12-12', 'Incidencia Fichaje de entrada', '2', 1,'');
+INSERT INTO incidencias (estado, fecha, mensaje, tipo, empleado_cod_empl,descripcion) VALUES ('1', '2019-12-16', 'Incidencia Fichaje de salida', '2', 1,'');
+INSERT INTO incidencias (estado, fecha, mensaje, tipo, empleado_cod_empl,descripcion) VALUES ('1', '2019-12-12', 'Incidencia Fichaje de entrada', '1', 3,'');
+INSERT INTO incidencias (estado, fecha, mensaje, tipo, empleado_cod_empl,descripcion) VALUES ('1', '2019-12-16', 'Incidencia datos personales', '2', 3,'');
+INSERT INTO incidencias (estado, fecha, mensaje, tipo, empleado_cod_empl,descripcion) VALUES ('1', '2019-12-12', 'Incidencia Fichaje de entrada', '2', 4,'');
