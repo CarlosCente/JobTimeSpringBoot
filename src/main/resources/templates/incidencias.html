@@ -68,16 +68,16 @@
 	                 
 	                  <div class="title font-weight-bold ">Incidencias</div>
 	                </div>
-	                <div class="card-body table-responsive">
+	                <div class="card-body ">
 	                
-	                <table id="table" class="table table-hover table-borderless">
+	                <table id="tablaIncidencias" class="table-hover table-borderless dataTables_length" >
 										<thead class="text-center bg-dark text-white">
 										<tr>
 											<th>Usuario</th>
 											<th>Fecha</th>
 											<th>Estado</th>
 											<th>Tipo de incidencia</th>
-											<th>Descripción</th>
+											<th >Descripción</th>
 											<th>Resolver</th>
 											<th>Eliminar</th>
 										</tr>
@@ -130,8 +130,11 @@
 															</div>
 															<div class="modal-footer">
 																<a class="btn btn-info text-white" data-dismiss="modal">Cancelar</a>
-																<a th:href="@{/incidencias/eliminar/} + ${incidencia.mensaje} + '/' +
-															 		${incidencia.empleado.cod_empl} + '/' + ${incidencia.fecha}"
+																<a th:href="@{/incidencias/eliminar/} + 
+																	${incidencia.mensaje} + '/' +
+																 	${incidencia.empleado.cod_empl} +
+																 	 '/' + 
+																 	${incidencia.fecha}"
 															  		type="button" class="btn btn-danger text-white">Borrar</a>
 															</div>
 														</div>
@@ -204,6 +207,31 @@
 
 	<script>
 	
+	$(document).ready( function () {
+		 var table = $('#tablaIncidencias').DataTable({
+		        "language": {
+		            "lengthMenu": "Mostrar _MENU_ registros por página",
+		            "zeroRecords": "Sin resultados",
+		            "info": "Mostrando página _PAGE_ de _PAGES_",
+		            "infoEmpty": "No hay datos disponibles",
+		            "infoFiltered": "(filtrados de _MAX_ registros en total)",
+		            "loadingRecords": "Cargando...",
+		            "processing":     "Procesando...",
+		            "search": "Buscar:",
+		            "paginate": {
+		            	"first":      "Primera",
+		                "last":       "Última",
+		                "next":       "Siguiente",
+		                "previous":   "Anterior"
+		            }
+		        },
+		        "lengthMenu": [ 6, 10, 15 , 20 ],
+		        "order": [ 2, 'asc'],
+		        "rowId": "id"
+		    });
+	});
+				
+			
 	var totalErrores = [[${totalErrores}]];
 	var totalAdvertencias = [[${totalAdvertencias}]];
 	var totalAbiertas = [[${totalAbiertas}]];
