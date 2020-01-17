@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -11,9 +12,6 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -31,7 +29,6 @@ import com.cjhercen.springboot.app.models.entity.Empleado;
 import com.cjhercen.springboot.app.models.service.interfaces.IEmpleadoService;
 import com.cjhercen.springboot.app.models.service.interfaces.IUploadFileService;
 import com.cjhercen.springboot.app.util.ConstantesUtils;
-import com.cjhercen.springboot.app.util.paginator.PageRender;
 
 @Controller
 public class EmpleadoController implements ConstantesUtils {
@@ -45,19 +42,11 @@ public class EmpleadoController implements ConstantesUtils {
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
 	@RequestMapping(value = "/listar", method = RequestMethod.GET)
-	public String listar(@RequestParam(name = "page", defaultValue = "0") int page, Model model) {
+	public String listar(Model model) {
 
-		/*
-		 * CAMBIO FUTURO, añadir el numero de elementos a mostrar en la tabla a través
-		 * de la configuración
-		 */
-		Pageable pageRequest = PageRequest.of(page, 6);
+		ArrayList<Empleado> empleados = (ArrayList<Empleado>) empleadoService.findAll();
 
-		Page<Empleado> empleados = empleadoService.findAll(pageRequest);
-
-		PageRender<Empleado> pageRender = new PageRender<>("/listar", empleados);
 		model.addAttribute("empleados", empleados);
-		model.addAttribute("page", pageRender);
 		return "listar";
 	}
 

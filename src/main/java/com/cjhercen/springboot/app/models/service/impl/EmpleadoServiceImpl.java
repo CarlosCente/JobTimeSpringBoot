@@ -46,9 +46,4 @@ public class EmpleadoServiceImpl implements IEmpleadoService {
 		
 	}
 
-	@Override
-	@Transactional(readOnly = true)
-	public Page<Empleado> findAll(Pageable pageable) {
-		return empleadoDao.findAll(pageable);
-	}
 }

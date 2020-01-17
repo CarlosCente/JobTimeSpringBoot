@@ -29,10 +29,10 @@
 
 										<img th:if="${#strings.length(empleado.foto) > 0}"
 											th:src="@{/uploads/imagenes/} + ${empleado.foto}" id="prev"
-											class="img-thumbnail rounded img-fluid w-75"> <img
+											class="rounded-circle rounded img-fluid w-75"> <img
 											th:if="${#strings.isEmpty(empleado.foto)}"
 											th:src="@{/images/user-empty.jpg}" id="prev"
-											class="img-thumbnail rounded img-fluid w-75">
+											class="rounded-circle rounded img-fluid w-75">
 										<div class="custom-file mt-4">
 											<input type="file" class="custom-file-input"
 												id="inputGroupFile01" name="file"

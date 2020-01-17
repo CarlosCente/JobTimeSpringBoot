@@ -7,17 +7,13 @@
 
 	<div class="container-fluid py-3 col-md-10 col-sm-12">
 
-		<div class="card bg-light">
-			<div class="card-body">
-			
-			<div class="row">
-					<input
-						class="form-control col-md-2 mb-4 mr-3 text-center border font-weight-bold col ml-auto"
-						id="myInput" type="text" placeholder="Buscar...">
-				</div>
-		
-		<div class="table-wrapper-scroll-y my-custom-scrollbar">
-				<table class="table table-hover table-sm text-center">
+		<div class="card shadow card-table">
+	                <div class="card-header">
+	                 
+	                  <div class="title font-weight-bold ">Listado de Empleados</div>
+	                </div>
+			<div class="card-body table-responsive ">
+				<table id="tablaListar" class="table-hover table-borderless dataTables_length">
 					<thead class="thead-dark">
 						<tr>
 							<th>Foto</th>
@@ -32,8 +28,8 @@
 					</thead>
 					<tbody id="myTable">
 						<tr th:each="empleado : ${empleados}">
-							<td > <img class="img-thumbnail img-fluid" width="80px" height="80px" th:if="${#strings.length(empleado.foto) > 0}" th:src="@{/uploads/imagenes/} + ${empleado.foto}" />
-								 <img class="img-thumbnail img-fluid" width="80px" height="80px" th:if="${#strings.isEmpty(empleado.foto)}" th:src="@{/images/user-empty.jpg}" />
+							<td > <img class="rounded-circle img-fluid" width="70px" height="70px" th:if="${#strings.length(empleado.foto) > 0}" th:src="@{/uploads/imagenes/} + ${empleado.foto}" />
+								 <img class="rounded-circle img-fluid" width="70px" height="70px" th:if="${#strings.isEmpty(empleado.foto)}" th:src="@{/images/user-empty.jpg}" />
 							</td>
 							<td class="align-middle" th:text="${empleado.nombre}"></td>
 							<td class="align-middle" th:text="${empleado.apellido1}"></td>
@@ -56,30 +52,36 @@
 
 				</table>
 				</div>
-				<div class="row">
-					<div class="col-sm mt-2 ml-4 font-weight-bold">
-						<nav th:replace="paginator-nav :: paginator"></nav>
-					</div>
-					<div class="col-sm text-right mt-2 ">
-						<a th:href="@{/form}" class="btn btn-primary mr-4 font-weight-bold">Crear
-							Empleado</a>
-					</div>
-				</div>
-
 
 			</div>
 		</div>
 
-	</div>
 	<footer th:replace="layout/layout :: footer"></footer>
 	<script>
-		$(document).ready(function() {
-			$("#myInput").on("keyup",function() {
-				var value = $(this).val().toLowerCase();
-			$("#myTable tr").filter(function() {
-				$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)});
-			});
-		});
+
+	
+	$(document).ready( function () {
+		 var table = $('#tablaListar').DataTable({
+		        "language": {
+		            "lengthMenu": "Mostrar _MENU_ registros por página",
+		            "zeroRecords": "Sin resultados",
+		            "info": "Mostrando página _PAGE_ de _PAGES_",
+		            "infoEmpty": "No hay datos disponibles",
+		            "infoFiltered": "(filtrados de _MAX_ registros en total)",
+		            "loadingRecords": "Cargando...",
+		            "processing":     "Procesando...",
+		            "search": "Buscar:",
+		            "paginate": {
+		            	"first":      "Primera",
+		                "last":       "Última",
+		                "next":       "Siguiente",
+		                "previous":   "Anterior"
+		            }
+		        },
+		        responsive: true,
+		        "lengthMenu": [ 5, 10, 15 , 20 ]
+		    });
+	});
 	</script>
 
 </body>
