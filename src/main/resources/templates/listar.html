@@ -45,32 +45,10 @@
 								<i class="far fa-edit"></i>
 								</a></td>
 							<td class="align-middle">
-								<a href="#" class="btn-lg" data-toggle="modal" data-target="#myModal">
+								<a onclick="return confirm('¿Estás seguro que quieres eliminar al empleado?');"
+								th:href="@{/eliminar/} + ${empleado.cod_empl}" class="btn-lg">
 								<i class="fas fa-trash-alt" style="color: red;"></i>
 								</a>
-
-								<!-- Modal HTML -->
-								<div id="myModal" class="modal fade">
-									<div class="modal-dialog modal-dialog-centered modal-confirm">
-										<div class="modal-content">
-											<div class="modal-header">
-												<div class="icon-box">
-													<i class="fas fa-times"></i>
-												</div>				
-												<h4 class="modal-title">¿Estás seguro?</h4>	
-											     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-											</div>
-											<div class="modal-body">
-												<p>¿Estás seguro de eliminar el usuario? Este proceso no puede ser revertido.</p>
-											</div>
-											<div class="modal-footer">
-												<a class="btn btn-info text-white" data-dismiss="modal">Cancelar</a>
-												<a th:href="@{/eliminar/} + ${empleado.cod_empl}"
-											  		type="button" class="btn btn-danger text-white">Borrar</a>
-											</div>
-										</div>
-									</div>
-								</div>     		
 							</td>
 
 						</tr>
