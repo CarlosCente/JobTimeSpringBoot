@@ -188,6 +188,7 @@
 	
 	$(document).ready( function () {
 		 var table = $('#tablaIncidencias').DataTable({
+			 	"pagingType": "numbers",
 		        "language": {
 		            "lengthMenu": "Mostrar _MENU_ registros por página",
 		            "zeroRecords": "Sin resultados",
@@ -204,7 +205,7 @@
 		                "previous":   "Anterior"
 		            }
 		        },
-		        "lengthMenu": [ 5, 10, 15 , 20 ],
+		        "lengthMenu": [ 6, 10, 15 , 20 ],
 		        "order": [ 2, 'asc']
 		    });
 	});

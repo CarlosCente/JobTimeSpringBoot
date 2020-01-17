@@ -12,7 +12,15 @@
 	                 
 	                  <div class="title font-weight-bold ">Listado de Empleados</div>
 	                </div>
+	                
+	                <div class="row">			
+					<div class="col-sm text-center mt-2 ">
+						<a th:href="@{/form}" class="btn btn-primary mt-3 font-weight-bold">Crear un nuevo
+							Empleado</a>
+					</div>
+				</div>
 			<div class="card-body table-responsive ">
+			
 				<table id="tablaListar" class="table-hover table-borderless dataTables_length">
 					<thead class="thead-dark">
 						<tr>
@@ -53,6 +61,7 @@
 				</table>
 				</div>
 
+				
 			</div>
 		</div>
 
@@ -62,8 +71,9 @@
 	
 	$(document).ready( function () {
 		 var table = $('#tablaListar').DataTable({
+				 "pagingType": "numbers",
 		        "language": {
-		            "lengthMenu": "Mostrar _MENU_ registros por página",
+		            "lengthMenu": "Mostrar _MENU_ por página",
 		            "zeroRecords": "Sin resultados",
 		            "info": "Mostrando página _PAGE_ de _PAGES_",
 		            "infoEmpty": "No hay datos disponibles",
@@ -79,7 +89,7 @@
 		            }
 		        },
 		        responsive: true,
-		        "lengthMenu": [ 5, 10, 15 , 20 ]
+		        "lengthMenu": [ 6, 10, 15 , 20 ]
 		    });
 	});
 	</script>
