@@ -2,10 +2,12 @@ package com.cjhercen.springboot.app.models.service.impl;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.UUID;
 
 import org.slf4j.Logger;
@@ -13,6 +15,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.cjhercen.springboot.app.models.service.interfaces.IUploadFileService;
@@ -77,5 +80,26 @@ public class UploadFileServiceImpl implements IUploadFileService {
 	public void init() throws IOException {
 		Files.createDirectories(Paths.get(UPLOADS_FOLDER));
 	}
+	
+	@Override
+	public void store(MultipartFile file) {
+		 String filename = StringUtils.cleanPath(file.getOriginalFilename());
+		 try {
+		 if (file.isEmpty()) {
+		 throw new RuntimeException("Fallo al intentar guardar archivo no existente: " + filename);
+		 }
+		 
+		 // This is a security check
+		 if (filename.contains("..")) {
+		 throw new RuntimeException("No se puede guardar el archivo con una ruta fuera del directorio: " + filename);
+		 }
+		 
+		 try (InputStream inputStream = file.getInputStream()) {
+		 Files.copy(inputStream, Paths.get(UPLOADS_FOLDER) , StandardCopyOption.REPLACE_EXISTING);
+		 }
+		 } catch (IOException e) {
+		 throw new RuntimeException("Failed to store file " + filename, e);
+		 }
+		}
 
 }

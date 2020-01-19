@@ -1,16 +1,10 @@
 package com.cjhercen.springboot.app.controllers;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Map;
 
 import javax.validation.Valid;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,14 +14,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.cjhercen.springboot.app.models.entity.Empleado;
+import com.cjhercen.springboot.app.models.entity.Role;
+import com.cjhercen.springboot.app.models.entity.Usuario;
+import com.cjhercen.springboot.app.models.service.impl.UsuarioServiceImpl;
 import com.cjhercen.springboot.app.models.service.interfaces.IEmpleadoService;
-import com.cjhercen.springboot.app.models.service.interfaces.IUploadFileService;
 import com.cjhercen.springboot.app.util.ConstantesUtils;
 
 @Controller
@@ -37,9 +31,9 @@ public class EmpleadoController implements ConstantesUtils {
 	private IEmpleadoService empleadoService;
 	
 	@Autowired
-	private IUploadFileService uploadService;
+	private UsuarioServiceImpl usuarioService;
 
-	private final Logger log = LoggerFactory.getLogger(getClass());
+	//private final Logger log = LoggerFactory.getLogger(getClass());
 
 	@RequestMapping(value = "/listar", method = RequestMethod.GET)
 	public String listar(Model model) {
@@ -55,7 +49,7 @@ public class EmpleadoController implements ConstantesUtils {
 
 		Empleado empleado = new Empleado();
 		model.put("empleado", empleado);
-		model.put("titulo", "Formulario para la creación de un Empleado");
+		model.put("titulo", "Creación de un Empleado");
 		return "form";
 	}
 
@@ -82,7 +76,7 @@ public class EmpleadoController implements ConstantesUtils {
 
 	@RequestMapping(value = "/save/{id}", method = RequestMethod.POST)
 	public String saveEmpleado(@PathVariable(value = "id") Long id, @ModelAttribute("empleado") Empleado empleado,
-			@RequestParam("file") MultipartFile foto, RedirectAttributes flash) {
+			RedirectAttributes flash) {
 		Empleado empleadoBD = null;
 
 		empleadoBD = empleadoService.findOne(id);
@@ -112,31 +106,7 @@ public class EmpleadoController implements ConstantesUtils {
 
 			// Una vez se hayan hecho las comprobaciones si todos los campos están correctos
 			// se edita el empleado correctamente
-
-			// Comprobación de foto
-			String fotoActual = empleadoBD.getFoto();
-			Path directorioRecursos = Paths.get(RUTA_IMAGENES_EMPLEADOS);
-			String rootPath = directorioRecursos.toFile().getAbsolutePath();
-
-			// Se borra la foto actual del servidor, a no ser que sea la misma, que se
-			// mantiene
-			if (fotoActual != null && !"".equals(fotoActual)) {
-				uploadService.delete(fotoActual);
-			}
-
-			try {
-				byte[] bytes = foto.getBytes();
-				Path rutaCompleta = Paths.get(rootPath + "//" + foto.getOriginalFilename());
-				Files.write(rutaCompleta, bytes);
-				flash.addFlashAttribute("info", "Has subido correctamente '" + foto.getOriginalFilename() + "'");
-
-				empleadoBD.setFoto(foto.getOriginalFilename());
-				log.info("Se modifica la foto del empleado por: " + foto.getOriginalFilename());
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
+			
 			empleadoBD.setApellido1(empleado.getApellido1());
 			empleadoBD.setApellido2(empleado.getApellido2());
 			empleadoBD.setDireccion(empleado.getDireccion());
@@ -158,25 +128,44 @@ public class EmpleadoController implements ConstantesUtils {
 
 	@RequestMapping(value = "/form", method = RequestMethod.POST)
 	public String guardar(@Valid Empleado empleado, BindingResult result, Model model,
-			@RequestParam("file") MultipartFile foto, RedirectAttributes flash, SessionStatus status) {
+			RedirectAttributes flash, SessionStatus status) {
 		if (result.hasErrors()) {
 			model.addAttribute("titulo", "Formulario de Empleado");
 			return "form";
 		}
 
-		if (!foto.isEmpty()) {
-			try {
-				uploadService.copy(foto);
-				flash.addFlashAttribute("info", "Has subido correctamente '" + foto.getOriginalFilename() + "'");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
 		String mensajeFlash = "Empleado creado con éxito!";
 
 		empleadoService.save(empleado);
+		
+		//Se crea el usuario asociado al empleado que se acaba de crear
+		Usuario usuario = new Usuario();
+		
+		//Se obtiene el numero total de usuarios para asignarle el siguiente ID
+		ArrayList<Usuario> totalUsuarios = usuarioService.findAll();
+		Long idUsuarioNuevo = (long) (totalUsuarios.size() + 1);
+		
+		//Nombre de usuario se genera con las 3 primeras letras del nombre + 3 primeras letras del primer apellido
+		// + 3 primeras letras del segundo apellido
+		usuario.setUsername(generarUsername(empleado.getNombre(), empleado.getApellido1(), empleado.getApellido2()));
+		usuario.setPassword("$2y$12$vMYXOOoVzK4srU6SAHpseeUGiSg0gyKc2nrw9d1//DYvrd7FtTfYS");
+				
+		//El rol del usuario se define según lo elegido en el formulario de creacion
+		ArrayList<Role> listaRol = new ArrayList<Role>();
+		Role role = new Role();
+		
+		
+		role.setAuthority("ROLE_USER");
+		
+		
+		role.setId(empleado.getCod_empl());
+		listaRol.add(role);
+		usuario.setRoles(listaRol);
+		usuario.setId(idUsuarioNuevo);
+		usuario.setEnabled(true);
+		usuario.setEmpleado(empleado);
+		usuarioService.save(usuario);
+		
 		status.setComplete();
 		flash.addFlashAttribute("success", mensajeFlash);
 		return "redirect:listar";
@@ -187,16 +176,14 @@ public class EmpleadoController implements ConstantesUtils {
 
 		if (id > 0) {
 
-			Empleado empleado = empleadoService.findOne(id);
-			String foto = empleado.getFoto();
-			
-			uploadService.delete(foto);
-			log.info("Se ha borrado correctamente la imagen '" + foto + "'");
-
 			empleadoService.delete(id);
 			flash.addFlashAttribute("success", "Empleado eliminado con éxito!");
 		}
 		return "redirect:/listar";
+	}
+	
+	private String generarUsername(String nombre, String primerApellido, String segundoApellido) {
+		return nombre.substring(0,3) + primerApellido.substring(0,3) + segundoApellido.substring(0,3);
 	}
 
 }

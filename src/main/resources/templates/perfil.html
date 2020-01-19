@@ -24,23 +24,9 @@
 
 								<div class="row">
 
-									<div
-										class="col-md-12 col-lg-3 col-xl-3 col-xs-3 pt-2 text-center mt-3">
+									<div class="col-md-12 col-lg-3 col-xl-3 col-xs-3 pt-2 text-center mt-3">
 
-										<img th:if="${#strings.length(empleado.foto) > 0}"
-											th:src="@{/uploads/imagenes/} + ${empleado.foto}" id="prev"
-											class="rounded-circle rounded img-fluid w-75"> <img
-											th:if="${#strings.isEmpty(empleado.foto)}"
-											th:src="@{/images/user-empty.jpg}" id="prev"
-											class="rounded-circle rounded img-fluid w-75">
-										<div class="custom-file mt-4">
-											<input type="file" class="custom-file-input"
-												id="inputGroupFile01" name="file"
-												aria-describedby="inputGroupFileAddon01"> <label
-												class="custom-file-label text-left" for="inputGroupFile01"
-												data-browse="Elegir"><small>Seleccionar archivo</small></label>
-
-										</div>
+										
 									</div>
 
 									<div class="col-md-12 col-lg-4 mx-auto">
@@ -299,18 +285,5 @@
 
 	</div>
 	<footer th:replace="layout/layout :: footer"></footer>
-
-	<script>
-		var reader = new FileReader();
-		reader.onload = function(r_event) {
-			document.getElementById('prev').setAttribute('src',
-					r_event.target.result);
-		}
-
-		document.getElementsByName('file')[0].addEventListener('change',
-				function(event) {
-					reader.readAsDataURL(this.files[0]);
-				});
-	</script>
 </body>
 </html>

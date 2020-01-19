@@ -34,8 +34,7 @@ public class UsuarioServiceImpl implements IUsuarioDao {
 	
 	@Override
 	public <S extends Usuario> S save(S entity) {
-		// TODO Auto-generated method stub
-		return null;
+		return iUsuarioDao.save(entity);
 	}
 
 	@Override

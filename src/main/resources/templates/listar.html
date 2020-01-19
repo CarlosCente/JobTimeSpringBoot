@@ -24,7 +24,7 @@
 				<table id="tablaListar" class="table-hover table-borderless dataTables_length">
 					<thead class="thead-dark">
 						<tr>
-							<th>Foto</th>
+							<th>Usuario</th>
 							<th>Nombre</th>
 							<th>Primer Apellido</th>
 							<th>Segundo Apellido</th>
@@ -36,9 +36,7 @@
 					</thead>
 					<tbody id="myTable">
 						<tr th:each="empleado : ${empleados}">
-							<td > <img class="rounded-circle img-fluid" width="70px" height="70px" th:if="${#strings.length(empleado.foto) > 0}" th:src="@{/uploads/imagenes/} + ${empleado.foto}" />
-								 <img class="rounded-circle img-fluid" width="70px" height="70px" th:if="${#strings.isEmpty(empleado.foto)}" th:src="@{/images/user-empty.jpg}" />
-							</td>
+							<td class="align-middle" th:text="${empleado.usuario.username}"></td>
 							<td class="align-middle" th:text="${empleado.nombre}"></td>
 							<td class="align-middle" th:text="${empleado.apellido1}"></td>
 							<td class="align-middle" th:text="${empleado.apellido2}"></td>
@@ -49,7 +47,7 @@
 								<i class="far fa-edit"></i>
 								</a></td>
 							<td class="align-middle">
-								<a onclick="return confirm('¿Estás seguro que quieres eliminar al empleado?');"
+								<a onclick="return confirm('Â¿EstÃ¡s seguro que quieres eliminar al empleado?');"
 								th:href="@{/eliminar/} + ${empleado.cod_empl}" class="btn-lg">
 								<i class="fas fa-trash-alt" style="color: red;"></i>
 								</a>
@@ -80,13 +78,8 @@
 		            "infoFiltered": "(filtrados de _MAX_ registros en total)",
 		            "loadingRecords": "Cargando...",
 		            "processing":     "Procesando...",
-		            "search": "Buscar:",
-		            "paginate": {
-		            	"first":      "Primera",
-		                "last":       "Última",
-		                "next":       "Siguiente",
-		                "previous":   "Anterior"
-		            }
+		            "search": "Buscar:"
+		           
 		        },
 		        responsive: true,
 		        "lengthMenu": [ 6, 10, 15 , 20 ]

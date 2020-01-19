@@ -75,8 +75,8 @@
 										<tr>
 											<th>Usuario</th>
 											<th>Fecha</th>
-											<th>Estado</th>
 											<th>Tipo de incidencia</th>
+											<th>Estado</th>
 											<th >Descripción</th>
 											<th>Resolver</th>
 											<th>Eliminar</th>
@@ -89,12 +89,14 @@
 											 th:text="${incidencia.empleado.usuario.username}"></td>
 	
 											<td th:text="${incidencia.fecha}"></td>
-											<td
-												th:text="${incidencia.estado == '1' ? '&nbspAbierta&nbsp ' : '&nbspResuelta&nbsp'}"></td>
+											
 											<td
 												th:text="${incidencia.mensaje}"
 												th:class="${incidencia.tipo == '1'} ? 'text-danger font-weight-bold' : 'text-warning font-weight-bold'">
 											</td>
+											
+											<td
+												th:text="${incidencia.estado == '1' ? '&nbspAbierta&nbsp ' : '&nbspResuelta&nbsp'}"></td>
 											
 											<td>
 																		
