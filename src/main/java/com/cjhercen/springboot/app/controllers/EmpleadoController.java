@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -32,6 +33,9 @@ public class EmpleadoController implements ConstantesUtils {
 	
 	@Autowired
 	private UsuarioServiceImpl usuarioService;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	//private final Logger log = LoggerFactory.getLogger(getClass());
 
@@ -147,17 +151,21 @@ public class EmpleadoController implements ConstantesUtils {
 		
 		//Nombre de usuario se genera con las 3 primeras letras del nombre + 3 primeras letras del primer apellido
 		// + 3 primeras letras del segundo apellido
-		usuario.setUsername(generarUsername(empleado.getNombre(), empleado.getApellido1(), empleado.getApellido2()));
-		usuario.setPassword("$2y$12$vMYXOOoVzK4srU6SAHpseeUGiSg0gyKc2nrw9d1//DYvrd7FtTfYS");
+		String usernameGenerado = generarUsername(empleado.getNombre(), empleado.getApellido1(), empleado.getApellido2());
+		usuario.setUsername(usernameGenerado);
+		usuario.setPassword(passwordEncoder.encode(usernameGenerado));
 				
 		//El rol del usuario se define según lo elegido en el formulario de creacion
 		ArrayList<Role> listaRol = new ArrayList<Role>();
 		Role role = new Role();
 		
-		
-		role.setAuthority("ROLE_USER");
-		
-		
+		//Se establecen sus permisos, sea de usuario o de administrador
+		if(empleado.isEsAdmin()) {
+			role.setAuthority("ROLE_ADMIN");
+		} else {
+			role.setAuthority("ROLE_USER");
+		}
+			
 		role.setId(empleado.getCod_empl());
 		listaRol.add(role);
 		usuario.setRoles(listaRol);
@@ -175,15 +183,22 @@ public class EmpleadoController implements ConstantesUtils {
 	public String eliminar(@PathVariable(value = "id") Long id, RedirectAttributes flash) {
 
 		if (id > 0) {
-
+			
+			//Primero se borra el Usuario del empleado
+			Empleado empleado = empleadoService.findOne(id);
+			Usuario usuario = usuarioService.findByUsername(empleado.getUsuario().getUsername());
+			usuarioService.delete(usuario);
+			
+			//Se borra el empleado
 			empleadoService.delete(id);
-			flash.addFlashAttribute("success", "Empleado eliminado con éxito!");
+			flash.addFlashAttribute("success", "Empleado eliminado con éxito");
 		}
 		return "redirect:/listar";
 	}
 	
 	private String generarUsername(String nombre, String primerApellido, String segundoApellido) {
-		return nombre.substring(0,3) + primerApellido.substring(0,3) + segundoApellido.substring(0,3);
+		String username = nombre.substring(0,3) + primerApellido.substring(0,3) + segundoApellido.substring(0,3);
+		return username.toLowerCase();
 	}
 
 }

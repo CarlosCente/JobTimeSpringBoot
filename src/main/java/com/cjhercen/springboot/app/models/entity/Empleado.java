@@ -69,6 +69,8 @@ public class Empleado implements Serializable {
 	@OneToOne(mappedBy = "empleado", cascade = CascadeType.ALL)
 	private Usuario usuario;
 	
+	private boolean esAdmin;
+	
 	public Empleado() {
 
 	}
@@ -170,6 +172,14 @@ public class Empleado implements Serializable {
 	}
 	
 	
+	public boolean isEsAdmin() {
+		return esAdmin;
+	}
+
+	public void setEsAdmin(boolean esAdmin) {
+		this.esAdmin = esAdmin;
+	}
+
 	/*
 	 * Para añadir un fichaje en la lista de fichajes
 	 */

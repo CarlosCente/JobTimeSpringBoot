@@ -3,9 +3,6 @@ package com.cjhercen.springboot.app.models.service.interfaces;
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-
 import com.cjhercen.springboot.app.models.entity.Empleado;
 import com.cjhercen.springboot.app.models.entity.Incidencia;
 
