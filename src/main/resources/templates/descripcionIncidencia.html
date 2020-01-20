@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+<body>
+
+	<header th:replace="layout/layout :: header"></header>
+
+	<div class="container-fluid py-2 col-md-10 col-sm-12">
+
+		<div class="card bg-light">
+			<div class="card-header text-center font-weight-bold bg-dark text-white" th:text="${titulo}"></div>
+			<div class="card-body">
+			
+				<div class="row">
+					<div class="col-xs-12 col-md-6 col-lg-6">
+								<div class="form-group">
+										<label class="col-sm-5 col-form-label">Fecha de
+											la Incidencia: </label>
+										 <div class="col-md-6" th:text="${incidencia.fecha}"> </div>
+								</div>
+								
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+		<footer th:replace="layout/layout :: footer"></footer>
+</body>
+</html>

@@ -68,6 +68,23 @@ public class IncidenciaController {
 		return "redirect:/incidencias";
 	}
 	
+	@RequestMapping(value = "/incidencias/descripcionIncidencia/{mensaje}/{cod_empl}/{fecha}")
+	public String getDescripcionIncidencia(Map<String, Object> model, 
+			@PathVariable(value = "mensaje") String mensaje,
+			@PathVariable(value = "cod_empl") Long cod_empl ,
+			@PathVariable(value = "fecha") String fecha) {
+		
+		Date fechaIncidencia = fechaUtils.obtenerFechaApartirString(fecha);
+		Empleado empleado = empleadoService.findOne(cod_empl);
+		Incidencia incidenciaAMostrar = incidenciaService.
+				findByEmpleadoAndFechaAndMensaje(empleado, fechaIncidencia, mensaje);
+		
+		model.put("incidencia",incidenciaAMostrar);
+		model.put("titulo", "Descripción de la Incidencia");
+		
+		return "/descripcionIncidencia";
+	}
+	
 	private int calcularIncidenciasErrores(ArrayList<Incidencia> listaIncidencias) {
 		
 		int total = 0;
