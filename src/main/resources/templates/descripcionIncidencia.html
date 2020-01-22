@@ -15,19 +15,19 @@
 					<div class="col-xs-12 col-md-3 col-lg-3">
 								<div class="form-group text-center">
 										<label class="col-md-12 col-form-label font-weight-bold">Fecha de
-											la Incidencia </label>
+											apertura </label>
 										 <div class="col-md-12 mt-2" th:text="${incidencia.fecha}"> </div>
 								</div>			
 					</div>
-					<div class="col-xs-12 col-md-3 col-lg-3">
+					<div class="col-xs-12 col-md-4 col-lg-4">
 								<div class="form-group text-center">
 										<label class="col-md-12 col-form-label font-weight-bold">Mensaje de la Incidencia </label>
 										 <div class="col-md-12 mt-2" th:text="${incidencia.mensaje}"> </div>
 								</div>			
 					</div>
-					<div class="col-xs-12 col-md-3 col-lg-3">
+					<div class="col-xs-12 col-md-2 col-lg-2">
 								<div class="form-group text-center">
-										<label class="col-md-12 col-form-label font-weight-bold">Estado de la Incidencia</label>
+										<label class="col-md-12 col-form-label font-weight-bold">Estado</label>
 										 <div th:class="${incidencia.estado == '1'} ? 'text-primary font-weight-bold col-md-12 mt-2' : 'text-success font-weight-bold col-md-12 mt-2 '"
 										 	th:text="${incidencia.estado == '1' ? '&nbspAbierta&nbsp ' : '&nbspResuelta&nbsp'}"> </div>
 								</div>			
@@ -35,14 +35,14 @@
 					
 					<div class="col-xs-12 col-md-3 col-lg-3">
 								<div class="form-group text-center">
-										<label class="col-md-12 col-form-label font-weight-bold">Tipo de Incidencia</label>
+										<label class="col-md-12 col-form-label font-weight-bold">Tipo</label>
 										 <div th:class="${incidencia.tipo == '1'} ? 'text-danger font-weight-bold' : 'text-warning font-weight-bold'"
 										 	th:text="${incidencia.tipo == '1' ? '&nbspError&nbsp ' : '&nbspAdvertencia&nbsp'}"> </div>
 								</div>			
 					</div>
 				</div>
 				
-				<div class="row mt-4">
+				<div class="row">
 					<div class="col-xs-12 col-md-12 col-lg-12">
 						<div class="form-group text-center">
 							<label class="col-md-12 col-form-label font-weight-bold">Empleado que ha abierto la Incidencia </label>
@@ -58,18 +58,18 @@
 					</div>
 				</div>
 				
-				<div class="row mt-5">
+				<div class="row mt-2">
 				<div class="col-xs-12 col-md-12 col-lg-12">
 								<div class="form-group text-center">
 										<h5 class="col-md-12 font-weight-bold">Descripcion de la Incidencia </h5>
 										 	<hr />
-										 <div class="col-md-12 mt-2 text-justify mark"  th:text="${incidencia.descripcion}"> </div>
+										 <div class="col-md-12 mt-2 text-justify" style="background-color: #fff2a8;"   th:text="${incidencia.descripcion}"> </div>
 											<hr />
 								</div>			
 					</div>
 				</div>
 				
-				<div class="row mt-5">
+				<div class="row">
 					<div class="col-xs-12 col-md-6 col-lg-6">
 								<div th:if="${incidencia.mensaje} != 'Incidencia de Fichaje (Otras)'" class="form-group text-center">
 										<h5 class="col-md-12 font-weight-bold mb-3">Valores modificados </h5>
@@ -89,7 +89,7 @@
 										 	
 										 <div th:if="${incidencia.mensaje} == 'Incidencia de Datos de dirección'" 
 										 	class="col-md-12 mt-2 text-center">
-										 	 <p>Datos de dirección</p>
+										 	 <p>Datos de direcci�n</p>
 										  </div>
 											
 								</div>			
@@ -106,12 +106,12 @@
 				</div>
 				
 			</div>
-			<div class="card-footer">
+			<div class="card-footer pb-0">
 				<div class="col-md-12">
 					<div class="row float-right ">
 						<div class="form-group">
 							<input value="Volver" type="button"
-								class="btn btn-danger mr-4" onclick="history.back()" />
+								class="btn btn-danger" onclick="history.back()" />
 						</div>
 
 					</div>
