@@ -1,6 +1,7 @@
 package com.cjhercen.springboot.app.controllers;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -121,6 +122,10 @@ public class EmpleadoController implements ConstantesUtils {
 			empleadoBD.setFechaNacim(empleado.getFechaNacim());
 			empleadoService.save(empleadoBD);
 
+			//Comprobar si se han cambiado los permisos para darselos al usuario
+			Usuario usuarioBD = usuarioService.findByUsername(empleadoBD.getUsuario().getUsername());
+			gestionarEdicionPermisos(usuarioBD, empleado.isEsAdmin());
+			
 			flash.addFlashAttribute("success", "El empleado se ha editado correctamente!");
 
 		} else {
@@ -199,6 +204,31 @@ public class EmpleadoController implements ConstantesUtils {
 	private String generarUsername(String nombre, String primerApellido, String segundoApellido) {
 		String username = nombre.substring(0,3) + primerApellido.substring(0,3) + segundoApellido.substring(0,3);
 		return username.toLowerCase();
+	}
+	
+	private void gestionarEdicionPermisos(Usuario usuario, boolean isAdmin) {
+	
+		Empleado empleado = usuario.getEmpleado();
+		List<Role> listaRoles = usuario.getRoles();
+		String rolUsuario = listaRoles.get(0).getAuthority();
+			
+		//Si es usuario y se elige Admin, se modifica el rol de usuario por admin 
+		if (isAdmin && "ROLE_USER".equals(rolUsuario)) {
+		
+			listaRoles.get(0).setAuthority("ROLE_ADMIN");
+			empleado.setEsAdmin(true);
+				
+		//Si es admin y se elige usuario, se modifica el rol de admin por usuario 
+		} else if (!isAdmin && "ROLE_ADMIN".equals(rolUsuario)) {
+		
+			listaRoles.get(0).setAuthority("ROLE_USER");
+			empleado.setEsAdmin(false);
+			
+		}
+		
+		usuario.setRoles(listaRoles);
+		usuarioService.save(usuario);		
+		
 	}
 
 }
