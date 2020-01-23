@@ -16,6 +16,7 @@ import com.cjhercen.springboot.app.models.entity.Empleado;
 import com.cjhercen.springboot.app.models.entity.Incidencia;
 import com.cjhercen.springboot.app.models.service.interfaces.IEmpleadoService;
 import com.cjhercen.springboot.app.models.service.interfaces.IIncidenciaService;
+import com.cjhercen.springboot.app.util.ConstantesUtils;
 import com.cjhercen.springboot.app.util.FechaUtils;
 
 @Controller
@@ -79,6 +80,15 @@ public class IncidenciaController {
 		Incidencia incidenciaAMostrar = incidenciaService.
 				findByEmpleadoAndFechaAndMensaje(empleado, fechaIncidencia, mensaje);
 		
+		//Valores a recuperar de la descripcion generada por la incidencia de entrada o salida
+		if(incidenciaAMostrar.getMensaje().equals(ConstantesUtils.INCIDENCIA_FICHAJE_ENTRADA) || 
+				incidenciaAMostrar.getMensaje().equals(ConstantesUtils.INCIDENCIA_FICHAJE_SALIDA)) {
+			String fechaDescripcion = recuperarFechaDescripcion(incidenciaAMostrar);
+			String horaDescripcion = recuperarHoraDescripcion(incidenciaAMostrar);
+			model.put("fechaDescripcion", fechaDescripcion);
+			model.put("horaDescripcion", horaDescripcion);
+			
+		}
 		model.put("incidencia",incidenciaAMostrar);
 		model.put("titulo", "Descripción de la Incidencia");
 		
@@ -129,5 +139,52 @@ public class IncidenciaController {
 		}
 		return total;
 	}
+	
+	private String recuperarFechaDescripcion(Incidencia incidencia) {
+		String descripcion = incidencia.getDescripcion();
+		String fechaDescripcion = "";
+		int contadorAbertura = 0;
+		int contadorCierre = 0;
+		
+		for(int i=0; i < descripcion.length() ; i++) {
+			
+			if(descripcion.charAt(i) == '(') {
+				contadorAbertura ++;
+			}
+			if(descripcion.charAt(i) == ')') {
+				contadorCierre ++;
+			}
+			//A partir del segundo parentesis de abertura se recupera la fecha
+			if(contadorAbertura == 2 && contadorCierre != 2) {
+				fechaDescripcion += descripcion.charAt(i);
+			}	
+		}
+		return fechaDescripcion.replaceAll("\\(", "");
+	}
+	
+	private String recuperarHoraDescripcion(Incidencia incidencia) {
+		String descripcion = incidencia.getDescripcion();
+		String horaDescripcion = "";
+		int contadorAbertura = 0;
+		int contadorCierre = 0;
+		
+		for(int i=0; i < descripcion.length() ; i++) {
+			
+			if(descripcion.charAt(i) == '(') {
+				contadorAbertura ++;
+			}
+			if(descripcion.charAt(i) == ')') {
+				contadorCierre ++;
+			}
+			//A partir del segundo parentesis de abertura se recupera la fecha
+			if(contadorAbertura == 3 && contadorCierre != 3) {
+				horaDescripcion += descripcion.charAt(i);
+			}
+			
+		}
+		
+		return horaDescripcion.replaceAll("\\(", "");
+	}
+	
 	
 }

@@ -266,8 +266,8 @@ public class FicharController implements ConstantesUtils {
 			String horaEntrada = partesEntrada[1];
 			
 			mensaje = "El usuario "+empleado.getUsuario().getUsername() + " (" + empleado.getNombre() + " " +
-		empleado.getApellido1() + " " + empleado.getApellido2() +"), ha creado una incidencia con su fichaje de entrada del día "
-				+ fechaEntrada +" la hora correcta sería a las "+ horaEntrada +". Además el usuario ha añadido el siguiente comentario:"
+		empleado.getApellido1() + " " + empleado.getApellido2() +"), ha creado una incidencia con su fichaje de entrada del día ("
+				+ fechaEntrada +") la hora correcta sería a las ("+ horaEntrada +"). Además el usuario ha añadido el siguiente comentario:"
 						+ " "+comentarioEntrada;
 		} 
 		

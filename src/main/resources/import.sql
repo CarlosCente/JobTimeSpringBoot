@@ -30,11 +30,6 @@ INSERT INTO authorities (user_id, authority) VALUES (6,'ROLE_USER');
 
 
 /* Populate table incidencias */
-INSERT INTO incidencias (estado, fecha, mensaje, tipo, empleado_cod_empl,descripcion) VALUES ('1', '2019-12-11', 'Incidencia de Fichaje de salida', '1', 2,'');
-INSERT INTO incidencias (estado, fecha, mensaje, tipo, empleado_cod_empl,descripcion) VALUES ('2', '2019-12-14', 'Incidencia de Fichaje de entrada', '1', 1,'');
-INSERT INTO incidencias (estado, fecha, mensaje, tipo, empleado_cod_empl,descripcion) VALUES ('1', '2019-12-13', 'Incidencia de Fichaje de entrada', '2', 1,'');
-INSERT INTO incidencias (estado, fecha, mensaje, tipo, empleado_cod_empl,descripcion) VALUES ('1', '2019-12-12', 'Incidencia de Fichaje de entrada', '2', 1,'');
-INSERT INTO incidencias (estado, fecha, mensaje, tipo, empleado_cod_empl,descripcion) VALUES ('1', '2019-12-16', 'Incidencia de Fichaje de salida', '2', 1,'');
-INSERT INTO incidencias (estado, fecha, mensaje, tipo, empleado_cod_empl,descripcion) VALUES ('1', '2019-12-12', 'Incidencia de Fichaje de entrada', '1', 3,'');
-INSERT INTO incidencias (estado, fecha, mensaje, tipo, empleado_cod_empl,descripcion) VALUES ('1', '2019-12-16', 'Incidencia de Datos personales', '2', 3,'');
-INSERT INTO incidencias (estado, fecha, mensaje, tipo, empleado_cod_empl,descripcion) VALUES ('1', '2019-12-12', 'Incidencia de Fichaje de entrada', '2', 4,'');
+INSERT INTO incidencias (estado, fecha, mensaje, tipo, empleado_cod_empl,descripcion) VALUES ('2', '2020-01-16', 'Incidencia de Fichaje de salida', '1', 1,'El usuario admin (Carlos Hernández Centenero), ha creado una incidencia con su fichaje de entrada del día (20/01/2020) la hora correcta sería a las (8:00). Además el usuario ha añadido el siguiente comentario: Se me olvidó');
+INSERT INTO incidencias (estado, fecha, mensaje, tipo, empleado_cod_empl,descripcion) VALUES ('1', '2020-01-23', 'Incidencia de Fichaje de entrada', '1', 2,'El usuario laura (Laura Ruiz Fernández), ha creado una incidencia con su fichaje de entrada del día (23/01/2020) la hora correcta sería a las (8:00). Además el usuario ha añadido el siguiente comentario: Problemas con el acceso al ordenador al llegar a la oficina.');
+INSERT INTO incidencias (estado, fecha, mensaje, tipo, empleado_cod_empl,descripcion) VALUES ('1', '2020-01-23', 'Incidencia de Fichaje de salida', '1', 2,'El usuario laura (Laura Ruiz Fernández), ha creado una incidencia con su fichaje de salida del día (23/01/2020) la hora correcta sería a las (16:00). Además el usuario ha añadido el siguiente comentario: Problemas con el acceso al ordenador al llegar a la oficina.');

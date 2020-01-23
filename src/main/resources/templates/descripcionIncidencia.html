@@ -75,11 +75,27 @@
 										<h5 class="col-md-12 font-weight-bold mb-3">Valores modificados </h5>
 										 
 										 <div th:if="${incidencia.mensaje} == 'Incidencia de Fichaje de entrada'" 
-										 	class="col-md-12 mt-2 text-center" th:text="'Hora de Entrada del día'">
+										 	class="col-md-12 mt-2 text-center">
+										 	<p class="ml-4 mr-4">Se va a modificar la hora de entrada del día 
+											 	<span class="text-primary font-weight-bold" th:text="${fechaDescripcion}"></span> 
+											 	para el empleado
+											 	<span th:text="${incidencia.empleado.nombre} + ' ' +
+									 				${incidencia.empleado.apellido1} + ' ' + ${incidencia.empleado.apellido2}"></span>
+											 	, la hora correcta sería: 
+											 	<span class="text-success font-weight-bold" th:text="${horaDescripcion}"></span>
+										 	 </p>
 										  </div>
 										 	
 										 <div th:if="${incidencia.mensaje} == 'Incidencia de Fichaje de salida'" 
-										 	class="col-md-12 mt-2 text-center" th:text="'Hora de Salida del día'">
+										 	class="col-md-12 mt-2 text-center">
+										 	<p class="ml-4 mr-4">Se va a modificar la hora de salida del día 
+											 	<span class="text-primary font-weight-bold" th:text="${fechaDescripcion}"></span> 
+											 	para el empleado
+											 	<span th:text="${incidencia.empleado.nombre} + ' ' +
+									 				${incidencia.empleado.apellido1} + ' ' + ${incidencia.empleado.apellido2}"></span>
+											 	, la hora correcta sería: 
+											 	<span class="text-success font-weight-bold" th:text="${horaDescripcion}"></span>
+										 	 </p>
 										 </div>
 										 	
 										 <div th:if="${incidencia.mensaje} == 'Incidencia de Datos personales'" 
@@ -89,7 +105,7 @@
 										 	
 										 <div th:if="${incidencia.mensaje} == 'Incidencia de Datos de dirección'" 
 										 	class="col-md-12 mt-2 text-center">
-										 	 <p>Datos de direcci�n</p>
+										 	 <p>Datos de dirección</p>
 										  </div>
 											
 								</div>			
@@ -99,20 +115,26 @@
 								<div th:if="${incidencia.mensaje} != 'Incidencia de Fichaje (Otras)'" class="form-group text-center">
 										<h5 class="col-md-12 font-weight-bold mb-3">Acciones disponibles </h5>
 										 
-										 <div class="col-md-12 mt-2 text-center"  th:text="'Acciones para resolver la incidencia'"> </div>
-											
+										<a data-toggle="tooltip" data-placement="bottom"  data-type="primary" 
+							 				title="Resolver la incidencia">
+											<i class="fas fa-3x fa-tools" style="color: green;"></i>
+										</a>
+										<a data-toggle="tooltip" data-placement="bottom"  data-type="primary" 
+							 				title="Borrar la incidencia">
+							 				<i class="far fa-3x fa-times-circle" style="color: #dc3545;"></i>
+							 			</a>
 								</div>			
 					</div>
 				</div>
 				
 			</div>
-			<div class="card-footer pb-0">
+			<div class="card-footer">
 				<div class="col-md-12">
 					<div class="row float-right ">
-						<div class="form-group">
+						
 							<input value="Volver" type="button"
 								class="btn btn-danger" onclick="history.back()" />
-						</div>
+					
 
 					</div>
 				</div>
