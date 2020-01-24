@@ -159,30 +159,32 @@ public class PerfilController implements ConstantesUtils {
 		
 		
 		if(incidenciaDatosPersonales.isHayNombre()) {
-			anadirNombre = " Nombre, el valor correcto sería "+incidenciaDatosPersonales.getNombre();
+			anadirNombre = " (Nombre), el valor correcto sería ("+incidenciaDatosPersonales.getNombre()+')';
 		}
 		
 		if(incidenciaDatosPersonales.isHayApellido1()) {
 			if(!"".equals(anadirNombre)){
-				anadirApellido1 = " , también en el campo Primer Apellido, el valor correcto sería "+incidenciaDatosPersonales.getApellido1();
+				anadirApellido1 = " , en el campo (Primer Apellido), el valor correcto sería ("+incidenciaDatosPersonales.getApellido1()+')';
 			} else {
-				anadirApellido1 = " Primer Apellido, el valor correcto sería "+incidenciaDatosPersonales.getApellido1();
+				anadirApellido1 = " (Primer Apellido), el valor correcto sería ("+incidenciaDatosPersonales.getApellido1()+')';
 			}
 		}
 		
 		if(incidenciaDatosPersonales.isHayApellido2()) {
 			if(!"".equals(anadirApellido1) || !"".equals(anadirNombre)) {
-				anadirApellido2 = " , también en el campo Segundo Apellido, el valor correcto sería "+incidenciaDatosPersonales.getApellido2();
+				anadirApellido2 = " , en el campo (Segundo Apellido), el valor correcto sería ("+incidenciaDatosPersonales.getApellido2()+')';
 			} else {
-				anadirApellido2 = " Segundo Apellido, el valor correcto sería "+incidenciaDatosPersonales.getApellido2();
+				anadirApellido2 = " (Segundo Apellido), el valor correcto sería ("+incidenciaDatosPersonales.getApellido2()+')';
 			}
 		}
 		
 		if(incidenciaDatosPersonales.isHayFechaNacimiento()) {
 			if(!"".equals(anadirApellido1) || !"".equals(anadirNombre) || !"".equals(anadirApellido2)) {
-				anadirFecha = " , también en el campo Fecha de Nacimiento, el valor correcto sería "+ fechaUtils.obtenerFechaParametroEnFormatoCadena(incidenciaDatosPersonales.getFechaNacimiento());
+				anadirFecha = " , en el campo (Fecha de Nacimiento), el valor correcto sería ("+ fechaUtils.
+						obtenerFechaParametroEnFormatoCadena(incidenciaDatosPersonales.getFechaNacimiento())+')';
 			}else {
-				anadirFecha = " Fecha de Nacimiento, el valor correcto sería "+fechaUtils.obtenerFechaParametroEnFormatoCadena(incidenciaDatosPersonales.getFechaNacimiento());
+				anadirFecha = " (Fecha de Nacimiento), el valor correcto sería ("+fechaUtils.
+						obtenerFechaParametroEnFormatoCadena(incidenciaDatosPersonales.getFechaNacimiento())+')';
 			}
 		}
 		
@@ -228,19 +230,19 @@ public class PerfilController implements ConstantesUtils {
 					+ " datos de dirección: ";
 		
 		if(!empleadoBD.getDireccion().equals(empleadoForm.getDireccion())) {
-			anadirDireccion = " el campo 'Direccion', el nuevo valor es: " + empleadoForm.getDireccion();
+			anadirDireccion = " el campo (Direccion), el nuevo valor es: (" + empleadoForm.getDireccion()+')';
 		}
 		
 		if(!empleadoBD.getLocalidad().equals(empleadoForm.getLocalidad())) {
-			anadirLocalidad = " el campo 'Localidad', el nuevo valor es: " + empleadoForm.getLocalidad();
+			anadirLocalidad = " el campo (Localidad), el nuevo valor es: (" + empleadoForm.getLocalidad()+')';
 		}
 		
 		if(!empleadoBD.getPais().equals(empleadoForm.getPais())) {
-			anadirPais = " el campo 'Pais', el nuevo valor es: " + empleadoForm.getPais();
+			anadirPais = " el campo (Pais), el nuevo valor es: (" + empleadoForm.getPais()+')';
 		}
 		
 		if(!empleadoBD.getProvincia().equals(empleadoForm.getProvincia())) {
-			anadirProvincia = " el campo 'Provincia', el nuevo valor es: " + empleadoForm.getProvincia();
+			anadirProvincia = " el campo (Provincia), el nuevo valor es: (" + empleadoForm.getProvincia()+')';
 		}
 		
 		if(!"".equals(anadirDireccion)) {
