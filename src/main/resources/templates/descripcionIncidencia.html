@@ -5,7 +5,7 @@
 
 	<header th:replace="layout/layout :: header"></header>
 
-	<div class="container-fluid py-2 col-md-10 col-sm-12">
+	<div class="container-fluid py-2 col-md-11 col-sm-12">
 
 		<div class="card bg-light">
 			<div class="card-header text-center font-weight-bold bg-dark text-white" th:text="${titulo}"></div>
@@ -100,7 +100,18 @@
 										 	
 										 <div th:if="${incidencia.mensaje} == 'Incidencia de Datos personales'" 
 										 	class="col-md-12 mt-2 text-center">
-										 	 <p>Datos personales</p>
+										 	 <p class="ml-4 mr-4">Se van a modificar los siguientes campos:</p>
+										  	 	<div th:each="map : ${camposIncidencia}">
+										  	 		<table class="table table-sm table-striped">
+										  	 			<tbody>
+										  	 				<tr th:each="mapEntry : ${map}">
+										  	 					<td class="text-primary font-weight-bold " th:text="${mapEntry.key}"></td>
+										  	 					<td class="text-success font-weight-bold " th:text="${mapEntry.value}"></td>
+										  	 				</tr>
+										  	 			</tbody>
+										  	 		</table>
+										 	 	</div>
+										 	 	
 										  </div>
 										 	
 										 <div th:if="${incidencia.mensaje} == 'Incidencia de Datos de dirección'" 
