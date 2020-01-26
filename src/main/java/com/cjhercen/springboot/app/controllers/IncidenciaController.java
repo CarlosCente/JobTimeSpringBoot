@@ -104,6 +104,24 @@ public class IncidenciaController {
 		return "/descripcionIncidencia";
 	}
 	
+	@RequestMapping(value = "/incidencias/descripcionIncidencia/resolver/{mensaje}/{cod_empl}/{fecha}")
+	public String resolverIncidencia (Map<String, Object> model,
+			@PathVariable(value = "mensaje") String mensaje,
+			@PathVariable(value = "cod_empl") Long cod_empl ,
+			@PathVariable(value = "fecha") String fecha) {
+			
+		Date fechaIncidencia = fechaUtils.obtenerFechaApartirString(fecha);
+		Empleado empleado = empleadoService.findOne(cod_empl);
+		Incidencia incidencia = incidenciaService.findByEmpleadoAndFechaAndMensaje(empleado, fechaIncidencia, mensaje);
+		
+		model.put("incidencia", incidencia);
+		model.put("titulo", "Descripción de la Incidencia");
+		
+		return "/descripcionIncidencia";
+	}
+	
+	
+	
 	
 	private void recuperarCamposConIncidencia(Incidencia incidencia, ArrayList<Map<String, String>> listaValoresModificados) {
 		
@@ -233,7 +251,6 @@ public class IncidenciaController {
 		return total;
 	}
 	
-
 	private int calcularIncidenciasAdvertencias(ArrayList<Incidencia> listaIncidencias) {
 		
 		int total = 0;
