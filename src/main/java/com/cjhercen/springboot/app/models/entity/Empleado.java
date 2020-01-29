@@ -68,9 +68,8 @@ public class Empleado implements Serializable {
 	
 	@OneToOne(mappedBy = "empleado", cascade = CascadeType.ALL)
 	private Usuario usuario;
-
-	@Column(name = "foto")
-	private String foto;
+	
+	private boolean esAdmin;
 	
 	public Empleado() {
 
@@ -173,12 +172,12 @@ public class Empleado implements Serializable {
 	}
 	
 	
-	public String getFoto() {
-		return foto;
+	public boolean isEsAdmin() {
+		return esAdmin;
 	}
 
-	public void setFoto(String foto) {
-		this.foto = foto;
+	public void setEsAdmin(boolean esAdmin) {
+		this.esAdmin = esAdmin;
 	}
 
 	/*

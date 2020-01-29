@@ -15,4 +15,6 @@ public interface IIncidenciaDao extends CrudRepository<Incidencia, IncidenciaId>
 	
 	public Incidencia findByEmpleadoAndFecha(Empleado empleado, Date fecha);
 	
+	public Incidencia findByEmpleadoAndFechaAndMensaje(Empleado empleado, Date fecha, String mensaje);
+		
 }

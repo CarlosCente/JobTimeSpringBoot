@@ -27,6 +27,11 @@ public class IncidenciaServiceImpl implements IIncidenciaService {
 	public Incidencia findByEmpleadoAndFecha(Empleado empleado, Date fecha) {
 		return incidenciaDao.findByEmpleadoAndFecha(empleado, fecha);
 	}
+	
+	@Override
+	public Incidencia findByEmpleadoAndFechaAndMensaje(Empleado empleado, Date fecha, String mensaje) {
+		return incidenciaDao.findByEmpleadoAndFechaAndMensaje(empleado, fecha, mensaje);
+	}
 
 	@Override
 	public List<Incidencia> findAll() {
@@ -38,5 +43,11 @@ public class IncidenciaServiceImpl implements IIncidenciaService {
 	public void save(Incidencia incidencia) {
 		incidenciaDao.save(incidencia);	
 	}
+
+	@Override
+	public void delete(Incidencia incidencia) {
+		incidenciaDao.delete(incidencia);
+	}
+
 
 }

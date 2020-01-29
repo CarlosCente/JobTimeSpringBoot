@@ -5,22 +5,26 @@
 
 	<header th:replace="layout/layout :: header"></header>
 
-	<div class="container-fluid py-5 col-md-10 col-sm-12">
+	<div class="container-fluid py-3 col-md-10 col-sm-12">
 
-		<div class="card bg-light">
-			<div class="card-body">
-			
-			<div class="row">
-					<input
-						class="form-control col-md-2 mb-4 mr-3 text-center border font-weight-bold col ml-auto"
-						id="myInput" type="text" placeholder="Buscar...">
+		<div class="card shadow card-table">
+	                <div class="card-header">
+	                 
+	                  <div class="title font-weight-bold ">Listado de Empleados</div>
+	                </div>
+	                
+	                <div class="row">			
+					<div class="col-sm text-center mt-2 ">
+						<a th:href="@{/form}" class="btn btn-primary mt-3 font-weight-bold">Crear un nuevo
+							Empleado</a>
+					</div>
 				</div>
-		
-		<div class="table-wrapper-scroll-y my-custom-scrollbar">
-				<table class="table table-striped table-hover table-sm text-center">
+			<div class="card-body table-responsive ">
+			
+				<table id="tablaListar" class="table-hover table-borderless dataTables_length">
 					<thead class="thead-dark">
 						<tr>
-							<th>Foto</th>
+							<th>Usuario</th>
 							<th>Nombre</th>
 							<th>Primer Apellido</th>
 							<th>Segundo Apellido</th>
@@ -32,50 +36,55 @@
 					</thead>
 					<tbody id="myTable">
 						<tr th:each="empleado : ${empleados}">
-							<td > <img class="img-thumbnail img-fluid" width="80px" height="80px" th:if="${#strings.length(empleado.foto) > 0}" th:src="@{/uploads/imagenes/} + ${empleado.foto}" />
-								 <img class="img-thumbnail img-fluid" width="80px" height="80px" th:if="${#strings.isEmpty(empleado.foto)}" th:src="@{/images/user-empty.jpg}" />
-							</td>
+							<td class="align-middle" th:text="${empleado.usuario.username}"></td>
 							<td class="align-middle" th:text="${empleado.nombre}"></td>
 							<td class="align-middle" th:text="${empleado.apellido1}"></td>
 							<td class="align-middle" th:text="${empleado.apellido2}"></td>
 							<td class="align-middle" th:text="${empleado.fechaNacim}"></td>
 							<td class="align-middle" th:text="${empleado.localidad}"></td>
-							<td class="align-middle"><a class="btn btn-primary btn-sm"
-								th:href="@{/editar/} + ${empleado.cod_empl}" th:text="'Editar'"></a></td>
-							<td class="align-middle"><a class="btn btn-danger btn-sm"
-								th:href="@{/eliminar/} + ${empleado.cod_empl}"
-								th:text="'Eliminar'"
-								onclick="return confirm('Est�s seguro que quieres eliminar?');"></a></td>
+							<td class="align-middle"><a class="btn-lg"
+								th:href="@{/editar/} + ${empleado.cod_empl}">
+								<i class="far fa-edit"></i>
+								</a></td>
+							<td class="align-middle">
+								<a onclick="return confirm('Â¿EstÃ¡s seguro que quieres eliminar al empleado?');"
+								th:href="@{/eliminar/} + ${empleado.cod_empl}" class="btn-lg">
+								<i class="fas fa-trash-alt" style="color: red;"></i>
+								</a>
+							</td>
 
 						</tr>
 					</tbody>
 
 				</table>
 				</div>
-				<div class="row">
-					<div class="col-sm mt-2 ml-4 font-weight-bold">
-						<nav th:replace="paginator-nav :: paginator"></nav>
-					</div>
-					<div class="col-sm text-right mt-2 ">
-						<a th:href="@{/form}" class="btn btn-primary mr-4 font-weight-bold">Crear
-							Empleado</a>
-					</div>
-				</div>
 
-
+				
 			</div>
 		</div>
 
-	</div>
 	<footer th:replace="layout/layout :: footer"></footer>
 	<script>
-		$(document).ready(function() {
-			$("#myInput").on("keyup",function() {
-				var value = $(this).val().toLowerCase();
-			$("#myTable tr").filter(function() {
-				$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)});
-			});
-		});
+
+	
+	$(document).ready( function () {
+		 var table = $('#tablaListar').DataTable({
+				 "pagingType": "numbers",
+		        "language": {
+		            "lengthMenu": "Mostrar _MENU_ por página",
+		            "zeroRecords": "Sin resultados",
+		            "info": "Mostrando página _PAGE_ de _PAGES_",
+		            "infoEmpty": "No hay datos disponibles",
+		            "infoFiltered": "(filtrados de _MAX_ registros en total)",
+		            "loadingRecords": "Cargando...",
+		            "processing":     "Procesando...",
+		            "search": "Buscar:"
+		           
+		        },
+		        responsive: true,
+		        "lengthMenu": [ 6, 10, 15 , 20 ]
+		    });
+	});
 	</script>
 
 </body>

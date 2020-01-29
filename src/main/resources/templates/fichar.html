@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-
+<script th:src="@{/js/jquery-3.3.1.min.js}"></script>
 <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}" />
 <link rel="stylesheet" type="text/css" th:href="@{/css/fontawesome.min.css}" />
@@ -13,7 +13,7 @@
 <body>
 
 	<header th:replace="layout/layout :: header"></header>
-	<div class="container-fluid py-5  col-md-10 col-sm-12">
+	<div class="container-fluid py-3  col-md-10 col-sm-12">
 		<h5 th:text="${titulo}"></h5>
 		<hr>
 
@@ -26,12 +26,7 @@
 						<div class="col-md-4">
 							<div class="row">
 								<div class="col-md-12 col-xs-12 col-lg-12 text-center">
-								<img th:if="${#strings.length(empleado.foto) > 0}"
-											th:src="@{/uploads/imagenes/} + ${empleado.foto}" id="prev"
-											class="img-thumbnail rounded img-fluid w-75"> <img
-											th:if="${#strings.isEmpty(empleado.foto)}"
-											th:src="@{/images/user-empty.jpg}" id="prev"
-											class="img-thumbnail rounded img-fluid w-75">
+								
 								</div>
 								
 							</div>
@@ -85,7 +80,7 @@
 		<!-- ########################## OPERACIONES DISPONIBLES FICHAJE ############################  -->
 		<!-- #######################################################################################  -->
 		<div class="row">
-		<div class="col-md-7 col-sm-12 col-lg-7">
+		<div class="col-md-12 col-sm-12 col-lg-6">
 		<div class="card bg-light mt-3 h-100">
 			<div class="card-header text-center font-weight-bold">OPERACIONES</div>
 			<div class="card-body">
@@ -226,7 +221,7 @@
 		</div>
 		</div>
 		
-		<div class="col-md-5 col-lg-5 col-sm-12">
+		<div class="col-md-12 col-lg-6 col-sm-12">
 				<div class="card bg-light mt-3 h-100	">
 					<div class="card-header text-center font-weight-bold">INFORMES</div>
 					<div class="card-body">
@@ -375,7 +370,7 @@
             });
         </script>
 
-		<script th:src="@{/js/jquery-3.3.1.min.js}"></script>
+		
 		<script th:src="@{/js/popper.min.js}"></script>
 		<script th:src="@{/js/bootstrap.min.js}"></script>
 		<script th:src="@{/js/moment-with-locales.js}"></script>

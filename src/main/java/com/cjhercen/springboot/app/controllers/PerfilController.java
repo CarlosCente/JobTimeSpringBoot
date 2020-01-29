@@ -1,9 +1,5 @@
 package com.cjhercen.springboot.app.controllers;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -16,8 +12,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.cjhercen.springboot.app.models.entity.Empleado;
@@ -27,7 +21,6 @@ import com.cjhercen.springboot.app.models.object.IncidenciaDatosPersonales;
 import com.cjhercen.springboot.app.models.service.impl.IncidenciaServiceImpl;
 import com.cjhercen.springboot.app.models.service.impl.UsuarioServiceImpl;
 import com.cjhercen.springboot.app.models.service.interfaces.IEmpleadoService;
-import com.cjhercen.springboot.app.models.service.interfaces.IUploadFileService;
 import com.cjhercen.springboot.app.util.ConstantesUtils;
 import com.cjhercen.springboot.app.util.FechaUtils;
 
@@ -44,9 +37,6 @@ public class PerfilController implements ConstantesUtils {
 	
 	@Autowired
 	private IncidenciaServiceImpl incidenciaService;
-	
-	@Autowired
-	private IUploadFileService uploadService;
 	
 	FechaUtils fechaUtils = new FechaUtils();
 	
@@ -69,7 +59,7 @@ public class PerfilController implements ConstantesUtils {
 	
 	@RequestMapping(value = "/perfil/editar/{id}", method = RequestMethod.POST)
 	public String saveEmpleado(@PathVariable(value = "id") Long id, @ModelAttribute("empleado") Empleado empleado,
-			@RequestParam("file") MultipartFile foto, RedirectAttributes flash) {
+		 RedirectAttributes flash) {
 		Empleado empleadoBD = null;
 		
 		//Se obtiene primero el usuario conectado para obtener los datos del empleado
@@ -81,29 +71,6 @@ public class PerfilController implements ConstantesUtils {
 			
 			String descripcionInci = generarDescripcionAdvertencia(empleadoBD, empleado);
 
-			// Comprobación de foto
-			String fotoActual = empleadoBD.getFoto();
-			Path directorioRecursos = Paths.get(RUTA_IMAGENES_EMPLEADOS);
-			String rootPath = directorioRecursos.toFile().getAbsolutePath();
-
-			// Se borra la foto actual del servidor, a no ser que sea la misma, que se
-			// mantiene
-			if (fotoActual != null && !"".equals(fotoActual)) {
-				uploadService.delete(fotoActual);
-			}
-
-			try {
-				byte[] bytes = foto.getBytes();
-				Path rutaCompleta = Paths.get(rootPath + "//" + foto.getOriginalFilename());
-				Files.write(rutaCompleta, bytes);
-				flash.addFlashAttribute("info", "Has subido correctamente '" + foto.getOriginalFilename() + "'");
-
-				empleadoBD.setFoto(foto.getOriginalFilename());
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
 			empleadoBD.setDireccion(empleado.getDireccion());
 			empleadoBD.setLocalidad(empleado.getLocalidad());
 			empleadoBD.setPais(empleado.getPais());
@@ -192,30 +159,32 @@ public class PerfilController implements ConstantesUtils {
 		
 		
 		if(incidenciaDatosPersonales.isHayNombre()) {
-			anadirNombre = " Nombre, el valor correcto sería "+incidenciaDatosPersonales.getNombre();
+			anadirNombre = " (Nombre), el valor correcto sería ("+incidenciaDatosPersonales.getNombre()+')';
 		}
 		
 		if(incidenciaDatosPersonales.isHayApellido1()) {
 			if(!"".equals(anadirNombre)){
-				anadirApellido1 = " , también en el campo Primer Apellido, el valor correcto sería "+incidenciaDatosPersonales.getApellido1();
+				anadirApellido1 = " , en el campo (Primer Apellido), el valor correcto sería ("+incidenciaDatosPersonales.getApellido1()+')';
 			} else {
-				anadirApellido1 = " Primer Apellido, el valor correcto sería "+incidenciaDatosPersonales.getApellido1();
+				anadirApellido1 = " (Primer Apellido), el valor correcto sería ("+incidenciaDatosPersonales.getApellido1()+')';
 			}
 		}
 		
 		if(incidenciaDatosPersonales.isHayApellido2()) {
 			if(!"".equals(anadirApellido1) || !"".equals(anadirNombre)) {
-				anadirApellido2 = " , también en el campo Segundo Apellido, el valor correcto sería "+incidenciaDatosPersonales.getApellido2();
+				anadirApellido2 = " , en el campo (Segundo Apellido), el valor correcto sería ("+incidenciaDatosPersonales.getApellido2()+')';
 			} else {
-				anadirApellido2 = " Segundo Apellido, el valor correcto sería "+incidenciaDatosPersonales.getApellido2();
+				anadirApellido2 = " (Segundo Apellido), el valor correcto sería ("+incidenciaDatosPersonales.getApellido2()+')';
 			}
 		}
 		
 		if(incidenciaDatosPersonales.isHayFechaNacimiento()) {
 			if(!"".equals(anadirApellido1) || !"".equals(anadirNombre) || !"".equals(anadirApellido2)) {
-				anadirFecha = " , también en el campo Fecha de Nacimiento, el valor correcto sería "+ fechaUtils.obtenerFechaParametroEnFormatoCadena(incidenciaDatosPersonales.getFechaNacimiento());
+				anadirFecha = " , en el campo (Fecha de Nacimiento), el valor correcto sería ("+ fechaUtils.
+						obtenerFechaParametroEnFormatoCadena(incidenciaDatosPersonales.getFechaNacimiento())+')';
 			}else {
-				anadirFecha = " Fecha de Nacimiento, el valor correcto sería "+fechaUtils.obtenerFechaParametroEnFormatoCadena(incidenciaDatosPersonales.getFechaNacimiento());
+				anadirFecha = " (Fecha de Nacimiento), el valor correcto sería ("+fechaUtils.
+						obtenerFechaParametroEnFormatoCadena(incidenciaDatosPersonales.getFechaNacimiento())+')';
 			}
 		}
 		
@@ -261,19 +230,19 @@ public class PerfilController implements ConstantesUtils {
 					+ " datos de dirección: ";
 		
 		if(!empleadoBD.getDireccion().equals(empleadoForm.getDireccion())) {
-			anadirDireccion = " el campo 'Direccion', el nuevo valor es: " + empleadoForm.getDireccion();
+			anadirDireccion = " el campo (Direccion), el nuevo valor es: (" + empleadoForm.getDireccion()+')';
 		}
 		
 		if(!empleadoBD.getLocalidad().equals(empleadoForm.getLocalidad())) {
-			anadirLocalidad = " el campo 'Localidad', el nuevo valor es: " + empleadoForm.getLocalidad();
+			anadirLocalidad = " el campo (Localidad), el nuevo valor es: (" + empleadoForm.getLocalidad()+')';
 		}
 		
 		if(!empleadoBD.getPais().equals(empleadoForm.getPais())) {
-			anadirPais = " el campo 'Pais', el nuevo valor es: " + empleadoForm.getPais();
+			anadirPais = " el campo (Pais), el nuevo valor es: (" + empleadoForm.getPais()+')';
 		}
 		
 		if(!empleadoBD.getProvincia().equals(empleadoForm.getProvincia())) {
-			anadirProvincia = " el campo 'Provincia', el nuevo valor es: " + empleadoForm.getProvincia();
+			anadirProvincia = " el campo (Provincia), el nuevo valor es: (" + empleadoForm.getProvincia()+')';
 		}
 		
 		if(!"".equals(anadirDireccion)) {

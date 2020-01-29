@@ -1,6 +1,7 @@
 package com.cjhercen.springboot.app.util;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -78,6 +79,25 @@ public class FechaUtils {
 	public Date obtenerFechaActual() {
 
 		Date date = new Date();
+		return date;
+	}
+	
+	/**
+	 * Obtener una fecha de tipo Date a partir de una fecha String
+	 * @param fecha fecha String a transformar
+	 * @return Date fecha en tipo Date
+	 */
+	public Date obtenerFechaApartirString(String fecha) {
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date date = null;
+		try {
+			date = sdf.parse(fecha);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
 		return date;
 	}
 

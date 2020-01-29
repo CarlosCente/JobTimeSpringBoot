@@ -5,123 +5,168 @@
 
 	<header th:replace="layout/layout :: header"></header>
 
-	<div class="container-fluid py-5 col-md-10 col-sm-12">
+	<div class="container-fluid py-2 col-md-8 col-sm-12">
 
 		<div class="card bg-light">
-			<div class="card-header text-center font-weight-bold" th:text="${titulo}"></div>
+			<div class="card-header text-center font-weight-bold bg-dark text-white" th:text="${titulo}"></div>
 			<div class="card-body">
 
-				<form th:action="@{/form}" th:object="${empleado}" method="post" enctype="multipart/form-data">
+				<form th:action="@{/form}" th:object="${empleado}" method="post">
 
 					<div class="row">
 
-						<div class="col-sm-3 col-md-3 pt-2 text-center">
-
-							<img th:src="@{/images/user-empty.jpg}" id="prev"
-								class="img-thumbnail rounded img-fluid w-75">
-							<div class="custom-file mt-4">
-								<input type="file" class="custom-file-input"
-									id="inputGroupFile01" name="file" aria-describedby="inputGroupFileAddon01">
-								<label class="custom-file-label text-left" for="inputGroupFile01"
-									data-browse="Elegir">Seleccionar archivo</label>
+						<div class="col-sm-12 col-md-12 col-lg-12">
+							<div class="row pb-2">
+								<h5 class="col-md-12 text-center mark">Datos personales</h5>
 							</div>
-
-						</div>
-
-
-						<div class="col-sm-5">
-							<div class="form-group row pt-3">
-								<label class="col-sm-5 ml-3 col-form-label">Nombre</label>
-								<div class="col-sm-6">
-									<input type="text" class="form-control" th:field="*{nombre}"
-										th:errorclass="'form-control alert-danger'" /> <small
+							
+							<div class="row">
+								<div class="col-xs-12 col-md-6 col-lg-6">
+									<div class="form-group input-group">
+										
+										<div class="input-group-prepend">
+										    <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+										 </div>									
+										<input type="text" class="form-control" th:field="*{nombre}"
+										placeholder="Nombre"
+										th:errorclass="'form-control alert-danger'" /> 
+									</div>
+									<small
 										class="form-text text-danger"
 										th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></small>
 								</div>
-							</div>
-							<div class="form-group row">
-								<label class="col-sm-5 ml-3 col-form-label">Primer
-									Apellido</label>
-								<div class="col-sm-6">
-									<input type="text" class="form-control" th:field="*{apellido1}"
-										th:errorclass="'form-control alert-danger'" /> <small
+								<div class="col-xs-12 col-md-6 col-lg-6">
+									<div class="form-group input-group">
+										
+										<div class="input-group-prepend">
+										    <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+										 </div>									
+										<input type="text" class="form-control" th:field="*{apellido1}"
+										placeholder="Primer Apellido"
+										th:errorclass="'form-control alert-danger'" /> 
+									</div>
+									<small
 										class="form-text text-danger"
-										th:if="${#fields.hasErrors('apellido1')}"
-										th:errors="*{apellido1}"></small>
+										th:if="${#fields.hasErrors('apellido1')}" th:errors="*{apellido1}"></small>
 								</div>
 							</div>
-							<div class="form-group row">
-								<label class="col-sm-5 ml-3 col-form-label">Segundo
-									Apellido</label>
-								<div class="col-sm-6">
-									<input type="text" class="form-control" th:field="*{apellido2}"
-										th:errorclass="'form-control alert-danger'" /> <small
+							
+							<div class="row">
+								<div class="col-xs-12 col-md-6 col-lg-6">
+									<div class="form-group input-group">
+										
+										<div class="input-group-prepend">
+										    <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+										 </div>									
+										<input type="text" class="form-control" th:field="*{apellido2}"
+										placeholder="Segundo Apellido"
+										th:errorclass="'form-control alert-danger'" /> 
+									</div>
+									<small
 										class="form-text text-danger"
-										th:if="${#fields.hasErrors('apellido2')}"
-										th:errors="*{apellido2}"></small>
+										th:if="${#fields.hasErrors('apellido2')}" th:errors="*{apellido2}"></small>
 								</div>
-							</div>
-							<div class="form-group row">
-								<label class="col-sm-5 ml-3 col-form-label">Fecha
-									Nacimiento</label>
-								<div class="col-sm-6">
-									<input type="date" class="form-control"
-										th:field="*{fechaNacim}"
-										th:errorclass="'form-control alert-danger'" /> <small
+								<div class="col-xs-12 col-md-6 col-lg-6">
+									<div class="form-group input-group">
+										
+										<div class="input-group-prepend">
+										    <span class="input-group-text"> <i class="fas fa-calendar-alt"></i> </span>
+										 </div>									
+										<input type="text" class="form-control" th:field="*{fechaNacim}"
+											 onfocus="(this.type='date')"
+											placeholder="Fecha de Nacimiento"
+											th:errorclass="'form-control alert-danger'" /> 
+									</div>
+									<small
 										class="form-text text-danger"
-										th:if="${#fields.hasErrors('fechaNacim')}"
-										th:errors="*{fechaNacim}"></small>
+										th:if="${#fields.hasErrors('fechaNacim')}" th:errors="*{fechaNacim}"></small>
 								</div>
-							</div>
-
 						</div>
-
-						<div class="col-sm-4">
-							<div class="form-group row pt-3">
-								<label class="col-sm-4 ml-3 col-form-label">Dirección</label>
-								<div class="col-sm-6">
-									<input type="text" class="form-control" th:field="*{direccion}"
-										th:errorclass="'form-control alert-danger'" /> <small
+						
+						<div class="row pb-2">
+							<h5 class="col-md-12 text-center mark">Datos de dirección</h5>
+						</div>
+								
+							<div class="row">
+								<div class="col-xs-12 col-md-6 col-lg-6">
+									<div class="form-group input-group">
+										
+										<div class="input-group-prepend">
+										    <span class="input-group-text"> <i class="fas fa-compass"></i> </span>
+										 </div>									
+										<input type="text" class="form-control" th:field="*{direccion}"
+										placeholder="Dirección completa"
+										th:errorclass="'form-control alert-danger'" /> 
+									</div>
+									<small
 										class="form-text text-danger"
-										th:if="${#fields.hasErrors('direccion')}"
-										th:errors="*{direccion}"></small>
+										th:if="${#fields.hasErrors('direccion')}" th:errors="*{direccion}"></small>
+								</div>
+								<div class="col-xs-12 col-md-6 col-lg-6">
+									<div class="form-group input-group">
+										
+										<div class="input-group-prepend">
+										    <span class="input-group-text"><i class="fas fa-map-marker-alt"></i> </span>
+										 </div>									
+										<input type="text" class="form-control" th:field="*{localidad}"
+										placeholder="Localidad"
+										th:errorclass="'form-control alert-danger'" /> 
+									</div>
+									<small
+										class="form-text text-danger"
+										th:if="${#fields.hasErrors('localidad')}" th:errors="*{localidad}"></small>
 								</div>
 							</div>
-							<div class="form-group row">
-								<label class="col-sm-4 ml-3 col-form-label">País</label>
-								<div class="col-sm-6">
-									<input type="text" class="form-control" th:field="*{pais}"
-										th:errorclass="'form-control alert-danger'" /> <small
+							
+								<div class="row">
+								<div class="col-xs-12 col-md-6 col-lg-6">
+									<div class="form-group input-group">
+										
+										<div class="input-group-prepend">
+										    <span class="input-group-text"> <i class="fas fa-map-marker-alt"></i> </span>
+										 </div>									
+										<input type="text" class="form-control" th:field="*{provincia}"
+										placeholder="Provincia"
+										th:errorclass="'form-control alert-danger'" /> 
+									</div>
+									<small
+										class="form-text text-danger"
+										th:if="${#fields.hasErrors('provincia')}" th:errors="*{provincia}"></small>
+								</div>
+								<div class="col-xs-12 col-md-6 col-lg-6">
+									<div class="form-group input-group">
+										
+										<div class="input-group-prepend">
+										    <span class="input-group-text"> <i class="fas fa-flag"></i> </span>
+										 </div>									
+										<input type="text" class="form-control" th:field="*{pais}"
+										placeholder="País"
+										th:errorclass="'form-control alert-danger'" /> 
+									</div>
+									<small
 										class="form-text text-danger"
 										th:if="${#fields.hasErrors('pais')}" th:errors="*{pais}"></small>
 								</div>
 							</div>
-							<div class="form-group row">
-								<label class="col-sm-4 ml-3 col-form-label">Provincia</label>
-								<div class="col-sm-6">
-									<input type="text" class="form-control" th:field="*{provincia}"
-										th:errorclass="'form-control alert-danger'" /> <small
-										class="form-text text-danger"
-										th:if="${#fields.hasErrors('provincia')}"
-										th:errors="*{provincia}"></small>
-								</div>
-							</div>
-							<div class="form-group row">
-								<label class="col-sm-4 ml-3 col-form-label">Localidad</label>
-								<div class="col-sm-6">
-									<input type="text" class="form-control" th:field="*{localidad}"
-										th:errorclass="'form-control alert-danger'" /> <small
-										class="form-text text-danger"
-										th:if="${#fields.hasErrors('localidad')}"
-										th:errors="*{localidad}"></small>
-								</div>
-							</div>
+						
+							<div class="row text-center">
+								<div class="col-md-12 mt-2 mb-2">
 
-
+									<div class="col-md-12">
+										<h6>Permiso para el usuario (Usuario / Administrador)</h6>
+										<input th:field="*{esAdmin}" 
+											type="checkbox" checked data-toggle="toggle" data-onstyle="success" data-offstyle="danger">
+									        
+									</div>
+									<hr />
+									</div> 
+							</div>
+							
 						</div>
+							
 					</div>
 
-					<div class="row py-2 mt-2">
+					<div class="row">
 						<div class="col-md-11">
 							<div class="row float-right ">
 								<div class="form-group">
@@ -144,17 +189,5 @@
 		</div>
 	</div>
 		<footer th:replace="layout/layout :: footer"></footer>
-	
-	<script>
-	var reader = new FileReader();
-	reader.onload = function(r_event) {
-	  document.getElementById('prev').setAttribute('src', r_event.target.result);
-	}
-
-	document.getElementsByName('file')[0].addEventListener('change', function(event) {
-	    reader.readAsDataURL(this.files[0]);
-	});
-	
-	</script>
 </body>
 </html>

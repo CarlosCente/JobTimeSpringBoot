@@ -91,3 +91,58 @@ function cargarSeleccionado(){
 	
 }
 
+
+/*
+ * FUNCIONES PARA OBTENER FECHA, USUARIO Y MENSAJE PARA CONTROLAR LAS FUNCIONES DE LA TABLA DE INCIDENCIAS
+ */
+
+function borrarIncidencia(){
+		
+	$("#tablaIncidencias tr").click(function(){
+	
+			
+			var fecha = $(this).find('td:nth-child(2)').html();
+			var usuario = $(this).find('td:first').html();
+			var mensaje = $(this).find('td:nth-child(4)').html();
+	
+			console.log(fecha + " " + usuario + " " + mensaje);
+			
+		});
+
+}
+
+function obtenerDatosFilaTabla(){
+
+	$("#tablaIncidencias tr").click(function(){
+
+		
+		var fecha = $(this).find('td:nth-child(2)').html();
+		var usuario = $(this).find('td:first').html();
+		var mensaje = $(this).find('td:nth-child(4)').html();
+
+		console.log(fecha + " " + usuario + " " + mensaje);
+		
+	});
+
+}
+
+function obtenerUsuario(){
+	$("#tablaIncidencias tr").click(function(){
+
+		alert(usuario);
+
+	});
+
+}
+
+
+function obtenerMensaje(){
+
+	$("#tablaIncidencias tr").click(function(){
+
+		return mensaje;
+
+	});
+
+}
+

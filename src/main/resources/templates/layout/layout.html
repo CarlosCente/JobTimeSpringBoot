@@ -7,12 +7,16 @@
 
 
 <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}" />
+<script th:src="@{/js/jquery-3.3.1.min.js}"></script>
+
 <link rel="stylesheet" type="text/css" th:href="@{/css/fontawesome.min.css}" />
 <link rel="stylesheet" type="text/css" th:href="@{/css/jquery.dataTables.min.css}" />
-<link rel="stylesheet" type="text/css" th:href="@{/css/dataTables.bootstrap.min.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/responsive.dataTables.min.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/dataTables.bootstrap4.min.css}" />
 <link rel="stylesheet" type="text/css" th:href="@{/css/buttons.bootstrap.min.css}" />
 <link rel="stylesheet" type="text/css" th:href="@{/css/all.css}" />
 <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap4-toggle.min.css}" />
 
 
 </head>
@@ -29,11 +33,14 @@
 				<ul class="navbar-nav">
 					<li sec:authorize="hasRole('ROLE_ADMIN')"
 						class="nav-item ml-2 mr-2"><a class="nav-link"
-						th:href="@{/incidencias}">Incidencias</a></li>
+						th:href="@{/incidencias}">Gestión de Incidencias</a></li>
 					<li sec:authorize="hasRole('ROLE_ADMIN')"
 						class="nav-item ml-2 mr-2"><a class="nav-link"
 						th:href="@{/listar}">Gestión de Usuarios</a></li>
-					<li class="nav-item"><a class="nav-link ml-2 mr-2"
+					<li sec:authorize="hasRole('ROLE_ADMIN')"
+						class="nav-item ml-2 mr-2"><a class="nav-link"
+						href="#">Gestión de Solicitudes/Ausencias</a></li>
+					<li sec:authorize="!hasRole('ROLE_ADMIN')" class="nav-item"><a class="nav-link ml-2 mr-2"
 						th:href="@{/fichar}">Fichaje de la jornada</a></li>
 					<li sec:authorize="!hasRole('ROLE_ADMIN')" class="nav-item"><a class="nav-link ml-2 mr-2" href="#">Solicitudes
 							/ Ausencias</a></li>
@@ -65,15 +72,17 @@
 		
 		<!-- Optional JavaScript -->
 		<!-- jQuery first, then Bootstrap JS -->
-		<script th:src="@{/js/jquery-3.3.1.min.js}"></script>
 		<script th:src="@{/js/popper.min.js}"></script>
-		<script th:src="@{/js/bootstrap.min.js}"></script>		
+		<script th:src="@{/js/bootstrap.min.js}"></script>	
+		
+		<!-- DATATABLES -->	
 		<script th:src="@{/js/jquery.dataTables.min.js}"></script>
-		<script th:src="@{/js/dataTables.bootstrap.min.js}"></script>
+		<script th:src="@{/js/dataTables.bootstrap4.min.js}"></script>
 		<script th:src="@{/js/dataTables.buttons.min.js}"></script>		
-		<script th:src="@{/js/bootstrap-sortable.js}"></script>
+		<script th:src="@{/js/bootstrap4-toggle.min.js}"></script>		
 		<script th:src="@{/js/funciones.js}"></script>
 		<script th:src="@{/js/Chart.min.js}"></script>
+		<script th:src="@{/js/bootbox.min.js}"></script>	
 		
 	</footer>
 </body>

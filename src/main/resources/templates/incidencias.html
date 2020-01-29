@@ -5,7 +5,7 @@
 
 	<header th:replace="layout/layout :: header"></header>
 
-	<div class="container-fluid py-5 col-md-10 col-sm-12">
+	<div class="container-fluid py-3  col-md-11 col-sm-12">
 		<div class="card bg-light">
 			<div class="card-header font-weight-bold" th:text="${titulo}"></div>
 			<div class="card-body">
@@ -19,9 +19,7 @@
 								</div>
 								<p class="card-category text-right">Errores</p>
 								<h3 class="card-title text-right" th:text="${totalErrores}"></h3>
-								<div class="card-footer text-center">
-									<a href="#">Ver Errores</a>
-								</div>
+								
 							</div>
 						</div>
 					</div>
@@ -33,9 +31,7 @@
 								</div>
 								<p class="card-category text-right">Advertencias</p>
 								<h3 class="card-title text-right" th:text="${totalAdvertencias}"></h3>
-								<div class="card-footer text-center">
-									<a href="#">Ver Advertencias</a>
-								</div>
+								
 							</div>
 						</div>
 					</div>
@@ -43,14 +39,12 @@
 					<div class="col-lg-3 col-md-6 col-sm-6">
 						<div class="card card-stats">
 							<div class="card-header card-header-danger card-header-icon">
-								<div class="card-icon3 bg-info text-white">
+								<div class="card-icon3 bg-primary text-white">
 									<i class="far fa-eye"></i>
 								</div>
 								<p class="card-category text-right">Abiertas</p>
 								<h3 class="card-title text-right" th:text="${totalAbiertas}"></h3>
-								<div class="card-footer text-center">
-									<a href="#">Ver Abiertas</a>
-								</div>
+								
 							</div>
 						</div>
 					</div>
@@ -62,85 +56,131 @@
 								</div>
 								<p class="card-category text-right">Resueltas</p>
 								<h3 class="card-title text-right" th:text="${totalSolucionadas}"></h3>
-								<div class="card-footer text-center">
-									<a href="#">Ver Resueltas</a>
-								</div>
+								
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="row pt-3">
-					<div class="col-lg-8 col-md-12 col-sm-12 text-center ">
-
-						<div class="card shadow mb-4 h-100">
-							<div
-								class="card-header py-3 text-center">
-								<h6 class="m-0 font-weight-bold">Datos de las incidencias</h6>
-
-							</div>
-							<table id="table" class="table table-responsive table-hover">
-								<thead class="text-center bg-dark text-white">
-									<tr>
-										<th>Usuario</th>
-										<th>Fecha</th>
-										<th>Estado</th>
-										<th>Tipo</th>
-										<th>Mensaje</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr th:each="incidencia : ${incidencias}">
-										<td data-toggle="tooltip" data-placement="left" data-type="primary" 
-										th:title="${incidencia.empleado.nombre} +' '+${incidencia.empleado.apellido1}+' '+${incidencia.empleado.apellido2}"
-										 th:text="${incidencia.empleado.usuario.username}"></td>
-
-										<td th:text="${incidencia.fecha}"></td>
-										<td
-											th:text="${incidencia.estado == '1' ? '&nbspAbierta&nbsp ' : '&nbspResuelta&nbsp'}"></td>
-										<td
-											th:text="${incidencia.tipo == '1'} ? 'Error' : 'Advertencia'"
-											th:class="${incidencia.tipo == '1'} ? 'text-danger font-weight-bold' : 'text-warning font-weight-bold'">
+				<div class="row pt-4">
+					<div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 text-center">
+	              <div class="card shadow card-table">
+	                <div class="card-header">
+	                 
+	                  <div class="title font-weight-bold ">Incidencias</div>
+	                </div>
+	                <div class="card-body table-responsive">
+	                
+	                <table id="tablaIncidencias" class="table-hover table-borderless dataTables_length" >
+										<thead class="text-center bg-dark text-white">
+										<tr>
+											<th>Usuario</th>
+											<th>Fecha</th>
+											<th>Tipo de incidencia</th>
+											<th>Estado</th>
+											<th>Descripción</th>
+											<th>Eliminar</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="incidencia : ${incidencias}">
+											<td data-toggle="tooltip" data-placement="left" data-type="primary" 
+											th:title="${incidencia.empleado.nombre} +' '+${incidencia.empleado.apellido1}+' '+${incidencia.empleado.apellido2}"
+											 th:text="${incidencia.empleado.usuario.username}"></td>
+	
+											<td th:text="${incidencia.fecha}"></td>
+											
+											<td
+												th:text="${incidencia.mensaje}"
+												th:class="${incidencia.tipo == '1'} ? 'text-danger font-weight-bold' : 'text-warning font-weight-bold'">
+												
+											</td>
+											
+											<td
+												th:text="${incidencia.estado == '1' ? '&nbspAbierta&nbsp ' : '&nbspResuelta&nbsp'}"></td>
+											
+											<td>
+																		
+												<a th:href="@{/incidencias/descripcionIncidencia/} + 
+																	${incidencia.mensaje} + '/' +
+																 	${incidencia.empleado.cod_empl} +
+																 	 '/' + 
+																 	${incidencia.fecha}" class="btn-lg">
+												<i class="fas fa-search-plus" style="color: #5bc0de;"></i>
+												</a>
+												
+											</td>
+										
+											<td>
+												
+												<!-- Button trigger modal-->
+												<a onclick="return confirm('¿Estás seguro que quieres eliminar la incidencia?');"
+												th:href="@{/incidencias/eliminar/} + 
+																	${incidencia.mensaje} + '/' +
+																 	${incidencia.empleado.cod_empl} +
+																 	 '/' + 
+																 	${incidencia.fecha}" class="btn-lg">
+												<i class="fas fa-trash-alt" style="color: red;"></i>
+												</a>
+ 
 										</td>
-										<td th:text="${incidencia.mensaje}"></td>
 									</tr>
 								</tbody>
 							</table>
-						</div>
-					</div>
-					<div class="col-lg-4 col-md-12 col-sm-12">
+                </div>
+              </div>
+            </div>
+				
 
-
-						<div class="card shadow mb-4 h-100">
-							<!-- Card Header - Dropdown -->
-							<div
-								class="card-header py-3 text-center">
-								<h6 class="m-0 font-weight-bold">Estadísticas</h6>
-
-							</div>
-							<!-- Card Body -->
-							<div class="card-body">
-								<div class="chart-pie pt-2 pb-2">
-									<div class="chartjs-size-monitor">
-										<div class="chartjs-size-monitor-expand">
-											<div class=""></div>
-										</div>
-										<div class="chartjs-size-monitor-shrink">
-											<div class=""></div>
+				<div class="col-lg-3 col-md-12 col-sm-12">
+						
+						<div class="card shadow h-100">
+								<div class="card-header text-center">		
+									<h6 class="card-title mb-0 text-center font-weight-bold">Estadisticas Incidencias</h6>
+								</div>
+								<div class="card-body d-flex">
+									<div class="align-self-center w-100">
+									<div class="py-3">
+										<div class="chart chart-xs">
+											<div class="chartjs-size-monitor">
+												<div class="chartjs-size-monitor-expand">
+												</div>
+												<div class="chartjs-size-monitor-shrink">
+												</div>
+											</div>
+											<canvas id="chartjs-dashboard-pie"
+												style="display: block; width: 317px; height: 200px;"
+												width="317" height="200" class="chartjs-render-monitor"></canvas>
 										</div>
 									</div>
-									<canvas id="myChart"
-										style="position:relative; display: flex; width: 25rem; height: 20rem;"
-									 	class="chartjs-render-monitor"></canvas>
+
+									<table class="table mb-0">
+											<tbody>
+												<tr>
+													<td><i class="fas fa-circle text-danger fa-fw"></i> Errores</td>
+													<td class="text-right" th:text="${totalErrores}"></td>
+												</tr>
+												<tr>
+													<td><i class="fas fa-circle text-warning fa-fw"></i> Advertencias</td>
+													<td class="text-right" th:text="${totalAdvertencias}"></td>
+												</tr>
+												<tr>
+													<td><i class="fas fa-circle text-primary fa-fw"></i> Abiertas</td>
+													<td class="text-right" th:text="${totalAbiertas}"></td>
+												</tr>
+												<tr>
+													<td><i class="fas fa-circle text-success fa-fw"></i> Resueltas</td>
+													<td class="text-right" th:text="${totalSolucionadas}"></td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
 								</div>
-
-							</div>
+									
 						</div>
-
-
+						
 					</div>
+								
 				</div>
-
-
 
 			</div>
 		</div>
@@ -148,32 +188,65 @@
 	<footer th:replace="layout/layout :: footer"></footer>
 
 	<script>
-var ctx = document.getElementById('myChart').getContext('2d');
-var totalErrores = [[${totalErrores}]];
-var totalAdvertencias = [[${totalAdvertencias}]];
-var totalAbiertas = [[${totalAbiertas}]];
-var totalSolucionadas = [[${totalSolucionadas}]];
-var option = {
-		  responsive: true
-		};
-var myChart = new Chart(ctx, {
-    type: 'doughnut',
-    options: option,
-    data: {
-        labels: ['Errores', 'Advertencias', 'Abiertas', 'Resueltas'],
-        datasets: [{
-            label: '# of Votes',
-            data: [totalErrores, totalAdvertencias, totalAbiertas, totalSolucionadas],
-            backgroundColor: [
-                'rgba(217,83,79)',
-                'rgba(255,193,0)',
-                'rgba(66,139,202)',
-                'rgba(92,184,92)'
-            ]
-        }]
-    }
-    
-});
+	
+	$(document).ready( function () {
+		 var table = $('#tablaIncidencias').DataTable({
+			 	"pagingType": "numbers",
+		        "language": {
+		            "lengthMenu": "Mostrar _MENU_ registros por página",
+		            "zeroRecords": "Sin resultados",
+		            "info": "Mostrando página _PAGE_ de _PAGES_",
+		            "infoEmpty": "No hay datos disponibles",
+		            "infoFiltered": "(filtrados de _MAX_ registros en total)",
+		            "loadingRecords": "Cargando...",
+		            "processing":     "Procesando...",
+		            "search": "Buscar:",
+		            "paginate": {
+		            	"first":      "Primera",
+		                "last":       "Última",
+		                "next":       "Siguiente",
+		                "previous":   "Anterior"
+		            }
+		        },
+		        "lengthMenu": [ 6, 10, 15 , 20 ],
+		        "order": [ 2, 'asc']
+		    });
+	});
+				
+			
+	var totalErrores = [[${totalErrores}]];
+	var totalAdvertencias = [[${totalAdvertencias}]];
+	var totalAbiertas = [[${totalAbiertas}]];
+	var totalSolucionadas = [[${totalSolucionadas}]];
+	
+	$(function() {
+		// Pie chart
+		new Chart(document.getElementById("chartjs-dashboard-pie"), {
+			type: 'pie',
+			data: {
+				labels: ["Errores", "Advertencias", "Abiertas", "Resueltas"],
+				datasets: [{
+					data: [totalErrores, totalAdvertencias, totalAbiertas, totalSolucionadas],
+					backgroundColor: [
+						"#d9534f",
+						"#f0ad4e",
+						"#0275d8",
+						"#5cb85c"
+					],
+					borderColor: "transparent"
+				}]
+			},
+			options: {
+				responsive: !window.MSInputMethodContext,
+				maintainAspectRatio: false,
+				legend: {
+					display: false
+				},
+				cutoutPercentage: 60
+			}
+		});
+	});
+
 </script>
 
 </body>
