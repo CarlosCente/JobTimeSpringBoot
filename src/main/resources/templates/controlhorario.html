@@ -38,8 +38,10 @@
 								</a>
 							</td>
 							<td class="align-middle">
-								<a onclick="return confirm('¿Estáss seguro que quieres eliminar el fichaje?');"
-									 class="btn-lg">
+								<a onclick="return confirm('¿Estás seguro que quieres eliminar el fichaje?');"
+									 th:href="@{/controlhorario/eliminar/} + 
+												${fichaje.empleado.cod_empl} + '/' +
+												${fichaje.fecha}" class="btn-lg">
 									<i class="fas fa-trash-alt" style="color: red;"></i>
 								</a>
 							</td>

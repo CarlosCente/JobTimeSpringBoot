@@ -10,7 +10,7 @@ public interface IFichajeService {
 
 	public void save(Fichaje fichaje);
 	
-	public void delete(Long id);
+	public void delete(Fichaje fichaje);
 
 	public List<Fichaje> findByEmpleado(Empleado empleado);
 	

@@ -26,9 +26,8 @@ public class FichajeServiceImpl implements IFichajeService {
 	}
 
 	@Override
-	public void delete(Long id) {
-		// TODO Auto-generated method stub
-		
+	public void delete(Fichaje fichaje) {
+		fichajeDao.delete(fichaje);
 	}
 
 	@Override
