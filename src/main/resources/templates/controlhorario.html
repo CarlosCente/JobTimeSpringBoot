@@ -3,96 +3,115 @@
 <head th:replace="layout/layout :: head"></head>
 <body>
 
-	<header th:replace="layout/layout :: header"></header>
+<header th:replace="layout/layout :: header"></header>
 
-	<div class="container-fluid py-5 col-md-8 col-sm-10">
+	<div class="container-fluid py-5 col-md-10 col-sm-10">
 
 		<div class="card bg-light">
-			<div class="card-header text-center font-weight-bold"
-				th:text="${titulo}"></div>
-			<div class="card-body">		
-				<form th:action="@{/formBusqueda}" th:object="${formBusqueda}" method="post">
+			
+			<div class="card-body table-responsive">
+	                
+	        	<table id="tablaFichajes" class="table-hover table-borderless dataTables_length" >
+					<thead class="text-center bg-dark text-white">
+						<tr>
+							<th>Usuario</th>
+							<th>Fecha</th>
+							<th>Hora Entrada</th>
+							<th>Hora Salida</th>
+							<th>Tiempo total</th>
+							<th>Editar</th>
+							<th>Eliminar</th>
+						</tr>
+					</thead>
+					<tbody class="text-center">
+						<tr th:each="fichaje : ${listaFichajes}">
+							<td data-toggle="tooltip" data-placement="left" data-type="primary" 
+							th:title="${fichaje.empleado.nombre} +' '+${fichaje.empleado.apellido1}+' '+${fichaje.empleado.apellido2}"
+							 th:text="${fichaje.empleado.usuario.username}"></td>
+							<td th:text="${fichaje.fecha}"></td>
+							<td th:text="${fichaje.horaEntrada}"></td>
+							<td th:text="${fichaje.horaSalida}"></td>
+							<td th:text="${fichaje.tiempoTotal}"></td>
+							<td class="align-middle">
+								<a class="btn-lg">
+									<i class="far fa-edit"></i>
+								</a>
+							</td>
+							<td class="align-middle">
+								<a onclick="return confirm('¿Estáss seguro que quieres eliminar el fichaje?');"
+									 class="btn-lg">
+									<i class="fas fa-trash-alt" style="color: red;"></i>
+								</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+           	</div>
 
-					<div class="row">
-
-						
-						<div class="col-sm-12 col-md-6">
-							<div class="form-group row pt-3">
-								<label class="col-sm-5 ml-3 col-form-label">Nombre</label>
-								<div class="col-sm-6">
-									<input type="text" class="form-control" th:field="*{nombre}"
-										/>
-								</div>
-							</div>
-							<div class="form-group row">
-								<label class="col-sm-5 ml-3 col-form-label">Primer
-									Apellido</label>
-								<div class="col-sm-6">
-									<input type="text" class="form-control" th:field="*{apellido1}"
-										/> 
-								</div>
-								
-							</div>
-							
-							<div class="form-group row">
-								<label class="col-sm-5 ml-3 col-form-label">Segundo
-									Apellido</label>
-								<div class="col-sm-6">
-									<input type="text" class="form-control" th:field="*{apellido2}"
-										/> 
-								</div>
-								
-							</div>
-						
-						</div>
-						
-						<div class="col-sm-12 col-md-6">
-						
-						
-							<div class="form-group row pt-3">
-								<label class="col-sm-5 ml-3 col-form-label">Fecha Inicio
-									</label>
-								<div class="col-sm-6">
-									<input type="date" class="form-control" th:field="*{fechaInicio}"
-										/> 
-								</div>
-							</div>
-							
-							<div class="form-group row">
-								<label class="col-sm-5 ml-3 col-form-label">Fecha Fin
-									</label>
-								<div class="col-sm-6">
-									<input type="date" class="form-control" th:field="*{fechaFin}"
-										/> 
-								</div>
-							</div>
-						</div>
-						
-						
-
-					</div>
-
-					<div class="row py-2 mt-2">
-						<div class="col-md-10">
-							<div class="row float-right ">
-								
-								<div class="form-group">
-									<input value="Buscar Fichajes" type="submit"
-										class="btn btn-primary" />
-								</div>
-							</div>
-
-						</div>
-
-
-					</div>
-
-				</form>
-
-			</div>
 		</div>
-
 	</div>
+
 	<footer th:replace="layout/layout :: footer"></footer>
+
+<script>
+	
+	$(document).ready( function () {
+		 var groupColumn = 1;
+		
+		 var table = $('#tablaFichajes').DataTable({
+			 	"columnDefs": [
+		            { "visible": false, "targets": groupColumn }
+		        ],
+			 	"pagingType": "numbers",
+		        "language": {
+		            "lengthMenu": "Mostrar _MENU_ registros por página",
+		            "zeroRecords": "Sin resultados",
+		            "info": "Mostrando página _PAGE_ de _PAGES_",
+		            "infoEmpty": "No hay datos disponibles",
+		            "infoFiltered": "(filtrados de _MAX_ registros en total)",
+		            "loadingRecords": "Cargando...",
+		            "processing":     "Procesando...",
+		            "search": "Buscar:",
+		            "paginate": {
+		            	"first":      "Primera",
+		                "last":       "Última",
+		                "next":       "Siguiente",
+		                "previous":   "Anterior"
+		            }
+		        },
+		        "order": [ groupColumn, 'asc' ],
+		        "displayLength": 25,
+		        "drawCallback": function ( settings ) {
+		            var api = this.api();
+		            var rows = api.rows( {page:'current'} ).nodes();
+		            var last=null;
+		 
+		            api.column(groupColumn, {page:'current'} ).data().each( function ( group, i ) {
+		                if ( last !== group ) {
+		                    $(rows).eq( i ).before(
+		                        '<tr class="group"><td colspan="6">'+group+'</td></tr>'
+		                    );
+		 
+		                    last = group;
+		                }
+		            } );
+		        }
+		    });
+		 
+		// Order by the grouping
+		    $('#tablaFichajes tbody').on( 'click', 'tr.group', function () {
+		        var currentOrder = table.order()[0];
+		        if ( currentOrder[0] === groupColumn && currentOrder[1] === 'asc' ) {
+		            table.order( [ groupColumn, 'desc' ] ).draw();
+		        }
+		        else {
+		            table.order( [ groupColumn, 'asc' ] ).draw();
+		        }
+		    } );
+		 
+	});
+	
+</script>
+
 </body>
 </html>

@@ -162,5 +162,9 @@ display: block;
 		margin: 100px auto;
 	}
 	
-	
+	tr.group,
+	tr.group:hover {
+	    background-color: #37a8d3 !important;
+	    
+	}
 	

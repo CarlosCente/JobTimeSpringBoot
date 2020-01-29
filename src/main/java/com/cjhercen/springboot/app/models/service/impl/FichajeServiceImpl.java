@@ -31,19 +31,23 @@ public class FichajeServiceImpl implements IFichajeService {
 		
 	}
 
+	@Override
 	public List<Fichaje> findByEmpleado(Empleado empleado) {
 		return fichajeDao.findByEmpleado(empleado);
 	}
 
+	@Override
 	public Fichaje findByEmpleadoAndFecha(Empleado empleado, Date fecha) {
 		return fichajeDao.findByEmpleadoAndFecha(empleado, fecha);
 	}
 
+	@Override
 	public ArrayList<Fichaje> findAll() {
 		return fichajeDao.findAll();
 	}
 
-	public ArrayList <Fichaje> findByFecha(Date fecha) {
+	@Override
+	public List <Fichaje> findByFecha(Date fecha) {
 		return fichajeDao.findByFecha(fecha);
 	}
 	

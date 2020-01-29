@@ -19,9 +19,9 @@ import com.cjhercen.springboot.app.models.entity.Incidencia;
 import com.cjhercen.springboot.app.models.entity.Usuario;
 import com.cjhercen.springboot.app.models.object.IncidenciaFichaje;
 import com.cjhercen.springboot.app.models.service.impl.EmpleadoServiceImpl;
-import com.cjhercen.springboot.app.models.service.impl.FichajeServiceImpl;
 import com.cjhercen.springboot.app.models.service.impl.IncidenciaServiceImpl;
 import com.cjhercen.springboot.app.models.service.impl.UsuarioServiceImpl;
+import com.cjhercen.springboot.app.models.service.interfaces.IFichajeService;
 import com.cjhercen.springboot.app.util.ConstantesUtils;
 import com.cjhercen.springboot.app.util.FechaUtils;
 import com.cjhercen.springboot.app.util.FuncionesUtiles;
@@ -36,10 +36,10 @@ public class FicharController implements ConstantesUtils {
 	UsuarioServiceImpl usuarioService;
 
 	@Autowired
-	private IncidenciaServiceImpl incidenciaService;
+	IncidenciaServiceImpl incidenciaService;
 	
 	@Autowired
-	FichajeServiceImpl fichajeService;
+	IFichajeService fichajeService;
 		
 	FechaUtils fechaUtils = new FechaUtils();
 	

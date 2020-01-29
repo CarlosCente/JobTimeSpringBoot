@@ -14,10 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.cjhercen.springboot.app.models.entity.Empleado;
-import com.cjhercen.springboot.app.models.entity.Fichaje;
 import com.cjhercen.springboot.app.models.entity.Incidencia;
-import com.cjhercen.springboot.app.models.service.impl.FichajeServiceImpl;
 import com.cjhercen.springboot.app.models.service.interfaces.IEmpleadoService;
+import com.cjhercen.springboot.app.models.service.interfaces.IFichajeService;
 import com.cjhercen.springboot.app.models.service.interfaces.IIncidenciaService;
 import com.cjhercen.springboot.app.util.ConstantesUtils;
 import com.cjhercen.springboot.app.util.FechaUtils;
@@ -32,7 +31,7 @@ public class IncidenciaController {
 	IEmpleadoService empleadoService;
 	
 	@Autowired
-	FichajeServiceImpl fichajeService;
+	IFichajeService fichajeService;
 	
 	private final Logger log = LoggerFactory.getLogger(getClass());
 	
