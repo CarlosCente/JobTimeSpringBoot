@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.cjhercen.springboot.app.models.entity.Empleado;
+import com.cjhercen.springboot.app.models.entity.Fichaje;
 import com.cjhercen.springboot.app.models.entity.Incidencia;
+import com.cjhercen.springboot.app.models.service.impl.FichajeServiceImpl;
 import com.cjhercen.springboot.app.models.service.interfaces.IEmpleadoService;
 import com.cjhercen.springboot.app.models.service.interfaces.IIncidenciaService;
 import com.cjhercen.springboot.app.util.ConstantesUtils;
@@ -28,6 +30,9 @@ public class IncidenciaController {
 	
 	@Autowired
 	IEmpleadoService empleadoService;
+	
+	@Autowired
+	FichajeServiceImpl fichajeService;
 	
 	private final Logger log = LoggerFactory.getLogger(getClass());
 	
@@ -113,6 +118,27 @@ public class IncidenciaController {
 		Date fechaIncidencia = fechaUtils.obtenerFechaApartirString(fecha);
 		Empleado empleado = empleadoService.findOne(cod_empl);
 		Incidencia incidencia = incidenciaService.findByEmpleadoAndFechaAndMensaje(empleado, fechaIncidencia, mensaje);
+		
+		//Casos que se resuelven automáticamente, la incidencia de tipo otros se soluciona manualmente
+		if(mensaje.equals(ConstantesUtils.INCIDENCIA_FICHAJE_ENTRADA)) {
+			
+			//Cambio de la hora de entrada del día indicado en la descripcion
+			//Primero se obtiene la hora de entrada y el dia
+			String fechaDescripcion = recuperarFechaDescripcion(incidencia);
+			String horaDescripcion = recuperarHoraDescripcion(incidencia);
+
+			//Fichaje fichaje = fichajeService.findByEmpleadoAndFecha(empleado, fechaDescripcion);
+			//fichaje.setHoraEntrada(horaDescripcion);
+			//fichajeService.save(fichaje);
+			
+		} else if (mensaje.equals(ConstantesUtils.INCIDENCIA_FICHAJE_SALIDA)) {
+			
+		} else if (mensaje.equals(ConstantesUtils.INCIDENCIA_DATOS_DIRECCION)) {
+			
+		} else if (mensaje.equals(ConstantesUtils.INCIDENCIA_PERFIL)) {
+			
+		}
+		
 		
 		model.put("incidencia", incidencia);
 		model.put("titulo", "Descripción de la Incidencia");
