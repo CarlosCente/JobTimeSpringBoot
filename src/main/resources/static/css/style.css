@@ -160,11 +160,14 @@ display: block;
 	.trigger-btn {
 		display: inline-block;
 		margin: 100px auto;
+		
 	}
 	
 	tr.group,
 	tr.group:hover {
-	    background-color: #37a8d3 !important;
+	    background-color: #d9edf7 !important;
+	    font-weight: bold;
+	    letter-spacing: 2px;
 	    
 	}
 	

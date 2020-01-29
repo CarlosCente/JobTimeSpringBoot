@@ -39,7 +39,7 @@ public class ControlHorarioController {
 		List<Fichaje> listaFichajes = fichajeService.findAll();
 		
 		model.addAttribute("listaFichajes", listaFichajes);
-		model.addAttribute("titulo", "Búsqueda de fichajes");
+		model.addAttribute("titulo", "Gestión de los fichajes de los empleados");
 
 		return "controlhorario";
 	}

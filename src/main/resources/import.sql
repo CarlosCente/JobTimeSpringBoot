@@ -6,7 +6,6 @@ INSERT INTO empleados (apellido1, apellido2, direccion, fecha_nacim, localidad, 
 INSERT INTO empleados (apellido1, apellido2, direccion, fecha_nacim, localidad, nombre, pais, provincia, es_admin) VALUES('Vega', 'Ejemplo', 'Calle de Ejemplo', '1992-12-10', 'Valladolid' , 'Leticia', 'España', 'Valladolid', 0);
 INSERT INTO empleados (apellido1, apellido2, direccion, fecha_nacim, localidad, nombre, pais, provincia, es_admin) VALUES('Gutierrez', 'Ejemplo', 'Calle de Ejemplo', '1992-12-10', 'Valladolid' , 'Pepe', 'España', 'Valladolid', 0);
 
-
 /* Populate table Fichaje */
 
 INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, ip_origen, tiempo_total, finalizado) VALUES (2, '2020-01-23', '08:00', '16:00', '192.168.1.1', '08:00', true);
@@ -15,12 +14,25 @@ INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, ip_or
 INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, ip_origen, tiempo_total, finalizado) VALUES (2, '2020-01-15', '08:00', '16:03', '192.168.1.1', '08:03', true);
 INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, ip_origen, tiempo_total, finalizado) VALUES (2, '2020-01-16', '08:00', '16:02', '192.168.1.1', '08:02', true);
 INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, ip_origen, tiempo_total, finalizado) VALUES (2, '2020-01-17', '08:00', '15:50', '192.168.1.1', '07:50', true);
+
 INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, ip_origen, tiempo_total, finalizado) VALUES (3, '2020-01-13', '07:57', '16:00', '192.168.1.1', '08:03', true);
 INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, ip_origen, tiempo_total, finalizado) VALUES (3, '2020-01-14', '07:55', '15:58', '192.168.1.1', '08:03', true);
 INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, ip_origen, tiempo_total, finalizado) VALUES (3, '2020-01-15', '08:00', '16:03', '192.168.1.1', '08:03', true);
 INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, ip_origen, tiempo_total, finalizado) VALUES (3, '2020-01-16', '08:00', '16:02', '192.168.1.1', '08:02', true);
 INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, ip_origen, tiempo_total, finalizado) VALUES (3, '2020-01-17', '08:00', '15:50', '192.168.1.1', '07:50', true);
  
+INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, ip_origen, tiempo_total, finalizado) VALUES (4, '2020-01-13', '07:57', '16:00', '192.168.1.1', '08:03', true);
+INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, ip_origen, tiempo_total, finalizado) VALUES (4, '2020-01-14', '07:55', '15:58', '192.168.1.1', '08:03', true);
+INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, ip_origen, tiempo_total, finalizado) VALUES (4, '2020-01-15', '08:00', '16:03', '192.168.1.1', '08:03', true);
+INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, ip_origen, tiempo_total, finalizado) VALUES (4, '2020-01-16', '08:00', '16:02', '192.168.1.1', '08:02', true);
+INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, ip_origen, tiempo_total, finalizado) VALUES (4, '2020-01-17', '08:00', '15:50', '192.168.1.1', '07:50', true);
+
+INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, ip_origen, tiempo_total, finalizado) VALUES (5, '2020-01-13', '07:57', '16:00', '192.168.1.1', '08:03', true);
+INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, ip_origen, tiempo_total, finalizado) VALUES (5, '2020-01-14', '07:55', '15:58', '192.168.1.1', '08:03', true);
+INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, ip_origen, tiempo_total, finalizado) VALUES (5, '2020-01-15', '08:00', '16:03', '192.168.1.1', '08:03', true);
+INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, ip_origen, tiempo_total, finalizado) VALUES (5, '2020-01-16', '08:00', '16:02', '192.168.1.1', '08:02', true);
+INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, ip_origen, tiempo_total, finalizado) VALUES (5, '2020-01-17', '08:00', '15:50', '192.168.1.1', '07:50', true);
+
 /* Populate table Users and roles */
 INSERT INTO users (username, password, enabled, cod_empl) VALUES ('admin', '$2y$12$6vxcbhYOgxlfFQxbPuApwuIobHyJHfppJqja/ZNPJjO9yYDovSXpa', 1, 1);
 INSERT INTO users (username, password, enabled, cod_empl) VALUES ('laura', '$2a$10$PSPfqJj5gIvRiZyTa6qeJeCVbgFJcg9T4DoNQdOO9ZbV8mEgufYrC', 1, 2);
@@ -35,7 +47,6 @@ INSERT INTO authorities (user_id, authority) VALUES (3,'ROLE_USER');
 INSERT INTO authorities (user_id, authority) VALUES (4,'ROLE_USER');
 INSERT INTO authorities (user_id, authority) VALUES (5,'ROLE_USER');
 INSERT INTO authorities (user_id, authority) VALUES (6,'ROLE_USER');
-
 
 /* Populate table incidencias */
 INSERT INTO incidencias (estado, fecha, mensaje, tipo, empleado_cod_empl,descripcion) VALUES ('2', '2020-01-16', 'Incidencia de Fichaje de salida', '1', 1,'El usuario admin (Carlos Hernández Centenero), ha creado una incidencia con su fichaje de entrada del día (20/01/2020) la hora correcta sería a las (8:00). Además el usuario ha añadido el siguiente comentario: Se me olvidó');
