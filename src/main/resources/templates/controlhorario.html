@@ -30,9 +30,9 @@
 							 th:text="${fichaje.empleado.usuario.username}"></td>
 							<td th:text="${fichaje.fecha}"></td>
 							<td th:text="${fichaje.ip}"></td>
-							<td th:text="${fichaje.horaEntrada}"></td>
-							<td th:text="${fichaje.horaSalida}"></td>
-							<td th:text="${fichaje.tiempoTotal}"></td>
+							<td><span class="badge badge-pill badge-primary" th:text="${fichaje.horaEntrada}"></span></td>
+							<td><span class="badge badge-pill badge-primary" th:text="${fichaje.horaSalida}"></span></td>
+							<td><span class="badge badge-pill badge-success" th:text="${fichaje.tiempoTotal}"></span></td>
 							<td class="align-middle">
 								<a class="btn-lg">
 									<i class="far fa-edit" style="color: #007bff;"></i>
@@ -47,6 +47,17 @@
 							</td>
 						</tr>
 					</tbody>
+					<tfoot>
+			            <tr>
+			                <th>Usuario</th>
+			                <th hidden="true">IP Origen</th>
+			               	<th hidden="true">Fecha</th>
+			                <th hidden="true">Hora Entrada</th>
+			                <th hidden="true">Hora Salida</th>
+			                <th hidden="true">Tiempo Total</th>
+			                <th hidden="true">Acciones</th>
+			            </tr>
+			        </tfoot>
 				</table>
            	</div>
 
@@ -112,6 +123,30 @@
 		    } );
 		 
 	});
+	
+	$(document).ready(function() {
+	    // Setup - add a text input to each footer cell
+	    $('#tablaFichajes tfoot th').each( function () {
+	        var title = $(this).text();
+	        $(this).html( '<input type="text" placeholder="Buscar por '+title+'" />' );
+	    } );
+	 
+	    // DataTable
+	    var table = $('#tablaFichajes').DataTable();
+	 
+	    // Apply the search
+	    table.columns().every( function () {
+	        var that = this;
+	 
+	        $( 'input', this.footer() ).on( 'keyup change clear', function () {
+	            if ( that.search() !== this.value ) {
+	                that
+	                    .search( this.value )
+	                    .draw();
+	            }
+	        } );
+	    } );
+	} );
 	
 </script>
 
