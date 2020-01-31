@@ -146,3 +146,6 @@ function obtenerMensaje(){
 
 }
 
+/*
+ * JAVASCRIPT DE LA VISTA controlHorario
+ */

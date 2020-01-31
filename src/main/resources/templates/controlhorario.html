@@ -96,11 +96,11 @@
 								</div>
 								<div class="form-group">
 									<span class="input-group-addon font-weight-bold">Hora de Entrada</span>
-									<input type="text" class="form-control" id="eHoraEntrada">
+									<input type="text" class="form-control" id="horaEntradaControl">
 								</div>
 								<div class="form-group">
 									<span class="input-group-addon font-weight-bold">Hora de Salida</span>
-									<input type="text" class="form-control" id="eHoraSalida">
+									<input type="text" class="form-control" id="horaSalidaControl">
 								</div>					
 						
 							</div>
@@ -220,13 +220,16 @@
 	    	$('#eUsuario').val(usuario);
 	    	$('#eFecha').val(fecha);
 	    	$('#eIp').val(ipOrigen);
-	    	$('#eHoraEntrada').val(horaDeEntrada);
-	    	$('#eHoraSalida').val(horaDeSalida);
+	    	$('#horaEntradaControl').val(horaDeEntrada);
+	    	$('#horaSalidaControl').val(horaDeSalida);
 	    });
 	   });
 	        
 
-	
+	  $(function () {
+          $('#horaEntradaControl').timepicker();
+          $('#horaSalidaControl').timepicker();
+      });
 	
 </script>
 
