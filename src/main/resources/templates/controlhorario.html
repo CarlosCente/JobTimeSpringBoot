@@ -29,9 +29,9 @@
 							th:title="${fichaje.empleado.nombre} +' '+${fichaje.empleado.apellido1}+' '+${fichaje.empleado.apellido2}"
 							 th:text="${fichaje.empleado.usuario.username}"></td>
 							<td th:text="${fichaje.fecha}"></td>
-							<td><span id="cIp" th:text="${fichaje.ip}"></span></td>
-							<td><span id="cHoraEntrada" class="badge badge-pill badge-primary" th:text="${fichaje.horaEntrada}"></span></td>
-							<td><span id="cHoraSalida" class="badge badge-pill badge-primary" th:text="${fichaje.horaSalida}"></span></td>
+							<td th:text="${fichaje.ip}"></td>
+							<td th:text="${fichaje.horaEntrada}"></td>
+							<td th:text="${fichaje.horaSalida}"></td>
 							<td><span class="badge badge-pill badge-success" th:text="${fichaje.tiempoTotal}"></span></td>
 							<td class="align-middle">
 								<a class="btn-lg edit">
@@ -79,20 +79,28 @@
 					</div>
 					<div class="modal-body">
 
-						<div class="row text-center">
-							<div class="col-md-12 text-center">
+						<div class="row">
+							<div class="col-md-12">
 							
-								<div class="form-group input-group">
-									<span class="input-group-addon" style="width:150px;">Ip de Origen</span>
-									<input type="text" style="width:350px;" class="form-control" id="eIp">
+								<div class="form-group">
+									<span class="input-group-addon font-weight-bold">Usuario</span>
+									<input type="text" class="form-control" id="eUsuario" disabled="disabled">
 								</div>
-								<div class="form-group input-group">
-									<span class="input-group-addon" style="width:150px;">Hora de Entrada</span>
-									<input type="text" style="width:350px;" class="form-control" id="eHoraEntrada">
+								<div class="form-group">
+									<span class="input-group-addon font-weight-bold">Fecha</span>
+									<input type="text" class="form-control" id="eFecha" disabled="disabled">
 								</div>
-								<div class="form-group input-group">
-									<span class="input-group-addon" style="width:150px;">Hora de Salida</span>
-									<input type="text" style="width:350px;" class="form-control" id="eHoraSalida">
+								<div class="form-group">
+									<span class="input-group-addon font-weight-bold">Ip de Origen</span>
+									<input type="text" class="form-control" id="eIp">
+								</div>
+								<div class="form-group">
+									<span class="input-group-addon font-weight-bold">Hora de Entrada</span>
+									<input type="text" class="form-control" id="eHoraEntrada">
+								</div>
+								<div class="form-group">
+									<span class="input-group-addon font-weight-bold">Hora de Salida</span>
+									<input type="text" class="form-control" id="eHoraSalida">
 								</div>					
 						
 							</div>
@@ -200,13 +208,17 @@
 	     
 	    $('#tablaFichajes tbody').on('click', 'tr', function () {
 	        var data = table.row( this ).data();
-	        alert( 'You clicked on '+data[2].text()+'\'s row' );
 
+	        var usuario=data[0];
+	        var fecha=data[1];
 	    	var ipOrigen=data[2];
 	    	var horaDeEntrada=data[3];
 	    	var horaDeSalida=data[4];
+	    	
 	    		
 	    	$('#modalEditar').modal('show');
+	    	$('#eUsuario').val(usuario);
+	    	$('#eFecha').val(fecha);
 	    	$('#eIp').val(ipOrigen);
 	    	$('#eHoraEntrada').val(horaDeEntrada);
 	    	$('#eHoraSalida').val(horaDeSalida);
