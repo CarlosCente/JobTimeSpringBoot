@@ -29,12 +29,12 @@
 							th:title="${fichaje.empleado.nombre} +' '+${fichaje.empleado.apellido1}+' '+${fichaje.empleado.apellido2}"
 							 th:text="${fichaje.empleado.usuario.username}"></td>
 							<td th:text="${fichaje.fecha}"></td>
-							<td th:text="${fichaje.ip}"></td>
-							<td><span class="badge badge-pill badge-primary" th:text="${fichaje.horaEntrada}"></span></td>
-							<td><span class="badge badge-pill badge-primary" th:text="${fichaje.horaSalida}"></span></td>
+							<td><span id="cIp" th:text="${fichaje.ip}"></span></td>
+							<td><span id="cHoraEntrada" class="badge badge-pill badge-primary" th:text="${fichaje.horaEntrada}"></span></td>
+							<td><span id="cHoraSalida" class="badge badge-pill badge-primary" th:text="${fichaje.horaSalida}"></span></td>
 							<td><span class="badge badge-pill badge-success" th:text="${fichaje.tiempoTotal}"></span></td>
 							<td class="align-middle">
-								<a class="btn-lg">
+								<a class="btn-lg edit">
 									<i class="far fa-edit" style="color: #007bff;"></i>
 								</a>
 						
@@ -62,12 +62,58 @@
            	</div>
 
 		</div>
+		
+		
+		<div class="modal fade" id="modalEditar" tabindex="-1"
+			role="dialog" aria-labelledby="modalEntrada" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered modal-md"
+				role="document">
+				<div class="modal-content">
+					<div class="modal-header bg-dark text-white">
+						<p class="modal-title w-100 text-center"
+							id="exampleModalLongTitle">Editar Fichaje del Empleado</p>
+						<button type="button" class="close text-white"
+							data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+
+						<div class="row text-center">
+							<div class="col-md-12 text-center">
+							
+								<div class="form-group input-group">
+									<span class="input-group-addon" style="width:150px;">Ip de Origen</span>
+									<input type="text" style="width:350px;" class="form-control" id="eIp">
+								</div>
+								<div class="form-group input-group">
+									<span class="input-group-addon" style="width:150px;">Hora de Entrada</span>
+									<input type="text" style="width:350px;" class="form-control" id="eHoraEntrada">
+								</div>
+								<div class="form-group input-group">
+									<span class="input-group-addon" style="width:150px;">Hora de Salida</span>
+									<input type="text" style="width:350px;" class="form-control" id="eHoraSalida">
+								</div>					
+						
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-danger"
+							data-dismiss="modal">Cerrar</button>
+						<a type="button" class="btn btn-primary text-white"
+							>Aceptar</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
 	</div>
 
 	<footer th:replace="layout/layout :: footer"></footer>
 
 <script>
-	
+			
 	$(document).ready( function () {
 		 var groupColumn = 1;
 		
@@ -146,7 +192,29 @@
 	            }
 	        } );
 	    } );
+
 	} );
+	
+	$(document).ready(function() {
+	    var table = $('#tablaFichajes').DataTable();
+	     
+	    $('#tablaFichajes tbody').on('click', 'tr', function () {
+	        var data = table.row( this ).data();
+	        alert( 'You clicked on '+data[2].text()+'\'s row' );
+
+	    	var ipOrigen=data[2];
+	    	var horaDeEntrada=data[3];
+	    	var horaDeSalida=data[4];
+	    		
+	    	$('#modalEditar').modal('show');
+	    	$('#eIp').val(ipOrigen);
+	    	$('#eHoraEntrada').val(horaDeEntrada);
+	    	$('#eHoraSalida').val(horaDeSalida);
+	    });
+	   });
+	        
+
+	
 	
 </script>
 

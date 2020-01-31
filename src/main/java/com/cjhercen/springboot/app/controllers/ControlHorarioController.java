@@ -66,4 +66,12 @@ public class ControlHorarioController {
 	}
 	
 	
+	@RequestMapping(value = "/editarFichaje")
+	public String editarFichaje(Model model, RedirectAttributes flash) {
+		
+		model.addAttribute("titulo", "Editar fichaje del empleado");
+		return "editarFichaje";
+	}
+	
+	
 }
