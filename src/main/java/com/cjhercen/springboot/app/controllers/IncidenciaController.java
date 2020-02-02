@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.cjhercen.springboot.app.models.entity.Empleado;
+import com.cjhercen.springboot.app.models.entity.Fichaje;
 import com.cjhercen.springboot.app.models.entity.Incidencia;
 import com.cjhercen.springboot.app.models.service.interfaces.IEmpleadoService;
 import com.cjhercen.springboot.app.models.service.interfaces.IFichajeService;
@@ -124,11 +125,12 @@ public class IncidenciaController {
 			//Cambio de la hora de entrada del día indicado en la descripcion
 			//Primero se obtiene la hora de entrada y el dia
 			String fechaDescripcion = recuperarFechaDescripcion(incidencia);
+			Date fechaConvertida = fechaUtils.obtenerFechaApartirString(fechaDescripcion);
 			String horaDescripcion = recuperarHoraDescripcion(incidencia);
 
-			//Fichaje fichaje = fichajeService.findByEmpleadoAndFecha(empleado, fechaDescripcion);
-			//fichaje.setHoraEntrada(horaDescripcion);
-			//fichajeService.save(fichaje);
+			Fichaje fichaje = fichajeService.findByEmpleadoAndFecha(empleado, fechaConvertida);
+			fichaje.setHoraEntrada(horaDescripcion);
+			fichajeService.save(fichaje);
 			
 		} else if (mensaje.equals(ConstantesUtils.INCIDENCIA_FICHAJE_SALIDA)) {
 			
