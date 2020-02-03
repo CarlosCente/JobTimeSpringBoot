@@ -125,11 +125,13 @@ public class IncidenciaController {
 			//Cambio de la hora de entrada del día indicado en la descripcion
 			//Primero se obtiene la hora de entrada y el dia
 			String fechaDescripcion = recuperarFechaDescripcion(incidencia);
-			Date fechaConvertida = fechaUtils.obtenerFechaApartirString(fechaDescripcion);
+			Date fechaConvertida = fechaUtils.obtenerFechaApartirStringFormato2(fechaDescripcion);
 			String horaDescripcion = recuperarHoraDescripcion(incidencia);
 
 			Fichaje fichaje = fichajeService.findByEmpleadoAndFecha(empleado, fechaConvertida);
 			fichaje.setHoraEntrada(horaDescripcion);
+			//Se marca la incidencia como resuelta
+			incidencia.setEstado(ConstantesUtils.INCIDENCIA_RESUELTA);
 			fichajeService.save(fichaje);
 			
 		} else if (mensaje.equals(ConstantesUtils.INCIDENCIA_FICHAJE_SALIDA)) {

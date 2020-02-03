@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Utilidades para trabajar con las fechas y horas de los fichajes
@@ -99,6 +100,26 @@ public class FechaUtils {
 		}
 	
 		return date;
+	}
+	
+	
+	/**
+	 * Obtener una fecha de tipo Date a partir de una fecha String
+	 * @param fecha fecha String a transformar
+	 * @return Date fecha en tipo Date
+	 */
+	public Date obtenerFechaApartirStringFormato2(String fecha) {
+		
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
+		Date journeyDate = null;
+		try {
+			journeyDate = df.parse(fecha);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+		return journeyDate;
 	}
 
 	/**
