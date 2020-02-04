@@ -83,7 +83,7 @@
 									</thead>
 									<tbody>
 										<tr th:each="incidencia : ${incidencias}"
-											>
+											th:style="${incidencia.estado == '1'} ? 'background: ' : 'background: '">
 											<td data-toggle="tooltip" data-placement="left" data-type="primary" 
 											th:title="${incidencia.empleado.nombre} +' '+${incidencia.empleado.apellido1}+' '+${incidencia.empleado.apellido2}"
 											 th:text="${incidencia.empleado.usuario.username}"></td>
