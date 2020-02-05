@@ -7,6 +7,11 @@
 
 	<div class="container-fluid py-2 col-md-11 col-sm-12">
 
+		<div th:if="${message}" th:text="${message}" th:class="${'alert ' + alertClass}">
+			 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+		</div>
+
+
 		<div class="card bg-light">
 			<div class="card-header text-center font-weight-bold bg-dark text-white" th:text="${titulo}"></div>
 			<div class="card-body">
@@ -73,9 +78,10 @@
 					<div class="col-xs-12 col-md-6 col-lg-6">
 								<div th:if="${incidencia.mensaje} != 'Incidencia de Fichaje (Otras)'" class="form-group text-center">
 										<h5 class="col-md-12 font-weight-bold mb-3">Valores modificados </h5>
-										 
+										
 										 <div th:if="${incidencia.mensaje} == 'Incidencia de Fichaje de entrada'" 
 										 	class="col-md-12 mt-2 text-center">
+										 	<br />
 										 	<p class="ml-4 mr-4">Se va a modificar la hora de entrada del día 
 											 	<span class="text-primary font-weight-bold" th:text="${fechaDescripcion}"></span> 
 											 	para el empleado
@@ -88,6 +94,7 @@
 										 	
 										 <div th:if="${incidencia.mensaje} == 'Incidencia de Fichaje de salida'" 
 										 	class="col-md-12 mt-2 text-center">
+										 	<br />
 										 	<p class="ml-4 mr-4">Se va a modificar la hora de salida del día 
 											 	<span class="text-primary font-weight-bold" th:text="${fechaDescripcion}"></span> 
 											 	para el empleado
@@ -110,7 +117,13 @@
 										 	
 										 <div th:if="${incidencia.mensaje} == 'Incidencia de Datos de dirección'" 
 										 	class="col-md-12 mt-2 text-center">
-										 	 <p>Datos de dirección</p>
+										 	<div th:each="map : ${camposIncidencia}" class="text-left ml-2">
+										  	 		<ul th:each="mapEntry : ${map}">
+										  	 			<li>El campo <span class="text-primary font-weight-bold " th:text="${mapEntry.key}"></span>
+										  	 			, el valor correcto sería <span class="text-success font-weight-bold " th:text="${mapEntry.value}"></span></li>
+										  	 		</ul>
+										 	 	</div>
+
 										  </div>
 											
 								</div>			
@@ -121,7 +134,7 @@
 										<h5 class="col-md-12 font-weight-bold mb-3">Acciones disponibles </h5>
 										<div class="row">
 											<div class="col-md-12">
-											
+		
 												<a data-toggle="tooltip" data-placement="bottom"  data-type="primary" 
 									 				title="Resolver la incidencia"class="mr-2" th:href="@{/incidencias/descripcionIncidencia/resolver/}+ 
 																	${incidencia.mensaje} + '/' +
@@ -130,7 +143,29 @@
 																 	${incidencia.fecha}">
 													<i class="fas fa-3x fa-tools" style="color: green;"></i>
 												</a>
-							
+												
+												<div th:if="${incidencia.mensaje} == 'Incidencia de Fichaje de entrada'" >
+												<hr />
+													<span>Se modificará la hora de entrada del día indicado por el usuario en la incidencia</span>
+												</div>
+												
+												<div th:if="${incidencia.mensaje} == 'Incidencia de Fichaje de salida'" >
+												<hr />
+													<span>Se modificará la hora de salida del día indicado por el usuario en la incidencia.</span>
+												</div>
+												
+												<div th:if="${incidencia.mensaje} == 'Incidencia de Datos de dirección'" >
+												<hr />
+													<span>Este tipo de incidencia sólo es para informar al administrador de los cambios
+													que ha realizado el usuario.</span>
+												</div>
+												
+												<div th:if="${incidencia.mensaje} == 'Incidencia de Datos personales'" >
+												<hr />
+													<span>Se realizarán los cambios en los datos señalados del empleado por
+													los nuevos valores.</span>
+												</div>
+												
 											</div>
 										</div>
 								</div>			

@@ -103,6 +103,12 @@ public class IncidenciaController {
 			model.put("camposIncidencia", listaValoresModificados);
 		}
 		
+		if(incidenciaAMostrar.getMensaje().equals(ConstantesUtils.INCIDENCIA_DATOS_DIRECCION)) {
+			ArrayList<Map<String, String>> listaValoresModificados = new ArrayList<Map<String, String>>();
+			recuperarCamposConIncidencia(incidenciaAMostrar, listaValoresModificados);
+			model.put("camposIncidencia", listaValoresModificados);
+		}
+		
 		model.put("incidencia",incidenciaAMostrar);
 		model.put("titulo", "Descripción de la Incidencia");
 		
@@ -146,7 +152,8 @@ public class IncidenciaController {
 				fichajeService.save(fichaje);
 			
 			} else {
-				flash.addFlashAttribute("error", "Hay un error, no existe el fichaje del empleado para ese día");
+				flash.addFlashAttribute("message", "Hay un error, no existe el fichaje del empleado para ese día");
+				flash.addFlashAttribute("alertClass", "alert-danger alert-dismissable");
 				log.info("No existe el fichaje del empleado "+ empleado.getNombre() + " " + empleado.getApellido1() + " " + 
 							empleado.getApellido2() +" para el día " + fechaDescripcion);				
 			}
@@ -177,7 +184,8 @@ public class IncidenciaController {
 				fichajeService.save(fichaje);
 				
 			} else {
-				flash.addFlashAttribute("error", "Hay un error, no existe el fichaje del empleado para ese día");
+				flash.addFlashAttribute("message", "Hay un error, no existe el fichaje del empleado para ese día");
+				flash.addFlashAttribute("alertClass", "alert-dismissable");
 				log.info("No existe el fichaje del empleado "+ empleado.getNombre() + " " + empleado.getApellido1() + " " + 
 						empleado.getApellido2() +" para el día " + fechaDescripcion);	
 			}
@@ -226,7 +234,7 @@ public class IncidenciaController {
 		model.put("incidencia", incidencia);
 		model.put("titulo", "Descripción de la Incidencia");
 		
-		return "/descripcionIncidencia";
+		return "redirect:/incidencias/descripcionIncidencia/"+mensaje+"/"+cod_empl+"/"+fecha;
 	}
 	
 	
@@ -405,8 +413,8 @@ public class IncidenciaController {
 			if(descripcion.charAt(i) == ')') {
 				contadorCierre ++;
 			}
-			//A partir del segundo parentesis de abertura se recupera la fecha
-			if(contadorAbertura == 2 && contadorCierre != 2) {
+			//A partir del primer parentesis de abertura se recupera la fecha
+			if(contadorAbertura == 1 && contadorCierre != 1) {
 				fechaDescripcion += descripcion.charAt(i);
 			}	
 		}
@@ -427,8 +435,8 @@ public class IncidenciaController {
 			if(descripcion.charAt(i) == ')') {
 				contadorCierre ++;
 			}
-			//A partir del tercer parentesis de abertura se recupera la fecha
-			if(contadorAbertura == 3 && contadorCierre != 3) {
+			//A partir del segundo parentesis de abertura se recupera la fecha
+			if(contadorAbertura == 2 && contadorCierre != 2) {
 				horaDescripcion += descripcion.charAt(i);
 			}
 			

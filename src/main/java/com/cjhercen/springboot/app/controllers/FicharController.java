@@ -265,8 +265,7 @@ public class FicharController implements ConstantesUtils {
 			String fechaEntrada = partesEntrada[0];
 			String horaEntrada = partesEntrada[1];
 			
-			mensaje = "El usuario "+empleado.getUsuario().getUsername() + " (" + empleado.getNombre() + " " +
-		empleado.getApellido1() + " " + empleado.getApellido2() +"), ha creado una incidencia con su fichaje de entrada del día ("
+			mensaje = "El usuario "+empleado.getUsuario().getUsername() + ", ha creado una incidencia con su fichaje de entrada del día ("
 				+ fechaEntrada +") la hora correcta sería a las ("+ horaEntrada +"). Además el usuario ha añadido el siguiente comentario:"
 						+ " "+comentarioEntrada;
 		} 
@@ -279,8 +278,7 @@ public class FicharController implements ConstantesUtils {
 			String fechaSalida = partesSalida[0];
 			String horaSalida = partesSalida[1];
 			
-			mensaje = "El usuario "+empleado.getUsuario().getUsername() + " (" + empleado.getNombre() + " " +
-					empleado.getApellido1() + " " + empleado.getApellido2() +"), ha creado una incidencia con su fichaje de salida del día ("
+			mensaje = "El usuario "+empleado.getUsuario().getUsername() + ", ha creado una incidencia con su fichaje de salida del día ("
 					+ fechaSalida + ") la hora correcta sería a las ("+ horaSalida + "). Además el usuario ha añadido el siguiente comentario:"
 					+ " " + comentarioSalida;
 		} 
@@ -288,8 +286,7 @@ public class FicharController implements ConstantesUtils {
 		if(INCIDENCIA_OTROS.equals(incidenciaFichaje.getTipo())) {
 			String comentarioOtro = incidenciaFichaje.getComentarioOtro();
 			
-			mensaje = "El usuario "+empleado.getUsuario().getUsername() + " (" + empleado.getNombre() + " " +
-					empleado.getApellido1() + " " + empleado.getApellido2() +"), ha creado una incidencia con su fichaje y ha dejado el"
+			mensaje = "El usuario "+empleado.getUsuario().getUsername() + ", ha creado una incidencia con su fichaje y ha dejado el"
 							+ " siguiente comentario: " + comentarioOtro;
 
 		} 
