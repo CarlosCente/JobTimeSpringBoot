@@ -104,13 +104,32 @@ public class FechaUtils {
 	
 	
 	/**
-	 * Obtener una fecha de tipo Date a partir de una fecha String
+	 * Obtener una fecha de tipo Date a partir de una fecha String dd/MM/yyyy
 	 * @param fecha fecha String a transformar
 	 * @return Date fecha en tipo Date
 	 */
 	public Date obtenerFechaApartirStringFormato2(String fecha) {
 		
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
+		Date journeyDate = null;
+		try {
+			journeyDate = df.parse(fecha);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+		return journeyDate;
+	}
+	
+	/**
+	 * Obtener una fecha de tipo Date a partir de una fecha String dd-MM-yyyy
+	 * @param fecha fecha String a transformar
+	 * @return Date fecha en tipo Date
+	 */
+	public Date obtenerFechaApartirStringFormato3(String fecha) {
+		
+		DateFormat df = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
 		Date journeyDate = null;
 		try {
 			journeyDate = df.parse(fecha);

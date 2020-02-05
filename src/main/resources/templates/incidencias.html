@@ -67,6 +67,7 @@
 	                <div class="card-header">
 	                 
 	                  <div class="title font-weight-bold ">Incidencias</div>
+
 	                </div>
 	                <div class="card-body table-responsive">
 	                
@@ -76,14 +77,14 @@
 											<th>Usuario</th>
 											<th>Fecha</th>
 											<th>Tipo de incidencia</th>
-											<th>Estado</th>
+											<th>Tipo</th>
 											<th>Descripción</th>
 											<th>Eliminar</th>
 										</tr>
 									</thead>
 									<tbody>
 										<tr th:each="incidencia : ${incidencias}"
-											th:style="${incidencia.estado == '1'} ? 'background: ' : 'background: '">
+											th:style="${incidencia.estado == '1'} ? 'background:#81DAF5; ' : 'background:#A9F5BC;'">
 											<td data-toggle="tooltip" data-placement="left" data-type="primary" 
 											th:title="${incidencia.empleado.nombre} +' '+${incidencia.empleado.apellido1}+' '+${incidencia.empleado.apellido2}"
 											 th:text="${incidencia.empleado.usuario.username}"></td>
@@ -91,13 +92,16 @@
 											<td th:text="${incidencia.fecha}"></td>
 											
 											<td
-												th:text="${incidencia.mensaje}"
-												th:class="${incidencia.tipo == '1'} ? 'text-danger font-weight-bold' : 'text-warning font-weight-bold'">
+												th:text="${incidencia.mensaje}">
 												
 											</td>
 											
-											<td
-												th:text="${incidencia.estado == '1' ? '&nbspAbierta&nbsp ' : '&nbspResuelta&nbsp'}"></td>
+											<td>
+												<span
+												th:class="${incidencia.tipo == '1'} ? 'badge badge-danger text-dark' : 'badge badge-warning'"
+												th:text="${incidencia.tipo == '1' ? '&nbspError&nbsp ' : '&nbspAdvertencia&nbsp'}">
+												</span>
+											</td>
 											
 											<td>
 																		
@@ -106,7 +110,7 @@
 																 	${incidencia.empleado.cod_empl} +
 																 	 '/' + 
 																 	${incidencia.fecha}" class="btn-lg">
-												<i class="fas fa-search-plus" style="color: #5bc0de;"></i>
+												<i class="fas fa-search-plus" style="color: black;"></i>
 												</a>
 												
 											</td>

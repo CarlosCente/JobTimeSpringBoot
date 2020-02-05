@@ -37,8 +37,11 @@ public interface ConstantesUtils {
 	public static final String INCIDENCIA_NO_SELECCION = "nada";
 	
 	/*
-	 * Ruta para las imagenes subidas al servidor
+	 * Constantes para recuperar los campos del map de incidencias
 	 */
-	public static final String RUTA_IMAGENES_EMPLEADOS = "C://jobtime//uploads//imagenes";
-	
+	public static final String CAMPO_NOMBRE = "Nombre";
+	public static final String CAMPO_APELLIDO1 = "Primer Apellido";
+	public static final String CAMPO_APELLIDO2 = "Segundo Apellido";
+	public static final String CAMPO_FECHANACIM = "Fecha de Nacimiento";
+
 }

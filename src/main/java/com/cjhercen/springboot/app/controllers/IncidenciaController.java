@@ -113,7 +113,7 @@ public class IncidenciaController {
 	public String resolverIncidencia (Map<String, Object> model,
 			@PathVariable(value = "mensaje") String mensaje,
 			@PathVariable(value = "cod_empl") Long cod_empl ,
-			@PathVariable(value = "fecha") String fecha) {
+			@PathVariable(value = "fecha") String fecha, RedirectAttributes flash) {
 			
 		Date fechaIncidencia = fechaUtils.obtenerFechaApartirString(fecha);
 		Empleado empleado = empleadoService.findOne(cod_empl);
@@ -129,17 +129,97 @@ public class IncidenciaController {
 			String horaDescripcion = recuperarHoraDescripcion(incidencia);
 
 			Fichaje fichaje = fichajeService.findByEmpleadoAndFecha(empleado, fechaConvertida);
-			fichaje.setHoraEntrada(horaDescripcion);
-			//Se marca la incidencia como resuelta
-			incidencia.setEstado(ConstantesUtils.INCIDENCIA_RESUELTA);
-			fichajeService.save(fichaje);
+			
+			//Se comprueba si existe el fichaje de ese dia
+			if(fichaje != null) {
+			
+				fichaje.setHoraEntrada(horaDescripcion);
+				
+				//Se marca la incidencia como resuelta
+				incidencia.setEstado(ConstantesUtils.INCIDENCIA_RESUELTA);
+				incidenciaService.save(incidencia);
+				
+				//Se calcula nuevamente el tiempo total
+				String totalTiempo = fechaUtils.obtenerTiempoTranscurrido(fichaje.getHoraEntrada(), fichaje.getHoraSalida());
+				fichaje.setTiempoTotal(fechaUtils.formatearFechas2digitos(totalTiempo));
+				
+				fichajeService.save(fichaje);
+			
+			} else {
+				flash.addFlashAttribute("error", "Hay un error, no existe el fichaje del empleado para ese día");
+				log.info("No existe el fichaje del empleado "+ empleado.getNombre() + " " + empleado.getApellido1() + " " + 
+							empleado.getApellido2() +" para el día " + fechaDescripcion);				
+			}
 			
 		} else if (mensaje.equals(ConstantesUtils.INCIDENCIA_FICHAJE_SALIDA)) {
 			
+			//Cambio de la hora de salida del día indicado en la descripcion
+			//Primero se obtiene la hora de salida y el dia
+			String fechaDescripcion = recuperarFechaDescripcion(incidencia);
+			Date fechaConvertida = fechaUtils.obtenerFechaApartirStringFormato2(fechaDescripcion);
+			String horaDescripcion = recuperarHoraDescripcion(incidencia);
+
+			Fichaje fichaje = fichajeService.findByEmpleadoAndFecha(empleado, fechaConvertida);
+			
+			//Se comprueba si existe el fichaje de ese dia
+			if(fichaje != null) {
+					
+				fichaje.setHoraSalida(horaDescripcion);
+				
+				//Se marca la incidencia como resuelta
+				incidencia.setEstado(ConstantesUtils.INCIDENCIA_RESUELTA);
+				incidenciaService.save(incidencia);
+				
+				//Se calcula nuevamente el tiempo total
+				String totalTiempo = fechaUtils.obtenerTiempoTranscurrido(fichaje.getHoraEntrada(), fichaje.getHoraSalida());
+				fichaje.setTiempoTotal(fechaUtils.formatearFechas2digitos(totalTiempo));
+				
+				fichajeService.save(fichaje);
+				
+			} else {
+				flash.addFlashAttribute("error", "Hay un error, no existe el fichaje del empleado para ese día");
+				log.info("No existe el fichaje del empleado "+ empleado.getNombre() + " " + empleado.getApellido1() + " " + 
+						empleado.getApellido2() +" para el día " + fechaDescripcion);	
+			}
+			
 		} else if (mensaje.equals(ConstantesUtils.INCIDENCIA_DATOS_DIRECCION)) {
+			
+			//Esta incidencia simplemente es informativa, se marcará como resuelta y ya está
+			incidencia.setEstado(ConstantesUtils.INCIDENCIA_RESUELTA);
+			incidenciaService.save(incidencia);
 			
 		} else if (mensaje.equals(ConstantesUtils.INCIDENCIA_PERFIL)) {
 			
+			ArrayList<Map<String, String>> listaValoresModificados = new ArrayList<Map<String, String>>();
+			recuperarCamposConIncidencia(incidencia, listaValoresModificados);
+			
+			//Modificar los campos que se han recogido en la incidencia para modificar
+			for(int x=0; x < listaValoresModificados.size() ; x++) {
+				
+				if(listaValoresModificados.get(x).containsKey(ConstantesUtils.CAMPO_NOMBRE)){
+					empleado.setNombre(listaValoresModificados.get(x).get(ConstantesUtils.CAMPO_NOMBRE));
+				}
+				
+				if(listaValoresModificados.get(x).containsKey(ConstantesUtils.CAMPO_APELLIDO1)){
+					empleado.setApellido1(listaValoresModificados.get(x).get(ConstantesUtils.CAMPO_APELLIDO1));
+				}
+				
+				if(listaValoresModificados.get(x).containsKey(ConstantesUtils.CAMPO_APELLIDO2)){
+					empleado.setApellido2(listaValoresModificados.get(x).get(ConstantesUtils.CAMPO_APELLIDO2));
+				}
+				
+				if(listaValoresModificados.get(x).containsKey(ConstantesUtils.CAMPO_FECHANACIM)){
+					String fechaNacim = listaValoresModificados.get(x).get(ConstantesUtils.CAMPO_FECHANACIM);
+					Date fechaConvertida = fechaUtils.obtenerFechaApartirStringFormato3(fechaNacim);
+					empleado.setFechaNacim(fechaConvertida);
+				}
+				
+			}
+			
+			incidencia.setEstado(ConstantesUtils.INCIDENCIA_RESUELTA);
+			incidenciaService.save(incidencia);
+			empleadoService.save(empleado);
+				
 		}
 		
 		
@@ -148,8 +228,6 @@ public class IncidenciaController {
 		
 		return "/descripcionIncidencia";
 	}
-	
-	
 	
 	
 	private void recuperarCamposConIncidencia(Incidencia incidencia, ArrayList<Map<String, String>> listaValoresModificados) {
