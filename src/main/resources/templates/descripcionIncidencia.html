@@ -7,9 +7,9 @@
 
 	<div class="container-fluid py-2 col-md-11 col-sm-12">
 
-		<div th:if="${message}" th:text="${message}" th:class="${'alert ' + alertClass}">
-			 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-		</div>
+		<th:block th:if="${message != null}">
+	        <div th:replace="fragments/alert :: alert (type=${alertClass}, message=${message})">&nbsp;</div>
+  	  	</th:block>
 
 
 		<div class="card bg-light">
