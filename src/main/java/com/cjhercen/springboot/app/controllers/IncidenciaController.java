@@ -70,8 +70,9 @@ public class IncidenciaController {
 		incidenciaService.delete(incidenciaABorrar);
 
 		log.info("Se ha borrado correctamente la incidencia");
-		flash.addFlashAttribute("success", "Incidencia borrada con éxito");
-		
+		flash.addFlashAttribute("tipo", "Información");
+		flash.addFlashAttribute("message", "La incidencia se ha eliminado correctamente");
+
 		return "redirect:/incidencias";
 	}
 	
@@ -152,8 +153,8 @@ public class IncidenciaController {
 				fichajeService.save(fichaje);
 			
 			} else {
-				flash.addFlashAttribute("message", "Hay un error, no existe el fichaje del empleado para ese día");
-				flash.addFlashAttribute("alertClass", "alert-danger alert-dismissable");
+				flash.addFlashAttribute("tipo", "Error");
+				flash.addFlashAttribute("message", "No existe el fichaje del empleado para ese día");
 				log.info("No existe el fichaje del empleado "+ empleado.getNombre() + " " + empleado.getApellido1() + " " + 
 							empleado.getApellido2() +" para el día " + fechaDescripcion);				
 			}
@@ -184,8 +185,8 @@ public class IncidenciaController {
 				fichajeService.save(fichaje);
 				
 			} else {
-				flash.addFlashAttribute("message", "Hay un error, no existe el fichaje del empleado para ese día");
-				flash.addFlashAttribute("alertClass", "alert-dismissable");
+				flash.addFlashAttribute("tipo", "Error");
+				flash.addFlashAttribute("message", "No existe el fichaje del empleado para ese día");
 				log.info("No existe el fichaje del empleado "+ empleado.getNombre() + " " + empleado.getApellido1() + " " + 
 						empleado.getApellido2() +" para el día " + fechaDescripcion);	
 			}
