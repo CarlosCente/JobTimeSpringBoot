@@ -69,7 +69,7 @@ public class IncidenciaController {
 		
 		incidenciaService.delete(incidenciaABorrar);
 
-		log.info("Se ha borrado correctamente la incidencia");
+		log.info("Se ha borrado correctamente la incidencia " + incidenciaABorrar.toString());
 		flash.addFlashAttribute("tipo", "Información");
 		flash.addFlashAttribute("message", "La incidencia se ha eliminado correctamente");
 
@@ -88,8 +88,8 @@ public class IncidenciaController {
 				findByEmpleadoAndFechaAndMensaje(empleado, fechaIncidencia, mensaje);
 		
 		//Valores a recuperar de la descripcion generada por la incidencia de entrada o salida
-		if(incidenciaAMostrar.getMensaje().equals(ConstantesUtils.INCIDENCIA_FICHAJE_ENTRADA) || 
-				incidenciaAMostrar.getMensaje().equals(ConstantesUtils.INCIDENCIA_FICHAJE_SALIDA)) {
+		if(ConstantesUtils.INCIDENCIA_FICHAJE_ENTRADA.equals(incidenciaAMostrar.getMensaje()) || 
+				ConstantesUtils.INCIDENCIA_FICHAJE_SALIDA.equals(incidenciaAMostrar.getMensaje())) {
 			String fechaDescripcion = recuperarFechaDescripcion(incidenciaAMostrar);
 			String horaDescripcion = recuperarHoraDescripcion(incidenciaAMostrar);
 			model.put("fechaDescripcion", fechaDescripcion);
@@ -98,13 +98,13 @@ public class IncidenciaController {
 		}
 		
 		//Valores a recuperar de la descripción generada por la incidencia de datos personales
-		if(incidenciaAMostrar.getMensaje().equals(ConstantesUtils.INCIDENCIA_PERFIL)) {
+		if(ConstantesUtils.INCIDENCIA_PERFIL.equals(incidenciaAMostrar.getMensaje())) {
 			ArrayList<Map<String, String>> listaValoresModificados = new ArrayList<Map<String, String>>();
 			recuperarCamposConIncidencia(incidenciaAMostrar, listaValoresModificados);
 			model.put("camposIncidencia", listaValoresModificados);
 		}
 		
-		if(incidenciaAMostrar.getMensaje().equals(ConstantesUtils.INCIDENCIA_DATOS_DIRECCION)) {
+		if(ConstantesUtils.INCIDENCIA_DATOS_DIRECCION.equals(incidenciaAMostrar.getMensaje())) {
 			ArrayList<Map<String, String>> listaValoresModificados = new ArrayList<Map<String, String>>();
 			recuperarCamposConIncidencia(incidenciaAMostrar, listaValoresModificados);
 			model.put("camposIncidencia", listaValoresModificados);
@@ -151,10 +151,12 @@ public class IncidenciaController {
 				fichaje.setTiempoTotal(fechaUtils.formatearFechas2digitos(totalTiempo));
 				
 				fichajeService.save(fichaje);
+				log.info("Se ha resuelto correctamente la incidencia " + incidencia.toString());
+				flash.addFlashAttribute("tipo", "Información");
 			
 			} else {
 				flash.addFlashAttribute("tipo", "Error");
-				flash.addFlashAttribute("message", "No existe el fichaje del empleado para ese día");
+				flash.addFlashAttribute("message", "No existe el fichaje del empleado para el día que se indica en la incidencia");
 				log.info("No existe el fichaje del empleado "+ empleado.getNombre() + " " + empleado.getApellido1() + " " + 
 							empleado.getApellido2() +" para el día " + fechaDescripcion);				
 			}
@@ -184,9 +186,12 @@ public class IncidenciaController {
 				
 				fichajeService.save(fichaje);
 				
+				log.info("Se ha resuelto correctamente la incidencia " + incidencia.toString());
+				flash.addFlashAttribute("tipo", "Información");
+				
 			} else {
 				flash.addFlashAttribute("tipo", "Error");
-				flash.addFlashAttribute("message", "No existe el fichaje del empleado para ese día");
+				flash.addFlashAttribute("message", "No existe el fichaje del empleado para el día que se indica en la incidencia");
 				log.info("No existe el fichaje del empleado "+ empleado.getNombre() + " " + empleado.getApellido1() + " " + 
 						empleado.getApellido2() +" para el día " + fechaDescripcion);	
 			}
@@ -196,6 +201,8 @@ public class IncidenciaController {
 			//Esta incidencia simplemente es informativa, se marcará como resuelta y ya está
 			incidencia.setEstado(ConstantesUtils.INCIDENCIA_RESUELTA);
 			incidenciaService.save(incidencia);
+			log.info("Se ha resuelto correctamente la incidencia " + incidencia.toString());
+			flash.addFlashAttribute("tipo", "Información");
 			
 		} else if (mensaje.equals(ConstantesUtils.INCIDENCIA_PERFIL)) {
 			
@@ -228,6 +235,9 @@ public class IncidenciaController {
 			incidencia.setEstado(ConstantesUtils.INCIDENCIA_RESUELTA);
 			incidenciaService.save(incidencia);
 			empleadoService.save(empleado);
+			
+			log.info("Se ha resuelto correctamente la incidencia " + incidencia.toString());
+			flash.addFlashAttribute("tipo", "Información");
 				
 		}
 		

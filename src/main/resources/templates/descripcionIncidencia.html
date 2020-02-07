@@ -110,7 +110,7 @@
 										 	 	</div>
 										  </div>
 										 	
-										 <div th:if="${incidencia.mensaje} == 'Incidencia de Datos de dirección'" 
+										 <div th:if="${incidencia.mensaje} == 'Incidencia de Datos de direccion'" 
 										 	class="col-md-12 mt-2 text-center">
 										 	<div th:each="map : ${camposIncidencia}" class="text-left ml-2">
 										  	 		<ul th:each="mapEntry : ${map}">
@@ -149,7 +149,7 @@
 													<span>Se modificará la hora de salida del día indicado por el usuario en la incidencia.</span>
 												</div>
 												
-												<div th:if="${incidencia.mensaje} == 'Incidencia de Datos de dirección'" >
+												<div th:if="${incidencia.mensaje} == 'Incidencia de Datos de direccion'" >
 												<hr />
 													<span>Este tipo de incidencia sólo es para informar al administrador de los cambios
 													que ha realizado el usuario.</span>

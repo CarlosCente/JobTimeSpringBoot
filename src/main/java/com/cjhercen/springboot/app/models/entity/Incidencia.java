@@ -100,6 +100,11 @@ public class Incidencia implements Serializable {
 		this.descripcion = descripcion;
 	}
 	
-	
+	@Override
+	public String toString() {
+		
+		return "Datos Incidencia: fecha: " + this.fecha + ", empleado: " + this.empleado.getCod_empl() +
+				", mensaje: " + this.mensaje + ", descripcion: " + this.descripcion;
+	}
 	
 }

@@ -226,7 +226,7 @@ public class FechaUtils {
 			minutos = "0" + minutos;
 		}
 		
-		return horas + " : " + minutos;
+		return horas + ":" + minutos;
 	}
 
 }

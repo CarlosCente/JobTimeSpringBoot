@@ -146,6 +146,33 @@ function obtenerMensaje(){
 
 }
 
+
+function modificarFichaje(){
+	
+	var usuario=$('#eUsuario').val();
+    var fecha=$('#eFecha').val();
+	var ipOrigen=$('#eIp').val();
+	var horaDeEntrada=$('#horaEntradaControl').val();
+	var horaDeSalida=$('#horaSalidaControl').val();
+	
+	$.ajax({
+		type: "GET",
+		url: "/controlhorario/editarFichaje",
+		data: {
+			"username" : usuario,
+			"fecha" : fecha,
+			"ipOrigen" : ipOrigen,
+			"horaDeEntrada" : horaDeEntrada,
+			"horaDeSalida" : horaDeSalida
+		},
+		success: function(result){
+			$('#modalEditar').modal('hide');
+			location.reload();			
+		}
+	});
+		
+}
+
 /*
  * JAVASCRIPT DE LA VISTA controlHorario
  */
