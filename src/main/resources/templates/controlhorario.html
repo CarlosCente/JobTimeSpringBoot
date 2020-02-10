@@ -3,96 +3,235 @@
 <head th:replace="layout/layout :: head"></head>
 <body>
 
-	<header th:replace="layout/layout :: header"></header>
+<header th:replace="layout/layout :: header"></header>
 
-	<div class="container-fluid py-5 col-md-8 col-sm-10">
+	<div class="container-fluid py-3 col-md-11 col-sm-12">
 
 		<div class="card bg-light">
-			<div class="card-header text-center font-weight-bold"
-				th:text="${titulo}"></div>
-			<div class="card-body">		
-				<form th:action="@{/formBusqueda}" th:object="${formBusqueda}" method="post">
+			<div class="card-header font-weight-bold" th:text="${titulo}"></div>
+			<div class="card-body table-responsive">
+	                
+	        	<table id="tablaFichajes" class="table-hover table-borderless dataTables_length" >
+					<thead class="text-center bg-dark text-white">
+						<tr>
+							<th>Usuario</th>
+							<th>Fecha</th>
+							<th>IP Origen</th>
+							<th>Hora Entrada</th>
+							<th>Hora Salida</th>
+							<th>Tiempo total</th>
+							<th>Acciones</th>
+						</tr>
+					</thead>
+					<tbody class="text-center">
+						<tr th:each="fichaje : ${listaFichajes}">
+							<td data-toggle="tooltip" data-placement="left" data-type="primary" 
+							th:title="${fichaje.empleado.nombre} +' '+${fichaje.empleado.apellido1}+' '+${fichaje.empleado.apellido2}"
+							 th:text="${fichaje.empleado.usuario.username}"></td>
+							<td th:text="${fichaje.fecha}"></td>
+							<td th:text="${fichaje.ip}"></td>
+							<td th:text="${fichaje.horaEntrada}"></td>
+							<td th:text="${fichaje.horaSalida}"></td>
+							<td><span class="badge badge-pill badge-success" th:text="${fichaje.tiempoTotal}"></span></td>
+							<td class="align-middle">
+								<a class="btn-lg edit">
+									<i class="far fa-edit" style="color: #007bff;"></i>
+								</a>
+						
+								<a onclick="return confirm('¿Estás seguro que quieres eliminar el fichaje?');"
+									 th:href="@{/controlhorario/eliminar/} + 
+												${fichaje.empleado.cod_empl} + '/' +
+												${fichaje.fecha}" class="btn-lg">
+									<i class="fas fa-trash-alt" style="color: red;"></i>
+								</a>
+							</td>
+						</tr>
+					</tbody>
+					<tfoot>
+			            <tr>
+			                <th>Usuario</th>
+			                <th hidden="true">IP Origen</th>
+			               	<th hidden="true">Fecha</th>
+			                <th hidden="true">Hora Entrada</th>
+			                <th hidden="true">Hora Salida</th>
+			                <th hidden="true">Tiempo Total</th>
+			                <th hidden="true">Acciones</th>
+			            </tr>
+			        </tfoot>
+				</table>
+           	</div>
 
-					<div class="row">
-
-						
-						<div class="col-sm-12 col-md-6">
-							<div class="form-group row pt-3">
-								<label class="col-sm-5 ml-3 col-form-label">Nombre</label>
-								<div class="col-sm-6">
-									<input type="text" class="form-control" th:field="*{nombre}"
-										/>
-								</div>
-							</div>
-							<div class="form-group row">
-								<label class="col-sm-5 ml-3 col-form-label">Primer
-									Apellido</label>
-								<div class="col-sm-6">
-									<input type="text" class="form-control" th:field="*{apellido1}"
-										/> 
-								</div>
-								
-							</div>
-							
-							<div class="form-group row">
-								<label class="col-sm-5 ml-3 col-form-label">Segundo
-									Apellido</label>
-								<div class="col-sm-6">
-									<input type="text" class="form-control" th:field="*{apellido2}"
-										/> 
-								</div>
-								
-							</div>
-						
-						</div>
-						
-						<div class="col-sm-12 col-md-6">
-						
-						
-							<div class="form-group row pt-3">
-								<label class="col-sm-5 ml-3 col-form-label">Fecha Inicio
-									</label>
-								<div class="col-sm-6">
-									<input type="date" class="form-control" th:field="*{fechaInicio}"
-										/> 
-								</div>
-							</div>
-							
-							<div class="form-group row">
-								<label class="col-sm-5 ml-3 col-form-label">Fecha Fin
-									</label>
-								<div class="col-sm-6">
-									<input type="date" class="form-control" th:field="*{fechaFin}"
-										/> 
-								</div>
-							</div>
-						</div>
-						
-						
-
+		</div>
+		
+		
+		<div class="modal fade" id="modalEditar" tabindex="-1"
+			role="dialog" aria-labelledby="modalEntrada" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered modal-md"
+				role="document">
+				<div class="modal-content">
+					<div class="modal-header bg-dark text-white">
+						<p class="modal-title w-100 text-center"
+							id="exampleModalLongTitle">Editar Fichaje del Empleado</p>
+						<button type="button" class="close text-white"
+							data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
 					</div>
+					<div class="modal-body">
 
-					<div class="row py-2 mt-2">
-						<div class="col-md-10">
-							<div class="row float-right ">
-								
+						<div class="row">
+							<div class="col-md-12">
+							
 								<div class="form-group">
-									<input value="Buscar Fichajes" type="submit"
-										class="btn btn-primary" />
+									<span class="input-group-addon font-weight-bold">Usuario</span>
+									<input type="text" class="form-control" id="eUsuario" disabled="disabled">
 								</div>
+								<div class="form-group">
+									<span class="input-group-addon font-weight-bold">Fecha</span>
+									<input type="text" class="form-control" id="eFecha" disabled="disabled">
+								</div>
+								<div class="form-group">
+									<span class="input-group-addon font-weight-bold">Ip de Origen</span>
+									<input type="text" class="form-control" id="eIp">
+								</div>
+								<div class="form-group">
+									<span class="input-group-addon font-weight-bold">Hora de Entrada</span>
+									<input type="text" class="form-control" id="horaEntradaControl">
+								</div>
+								<div class="form-group">
+									<span class="input-group-addon font-weight-bold">Hora de Salida</span>
+									<input type="text" class="form-control" id="horaSalidaControl">
+								</div>					
+						
 							</div>
-
 						</div>
-
-
 					</div>
-
-				</form>
-
+					<div class="modal-footer">
+						<button type="button" class="btn btn-danger"
+							data-dismiss="modal">Cerrar</button>
+						<a id="accionModificarFichaje" onclick="modificarFichaje()" type="button" class="btn btn-primary text-white"
+							>Aceptar</a>
+					</div>
+				</div>
 			</div>
 		</div>
 
 	</div>
+
 	<footer th:replace="layout/layout :: footer"></footer>
+
+<script>
+			
+	$(document).ready( function () {
+		 var groupColumn = 1;
+		
+		 var table = $('#tablaFichajes').DataTable({
+			 	"columnDefs": [
+		            { "visible": false, "targets": groupColumn }
+		        ],
+			 	"pagingType": "numbers",
+		        "language": {
+		            "lengthMenu": "Mostrar _MENU_ registros por página",
+		            "zeroRecords": "Sin resultados",
+		            "info": "Mostrando página _PAGE_ de _PAGES_",
+		            "infoEmpty": "No hay datos disponibles",
+		            "infoFiltered": "(filtrados de _MAX_ registros en total)",
+		            "loadingRecords": "Cargando...",
+		            "processing":     "Procesando...",
+		            "search": "Buscar:",
+		            "paginate": {
+		            	"first":      "Primera",
+		                "last":       "Última",
+		                "next":       "Siguiente",
+		                "previous":   "Anterior"
+		            }
+		        },
+		        "order": [ groupColumn, 'asc' ],
+		        "displayLength": 10,
+		        "drawCallback": function ( settings ) {
+		            var api = this.api();
+		            var rows = api.rows( {page:'current'} ).nodes();
+		            var last=null;
+		 
+		            api.column(groupColumn, {page:'current'} ).data().each( function ( group, i ) {
+		                if ( last !== group ) {
+		                    $(rows).eq( i ).before(
+		                        '<tr class="group"><td colspan="6">'+group+'</td></tr>'
+		                    );
+		 
+		                    last = group;
+		                }
+		            } );
+		        }
+		    });
+		 
+		// Order by the grouping
+		    $('#tablaFichajes tbody').on( 'click', 'tr.group', function () {
+		        var currentOrder = table.order()[0];
+		        if ( currentOrder[0] === groupColumn && currentOrder[1] === 'asc' ) {
+		            table.order( [ groupColumn, 'desc' ] ).draw();
+		        }
+		        else {
+		            table.order( [ groupColumn, 'asc' ] ).draw();
+		        }
+		    } );
+		 
+	});
+	
+	$(document).ready(function() {
+	    // Setup - add a text input to each footer cell
+	    $('#tablaFichajes tfoot th').each( function () {
+	        var title = $(this).text();
+	        $(this).html( '<input type="text" placeholder="Buscar por '+title+'" />' );
+	    } );
+	 
+	    // DataTable
+	    var table = $('#tablaFichajes').DataTable();
+	 
+	    // Apply the search
+	    table.columns().every( function () {
+	        var that = this;
+	 
+	        $( 'input', this.footer() ).on( 'keyup change clear', function () {
+	            if ( that.search() !== this.value ) {
+	                that
+	                    .search( this.value )
+	                    .draw();
+	            }
+	        } );
+	    } );
+
+	} );
+	
+	$(document).ready(function() {
+	    var table = $('#tablaFichajes').DataTable();
+	     
+	    $('#tablaFichajes tbody').on('click', 'tr', function () {
+	        var data = table.row( this ).data();
+
+	        var usuario=data[0];
+	        var fecha=data[1];
+	    	var ipOrigen=data[2];
+	    	var horaDeEntrada=data[3];
+	    	var horaDeSalida=data[4];
+	    	
+	    		
+	    	$('#modalEditar').modal('show');
+	    	$('#eUsuario').val(usuario);
+	    	$('#eFecha').val(fecha);
+	    	$('#eIp').val(ipOrigen);
+	    	$('#horaEntradaControl').val(horaDeEntrada);
+	    	$('#horaSalidaControl').val(horaDeSalida);
+	    });
+	   });
+	        
+
+	  $(function () {
+          $('#horaEntradaControl').timepicker();
+          $('#horaSalidaControl').timepicker();
+      });
+	
+</script>
+
 </body>
 </html>

@@ -160,7 +160,20 @@ display: block;
 	.trigger-btn {
 		display: inline-block;
 		margin: 100px auto;
+		
 	}
 	
+	tr.group,
+	tr.group:hover {
+	    background-color: #d9edf7 !important;
+	    font-weight: bold;
+	    letter-spacing: 2px;
+	    
+	}
 	
+	tfoot input {
+        width: 100%;
+        padding: 3px;
+        box-sizing: border-box;
+    }
 	

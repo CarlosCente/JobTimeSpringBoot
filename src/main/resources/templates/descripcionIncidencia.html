@@ -69,13 +69,14 @@
 					</div>
 				</div>
 				
-				<div class="row">
+				<div th:if="${incidencia.estado == '1'}" class="row">
 					<div class="col-xs-12 col-md-6 col-lg-6">
 								<div th:if="${incidencia.mensaje} != 'Incidencia de Fichaje (Otras)'" class="form-group text-center">
 										<h5 class="col-md-12 font-weight-bold mb-3">Valores modificados </h5>
-										 
+										
 										 <div th:if="${incidencia.mensaje} == 'Incidencia de Fichaje de entrada'" 
 										 	class="col-md-12 mt-2 text-center">
+										 	<br />
 										 	<p class="ml-4 mr-4">Se va a modificar la hora de entrada del día 
 											 	<span class="text-primary font-weight-bold" th:text="${fechaDescripcion}"></span> 
 											 	para el empleado
@@ -88,6 +89,7 @@
 										 	
 										 <div th:if="${incidencia.mensaje} == 'Incidencia de Fichaje de salida'" 
 										 	class="col-md-12 mt-2 text-center">
+										 	<br />
 										 	<p class="ml-4 mr-4">Se va a modificar la hora de salida del día 
 											 	<span class="text-primary font-weight-bold" th:text="${fechaDescripcion}"></span> 
 											 	para el empleado
@@ -108,9 +110,15 @@
 										 	 	</div>
 										  </div>
 										 	
-										 <div th:if="${incidencia.mensaje} == 'Incidencia de Datos de dirección'" 
+										 <div th:if="${incidencia.mensaje} == 'Incidencia de Datos de direccion'" 
 										 	class="col-md-12 mt-2 text-center">
-										 	 <p>Datos de dirección</p>
+										 	<div th:each="map : ${camposIncidencia}" class="text-left ml-2">
+										  	 		<ul th:each="mapEntry : ${map}">
+										  	 			<li>El campo <span class="text-primary font-weight-bold " th:text="${mapEntry.key}"></span>
+										  	 			, el valor correcto sería <span class="text-success font-weight-bold " th:text="${mapEntry.value}"></span></li>
+										  	 		</ul>
+										 	 	</div>
+
 										  </div>
 											
 								</div>			
@@ -121,7 +129,7 @@
 										<h5 class="col-md-12 font-weight-bold mb-3">Acciones disponibles </h5>
 										<div class="row">
 											<div class="col-md-12">
-											
+		
 												<a data-toggle="tooltip" data-placement="bottom"  data-type="primary" 
 									 				title="Resolver la incidencia"class="mr-2" th:href="@{/incidencias/descripcionIncidencia/resolver/}+ 
 																	${incidencia.mensaje} + '/' +
@@ -130,27 +138,92 @@
 																 	${incidencia.fecha}">
 													<i class="fas fa-3x fa-tools" style="color: green;"></i>
 												</a>
-							
+												
+												<div th:if="${incidencia.mensaje} == 'Incidencia de Fichaje de entrada'" >
+												<hr />
+													<span>Se modificará la hora de entrada del día indicado por el usuario en la incidencia</span>
+												</div>
+												
+												<div th:if="${incidencia.mensaje} == 'Incidencia de Fichaje de salida'" >
+												<hr />
+													<span>Se modificará la hora de salida del día indicado por el usuario en la incidencia.</span>
+												</div>
+												
+												<div th:if="${incidencia.mensaje} == 'Incidencia de Datos de direccion'" >
+												<hr />
+													<span>Este tipo de incidencia sólo es para informar al administrador de los cambios
+													que ha realizado el usuario.</span>
+												</div>
+												
+												<div th:if="${incidencia.mensaje} == 'Incidencia de Datos personales'" >
+												<hr />
+													<span>Se realizarán los cambios en los datos señalados del empleado por
+													los nuevos valores.</span>
+												</div>
+												
 											</div>
 										</div>
 								</div>			
 					</div>
 				</div>
 				
+				<div th:if="${incidencia.estado == '2'}" class="row text-center">
+					<div class="col-xs-12 col-md-12 col-lg-12">
+						<h4 class="text-success">La incidencia ya ha sido resuelta</h4>
+					</div>
+				</div>
+				
+				
 			</div>
 			<div class="card-footer">
 				<div class="col-md-12">
 					<div class="row float-right ">
 						
-							<input value="Volver" type="button"
-								class="btn btn-danger" onclick="history.back()" />
-					
+							<a type="button"
+								class="btn btn-danger" th:href="@{/incidencias}"> Volver </a>					
 
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-		<footer th:replace="layout/layout :: footer"></footer>
+	
+		<!-- Modal -->
+	<div class="modal fade" id="modalFlash" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header bg-danger text-white">
+	        <div class="modal-title" id="exampleModalLongTitle">
+	        	<i class="fas fa-exclamation-triangle"></i>
+	        	<span th:text="${tipo}"></span>
+	        </div>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	      	<h6 th:text="${message}"></h6>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+	<footer th:replace="layout/layout :: footer"></footer>
+	
+	<script th:inline="javascript">
+
+	$(document).ready( function () {
+		var message = /*[[${message}]]*/;
+		if(message.length > 0){
+			$('#modalFlash').modal('show');
+		}
+		
+	});
+	
+	</script>
+	
 </body>
 </html>

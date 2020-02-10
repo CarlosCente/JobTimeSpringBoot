@@ -225,9 +225,8 @@ public class PerfilController implements ConstantesUtils {
 		String anadirProvincia = "";
 		String separador = ", ";
 		
-		String mensaje = "El usuario " + empleadoBD.getUsuario().getUsername() + " ("+ empleadoBD.getNombre() +
-				" " + empleadoBD.getApellido1() + " " + empleadoBD.getApellido2() + "), ha modificado los siguientes"
-					+ " datos de dirección: ";
+		String mensaje = "El usuario " + empleadoBD.getUsuario().getUsername() + 
+				", ha modificado los siguientes datos de dirección: ";
 		
 		if(!empleadoBD.getDireccion().equals(empleadoForm.getDireccion())) {
 			anadirDireccion = " el campo (Direccion), el nuevo valor es: (" + empleadoForm.getDireccion()+')';

@@ -5,7 +5,7 @@
 
 	<header th:replace="layout/layout :: header"></header>
 
-	<div class="container-fluid py-3  col-md-11 col-sm-12">
+	<div class="container-fluid py-3 col-md-11 col-sm-12">
 		<div class="card bg-light">
 			<div class="card-header font-weight-bold" th:text="${titulo}"></div>
 			<div class="card-body">
@@ -67,6 +67,7 @@
 	                <div class="card-header">
 	                 
 	                  <div class="title font-weight-bold ">Incidencias</div>
+
 	                </div>
 	                <div class="card-body table-responsive">
 	                
@@ -76,13 +77,14 @@
 											<th>Usuario</th>
 											<th>Fecha</th>
 											<th>Tipo de incidencia</th>
-											<th>Estado</th>
+											<th>Tipo</th>
 											<th>Descripción</th>
 											<th>Eliminar</th>
 										</tr>
 									</thead>
 									<tbody>
-										<tr th:each="incidencia : ${incidencias}">
+										<tr th:each="incidencia : ${incidencias}"
+											th:style="${incidencia.estado == '1'} ? 'background:#A9D0F5; ' : 'background:#CEF6CE;'">
 											<td data-toggle="tooltip" data-placement="left" data-type="primary" 
 											th:title="${incidencia.empleado.nombre} +' '+${incidencia.empleado.apellido1}+' '+${incidencia.empleado.apellido2}"
 											 th:text="${incidencia.empleado.usuario.username}"></td>
@@ -90,13 +92,16 @@
 											<td th:text="${incidencia.fecha}"></td>
 											
 											<td
-												th:text="${incidencia.mensaje}"
-												th:class="${incidencia.tipo == '1'} ? 'text-danger font-weight-bold' : 'text-warning font-weight-bold'">
+												th:text="${incidencia.mensaje}">
 												
 											</td>
 											
-											<td
-												th:text="${incidencia.estado == '1' ? '&nbspAbierta&nbsp ' : '&nbspResuelta&nbsp'}"></td>
+											<td>
+												<span
+												th:class="${incidencia.tipo == '1'} ? 'badge badge-danger text-dark' : 'badge badge-warning'"
+												th:text="${incidencia.tipo == '1' ? '&nbspError&nbsp ' : '&nbspAdvertencia&nbsp'}">
+												</span>
+											</td>
 											
 											<td>
 																		
@@ -105,7 +110,7 @@
 																 	${incidencia.empleado.cod_empl} +
 																 	 '/' + 
 																 	${incidencia.fecha}" class="btn-lg">
-												<i class="fas fa-search-plus" style="color: #5bc0de;"></i>
+												<i class="fas fa-search-plus" style="color: black;"></i>
 												</a>
 												
 											</td>
@@ -185,6 +190,31 @@
 			</div>
 		</div>
 	</div>
+	
+	<!-- Modal -->
+	<div class="modal fade" id="modalFlash" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered" role="document">
+	    <div class="modal-content">
+	      <div th:class="${tipo == 'Error'} ? 'modal-header bg-danger text-white' : 'modal-header bg-primary text-white'">
+	        <div class="modal-title" id="exampleModalLongTitle">
+	        	<i class="fas fa-exclamation-triangle"></i>
+	        	<span th:text="${tipo}"></span>
+	        </div>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	      	<h6 th:text="${message}"></h6>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+	
 	<footer th:replace="layout/layout :: footer"></footer>
 
 	<script>
@@ -209,7 +239,7 @@
 		            }
 		        },
 		        "lengthMenu": [ 6, 10, 15 , 20 ],
-		        "order": [ 2, 'asc']
+		        "order": [ 1, 'asc']
 		    });
 	});
 				
@@ -248,6 +278,19 @@
 	});
 
 </script>
+
+<script th:inline="javascript">
+
+	$(document).ready( function () {
+		var message = /*[[${message}]]*/;
+		if(message.length > 0){
+			$('#modalFlash').modal('show');
+		}
+		
+	});
+	
+	</script>
+
 
 </body>
 
