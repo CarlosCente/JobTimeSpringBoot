@@ -16,21 +16,24 @@
                             <h5 class="mb-0">Cambiar Contraseña</h5>
                         </div>
                         <div class="card-body">
-                            <form class="form" role="form" autocomplete="off">
+                            <form class="form" th:action="@{/ajustes/cambioPassword}" role="form" autocomplete="off" th:object="${formCambioPassword}">
                                 <div class="form-group">
                                     <label for="inputPasswordOld">Contraseña actual</label>
-                                    <input type="password" class="form-control" id="inputPasswordOld" required>
+                                    <input type="password" class="form-control"
+                                     th:field="*{actual}" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputPasswordNew">Nueva contraseña</label>
-                                    <input type="password" class="form-control" id="inputPasswordNew" required>
+                                    <input type="password" class="form-control"
+                                     th:field="*{nueva}" required>
                                     <span class="form-text small text-muted">
                                             La contraseña debe tener entre 8 y 20 caracteres, no debe contener espacios.
                                         </span>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputPasswordNewVerify">Confirmar contraseña</label>
-                                    <input type="password" class="form-control" id="inputPasswordNewVerify" required>
+                                    <input type="password" class="form-control" 
+                                     th:field="*{confirmacion}" required>
                                     <span class="form-text small text-muted">
                                             Para confirmar, escriba la nueva contraseña de nuevo.
                                         </span>
@@ -46,7 +49,7 @@
                     
                        <div sec:authorize="!hasRole('ROLE_ADMIN')" class="card card-outline-secondary mt-4">
                         <div class="card-header">
-                            <h5 class="mb-0">Incidencias abiertas</h5>
+                            <h5 class="mb-0">Incidencias abiertas por el usuario</h5>
                         </div>
                         <div class="card-body">
                            Aquí iran las incidencias abiertas de cada usuario, si no hay ninguna se mostrará un mensaje
