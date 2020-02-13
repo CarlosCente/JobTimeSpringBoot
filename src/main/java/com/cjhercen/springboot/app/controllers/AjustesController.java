@@ -1,5 +1,7 @@
 package com.cjhercen.springboot.app.controllers;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +40,7 @@ public class AjustesController {
 	
 	@RequestMapping("/ajustes/cambioPassword")
 	public String cambioPassword(Model model, RedirectAttributes flash,
-			@ModelAttribute("formCambioPassword") FormCambioPassword formCambioPassword) {
+			@Valid FormCambioPassword formCambioPassword) {
 		
 		Usuario usuarioConectado = usuarioService.findByUsername(usuarioService.getUsername());
 		String passwordActual = usuarioConectado.getPassword();
@@ -51,6 +53,7 @@ public class AjustesController {
 				String passwordNew = passwordEncoder.encode(formCambioPassword.getNueva());
 				usuarioConectado.setPassword(passwordNew);
 				usuarioService.save(usuarioConectado);
+				//mensaje de exito al cambiar la contraseña
 			} else {
 				log.warn("Ha ocurrido un error al intentar modificar la contraseña del usuario " + usuarioConectado.getUsername() +
 						"la contraseña nueva y la de confirmación deben coincidir");
