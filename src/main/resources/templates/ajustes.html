@@ -13,7 +13,7 @@
 			<!-- form card change password -->
                     <div class="card card-outline-secondary">
                         <div class="card-header">
-                            <h5 class="mb-0">Cambiar Contraseña</h5>
+                            <h6 class="mb-0">Cambiar Contraseña</h6>
                         </div>
                         <div class="card-body">
                             <form class="form" th:action="@{/ajustes/cambioPassword}" role="form" autocomplete="off" th:object="${formCambioPassword}">                                <div class="form-group">
@@ -52,7 +52,59 @@
                             <h5 class="mb-0">Incidencias abiertas por el usuario</h5>
                         </div>
                         <div class="card-body">
-                           Aquí iran las incidencias abiertas de cada usuario, si no hay ninguna se mostrará un mensaje
+							<div class="card-body table-responsive">
+	                		<span class="form-text small text-muted mb-5">
+                                  Aquí puede ver las incidencias que has creado y se encuentran abiertas en este momento. Puede eliminarlas en caso de haberlas creado por error o de que ya no sea necesaria su resolución.
+                             </span>
+	              			  <table id="tablaAjustesIncidencias" class="table-hover table-borderless dataTables_length" >
+										<thead class="text-center bg-dark text-white">
+										<tr>
+											<th>Usuario</th>
+											<th>Fecha</th>
+											<th>Tipo de incidencia</th>
+											<th>Tipo</th>
+											<th>Eliminar</th>
+										</tr>
+									</thead>
+									<tbody class="text-center">
+										<tr th:each="incidencia : ${incidenciasAbiertas}">
+											<td data-toggle="tooltip" data-placement="left" data-type="primary" 
+											th:title="${incidencia.empleado.nombre} +' '+${incidencia.empleado.apellido1}+' '+${incidencia.empleado.apellido2}"
+											 th:text="${incidencia.empleado.usuario.username}"></td>
+	
+											<td th:text="${incidencia.fecha}"></td>
+											
+											<td
+												th:text="${incidencia.mensaje}">
+												
+											</td>
+											
+											<td>
+												<span
+												th:class="${incidencia.tipo == '1'} ? 'badge badge-danger text-dark' : 'badge badge-warning'"
+												th:text="${incidencia.tipo == '1' ? '&nbspError&nbsp ' : '&nbspAdvertencia&nbsp'}">
+												</span>
+											</td>
+											
+											
+											<td>
+												
+												<!-- Button trigger modal-->
+												<a onclick="return confirm('¿Estás seguro que quieres eliminar la incidencia?');"
+												th:href="@{/ajustes/eliminar/} + 
+																	${incidencia.mensaje} + '/' +
+																 	${incidencia.empleado.cod_empl} +
+																 	 '/' + 
+																 	${incidencia.fecha}" class="btn-lg">
+												<i class="fas fa-trash-alt" style="color: red;"></i>
+												</a>
+ 
+										</td>
+									</tr>
+								</tbody>
+							</table>
+                </div>
+
                         </div>
                     </div>
                     
@@ -88,6 +140,34 @@
 	</div>
 			
 	<footer th:replace="layout/layout :: footer"></footer>
+	
+<script>
+	
+	$(document).ready( function () {
+		 var table = $('#tablaAjustesIncidencias').DataTable({
+			 	"pagingType": "numbers",
+		        "language": {
+		            "lengthMenu": "Mostrar _MENU_ registros por página",
+		            "zeroRecords": "Sin resultados",
+		            "info": "Mostrando página _PAGE_ de _PAGES_",
+		            "infoEmpty": "No hay datos disponibles",
+		            "infoFiltered": "(filtrados de _MAX_ registros en total)",
+		            "loadingRecords": "Cargando...",
+		            "processing":     "Procesando...",
+		            "search": "Buscar:",
+		            "paginate": {
+		            	"first":      "Primera",
+		                "last":       "Última",
+		                "next":       "Siguiente",
+		                "previous":   "Anterior"
+		            }
+		        },
+		        "lengthMenu": [ 6, 10, 15 , 20 ],
+		        "order": [ 1, 'asc']
+		    });
+	});
+	
+</script>
 	
 	
 <script th:inline="javascript">
