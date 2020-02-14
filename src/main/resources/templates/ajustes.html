@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+<body>
+
+	<header th:replace="layout/layout :: header"></header>
+
+	<div class="container-fluid py-3 col-md-10 col-sm-12">
+		
+		<div class="card bg-light">
+			<div class="card-header font-weight-bold" th:text="${titulo}"></div>
+			<div class="card-body table-responsive">
+			<!-- form card change password -->
+                    <div class="card card-outline-secondary">
+                        <div class="card-header">
+                            <h6 class="mb-0">Cambiar Contraseña</h6>
+                        </div>
+                        <div class="card-body">
+                            <form class="form" th:action="@{/ajustes/cambioPassword}" role="form" autocomplete="off" th:object="${formCambioPassword}">                                <div class="form-group">
+                                    <label for="inputPasswordOld">Contraseña actual</label>
+                                    <input id="actual" type="password" class="form-control"
+                                     th:field="*{actual}" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputPasswordNew">Nueva contraseña</label>
+                                    <input id="nueva" type="password" class="form-control"
+                                     th:field="*{nueva}" required>
+                                      <small class="form-text text-danger" th:if="${#fields.hasErrors('nueva')}" th:errors="*{nueva}"></small>
+                                    <span class="form-text small text-muted">
+                                            La contraseña debe tener entre 8 y 20 caracteres, no debe contener espacios ni simbolos y contener al menos un número y una mayúscula.
+                                        </span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputPasswordNewVerify">Confirmar contraseña</label>
+                                    <input id="confirmacion" type="password" class="form-control" 
+                                     th:field="*{confirmacion}" required>
+                                    <span class="form-text small text-muted">
+                                            Para confirmar, escriba la nueva contraseña de nuevo.
+                                        </span>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-success float-right">Guardar cambios</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- /form card change password -->
+                    
+                    
+                       <div sec:authorize="!hasRole('ROLE_ADMIN')" class="card card-outline-secondary mt-4">
+                        <div class="card-header">
+                            <h5 class="mb-0">Incidencias abiertas por el usuario</h5>
+                        </div>
+                        <div class="card-body">
+							<div class="card-body table-responsive">
+	                		<span class="form-text small text-muted mb-5">
+                                  Aquí puede ver las incidencias que has creado y se encuentran abiertas en este momento. Puede eliminarlas en caso de haberlas creado por error o de que ya no sea necesaria su resolución.
+                             </span>
+	              			  <table id="tablaAjustesIncidencias" class="table-hover table-borderless dataTables_length" >
+										<thead class="text-center bg-dark text-white">
+										<tr>
+											<th>Usuario</th>
+											<th>Fecha</th>
+											<th>Tipo de incidencia</th>
+											<th>Tipo</th>
+											<th>Eliminar</th>
+										</tr>
+									</thead>
+									<tbody class="text-center">
+										<tr th:each="incidencia : ${incidenciasAbiertas}">
+											<td data-toggle="tooltip" data-placement="left" data-type="primary" 
+											th:title="${incidencia.empleado.nombre} +' '+${incidencia.empleado.apellido1}+' '+${incidencia.empleado.apellido2}"
+											 th:text="${incidencia.empleado.usuario.username}"></td>
+	
+											<td th:text="${incidencia.fecha}"></td>
+											
+											<td
+												th:text="${incidencia.mensaje}">
+												
+											</td>
+											
+											<td>
+												<span
+												th:class="${incidencia.tipo == '1'} ? 'badge badge-danger text-dark' : 'badge badge-warning'"
+												th:text="${incidencia.tipo == '1' ? '&nbspError&nbsp ' : '&nbspAdvertencia&nbsp'}">
+												</span>
+											</td>
+											
+											
+											<td>
+												
+												<!-- Button trigger modal-->
+												<a onclick="return confirm('¿Estás seguro que quieres eliminar la incidencia?');"
+												th:href="@{/ajustes/eliminar/} + 
+																	${incidencia.mensaje} + '/' +
+																 	${incidencia.empleado.cod_empl} +
+																 	 '/' + 
+																 	${incidencia.fecha}" class="btn-lg">
+												<i class="fas fa-trash-alt" style="color: red;"></i>
+												</a>
+ 
+										</td>
+									</tr>
+								</tbody>
+							</table>
+                </div>
+
+                        </div>
+                    </div>
+                    
+                    
+				</div>	
+			</div>
+		
+		
+		
+		</div>
+		
+		<!-- Modal -->
+	<div class="modal fade" id="modalFlash" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered" role="document">
+	    <div class="modal-content">
+	      <div th:class="${tipo == 'Error'} ? 'modal-header bg-danger text-white' : 'modal-header bg-primary text-white'">
+	        <div class="modal-title" id="exampleModalLongTitle">
+	        	<i class="fas fa-exclamation-triangle"></i>
+	        	<span th:text="${tipo}"></span>
+	        </div>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	      	<h6 th:text="${message}"></h6>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+			
+	<footer th:replace="layout/layout :: footer"></footer>
+	
+<script>
+	
+	$(document).ready( function () {
+		 var table = $('#tablaAjustesIncidencias').DataTable({
+			 	"pagingType": "numbers",
+		        "language": {
+		            "lengthMenu": "Mostrar _MENU_ registros por página",
+		            "zeroRecords": "Sin resultados",
+		            "info": "Mostrando página _PAGE_ de _PAGES_",
+		            "infoEmpty": "No hay datos disponibles",
+		            "infoFiltered": "(filtrados de _MAX_ registros en total)",
+		            "loadingRecords": "Cargando...",
+		            "processing":     "Procesando...",
+		            "search": "Buscar:",
+		            "paginate": {
+		            	"first":      "Primera",
+		                "last":       "Última",
+		                "next":       "Siguiente",
+		                "previous":   "Anterior"
+		            }
+		        },
+		        "lengthMenu": [ 6, 10, 15 , 20 ],
+		        "order": [ 1, 'asc']
+		    });
+	});
+	
+</script>
+	
+	
+<script th:inline="javascript">
+
+	$(document).ready( function () {
+		var message = /*[[${message}]]*/;
+		if(message.length > 0){
+			$('#modalFlash').modal('show');
+		}
+		
+	});
+	
+	</script>
+	
+</body>
+
+</html>
