@@ -97,7 +97,7 @@ public class FicharController implements ConstantesUtils {
 		model.put("porcentaje", porcentaje);
 		model.put("fechaHora", fechaUtils.obtenerFechaEnFormatoCadena() + " " + horaActual);
 		model.put("horaActual", horaActual);
-		model.put("titulo", "Fichaje del Empleado");
+		model.put("titulo", "Datos del empleado y estadísticas del fichaje");
 		model.put("empleado", empleado);
 		model.put("ip_cliente", FuncionesUtiles.obtenerIp(request));
 		model.put("esAdmin", FuncionesUtiles.esAdmin(usuario));
@@ -286,7 +286,7 @@ public class FicharController implements ConstantesUtils {
 		if(INCIDENCIA_OTROS.equals(incidenciaFichaje.getTipo())) {
 			String comentarioOtro = incidenciaFichaje.getComentarioOtro();
 			
-			mensaje = "El usuario "+empleado.getUsuario().getUsername() + ", ha creado una incidencia con su fichaje y ha dejado el"
+			mensaje = "El usuario "+empleado.getUsuario().getUsername() + ", ha creado una incidencia y ha dejado el"
 							+ " siguiente comentario: " + comentarioOtro;
 
 		} 

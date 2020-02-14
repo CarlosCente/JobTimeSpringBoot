@@ -1,31 +1,24 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="layout/layout :: head"></head>
-<body>
+<body class="bg-light">
 
 	<header th:replace="layout/layout :: header"></header>
 	<div class="container-fluid py-3  col-md-10 col-sm-12">
-		<h5 th:text="${titulo}"></h5>
-		<hr>
-
+		<div class="mt-3 mb-4">
+			<h4 class="text-center" th:text="${titulo}"></h4>
+		</div>
+		
 		<div class="row">
-			<div class="col-md-6 col-xs-12 col-xl-6">
-				<div class="card bg-light">
-					<div class="card-header text-center font-weight-bold">EMPLEADO</div>
+			<div class="col-md-4 col-xs-12 col-xl-4">
+				<div class="card bg-c-blue text-white">
 					<div class="card-body">
 					<div class="row">
-						<div class="col-md-4">
+						<div class="col-md-12 text-center">
 							<div class="row">
-								<div class="col-md-12 col-xs-12 col-lg-12 text-center">
-								
+								<div class="col-md-12 mt-2 h5 ">
+									<h4 class="font-weight-bold" th:text="${empleado.nombre} +' '+ ${empleado.apellido1} +' ' + ${empleado.apellido2}"></h4>
 								</div>
-								
-							</div>
-						</div>
-						<div class="col-md-8 text-center">
-							<div class="row">
-								<div class="col-md-12 mt-2 h5"
-									th:text="${empleado.nombre} +' '+ ${empleado.apellido1} +' ' + ${empleado.apellido2}"></div>
 							</div>
 	
 							<div class="row">
@@ -42,23 +35,30 @@
 				</div>
 
 			</div>
-			<div class="col-md-6 col-xs-12 col-xl-6">
-				<div class="card bg-light h-100">
-					<div class="card-header text-center font-weight-bold">FICHAJES</div>
+			<div class="col-md-8 col-xs-12 col-xl-8">
+				<div class="card h-100">
 					<div class="card-body">
 						
-						<div class="row mt-2">
-							<div class="col-md-6 col-xs-12 font-weight-bold text-center h3 text-success " th:text="${horaEntrada}"></div>
+						<div class="row text-center">
+							<div class="col-md-4 col-xl-4 col-xs-12">
+								<h5>Hora de Entrada</h5>
+								<hr/>
+								<h4 class="text-primary font-weight-bold" th:text="${horaEntrada}"></h4>
+							</div>
+							<div class="col-md-4 col-xl-4 col-xs-12">
+								<h5>Hora de Salida</h5>
+								<hr/>
+								<h4 class="text-primary font-weight-bold" th:text="${horaSalida}"></h4>
+							</div>
+							<div class="col-md-4 col-xl-4 col-xs-12">
+								<h5>Total del día</h5>
+								<hr />
+								<h4 class="text-primary font-weight-bold" th:text="${totalTiempo}"></h4>
+							</div>
 						
-							<div class="col-md-6 col-xs-12 font-weight-bold text-center h3 text-danger" th:text="${horaSalida}"></div>
 						</div>
-						<div class="row">
-							<div class="col-md-12 col-xs-12 col-lg-12 mt-2">
-								<div class="progress" style="height: 25px">
-								  <div class=" bg-primary progress-bar progress-bar-striped progress-bar-animated text-dark font-weight-bold" role="progressbar" th:style="'width:' + ${porcentaje} + ';'" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" th:text="${totalTiempo} + ' (' + ${porcentaje} + ')'"></div>
-								</div>
-							</div>	
-						</div>
+						
+						
 					</div>
 				</div>
 
@@ -66,26 +66,28 @@
 
 
 		</div>
-
+		
+		
 		<!-- #######################################################################################  -->
 		<!-- ########################## OPERACIONES DISPONIBLES FICHAJE ############################  -->
 		<!-- #######################################################################################  -->
-		<div class="row">
+		<div class="row mt-4">
 		<div class="col-md-12 col-sm-12 col-lg-6">
-		<div class="card bg-light mt-3 h-100">
-			<div class="card-header text-center font-weight-bold">OPERACIONES</div>
-			<div class="card-body">
-
+		
+				<h4 class="text-center mb-4">Fichajes</h4>
+		
+		<div class="card h-100">
+			<div class="card-body" style="display: flex; align-items: center; justify-content: center;">
 
 				<!-- #######################################################################################  -->
 				<!-- ########################## OPCION PARA EL FICHAJE DE ENTRADA ##########################  -->
 				<!-- #######################################################################################  -->
-				<div class="row mt-3" >
-
+				<div class="row col-md-12 col-xs-12" >
+					
 					<div class="col-md-6 text-center">
-						<button th:disabled="${hayEntrada}" class="btn btn-success btn-lg rounded-lg w-100 rounded-pill"
+						<button th:disabled="${hayEntrada}" class="btn btn-success btn-block rounded-pill"
 							data-toggle="modal" data-target="#modalEntrada"> 
-							<span class="fas fa-sign-in-alt h2"></span> &nbsp; ENTRADA
+							<span class="fas fa-sign-in-alt h2"> &nbsp; Entrada</span>
 							
 						</button>
 					</div>
@@ -147,10 +149,9 @@
 					<!-- #######################################################################################  -->
 
 					<div class="col-md-6 text-center">
-						<button th:disabled="${haySalida}" class="btn btn-danger btn-lg w-100 rounded-pill"
+						<button th:disabled="${haySalida}" class="btn btn-danger btn-block rounded-pill"
 							data-toggle="modal" data-target="#modalSalida"> 
-							<span class="fas fa-sign-out-alt h2"></span> &nbsp; SALIDA
-							
+							<span class="fas fa-sign-out-alt h2"> &nbsp; Salida</span>
 						</button>
 					</div>
 
@@ -205,40 +206,50 @@
 						</div>
 					</div>
 
-
+					<span class="form-text small text-muted mt-4 text-center">
+                         Solamente puede realizar un fichaje de salida y otro de entrada. 
+                         Si tiene cualquier problema debe abrir una incidencia.
+                    </span>
 					
 				</div>
 			</div>
 		</div>
 		</div>
 		
+	
 		<div class="col-md-12 col-lg-6 col-sm-12">
-				<div class="card bg-light mt-3 h-100	">
-					<div class="card-header text-center font-weight-bold">INFORMES</div>
-					<div class="card-body">
-						<div class="row text-center">
-							<div class="col-md-12">Informe semanal</div>
+			<h4 class="text-center mb-4">Informes</h4>
+			
+			<div class="card h-100">
+				<div class="card-body">
+					<div class="row text-center">
+						<div class="col-md-4">
+							<span>Informe Semanal</span>
 						</div>
-						<div class="row text-center">
-							<div class="col-md-12">Informe mensual</div>
+						<div class="col-md-4">
+							<span>Informe mensual</span>
 						</div>
-						<div class="row text-center">
-							<div class="col-md-12">Seleccionar fechas</div>
+						<div class="col-md-4">
+							<span>Seleccionar fechas</span>
 						</div>
-
 					</div>
 				</div>
-
 			</div>
+		</div>
 		
 		
 		
 	</div>
+	
+	<div class="row mt-4">
+		<div th:if="!${esAdmin}" class="col-md-12 col-xs-12 col-md-12 mt-5">
+			<h4 class="text-center">¿Tienes algún problema con tu fichaje?</h4>
+		</div>
+	</div>
+	
 	<div class="row mt-3">
 		<div class="col-md-12 col-lg-12 col-xs-12">
-		<div th:if="!${esAdmin}" class="card bg-light mt-3 mb-5">
-			<div class="card-header text-center font-weight-bold">¿TIENES
-				ALGUN PROBLEMA CON EL FICHAJE?</div>
+		<div th:if="!${esAdmin}" class="card ">
 			<div class="card-body">
 
 				<div class="text-center">Si tiene algún problema con el
@@ -252,6 +263,7 @@
 
 			</div>
 		</div>
+		
 		</div>	
 		</div>
 		<div class="modal fade" id="modalIncidencia" tabindex="-1"
