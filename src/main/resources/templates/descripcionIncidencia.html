@@ -192,7 +192,7 @@
 	<div class="modal fade" id="modalFlash" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 	  <div class="modal-dialog modal-dialog-centered" role="document">
 	    <div class="modal-content">
-	      <div class="modal-header bg-danger text-white">
+	      <div th:class="${tipo == 'Error'} ? 'modal-header bg-danger text-white' : 'modal-header bg-primary text-white'">
 	        <div class="modal-title" id="exampleModalLongTitle">
 	        	<i class="fas fa-exclamation-triangle"></i>
 	        	<span th:text="${tipo}"></span>
