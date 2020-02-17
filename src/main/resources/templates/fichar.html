@@ -36,24 +36,24 @@
 
 			</div>
 			<div class="col-md-8 col-xs-12 col-xl-8">
-				<div class="card h-100">
+				<div class="card h-100 text-white" style="background-color: #36689c;">
 					<div class="card-body">
 						
 						<div class="row text-center">
 							<div class="col-md-4 col-xl-4 col-xs-12">
 								<h5>Hora de Entrada</h5>
-								<hr/>
-								<h4 class="text-primary font-weight-bold" th:text="${horaEntrada}"></h4>
+								<hr class="bg-white" />
+								<h4 class="text-white font-weight-bold" th:text="${horaEntrada}"></h4>
 							</div>
 							<div class="col-md-4 col-xl-4 col-xs-12">
 								<h5>Hora de Salida</h5>
-								<hr/>
-								<h4 class="text-primary font-weight-bold" th:text="${horaSalida}"></h4>
+								<hr class="bg-white" />
+								<h4 class="text-white font-weight-bold" th:text="${horaSalida}"></h4>
 							</div>
 							<div class="col-md-4 col-xl-4 col-xs-12">
 								<h5>Total del día</h5>
-								<hr />
-								<h4 class="text-primary font-weight-bold" th:text="${totalTiempo}"></h4>
+								<hr class="bg-white" />
+								<h4 class="text-white font-weight-bold" th:text="${totalTiempo}"></h4>
 							</div>
 						
 						</div>
@@ -75,16 +75,18 @@
 		<div class="col-md-12 col-sm-12 col-lg-6">
 	
 		<div class="card h-100">
-			<h5 class=" card-header text-center">Fichajes</h5>
+			<h5 class=" card-header bg-dark text-white text-center">Fichajes</h5>
 			<div class="card-body" style="display: flex; align-items: center; justify-content: center;">
-
+				
 				<!-- #######################################################################################  -->
 				<!-- ########################## OPCION PARA EL FICHAJE DE ENTRADA ##########################  -->
 				<!-- #######################################################################################  -->
 				<div class="row col-md-12 col-xs-12" >
 					
 					<div class="col-md-6 text-center">
-						<button th:disabled="${hayEntrada}" class="btn btn-success btn-block rounded-pill"
+						<button th:disabled="${hayEntrada}" 
+						style="height: 80px"
+						class="btn btn-success btn-block rounded-pill mb-2"
 							data-toggle="modal" data-target="#modalEntrada"> 
 							<span class="fas fa-sign-in-alt h3"> &nbsp; Entrada</span>
 							
@@ -148,7 +150,9 @@
 					<!-- #######################################################################################  -->
 
 					<div class="col-md-6 text-center">
-						<button th:disabled="${haySalida}" class="btn btn-danger btn-block rounded-pill"
+						<button th:disabled="${haySalida}" 
+						class="btn btn-danger btn-block rounded-pill mb-2"
+						style="height: 80px"
 							data-toggle="modal" data-target="#modalSalida"> 
 							<span class="fas fa-sign-out-alt h3"> &nbsp; Salida</span>
 						</button>
@@ -219,7 +223,7 @@
 		<div class="col-md-12 col-lg-6 col-sm-12">
 			
 			<div class="card h-100">
-				<h5 class=" card-header text-center">Informes</h5>
+				<h5 class=" card-header bg-dark text-white text-center">Informes</h5>
 				<div class="card-body"  style="display: flex; align-items: center; justify-content: center;">
 					<div class="row text-center">
 						<div class="col-md-4">
@@ -236,7 +240,7 @@
 						</div>
 						<div class="col-md-4">
 							<div>
-								<h6>Selección</h6>
+								<h6>Personalizado</h6>
 								<img th:src="@{/images/report3.png}" class="img-responsive w-75 mt-2">
 							</div>
 						</div>
@@ -346,6 +350,30 @@
 		</div>
 </div>
  
+ 		<!-- Modal -->
+	<div class="modal fade" id="modalFlash" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered" role="document">
+	    <div class="modal-content">
+	      <div th:class="${tipo == 'Error'} ? 'modal-header bg-danger text-white' : 'modal-header bg-primary text-white'">
+	        <div class="modal-title" id="exampleModalLongTitle">
+	        	<i class="fas fa-exclamation-triangle"></i>
+	        	<span th:text="${tipo}"></span>
+	        </div>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	      	<h6 th:text="${message}"></h6>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+ 
+ 
 	<footer th:replace="layout/layout :: footer"></footer>
 
         <script type="text/javascript">
@@ -380,6 +408,18 @@
                 });
             });
         </script>
+        
+        <script th:inline="javascript">
+
+	$(document).ready( function () {
+		var message = /*[[${message}]]*/;
+		if(message.length > 0){
+			$('#modalFlash').modal('show');
+		}
+		
+	});
+	
+	</script>
 
 </body>
 </html>

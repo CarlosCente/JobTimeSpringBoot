@@ -5,6 +5,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -44,6 +46,8 @@ public class FicharController implements ConstantesUtils {
 	FechaUtils fechaUtils = new FechaUtils();
 	
 	String horaActual = fechaUtils.obtenerHoraEnFormatoCadena();
+	
+	private final Logger log = LoggerFactory.getLogger(getClass());
 	
 	@RequestMapping(value = "/fichar")
 	public String fichar(Map<String, Object> model,  HttpServletRequest request) {
@@ -119,7 +123,8 @@ public class FicharController implements ConstantesUtils {
 		Fichaje fichajeComprueba = fichajeService.findByEmpleadoAndFecha(empleado, fechaUtils.obtenerFechaActual());
 		
 		if(fichajeComprueba != null) {
-			flash.addFlashAttribute("error", "Ya has realizado el fichaje de entrada hoy!");
+			flash.addFlashAttribute("tipo", "Error");
+			flash.addFlashAttribute("message", "Ya se ha realizado el fichaje de entrada de hoy");
 		} else {
 			Fichaje fichajeEntrada = new Fichaje();
 			fichajeEntrada.setEmpleado(empleado);
@@ -129,8 +134,10 @@ public class FicharController implements ConstantesUtils {
 			
 			fichajeService.save(fichajeEntrada);	
 			
-			flash.addFlashAttribute("success", "Has fichado la entrada correctamente a las " + fechaUtils.obtenerHoraEnFormatoCadena());	
-		}
+			flash.addFlashAttribute("tipo", "Información");
+			flash.addFlashAttribute("message", "Has fichado la entrada correctamente a las " + fechaUtils.obtenerHoraEnFormatoCadena());		}
+			log.info("El usuario " + empleado.getUsuario().getUsername() + "ha fichado la entrada correctamente a las " + fechaUtils.obtenerHoraEnFormatoCadena()
+				+ " el día " + fechaUtils.obtenerFechaActual());
 		
 		return "redirect:/fichar";
 	}
@@ -148,12 +155,14 @@ public class FicharController implements ConstantesUtils {
 		Fichaje fichajeComprueba = fichajeService.findByEmpleadoAndFecha(empleado, fechaUtils.obtenerFechaActual());
 		
 		if(fichajeComprueba == null) {
-			flash.addFlashAttribute("error", "No has fichado aún la entrada de hoy");
+			flash.addFlashAttribute("tipo", "Error");
+			flash.addFlashAttribute("message", "No se ha fichado aún la entrada de hoy");
 		} else {
 			
 			if(fichajeComprueba.getHoraSalida() != null && !"".equals(fichajeComprueba.getHoraSalida())){
 				
-				flash.addFlashAttribute("error", "Ya has realizado el fichaje de salida hoy");	
+				flash.addFlashAttribute("tipo", "Error");
+				flash.addFlashAttribute("message", "Ya se ha realizado el fichaje de salida de hoy");
 				
 			} else {
 				//Una vez que se han realizado los dos fichajes, se guarda el tiempo total en la BBDD y marcamos el fichaje
@@ -167,7 +176,10 @@ public class FicharController implements ConstantesUtils {
 				
 				fichajeService.save(fichajeComprueba);	
 				
-				flash.addFlashAttribute("success", "Has fichado la salida correctamente a las " + fechaUtils.obtenerHoraEnFormatoCadena());	
+				flash.addFlashAttribute("tipo", "Información");
+				flash.addFlashAttribute("message", "Has fichado la salida correctamente a las " + fechaUtils.obtenerHoraEnFormatoCadena());	
+				log.info("El usuario " + empleado.getUsuario().getUsername() + "ha fichado la salida correctamente a las " + fechaUtils.obtenerHoraEnFormatoCadena()
+				+ " el día " + fechaUtils.obtenerFechaActual());
 			}
 	
 		}
@@ -184,7 +196,8 @@ public class FicharController implements ConstantesUtils {
 		 * Se controla que no vaya la incidencia completamente vacía
 		 */
 		if(INCIDENCIA_NO_SELECCION.equals(incidenciaFichaje.getTipo())){
-			flash.addFlashAttribute("error", "Error, no se puede crear una incidencia vacía");
+			flash.addFlashAttribute("tipo", "Error");
+			flash.addFlashAttribute("message", "No es posible crear una incidencia vacía");
 			return "redirect:/fichar";
 		}
 		
@@ -222,10 +235,13 @@ public class FicharController implements ConstantesUtils {
 					
 			incidenciaService.save(incidenciaNueva);
 
-			flash.addFlashAttribute("success", "Incidencia añadida correctamente");
+			flash.addFlashAttribute("tipo", "Información");
+			flash.addFlashAttribute("message", "Incidencia añadida correctamente");
+			log.info("El usuario " + empleadoBD.getUsuario().getUsername() + "ha creado correctamente una indicencia");
 
 		} else {
-			flash.addFlashAttribute("error", "Error, no se ha podido crear la incidencia");
+			flash.addFlashAttribute("tipo", "Error");
+			flash.addFlashAttribute("message", "No se ha podido crear la incidencia");
 		}
 		
 		return "redirect:/fichar";
