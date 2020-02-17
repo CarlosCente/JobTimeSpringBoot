@@ -51,7 +51,7 @@
 						th:href="@{/fichar}">Fichaje de la jornada</a></li>
 					<li sec:authorize="!hasRole('ROLE_ADMIN')" 
 						id="tab_solicitudes_admin"
-						class="nav-item"><a class="nav-link ml-2 mr-2" href="#">Solicitudes
+						class="nav-item"><a class="nav-link ml-2 mr-2" th:href="@{/solicitudes}">Solicitudes
 							/ Ausencias</a></li>
 					<li sec:authorize="hasRole('ROLE_ADMIN')" 
 						id="tab_controlhorario"
