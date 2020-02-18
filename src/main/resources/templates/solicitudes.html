@@ -1,20 +1,87 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="layout/layout :: head"></head>
-<body>
+<body class="bg-light">
 
 	<header th:replace="layout/layout :: header"></header>
 
 	<div class="container-fluid py-2 col-md-11 col-sm-12">
-
-		<div class="card bg-light">
-			<div class="card-header text-center font-weight-bold bg-dark text-white" th:text="${titulo}"></div>
+		<!--  <div class="mt-2 mb-3">
+				<h4 class="text-center" th:text="${titulo}"></h4>
+		</div>-->
+					
+		<!--
+		#################################################################################
+								 DATOS O VISTA PARA EL ROLE_USER 
+		#################################################################################
+		-->
+		<div th:if="!${esAdmin}" class="card mt-2">
+			<div class="card-header bg-dark text-white">
+				<h5 th:text="'Creación de solicitudes'"></h5>
+			</div>
 			<div class="card-body">
 						
-				
-			</div>
-		
+						
+						SOY USER
+	
+			</div>		
 		</div>
+		
+		<!--
+		#################################################################################
+								 DATOS O VISTA PARA EL ROLE_ADMIN 
+		#################################################################################
+		 -->
+		<div th:if="${esAdmin}" class="card mt-2">	
+			<div class="card-header bg-dark text-white">
+				<h5 th:text="'Listado de solicitudes abiertas'"></h5>
+			</div>		
+			<div class="card-body table-responsive">
+						
+					<table id="tablaSolicitudes" class="table-hover table-borderless dataTables_length" >
+										<thead class="text-center bg-dark text-white">
+										<tr>
+											<th>Usuario</th>
+											<th>Fecha</th>
+											<th>Tipo</th>
+											<th>Estado</th>
+											<th>Descripción</th>
+											<th>Acciones</th>
+										</tr>
+									</thead>
+									<tbody class="text-center">
+										<tr th:each="solicitud : ${todasSolicitudes}">
+											<td data-toggle="tooltip" data-placement="left" data-type="primary" 
+											th:title="${solicitud.empleado.nombre} +' '+${solicitud.empleado.apellido1}+' '+${solicitud.empleado.apellido2}"
+											 th:text="${solicitud.empleado.usuario.username}"></td>
+	
+											<td th:text="${solicitud.fecha}"></td>
+											
+											<td
+												
+												 th:text="${solicitud.tipo}"></td>
+											
+											<td>				
+												<span
+													th:class="${solicitud.estado == '1' ? 'badge badge-primary text-white' : solicitud.estado == '2' ? 'badge badge-success text-white' : 'badge badge-danger text-white'}"
+													th:text="${solicitud.estado == '1' ? '&nbspAbierta&nbsp' : solicitud.estado == '2' ? '&nbspAceptada&nbsp' :'&nbspRechazada&nbsp'}">
+												</span>
+											</td>
+											
+											<td>
+												<span
+												th:text="${solicitud.descripcion}">
+												</span>
+											</td>
+											<td></td>
+
+									</tr>
+								</tbody>
+							</table>	
+				
+			</div>		
+		</div>
+		
 	</div>
 	
 	
@@ -53,6 +120,33 @@
 		
 	});
 	
+	</script>
+	
+	<script>
+	
+	$(document).ready( function () {
+		 var table = $('#tablaSolicitudes').DataTable({
+			 	"pagingType": "numbers",
+		        "language": {
+		            "lengthMenu": "Mostrar _MENU_ registros por página",
+		            "zeroRecords": "Sin resultados",
+		            "info": "Mostrando página _PAGE_ de _PAGES_",
+		            "infoEmpty": "No hay datos disponibles",
+		            "infoFiltered": "(filtrados de _MAX_ registros en total)",
+		            "loadingRecords": "Cargando...",
+		            "processing":     "Procesando...",
+		            "search": "Buscar:",
+		            "paginate": {
+		            	"first":      "Primera",
+		                "last":       "Última",
+		                "next":       "Siguiente",
+		                "previous":   "Anterior"
+		            }
+		        },
+		        "lengthMenu": [ 6, 10, 15 , 20 ],
+		        "order": [ 1, 'asc']
+		    });
+	});
 	</script>
 	
 </body>
