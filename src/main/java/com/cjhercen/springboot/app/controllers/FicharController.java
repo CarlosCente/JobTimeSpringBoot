@@ -4,15 +4,19 @@ import java.text.DecimalFormat;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.cjhercen.springboot.app.models.entity.Empleado;
@@ -27,6 +31,7 @@ import com.cjhercen.springboot.app.models.service.interfaces.IFichajeService;
 import com.cjhercen.springboot.app.util.ConstantesUtils;
 import com.cjhercen.springboot.app.util.FechaUtils;
 import com.cjhercen.springboot.app.util.FuncionesUtiles;
+import com.cjhercen.springboot.app.util.IncidenciaFichajeValidator;
 
 @Controller
 public class FicharController implements ConstantesUtils {
@@ -48,6 +53,13 @@ public class FicharController implements ConstantesUtils {
 	String horaActual = fechaUtils.obtenerHoraEnFormatoCadena();
 	
 	private final Logger log = LoggerFactory.getLogger(getClass());
+	
+	
+	//Se registra el validador personalizado para las incidencias
+	//@InitBinder
+	//protected void initBinder(WebDataBinder binder) {
+	//	binder.setValidator(new IncidenciaFichajeValidator());
+	//}
 	
 	@RequestMapping(value = "/fichar")
 	public String fichar(Map<String, Object> model,  HttpServletRequest request) {
@@ -189,7 +201,7 @@ public class FicharController implements ConstantesUtils {
 	
 	
 	@RequestMapping(value = "/fichar/incidencia", method = RequestMethod.POST)
-	public String saveIncidencia(@ModelAttribute("incidenciaFichaje") IncidenciaFichaje incidenciaFichaje,
+	public String saveIncidencia(@RequestParam("IncidenciaFichaje") IncidenciaFichaje incidenciaFichaje,
 			BindingResult bindingResult, RedirectAttributes flash) {
 	
 		/*
