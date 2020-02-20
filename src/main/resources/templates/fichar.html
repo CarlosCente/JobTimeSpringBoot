@@ -46,8 +46,8 @@
 							
 							<div class="col-md-6 text-center">
 								<button th:disabled="${hayEntrada}" 
-								style="height: 60px"
-								class="btn btn-success btn-block rounded-pill mb-2"
+								
+								class="btn btn-success btn-block rounded-pill mb-2 h-100"
 									data-toggle="modal" data-target="#modalEntrada"> 
 									<span class="fas fa-sign-in-alt h3"> &nbsp; Entrada</span>
 									
@@ -112,8 +112,8 @@
 		
 							<div class="col-md-6 text-center">
 								<button th:disabled="${haySalida}" 
-								class="btn btn-danger btn-block rounded-pill mb-2"
-								style="height: 60px"
+								class="btn btn-danger btn-block rounded-pill mb-2 h-100"
+								
 									data-toggle="modal" data-target="#modalSalida"> 
 									<span class="fas fa-sign-out-alt h3"> &nbsp; Salida</span>
 								</button>
@@ -169,11 +169,6 @@
 									</div>
 								</div>
 							</div>
-		
-							<span class="form-text small text-muted mt-4 text-center">
-		                         Solamente puede realizar un fichaje de salida y otro de entrada. 
-		                         Si tiene cualquier problema debe abrir una incidencia.
-		                    </span>
 							
 						</div>
 					</div>
