@@ -173,6 +173,29 @@ function modificarFichaje(){
 		
 }
 
+
+function abrirModalEditar(){
+	
+	var table = $('#tablaFichajes').DataTable();
+	$('#tablaFichajes tbody').one('click', 'tr', function () {
+        var data = table.row( this ).data();
+        var usuario=data[0];
+        var fecha=data[1];
+    	var ipOrigen=data[2];
+    	var horaDeEntrada=data[3];
+    	var horaDeSalida=data[4];
+    	
+    		
+    	$('#modalEditar').modal('show');
+    	$('#eUsuario').val(usuario);
+    	$('#eFecha').val(fecha);
+    	$('#eIp').val(ipOrigen);
+    	$('#horaEntradaControl').val(horaDeEntrada);
+    	$('#horaSalidaControl').val(horaDeSalida);
+	});
+
+}
+
 /*
  * JAVASCRIPT DE LA VISTA controlHorario
  */

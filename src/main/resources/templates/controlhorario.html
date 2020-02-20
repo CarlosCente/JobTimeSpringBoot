@@ -36,7 +36,7 @@
 							<td th:text="${fichaje.horaSalida}"></td>
 							<td><span class="badge badge-pill badge-success" th:text="${fichaje.tiempoTotal}"></span></td>
 							<td class="align-middle">
-								<a class="btn-lg edit">
+								<a id="botonEditar" href="#" onclick="abrirModalEditar()" class="btn-lg">
 									<i class="far fa-edit" style="color: #007bff;"></i>
 								</a>
 						
@@ -205,28 +205,7 @@
 
 	} );
 	
-	$(document).ready(function() {
-	    var table = $('#tablaFichajes').DataTable();
-	     
-	    $('#tablaFichajes tbody').on('click', 'tr', function () {
-	        var data = table.row( this ).data();
-
-	        var usuario=data[0];
-	        var fecha=data[1];
-	    	var ipOrigen=data[2];
-	    	var horaDeEntrada=data[3];
-	    	var horaDeSalida=data[4];
-	    	
-	    		
-	    	$('#modalEditar').modal('show');
-	    	$('#eUsuario').val(usuario);
-	    	$('#eFecha').val(fecha);
-	    	$('#eIp').val(ipOrigen);
-	    	$('#horaEntradaControl').val(horaDeEntrada);
-	    	$('#horaSalidaControl').val(horaDeSalida);
-	    });
-	   });
-	        
+	
 
 	  $(function () {
           $('#horaEntradaControl').timepicker();
