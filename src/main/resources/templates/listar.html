@@ -14,9 +14,204 @@
 	                
 	                <div class="row">			
 					<div class="col-sm text-center mt-2 ">
-						<a th:href="@{/form}" class="btn btn-primary mt-3 font-weight-bold">Crear un nuevo
+						<a href="#" data-toggle="modal" data-target="#modalCrearEmpleado" 
+						class="btn btn-primary mt-3 font-weight-bold text-white">Crear un nuevo
 							Empleado</a>
 					</div>
+					
+					<div class="modal fade" id="modalCrearEmpleado" tabindex="-1"
+								role="dialog" aria-labelledby="modalCrearEmpleado" aria-hidden="true">
+								<div class="modal-dialog modal-dialog-centered modal-lg"
+									role="document">
+									<div class="modal-content">
+										<div class="modal-header bg-dark text-white">
+											<h5 class="modal-title w-100"
+												id="exampleModalLongTitle">Formulario para la creación del empleado</h5>
+											<button type="button" class="close text-white"
+												data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div class="modal-body">
+	
+											<form th:action="@{/form}" th:object="${empleado}" method="post">
+						
+											<div class="row">
+						
+												<div class="col-sm-12 col-md-12 col-lg-12">
+													<div class="row pb-2">
+														<h5 class="col-md-12 text-center mark">Datos personales</h5>
+													</div>
+													
+													<div class="row">
+														<div class="col-xs-12 col-md-6 col-lg-6">
+															<div class="form-group input-group">
+																
+																<div class="input-group-prepend">
+																    <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+																 </div>									
+																<input type="text" class="form-control" th:field="*{nombre}"
+																placeholder="Nombre"
+																th:errorclass="'form-control alert-danger'" /> 
+															</div>
+															<small
+																class="form-text text-danger"
+																th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></small>
+														</div>
+														<div class="col-xs-12 col-md-6 col-lg-6">
+															<div class="form-group input-group">
+																
+																<div class="input-group-prepend">
+																    <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+																 </div>									
+																<input type="text" class="form-control" th:field="*{apellido1}"
+																placeholder="Primer Apellido"
+																th:errorclass="'form-control alert-danger'" /> 
+															</div>
+															<small
+																class="form-text text-danger"
+																th:if="${#fields.hasErrors('apellido1')}" th:errors="*{apellido1}"></small>
+														</div>
+													</div>
+													
+													<div class="row">
+														<div class="col-xs-12 col-md-6 col-lg-6">
+															<div class="form-group input-group">
+																
+																<div class="input-group-prepend">
+																    <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+																 </div>									
+																<input type="text" class="form-control" th:field="*{apellido2}"
+																placeholder="Segundo Apellido"
+																th:errorclass="'form-control alert-danger'" /> 
+															</div>
+															<small
+																class="form-text text-danger"
+																th:if="${#fields.hasErrors('apellido2')}" th:errors="*{apellido2}"></small>
+														</div>
+														<div class="col-xs-12 col-md-6 col-lg-6">
+															<div class="form-group input-group">
+																
+																<div class="input-group-prepend">
+																    <span class="input-group-text"> <i class="fas fa-calendar-alt"></i> </span>
+																 </div>									
+																<input type="text" class="form-control" th:field="*{fechaNacim}"
+																	 onfocus="(this.type='date')"
+																	placeholder="Fecha de Nacimiento"
+																	th:errorclass="'form-control alert-danger'" /> 
+															</div>
+															<small
+																class="form-text text-danger"
+																th:if="${#fields.hasErrors('fechaNacim')}" th:errors="*{fechaNacim}"></small>
+														</div>
+												</div>
+												
+												<div class="row pb-2">
+													<h5 class="col-md-12 text-center mark">Datos de dirección</h5>
+												</div>
+														
+													<div class="row">
+														<div class="col-xs-12 col-md-6 col-lg-6">
+															<div class="form-group input-group">
+																
+																<div class="input-group-prepend">
+																    <span class="input-group-text"> <i class="fas fa-compass"></i> </span>
+																 </div>									
+																<input type="text" class="form-control" th:field="*{direccion}"
+																placeholder="Dirección completa"
+																th:errorclass="'form-control alert-danger'" /> 
+															</div>
+															<small
+																class="form-text text-danger"
+																th:if="${#fields.hasErrors('direccion')}" th:errors="*{direccion}"></small>
+														</div>
+														<div class="col-xs-12 col-md-6 col-lg-6">
+															<div class="form-group input-group">
+																
+																<div class="input-group-prepend">
+																    <span class="input-group-text"><i class="fas fa-map-marker-alt"></i> </span>
+																 </div>									
+																<input type="text" class="form-control" th:field="*{localidad}"
+																placeholder="Localidad"
+																th:errorclass="'form-control alert-danger'" /> 
+															</div>
+															<small
+																class="form-text text-danger"
+																th:if="${#fields.hasErrors('localidad')}" th:errors="*{localidad}"></small>
+														</div>
+													</div>
+													
+														<div class="row">
+														<div class="col-xs-12 col-md-6 col-lg-6">
+															<div class="form-group input-group">
+																
+																<div class="input-group-prepend">
+																    <span class="input-group-text"> <i class="fas fa-map-marker-alt"></i> </span>
+																 </div>									
+																<input type="text" class="form-control" th:field="*{provincia}"
+																placeholder="Provincia"
+																th:errorclass="'form-control alert-danger'" /> 
+															</div>
+															<small
+																class="form-text text-danger"
+																th:if="${#fields.hasErrors('provincia')}" th:errors="*{provincia}"></small>
+														</div>
+														<div class="col-xs-12 col-md-6 col-lg-6">
+															<div class="form-group input-group">
+																
+																<div class="input-group-prepend">
+																    <span class="input-group-text"> <i class="fas fa-flag"></i> </span>
+																 </div>									
+																<input type="text" class="form-control" th:field="*{pais}"
+																placeholder="País"
+																th:errorclass="'form-control alert-danger'" /> 
+															</div>
+															<small
+																class="form-text text-danger"
+																th:if="${#fields.hasErrors('pais')}" th:errors="*{pais}"></small>
+														</div>
+													</div>
+												
+													<div class="row text-center">
+														<div class="col-md-12 mt-2 mb-2">
+						
+															<div class="col-md-12">
+																<h6>Permiso para el usuario (Usuario / Administrador)</h6>
+																<input th:field="*{esAdmin}" 
+																	type="checkbox" checked data-toggle="toggle" 
+																	data-onstyle="success" data-offstyle="danger">
+															        
+															</div>
+															<hr />
+															</div> 
+													</div>
+													
+												</div>
+													
+											</div>
+						
+											<div class="row">
+												<div class="col-md-12 text-center">
+													
+													
+														<div class="form-group">
+															<input value="Crear Empleado" type="submit"
+																class="btn btn-lg btn-primary" />
+														</div>
+												
+						
+												</div>
+						
+						
+											</div>
+						
+										</form>														
+												
+										</div>						
+									</div>
+								</div>
+							</div>
+							
 				</div>
 			<div class="card-body table-responsive ">
 			

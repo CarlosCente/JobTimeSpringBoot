@@ -45,17 +45,10 @@ public class EmpleadoController implements ConstantesUtils {
 
 		ArrayList<Empleado> empleados = (ArrayList<Empleado>) empleadoService.findAll();
 
+		Empleado empleado = new Empleado();
+		model.addAttribute("empleado", empleado);
 		model.addAttribute("empleados", empleados);
 		return "listar";
-	}
-
-	@RequestMapping(value = "/form")
-	public String crear(Map<String, Object> model) {
-
-		Empleado empleado = new Empleado();
-		model.put("empleado", empleado);
-		model.put("titulo", "Creación de un Empleado");
-		return "form";
 	}
 
 	@GetMapping(value = "/editar/{id}")
