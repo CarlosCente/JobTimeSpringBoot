@@ -65,8 +65,8 @@ public class ControlHorarioController {
 		log.info("Se ha borrado correctamente el fichaje con fecha " + fichajeABorrar.getFecha() + " del empleado: "
 				+ fichajeABorrar.getEmpleado().getNombre() + " " + fichajeABorrar.getEmpleado().getApellido1() + 
 				" " + fichajeABorrar.getEmpleado().getApellido2());
-		
-		flash.addFlashAttribute("success", "Fichaje borrado con éxito");
+		flash.addFlashAttribute("tipo", "Información");
+		flash.addFlashAttribute("message", "Fichaje borrado con éxito");
 		
 		return "redirect:/controlhorario";
 	}
@@ -87,6 +87,8 @@ public class ControlHorarioController {
 		
 		if(fichajeModif == null) {
 			log.error("No existe el fichaje");
+			flash.addFlashAttribute("tipo", "Error");
+			flash.addFlashAttribute("message", "No existe el fichaje");
 		} else {
 			
 			//Solo se puede modificar la IP, la hora de entrada y la hora de salida
@@ -112,8 +114,9 @@ public class ControlHorarioController {
 				fichajeModif.setTiempoTotal(fechaUtils.formatearFechas2digitos(totalTiempo));
 				fichajeService.save(fichajeModif);
 			}
-			
+
 			fichajeService.save(fichajeModif);
+			
 			
 		}
 		
