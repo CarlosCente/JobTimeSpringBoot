@@ -9,7 +9,8 @@
 
 		<div class="card shadow card-table">
 	                <div class="card-header bg-dark text-white">
-	                 	<h5>Listado de Empleados</h5>
+	                 	<h5>Listado de Empleados  <small class="float-right" th:text="'Total de empleados: '+${totalEmpleados}"></small> </h5>
+	                 	
 	                </div>
 	                
 	                <div class="row">			
@@ -177,6 +178,7 @@
 						
 															<div class="col-md-12">
 																<h6>Permiso para el usuario (Usuario / Administrador)</h6>
+																
 																<input th:field="*{esAdmin}" 
 																	type="checkbox" checked data-toggle="toggle" 
 																	data-onstyle="success" data-offstyle="danger">
@@ -216,7 +218,7 @@
 			<div class="card-body table-responsive ">
 			
 				<table id="tablaListar" class="table-hover table-borderless dataTables_length text-center">
-					<thead class="thead-dark">
+					<thead class="thead-dark bg-dark text-white">
 						<tr>
 							<th>Usuario</th>
 							<th>Nombre</th>
@@ -239,7 +241,7 @@
 								<i class="far fa-edit"></i>
 								</a></td>
 							<td class="align-middle">
-								<a onclick="return confirm('Â¿EstÃ¡s seguro que quieres eliminar al empleado?');"
+								<a onclick="return confirm('¿Estás seguro que quieres eliminar al empleado?');"
 								th:href="@{/eliminar/} + ${empleado.cod_empl}" class="btn-lg">
 								<i class="fas fa-trash-alt" style="color: red;"></i>
 								</a>
@@ -255,7 +257,43 @@
 			</div>
 		</div>
 
+		<!-- Modal -->
+		<div class="modal fade" id="modalFlash" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		  <div class="modal-dialog modal-dialog-centered" role="document">
+		    <div class="modal-content">
+		      <div th:class="${tipo == 'Error'} ? 'modal-header bg-danger text-white' : 'modal-header bg-primary text-white'">
+		        <div class="modal-title" id="exampleModalLongTitle">
+		        	<i class="fas fa-exclamation-triangle"></i>
+		        	<span th:text="${tipo}"></span>
+		        </div>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+		      	<h6 th:text="${message}"></h6>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+
 	<footer th:replace="layout/layout :: footer"></footer>
+	
+	<script th:inline="javascript">
+
+	$(document).ready( function () {
+		var message = /*[[${message}]]*/;
+		if(message.length > 0){
+			$('#modalFlash').modal('show');
+		}
+		
+	});
+	
+	</script>
+	
 	<script>
 
 	
@@ -274,7 +312,7 @@
 		           
 		        },
 		        responsive: true,
-		        "lengthMenu": [ 6, 10, 15 , 20 ]
+		        "lengthMenu": [ 10, 15, 20 , 25 ]
 		    });
 	});
 	</script>

@@ -196,6 +196,29 @@ function abrirModalEditar(){
 
 }
 
+
+function confirmacionBorrado(empleadoId){
+	
+	swal({
+        title: "¿Estás seguro?",
+        text: "No podras recuperar el empleado borrado",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Si, borrar",
+        closeOnConfirm: false
+    )},
+        $.ajax({
+            url: "/eliminar/",
+            type: "POST",
+            data: {id: empleadoId},
+            dataType: "html",
+            success: function () {
+                swal("Correcto","Se ha borrado correctamente","success");
+            }
+        });
+}
+
 /*
  * JAVASCRIPT DE LA VISTA controlHorario
  */

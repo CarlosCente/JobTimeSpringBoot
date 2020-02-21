@@ -6,6 +6,8 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -38,14 +40,17 @@ public class EmpleadoController implements ConstantesUtils {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
-	//private final Logger log = LoggerFactory.getLogger(getClass());
+	private final Logger log = LoggerFactory.getLogger(getClass());
 
 	@RequestMapping(value = "/listar", method = RequestMethod.GET)
 	public String listar(Model model) {
 
 		ArrayList<Empleado> empleados = (ArrayList<Empleado>) empleadoService.findAll();
-
+		int totalEmpleados = empleados.size();
+		
+		
 		Empleado empleado = new Empleado();
+		model.addAttribute("totalEmpleados", totalEmpleados);
 		model.addAttribute("empleado", empleado);
 		model.addAttribute("empleados", empleados);
 		return "listar";
@@ -59,11 +64,13 @@ public class EmpleadoController implements ConstantesUtils {
 		if (id > 0) {
 			empleado = empleadoService.findOne(id);
 			if (empleado == null) {
-				flash.addFlashAttribute("error", "El ID del empleado no existe en la BBDD!");
+				flash.addFlashAttribute("tipo", "Error");
+				flash.addFlashAttribute("message", "No se encuentra el id del empleado");
 				return "redirect:/listar";
 			}
 		} else {
-			flash.addFlashAttribute("error", "El ID del empleado no puede ser cero!");
+			flash.addFlashAttribute("tipo", "Error");
+			flash.addFlashAttribute("message", "El id del empleado no puede ser cero");
 			return "redirect:/listar";
 		}
 
@@ -119,10 +126,14 @@ public class EmpleadoController implements ConstantesUtils {
 			Usuario usuarioBD = usuarioService.findByUsername(empleadoBD.getUsuario().getUsername());
 			gestionarEdicionPermisos(usuarioBD, empleado.isEsAdmin());
 			
-			flash.addFlashAttribute("success", "El empleado se ha editado correctamente!");
+			log.info("Se ha editado correctamente el empleado " + empleado.toString());
+			flash.addFlashAttribute("tipo", "Información");
+			flash.addFlashAttribute("message", "El empleado se ha editado correctamente");
 
 		} else {
-			flash.addFlashAttribute("error", "No se encuentra el ID del empleado");
+			log.info("No se encuentra el id del empleado " + id);
+			flash.addFlashAttribute("tipo", "Error");
+			flash.addFlashAttribute("message", "No se encuentra el id del empleado");
 		}
 
 		return "redirect:/listar";
@@ -136,8 +147,7 @@ public class EmpleadoController implements ConstantesUtils {
 			return "form";
 		}
 
-		String mensajeFlash = "Empleado creado con éxito!";
-
+		
 		empleadoService.save(empleado);
 		
 		//Se crea el usuario asociado al empleado que se acaba de crear
@@ -173,7 +183,9 @@ public class EmpleadoController implements ConstantesUtils {
 		usuarioService.save(usuario);
 		
 		status.setComplete();
-		flash.addFlashAttribute("success", mensajeFlash);
+		log.info("Se ha creado correctamente el empleado " + empleado.toString());
+		flash.addFlashAttribute("tipo", "Información");
+		flash.addFlashAttribute("message", "El empleado se ha creado correctamente");
 		return "redirect:listar";
 	}
 
@@ -189,7 +201,9 @@ public class EmpleadoController implements ConstantesUtils {
 			
 			//Se borra el empleado
 			empleadoService.delete(id);
-			flash.addFlashAttribute("success", "Empleado eliminado con éxito");
+			log.info("Se ha eliminado correctamente el empleado " + empleado.toString());
+			flash.addFlashAttribute("tipo", "Información");
+			flash.addFlashAttribute("message", "El empleado se ha eliminado correctamente");
 		}
 		return "redirect:/listar";
 	}
