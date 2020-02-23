@@ -20,10 +20,50 @@
 				<h5 th:text="'Creación de solicitudes'"></h5>
 			</div>
 			<div class="card-body">
+				<div class="col-md-12 col-xs-12">
+					<form th:action="@{/solicitud}" th:object="${formSolicitud}" method="post">
+						<div class="row col-md-12">
+							<label for="tipo">Tipo de solicitud / Ausencia</label>		
+							<select class="form-control" id="tipo" name="tipo" th:field="*{tipo}">
+							    <option value="">Seleccione una opción</option>
+								<option value="1">Vacaciones</option>
+								<option value="2">Enfermedad</option>
+								<option value="3">Operación de un familiar</option>
+								<option value="4">Matrimonio</option>
+								<option value="5">Nacimiento de un hijo</option>
+								<option value="6">Examen</option>
+								<option value="7">Cita médica</option>
+								<option value="8">Asistencia a formación</option>
+							</select>
+						</div>
+						
+						<div class="row mt-3 col-md-12">
+							<div class="row col-md-12">
+								<div class="col-md-6">
+									<label>Fecha de Inicio</label>
+								</div>
+								<div class="col-md-6">
+									<label>Fecha de Fin</label>
+								</div>
+							</div>
+						
+						</div>
 						
 						
-						SOY USER
+						
+						<div class="row">
+							<div class="col-md-11">
+								<div class="row float-right ">
+									<div class="form-group">
+										<input value="Crear Solicitud" type="submit"
+											class="btn btn-primary" />
+									</div>
+								</div>
 	
+							</div>
+						</div>
+					</form>
+				</div>
 			</div>		
 		</div>
 		
