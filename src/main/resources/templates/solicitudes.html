@@ -37,21 +37,32 @@
 							</select>
 						</div>
 						
-						<div class="row mt-3 col-md-12">
-							<div class="row col-md-12">
-								<div class="col-md-6">
-									<label>Fecha de Inicio</label>
-								</div>
-								<div class="col-md-6">
-									<label>Fecha de Fin</label>
+						<div class="col-md-12">
+							<div class="row mt-5">
+								<small class="col-md-9">En el caso de los permisos de "Operación de un familiar" o de "Nacimiento de un hijo" es necesario
+								indicar si requiere desplazamiento o no para calcular el número de días que se van a solicitar. En el caso de no necesitar
+								desplazamiento serán 2 días, en caso de necesitarlo, serán 4.</small>
+						
+								<div class="col-md-3 text-center">
+									<input type="checkbox" class="form-check-input" id="exampleCheck1"
+									 value="si"
+									 th:field="*{requiereDesplazamiento}">
+	    							<label class="form-check-label" for="exampleCheck1">¿Requiere desplazamiento?</label>
 								</div>
 							</div>
-						
 						</div>
 						
+						<!-- El Full Calendar solo aparecerá para la opción vacaciones -->
+						<div class="col-md-12 col-xs-12">
+							<div class="row mt-5">
+							
+								 <div class="w-75" id='calendar'></div>
+							
+							</div>
+						</div>				
 						
 						
-						<div class="row">
+						<div class="row mt-5">
 							<div class="col-md-11">
 								<div class="row float-right ">
 									<div class="form-group">
@@ -188,6 +199,20 @@
 		    });
 	});
 	</script>
+	
+	<script>
+
+      document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          plugins: [ 'dayGrid' ]
+        });
+
+        calendar.render();
+      });
+
+    </script>
 	
 </body>
 </html>
