@@ -22,7 +22,7 @@
 			<div class="card-body">
 				<div class="col-md-12 col-xs-12">
 					<form th:action="@{/solicitud}" th:object="${formSolicitud}" method="post">
-						<div class="row col-md-12">
+						<div class="row">
 							<label for="tipo">Tipo de solicitud / Ausencia</label>		
 							<select class="form-control" id="tipo" name="tipo" th:field="*{tipo}">
 							    <option value="">Seleccione una opción</option>
@@ -37,32 +37,38 @@
 							</select>
 						</div>
 						
-						<div class="col-md-12">
-							<div class="row mt-5">
-								<small class="col-md-9">En el caso de los permisos de "Operación de un familiar" o de "Nacimiento de un hijo" es necesario
-								indicar si requiere desplazamiento o no para calcular el número de días que se van a solicitar. En el caso de no necesitar
-								desplazamiento serán 2 días, en caso de necesitarlo, serán 4.</small>
-						
-								<div class="col-md-3 text-center">
-									<input type="checkbox" class="form-check-input" id="exampleCheck1"
+						<div class="card mt-3">
+						<h6 class="card-header text-center">Datos adicionales</h6>
+							<div class="card-body row">
+								<div class="form-group col-md-4 col-xs-12 text-center mt-2" >
+									<input type="checkbox" class="form-check-input" id="desplazamiento"
 									 value="si"
 									 th:field="*{requiereDesplazamiento}">
-	    							<label class="form-check-label" for="exampleCheck1">¿Requiere desplazamiento?</label>
+	    							<label class="form-check-label font-weight-bold" for="desplazamiento">¿Requiere desplazamiento?</label>
+								</div>
+								<div class="form-group col-md-4 col-xs-12 text-center mt-2" >
+									 <label class="font-weight-bold" for="fechaInicio">Fecha de Inicio</label>
+									<input type="date" class="form-control text-center" id="fechaInicio">
+								</div>
+								<div class="form-group col-md-4 col-xs-12 text-center mt-2">
+									<label class="font-weight-bold" for="tiempoNecesario">Tiempo necesario</label>
+									<input type="text" class="form-control text-center" id="tiempoNecesario">
 								</div>
 							</div>
 						</div>
 						
-						<!-- El Full Calendar solo aparecerá para la opción vacaciones -->
-						<div class="col-md-12 col-xs-12">
-							<div class="row mt-5">
-							
-								 <div class="w-75" id='calendar'></div>
-							
-							</div>
-						</div>				
+						<div class="card mt-3">
+						<h6 class="card-header text-center">Días para las vacaciones</h6>
+							<div class="card-body col-md-12 col-xs-12">
+								<div class="row mt-2">
+									<div class="col-md-9 col-xs-12">
+									 	<div id='calendar'></div>
+									</div>
+								</div>
+							</div>				
+						</div>
 						
-						
-						<div class="row mt-5">
+						<div class="row mt-3">
 							<div class="col-md-11">
 								<div class="row float-right ">
 									<div class="form-group">
@@ -206,13 +212,19 @@
         var calendarEl = document.getElementById('calendar');
 
         var calendar = new FullCalendar.Calendar(calendarEl, {
-          plugins: [ 'dayGrid' ]
+          plugins: [ 'dayGrid' ],
+          locale: 'es'
         });
 
         calendar.render();
       });
 
     </script>
-	
+    
+    <script>
+	  $(function () {
+          $('#tiempoNecesario').timepicker();
+      });
+	 </script>
 </body>
 </html>
