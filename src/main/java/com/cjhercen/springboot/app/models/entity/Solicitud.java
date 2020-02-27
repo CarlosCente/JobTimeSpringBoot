@@ -44,6 +44,10 @@ public class Solicitud implements Serializable{
 	@Column(name = "estado")
 	private String estado;
 	
+	private int tiempoNecesario = 0;
+	
+	private String necesitaDesplazamiento = "No";
+	
 	@Length(min = 0, max = 300)
 	@Lob
 	@Column(name = "descripcion")
@@ -87,6 +91,22 @@ public class Solicitud implements Serializable{
 
 	public void setEstado(String estado) {
 		this.estado = estado;
+	}
+
+	public int getTiempoNecesario() {
+		return tiempoNecesario;
+	}
+
+	public void setTiempoNecesario(int tiempoNecesario) {
+		this.tiempoNecesario = tiempoNecesario;
+	}
+
+	public String getNecesitaDesplazamiento() {
+		return necesitaDesplazamiento;
+	}
+
+	public void setNecesitaDesplazamiento(String necesitaDesplazamiento) {
+		this.necesitaDesplazamiento = necesitaDesplazamiento;
 	}
 	
 	

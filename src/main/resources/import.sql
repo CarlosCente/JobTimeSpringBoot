@@ -58,8 +58,8 @@ INSERT INTO incidencias (estado, fecha, mensaje, tipo, empleado_cod_empl,descrip
 INSERT INTO incidencias (estado, fecha, mensaje, tipo, empleado_cod_empl,descripcion) VALUES ('1', '2020-01-25', 'Incidencia de Datos de direccion', '2', 2,'El usuario laura, ha modificado los siguientes datos de dirección:  el campo (Direccion), el nuevo valor es: (Calle la Peña),  el campo (Localidad), el nuevo valor es: (Villanueva del Campo),  el campo (Pais), el nuevo valor es: (Spain),  el campo (Provincia), el nuevo valor es: (Zamora)');
 INSERT INTO incidencias (estado, fecha, mensaje, tipo, empleado_cod_empl,descripcion) VALUES ('1', '2020-02-03', 'Incidencia de Fichaje de entrada', '1', 4,'El usuario miguel,  ha creado una incidencia con su fichaje de entrada del día (03/02/2020) la hora correcta sería a las (8:00). Además el usuario ha añadido el siguiente comentario: Tuve problemas con la red.');
 
-INSERT INTO solicitudes (fecha, tipo, descripcion, estado, empleado_cod_empl) VALUES ('2020-02-03', 'Operación de un familiar', 'Prueba 1', '1', 2);
-INSERT INTO solicitudes (fecha, tipo, descripcion, estado, empleado_cod_empl) VALUES ('2020-02-03', 'Nacimiento de un hijo', 'Prueba 2', '2', 2);
-INSERT INTO solicitudes (fecha, tipo, descripcion, estado, empleado_cod_empl) VALUES ('2020-02-03', 'Vacaciones', 'Prueba 3', '3', 4);
+INSERT INTO solicitudes (fecha, tipo, descripcion, estado, tiempo_necesario, empleado_cod_empl) VALUES ('2020-02-03', 'Operación de un familiar', 'Prueba 1', '1', 0, 2);
+INSERT INTO solicitudes (fecha, tipo, descripcion, estado, tiempo_necesario, empleado_cod_empl) VALUES ('2020-02-03', 'Nacimiento de un hijo', 'Prueba 2', '2', 0, 2);
+INSERT INTO solicitudes (fecha, tipo, descripcion, estado, tiempo_necesario, empleado_cod_empl) VALUES ('2020-02-03', 'Vacaciones', 'Prueba 3', '3', 0, 4);
 
 

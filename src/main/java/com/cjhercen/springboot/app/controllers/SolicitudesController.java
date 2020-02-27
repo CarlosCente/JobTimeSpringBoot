@@ -71,7 +71,19 @@ public class SolicitudesController implements ConstantesSolicitudes{
 			return "solicitudes";
 		}
 		
-		log.info("Tipo seleccionado: " + obtenerTipo(formSolicitud));
+		//Se obtiene el usuario conectado
+		String username = usuarioService.getUsername();
+		Usuario usuario = usuarioService.findByUsername(username);
+		
+		//Creo la solicitud con los datos obtenidos del formulario
+		Solicitud solicitud = new Solicitud();
+		solicitud.setTipo(obtenerTipo(formSolicitud));
+		solicitud.setEmpleado(usuario.getEmpleado());
+		solicitud.setFecha(formSolicitud.getFecha());
+		solicitud.setEstado(SOLICITUD_ABIERTA);
+		solicitud.setTiempoNecesario(0);
+		
+		solicitudService.save(solicitud);
 		
 		return "redirect:solicitudes";
 	}

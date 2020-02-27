@@ -24,7 +24,7 @@
 					<form th:action="@{/solicitud}" th:object="${formSolicitud}" method="post">
 						<div class="row">
 							<label for="tipo">Tipo de solicitud / Ausencia</label>		
-							<select class="form-control" id="tipo" name="tipo" th:field="*{tipo}">
+							<select class="form-control text-white" id="tipo" name="tipo" th:field="*{tipo}" style="background-color: #6c8ec2;">
 							    <option value="">Seleccione una opción</option>
 								<option value="1">Vacaciones</option>
 								<option value="2">Enfermedad</option>
@@ -36,32 +36,47 @@
 								<option value="8">Asistencia a formación</option>
 							</select>
 						</div>
+						<small
+							class="form-text text-danger"
+							th:if="${#fields.hasErrors('tipo')}" th:errors="*{tipo}"></small>
 						
 						<div class="card mt-3">
-						<h6 class="card-header text-center">Datos adicionales</h6>
+						<h6 class="card-header text-center bg-dark text-white">Datos adicionales</h6>
 							<div class="card-body row">
-								<div class="form-group col-md-4 col-xs-12 text-center mt-2" >
+								<div class="form-group col-md-4 col-xs-12 text-center mt-2" style="align-self: center;">
 									<input type="checkbox" class="form-check-input" id="desplazamiento"
 									 value="si"
 									 th:field="*{requiereDesplazamiento}">
-	    							<label class="form-check-label font-weight-bold" for="desplazamiento">¿Requiere desplazamiento?</label>
-								</div>
+	    							<label class="form-check-label font-weight-bold h6" for="desplazamiento">¿Requiere desplazamiento?</label>
+								</div>								
 								<div class="form-group col-md-4 col-xs-12 text-center mt-2" >
 									 <label class="font-weight-bold" for="fechaInicio">Fecha de Inicio</label>
-									<input type="date" class="form-control text-center" id="fechaInicio">
+									<input type="date" class="form-control text-center text-white" id="fechaInicio"
+									th:field="*{fecha}" style="background-color: #6c8ec2;">
+										<small
+											class="form-text text-danger"
+											th:if="${#fields.hasErrors('fecha')}" th:errors="*{fecha}">
+										</small>
 								</div>
+								
+									
 								<div class="form-group col-md-4 col-xs-12 text-center mt-2">
 									<label class="font-weight-bold" for="tiempoNecesario">Tiempo necesario</label>
-									<input type="text" class="form-control text-center" id="tiempoNecesario">
+									<input type="number" class="form-control text-center text-white" id="tiempoNecesario"
+									th:field="*{tiempoNecesario}" style="background-color: #6c8ec2;">
+									<small
+											class="form-text text-danger"
+											th:if="${#fields.hasErrors('tiempoNecesario')}" th:errors="*{tiempoNecesario}">
+										</small>
 								</div>
 							</div>
 						</div>
 						
 						<div class="card mt-3">
-						<h6 class="card-header text-center">Días para las vacaciones</h6>
+						<h6 class="card-header text-center bg-dark text-white">Selección de días para las vacaciones</h6>
 							<div class="card-body col-md-12 col-xs-12">
 								<div class="row mt-2">
-									<div class="col-md-9 col-xs-12">
+									<div class="col-md-8 col-xs-12" style="margin: auto;">
 									 	<div id='calendar'></div>
 									</div>
 								</div>
@@ -73,7 +88,7 @@
 								<div class="row float-right ">
 									<div class="form-group">
 										<input value="Crear Solicitud" type="submit"
-											class="btn btn-primary" />
+											class="btn btn-lg btn-primary" />
 									</div>
 								</div>
 	
@@ -124,11 +139,10 @@
 													th:text="${solicitud.estado == '1' ? '&nbspAbierta&nbsp' : solicitud.estado == '2' ? '&nbspAceptada&nbsp' :'&nbspRechazada&nbsp'}">
 												</span>
 											</td>
-											
-											<td>
-												<span
-												th:text="${solicitud.descripcion}">
-												</span>
+											<td>																		
+												<a href="#" class="btn-lg">
+													<i class="fas fa-search-plus" style="color: black;"></i>
+												</a>		
 											</td>
 											<td></td>
 
@@ -212,8 +226,13 @@
         var calendarEl = document.getElementById('calendar');
 
         var calendar = new FullCalendar.Calendar(calendarEl, {
-          plugins: [ 'dayGrid' ],
-          locale: 'es'
+          plugins: [ 'interaction', 'dayGrid' ],
+          locale: 'es',
+          firstDay: 1,
+          selectable: true,
+          businessHours: {
+        	  daysOfWeek: [1, 2, 3, 4, 5]
+          }
         });
 
         calendar.render();
@@ -221,10 +240,5 @@
 
     </script>
     
-    <script>
-	  $(function () {
-          $('#tiempoNecesario').timepicker();
-      });
-	 </script>
 </body>
 </html>

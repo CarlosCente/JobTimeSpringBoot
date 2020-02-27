@@ -1,14 +1,30 @@
 package com.cjhercen.springboot.app.models.object;
 
+import java.util.Date;
+
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 public class FormSolicitud {
 
-	@NotEmpty
+	@NotEmpty(message = "Se debe seleccionar un tipo obligatoriamente")
 	String tipo;
 	
 	String requiereDesplazamiento;
 
+	@NotNull(message = "No puede estar vacío")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	Date fecha;
+	
+	@Min(0)
+	@Max(8)
+	int tiempoNecesario;
+	
+	
 	public String getTipo() {
 		return tipo;
 	}
@@ -23,6 +39,22 @@ public class FormSolicitud {
 
 	public void setRequiereDesplazamiento(String requiereDesplazamiento) {
 		this.requiereDesplazamiento = requiereDesplazamiento;
+	}
+
+	public Date getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
+
+	public int getTiempoNecesario() {
+		return tiempoNecesario;
+	}
+
+	public void setTiempoNecesario(int tiempoNecesario) {
+		this.tiempoNecesario = tiempoNecesario;
 	}
 
 	
