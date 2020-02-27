@@ -231,7 +231,10 @@
           firstDay: 1,
           selectable: true,
           businessHours: {
-        	  daysOfWeek: [1, 2, 3, 4, 5]
+        	 daysOfWeek: [1, 2, 3, 4, 5]
+          },
+          select: function(info) {
+             alert('selected ' + info.startStr + ' to ' + info.endStr);
           }
         });
 
