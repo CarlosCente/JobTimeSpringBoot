@@ -5,7 +5,6 @@ import java.util.Date;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -16,13 +15,18 @@ public class FormSolicitud {
 	
 	String requiereDesplazamiento;
 
-	@NotNull(message = "No puede estar vacío")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	Date fecha;
 	
 	@Min(0)
 	@Max(8)
 	int tiempoNecesario;
+	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	Date inicioVacaciones;
+	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	Date finVacaciones;
 	
 	
 	public String getTipo() {
@@ -57,6 +61,20 @@ public class FormSolicitud {
 		this.tiempoNecesario = tiempoNecesario;
 	}
 
-	
+	public Date getInicioVacaciones() {
+		return inicioVacaciones;
+	}
+
+	public void setInicioVacaciones(Date inicioVacaciones) {
+		this.inicioVacaciones = inicioVacaciones;
+	}
+
+	public Date getFinVacaciones() {
+		return finVacaciones;
+	}
+
+	public void setFinVacaciones(Date finVacaciones) {
+		this.finVacaciones = finVacaciones;
+	}
 	
 }

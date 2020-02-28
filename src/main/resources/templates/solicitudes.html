@@ -24,7 +24,8 @@
 					<form th:action="@{/solicitud}" th:object="${formSolicitud}" method="post">
 						<div class="row">
 							<label for="tipo">Tipo de solicitud / Ausencia</label>		
-							<select class="form-control text-white" id="tipo" name="tipo" th:field="*{tipo}" style="background-color: #6c8ec2;">
+							<select onChange="cargarSolicitudSeleccionada()" class="form-control text-white" 
+							id="tipoSolicitud" name="tipo" th:field="*{tipo}" style="background-color: #6c8ec2;">
 							    <option value="">Seleccione una opción</option>
 								<option value="1">Vacaciones</option>
 								<option value="2">Enfermedad</option>
@@ -40,18 +41,18 @@
 							class="form-text text-danger"
 							th:if="${#fields.hasErrors('tipo')}" th:errors="*{tipo}"></small>
 						
-						<div class="card mt-3">
+						<div class="card mt-3" id="cardDatosAdicionales">
 						<h6 class="card-header text-center bg-dark text-white">Datos adicionales</h6>
 							<div class="card-body row">
 								<div class="form-group col-md-4 col-xs-12 text-center mt-2" style="align-self: center;">
-									<input type="checkbox" class="form-check-input" id="desplazamiento"
+									<input type="checkbox" class="form-check-input" id="desplazamiento" disabled="true"
 									 value="si"
 									 th:field="*{requiereDesplazamiento}">
 	    							<label class="form-check-label font-weight-bold h6" for="desplazamiento">¿Requiere desplazamiento?</label>
 								</div>								
 								<div class="form-group col-md-4 col-xs-12 text-center mt-2" >
 									 <label class="font-weight-bold" for="fechaInicio">Fecha de Inicio</label>
-									<input type="date" class="form-control text-center text-white" id="fechaInicio"
+									<input type="date" class="form-control text-center text-white" id="fechaInicioPermiso" disabled="true"
 									th:field="*{fecha}" style="background-color: #6c8ec2;">
 										<small
 											class="form-text text-danger"
@@ -62,7 +63,7 @@
 									
 								<div class="form-group col-md-4 col-xs-12 text-center mt-2">
 									<label class="font-weight-bold" for="tiempoNecesario">Tiempo necesario</label>
-									<input type="number" class="form-control text-center text-white" id="tiempoNecesario"
+									<input type="number" class="form-control text-center text-white" id="tiempoNecesario" disabled="true"
 									th:field="*{tiempoNecesario}" style="background-color: #6c8ec2;">
 									<small
 											class="form-text text-danger"
@@ -72,12 +73,16 @@
 							</div>
 						</div>
 						
-						<div class="card mt-3">
+						<div class="card mt-3" id="cardVacaciones">
 						<h6 class="card-header text-center bg-dark text-white">Selección de días para las vacaciones</h6>
 							<div class="card-body col-md-12 col-xs-12">
 								<div class="row mt-2">
 									<div class="col-md-8 col-xs-12" style="margin: auto;">
 									 	<div id='calendar'></div>
+									</div>
+									<div class="col-md-2 col-xs-12">
+									 	<input type="text" class="form-control" id="inicioVacaciones" th:field="*{inicioVacaciones}" />
+									 	<input type="text" class="form-control" id="finVacaciones" th:field="*{finVacaciones}" />									 	
 									</div>
 								</div>
 							</div>				
@@ -88,7 +93,7 @@
 								<div class="row float-right ">
 									<div class="form-group">
 										<input value="Crear Solicitud" type="submit"
-											class="btn btn-lg btn-primary" />
+											class="btn btn-primary" />
 									</div>
 								</div>
 	
@@ -224,7 +229,10 @@
 
       document.addEventListener('DOMContentLoaded', function() {
         var calendarEl = document.getElementById('calendar');
+		var inicioVacaciones = document.getElementById('inicioVacaciones');
+		var finVacaciones = document.getElementById('finVacaciones');
 
+        
         var calendar = new FullCalendar.Calendar(calendarEl, {
           plugins: [ 'interaction', 'dayGrid' ],
           locale: 'es',
@@ -235,6 +243,8 @@
           },
           select: function(info) {
              alert('selected ' + info.startStr + ' to ' + info.endStr);
+             $('#inicioVacaciones').val(info.startStr);
+             $('#finVacaciones').val(info.endStr);
           }
         });
 

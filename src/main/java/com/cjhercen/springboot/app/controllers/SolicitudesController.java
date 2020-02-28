@@ -71,17 +71,47 @@ public class SolicitudesController implements ConstantesSolicitudes{
 			return "solicitudes";
 		}
 		
+		//En caso de que sea una solicitud de tipo "VACACIONES" hay que controlar que se seleccionan los días
+		if(obtenerTipo(formSolicitud).equals(TIPO_VACACIONES) && 
+				(formSolicitud.getInicioVacaciones() == null || formSolicitud.getFinVacaciones() == null)) {
+			log.info("No se han seleccionado los días en el calendario");
+			flash.addFlashAttribute("tipo", "Error");
+			flash.addFlashAttribute("message", "No se han seleccionado los días en el calendario");
+			return "redirect:solicitudes";
+		}
+		
 		//Se obtiene el usuario conectado
 		String username = usuarioService.getUsername();
 		Usuario usuario = usuarioService.findByUsername(username);
 		
-		//Creo la solicitud con los datos obtenidos del formulario
+		//Creo la solicitud con los datos básicos obtenidos del formulario
 		Solicitud solicitud = new Solicitud();
 		solicitud.setTipo(obtenerTipo(formSolicitud));
 		solicitud.setEmpleado(usuario.getEmpleado());
 		solicitud.setFecha(formSolicitud.getFecha());
 		solicitud.setEstado(SOLICITUD_ABIERTA);
-		solicitud.setTiempoNecesario(0);
+
+		//Datos faltantes según el tipo de solicitud
+		//VACACIONES (DÍAS SELECCIONADOS)
+		
+		
+		/*
+		 * PERMISOS DE DIAS COMPLETOS
+		 * Enfermedad --> Hasta que se coja el alta, indicar fecha de inicio
+		 * Matrimonio --> Indicar día de inicio (15 días) y fecha de inicio
+		 * Operación de un familiar --> Indicar si requiere desplazamiento (2 o 4 dias) y fecha de inicio
+		 * Nacimiento de un hijo --> Indicar si requiere desplazamiento (2 o 4 dias) y fecha de inicio
+		 */
+		
+		
+		
+		/*
+		 * PERMISOS DE HORAS O PARCIALES
+		 * Examen --> Indicar horas necesarias y el dia de inicio
+		 * Cita médica --> Indicar horas necesarias y el dia de inicio
+		 * Asistencia a formación --> Indicar horas necesarias y el dia de inicio
+		 */
+		
 		
 		solicitudService.save(solicitud);
 		

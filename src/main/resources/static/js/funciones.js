@@ -196,7 +196,35 @@ function abrirModalEditar(){
 
 }
 
-
 /*
- * JAVASCRIPT DE LA VISTA controlHorario
+ * Método que controla en la vista solicitudes los formularios que aparecen o desaparecen según el tipo
+ * seleccionado en el selectable
  */
+
+function cargarSolicitudSeleccionada(){
+	
+	var seleccion = document.getElementById("tipoSolicitud").value;
+	var cardAdicionales = document.getElementById("cardDatosAdicionales");
+	var cardVacacioness = document.getElementById("cardVacaciones");
+	
+	var desplazamiento = document.getElementById("desplazamiento");
+	var fechaInicioPermiso = document.getElementById("fechaInicioPermiso");
+	var tiempoNecesario = document.getElementById("tiempoNecesario");
+
+	
+	//La tarjeta de vacaciones solo para la opción de vacaciones
+	if(seleccion == '1'){
+		cardVacacioness.hidden = false;
+		cardAdicionales.hidden = true;
+	} else {
+		cardVacacioness.hidden = true;
+		cardAdicionales.hidden = false;
+		desplazamiento.disabled = false;
+		fechaInicioPermiso.disabled = false;
+		tiempoNecesario.disabled = false;
+		
+	}
+	
+	//Controlar los campos del formulario para cada caso
+	
+}
