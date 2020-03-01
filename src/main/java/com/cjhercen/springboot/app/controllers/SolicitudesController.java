@@ -72,13 +72,47 @@ public class SolicitudesController implements ConstantesSolicitudes{
 		}
 		
 		//En caso de que sea una solicitud de tipo "VACACIONES" hay que controlar que se seleccionan los días
-		if(obtenerTipo(formSolicitud).equals(TIPO_VACACIONES) && 
-				(formSolicitud.getInicioVacaciones() == null || formSolicitud.getFinVacaciones() == null)) {
-			log.info("No se han seleccionado los días en el calendario");
-			flash.addFlashAttribute("tipo", "Error");
-			flash.addFlashAttribute("message", "No se han seleccionado los días en el calendario");
-			return "redirect:solicitudes";
+		if(obtenerTipo(formSolicitud).equals(TIPO_VACACIONES)) {
+			 if (formSolicitud.getInicioVacaciones() == null || formSolicitud.getFinVacaciones() == null) {
+					log.info("No se han seleccionado los días en el calendario");
+					flash.addFlashAttribute("tipo", "Error");
+					flash.addFlashAttribute("message", "No se han seleccionado los días en el calendario");
+					return "redirect:solicitudes";
+			 }
 		}
+		
+		if(obtenerTipo(formSolicitud).equals(TIPO_ENFERMEDAD) || obtenerTipo(formSolicitud).equals(TIPO_MATRIMONIO)) {	
+			if(formSolicitud.getFecha() == null) {
+				log.info("No se ha introducido la fecha de inicio del permiso");
+				flash.addFlashAttribute("tipo", "Error");
+				flash.addFlashAttribute("message", "La fecha de inicio para el permiso por enfermedad o por matrimonio es obligatoria");
+				return "redirect:solicitudes";
+				
+			}	
+		}
+		
+		if(obtenerTipo(formSolicitud).equals(TIPO_NACIMIENTO) || obtenerTipo(formSolicitud).equals(TIPO_OPERACION_FAMILIAR)){
+			if (formSolicitud.getFecha() == null) {
+				log.info("No se ha introducido la fecha de inicio ni si es necesario desplazamiento para el permiso");
+				flash.addFlashAttribute("tipo", "Error");
+				flash.addFlashAttribute("message", "La fecha de inicio y si es necesario desplazamiento son campos necesarios "
+						+ "para el permiso por nacimiento de un hijo/a o por matrimonio");
+				return "redirect:solicitudes";
+			}
+			
+		}
+		
+		if(obtenerTipo(formSolicitud).equals(TIPO_EXAMEN) || obtenerTipo(formSolicitud).equals(TIPO_FORMACION) ||
+				obtenerTipo(formSolicitud).equals(TIPO_CITA_MEDICA)) {	
+			if(formSolicitud.getFecha() == null || formSolicitud.getTiempoNecesario() <= 0 || formSolicitud.getTiempoNecesario() > 8) {
+				log.info("No se ha introducido la fecha de inicio o las horas necesarias para el permiso");
+				flash.addFlashAttribute("tipo", "Error");
+				flash.addFlashAttribute("message", "Los campos de fecha de inicio y las horas necesarias son necesarias para"
+						+ " los permisos de examen, cita médica o asistencia a formación");
+				return "redirect:solicitudes";
+			}
+		}
+		
 		
 		//Se obtiene el usuario conectado
 		String username = usuarioService.getUsername();
@@ -88,12 +122,15 @@ public class SolicitudesController implements ConstantesSolicitudes{
 		Solicitud solicitud = new Solicitud();
 		solicitud.setTipo(obtenerTipo(formSolicitud));
 		solicitud.setEmpleado(usuario.getEmpleado());
-		solicitud.setFecha(formSolicitud.getFecha());
+		solicitud.setFecha(fechaUtils.obtenerFechaActual());
 		solicitud.setEstado(SOLICITUD_ABIERTA);
 
 		//Datos faltantes según el tipo de solicitud
 		//VACACIONES (DÍAS SELECCIONADOS)
-		
+		if(obtenerTipo(formSolicitud).equals(TIPO_VACACIONES)) {
+			solicitud.setFechaInicioVacaciones(formSolicitud.getInicioVacaciones());
+			solicitud.setFechaFinVacaciones(formSolicitud.getFinVacaciones());
+		}
 		
 		/*
 		 * PERMISOS DE DIAS COMPLETOS
@@ -102,7 +139,14 @@ public class SolicitudesController implements ConstantesSolicitudes{
 		 * Operación de un familiar --> Indicar si requiere desplazamiento (2 o 4 dias) y fecha de inicio
 		 * Nacimiento de un hijo --> Indicar si requiere desplazamiento (2 o 4 dias) y fecha de inicio
 		 */
+		if(obtenerTipo(formSolicitud).equals(TIPO_NACIMIENTO) || obtenerTipo(formSolicitud).equals(TIPO_OPERACION_FAMILIAR)){
+			solicitud.setNecesitaDesplazamiento(formSolicitud.getRequiereDesplazamiento());
+			solicitud.setFechaInicioPermiso(formSolicitud.getFecha());
+		}
 		
+		if(obtenerTipo(formSolicitud).equals(TIPO_ENFERMEDAD) || obtenerTipo(formSolicitud).equals(TIPO_MATRIMONIO)) {	
+			solicitud.setFechaInicioPermiso(formSolicitud.getFecha());
+		}
 		
 		
 		/*
@@ -111,9 +155,17 @@ public class SolicitudesController implements ConstantesSolicitudes{
 		 * Cita médica --> Indicar horas necesarias y el dia de inicio
 		 * Asistencia a formación --> Indicar horas necesarias y el dia de inicio
 		 */
+		if(obtenerTipo(formSolicitud).equals(TIPO_EXAMEN) || obtenerTipo(formSolicitud).equals(TIPO_FORMACION) ||
+				obtenerTipo(formSolicitud).equals(TIPO_CITA_MEDICA)) {	
+			solicitud.setTiempoNecesario(formSolicitud.getTiempoNecesario());
+			solicitud.setFechaInicioPermiso(formSolicitud.getFecha());
+		}
 		
 		
 		solicitudService.save(solicitud);
+		log.info("La solicitud se ha creado con éxito");
+		flash.addFlashAttribute("tipo", "Informacion");
+		flash.addFlashAttribute("message", "La solicitud se ha creado con éxito");
 		
 		return "redirect:solicitudes";
 	}

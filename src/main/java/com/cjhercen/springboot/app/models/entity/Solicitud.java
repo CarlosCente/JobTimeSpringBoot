@@ -53,6 +53,22 @@ public class Solicitud implements Serializable{
 	@Column(name = "descripcion")
 	private String descripcion;
 	
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@Column(name = "fechaInicioPermiso")
+	private Date fechaInicioPermiso;
+	
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@Column(name = "fechaInicioVacaciones")
+	private Date fechaInicioVacaciones;
+	
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@Column(name = "fechaFinVacaciones")
+	private Date fechaFinVacaciones;
+	
+	
 	public Empleado getEmpleado() {
 		return empleado;
 	}
@@ -107,6 +123,30 @@ public class Solicitud implements Serializable{
 
 	public void setNecesitaDesplazamiento(String necesitaDesplazamiento) {
 		this.necesitaDesplazamiento = necesitaDesplazamiento;
+	}
+
+	public Date getFechaInicioPermiso() {
+		return fechaInicioPermiso;
+	}
+
+	public void setFechaInicioPermiso(Date fechaInicioPermiso) {
+		this.fechaInicioPermiso = fechaInicioPermiso;
+	}
+
+	public Date getFechaInicioVacaciones() {
+		return fechaInicioVacaciones;
+	}
+
+	public void setFechaInicioVacaciones(Date fechaInicioVacaciones) {
+		this.fechaInicioVacaciones = fechaInicioVacaciones;
+	}
+
+	public Date getFechaFinVacaciones() {
+		return fechaFinVacaciones;
+	}
+
+	public void setFechaFinVacaciones(Date fechaFinVacaciones) {
+		this.fechaFinVacaciones = fechaFinVacaciones;
 	}
 	
 	

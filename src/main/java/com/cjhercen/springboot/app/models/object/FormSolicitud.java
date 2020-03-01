@@ -14,7 +14,7 @@ public class FormSolicitud {
 	String tipo;
 	
 	String requiereDesplazamiento;
-
+	
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	Date fecha;
 	
@@ -27,7 +27,6 @@ public class FormSolicitud {
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	Date finVacaciones;
-	
 	
 	public String getTipo() {
 		return tipo;
@@ -43,14 +42,6 @@ public class FormSolicitud {
 
 	public void setRequiereDesplazamiento(String requiereDesplazamiento) {
 		this.requiereDesplazamiento = requiereDesplazamiento;
-	}
-
-	public Date getFecha() {
-		return fecha;
-	}
-
-	public void setFecha(Date fecha) {
-		this.fecha = fecha;
 	}
 
 	public int getTiempoNecesario() {
@@ -76,5 +67,13 @@ public class FormSolicitud {
 	public void setFinVacaciones(Date finVacaciones) {
 		this.finVacaciones = finVacaciones;
 	}
+
+	public Date getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}	
 	
 }

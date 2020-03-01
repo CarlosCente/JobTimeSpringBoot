@@ -45,30 +45,22 @@
 						<h6 class="card-header text-center bg-dark text-white">Datos adicionales</h6>
 							<div class="card-body row">
 								<div class="form-group col-md-4 col-xs-12 text-center mt-2" style="align-self: center;">
-									<input type="checkbox" class="form-check-input" id="desplazamiento" disabled="true"
+									<input type="checkbox" class="form-check-input" id="desplazamiento" 
 									 value="si"
 									 th:field="*{requiereDesplazamiento}">
 	    							<label class="form-check-label font-weight-bold h6" for="desplazamiento">¿Requiere desplazamiento?</label>
 								</div>								
 								<div class="form-group col-md-4 col-xs-12 text-center mt-2" >
 									 <label class="font-weight-bold" for="fechaInicio">Fecha de Inicio</label>
-									<input type="date" class="form-control text-center text-white" id="fechaInicioPermiso" disabled="true"
+									<input type="date" class="form-control text-center text-white" id="fechaInicioPermiso"
 									th:field="*{fecha}" style="background-color: #6c8ec2;">
-										<small
-											class="form-text text-danger"
-											th:if="${#fields.hasErrors('fecha')}" th:errors="*{fecha}">
-										</small>
 								</div>
 								
 									
 								<div class="form-group col-md-4 col-xs-12 text-center mt-2">
 									<label class="font-weight-bold" for="tiempoNecesario">Tiempo necesario</label>
-									<input type="number" class="form-control text-center text-white" id="tiempoNecesario" disabled="true"
+									<input type="number" class="form-control text-center text-white" id="tiempoNecesario"
 									th:field="*{tiempoNecesario}" style="background-color: #6c8ec2;">
-									<small
-											class="form-text text-danger"
-											th:if="${#fields.hasErrors('tiempoNecesario')}" th:errors="*{tiempoNecesario}">
-										</small>
 								</div>
 							</div>
 						</div>

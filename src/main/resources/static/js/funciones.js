@@ -216,15 +216,34 @@ function cargarSolicitudSeleccionada(){
 	if(seleccion == '1'){
 		cardVacacioness.hidden = false;
 		cardAdicionales.hidden = true;
-	} else {
-		cardVacacioness.hidden = true;
-		cardAdicionales.hidden = false;
-		desplazamiento.disabled = false;
-		fechaInicioPermiso.disabled = false;
-		tiempoNecesario.disabled = false;
-		
+		desplazamiento.disabled = true;
+		tiempoNecesario.disabled = true;
+		fechaInicioPermiso.disabled = true;
 	}
 	
-	//Controlar los campos del formulario para cada caso
+	if(seleccion == '2' || seleccion == '4'){
+		cardAdicionales.hidden = false;
+		cardVacaciones.hidden = true;
+		desplazamiento.disabled = true;
+		tiempoNecesario.disabled = true;
+		fechaInicioPermiso.disabled = false;
+	}
+	
+	if(seleccion == '3' || seleccion == '5'){
+		cardAdicionales.hidden = false;
+		cardVacaciones.hidden = true;
+		desplazamiento.disabled = false;
+		tiempoNecesario.disabled = true;
+		fechaInicioPermiso.disabled = false;
+	}
+	
+	if(seleccion == '6' || seleccion == '7' || seleccion == '8'){
+		cardAdicionales.hidden = false;
+		cardVacaciones.hidden = true;
+		desplazamiento.disabled = true;
+		tiempoNecesario.disabled = false;
+		fechaInicioPermiso.disabled = false;	
+	}
+	
 	
 }
