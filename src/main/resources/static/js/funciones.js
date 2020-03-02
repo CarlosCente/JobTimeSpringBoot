@@ -210,7 +210,11 @@ function cargarSolicitudSeleccionada(){
 	var desplazamiento = document.getElementById("desplazamiento");
 	var fechaInicioPermiso = document.getElementById("fechaInicioPermiso");
 	var tiempoNecesario = document.getElementById("tiempoNecesario");
-
+	var inicioVacaciones = document.getElementById("inicioVacaciones");
+	var finVacaciones = document.getElementById("finVacaciones");
+	var labelInicioVacaciones = document.getElementById("labelInicioVacaciones");
+	var labelFinVacaciones = document.getElementById("labelFinVacaciones");
+	var cardDiasSolicitados = document.getElementById("cardDiasSolicitados");
 	
 	//La tarjeta de vacaciones solo para la opción de vacaciones
 	if(seleccion == '1'){
@@ -219,6 +223,10 @@ function cargarSolicitudSeleccionada(){
 		desplazamiento.disabled = true;
 		tiempoNecesario.disabled = true;
 		fechaInicioPermiso.disabled = true;
+		inicioVacaciones.hidden = false;
+		finVacaciones.hidden = false;
+		labelInicioVacaciones.hidden = false;
+		labelFinVacaciones.hidden = false;
 	}
 	
 	if(seleccion == '2' || seleccion == '4'){
@@ -227,6 +235,11 @@ function cargarSolicitudSeleccionada(){
 		desplazamiento.disabled = true;
 		tiempoNecesario.disabled = true;
 		fechaInicioPermiso.disabled = false;
+		if(seleccion == '2'){
+			cardDiasSolicitados.hidden = true;
+		} else{
+			cardDiasSolicitados.hidden = false;
+		}	
 	}
 	
 	if(seleccion == '3' || seleccion == '5'){
@@ -235,6 +248,7 @@ function cargarSolicitudSeleccionada(){
 		desplazamiento.disabled = false;
 		tiempoNecesario.disabled = true;
 		fechaInicioPermiso.disabled = false;
+		cardDiasSolicitados.hidden = false;
 	}
 	
 	if(seleccion == '6' || seleccion == '7' || seleccion == '8'){
@@ -242,7 +256,8 @@ function cargarSolicitudSeleccionada(){
 		cardVacaciones.hidden = true;
 		desplazamiento.disabled = true;
 		tiempoNecesario.disabled = false;
-		fechaInicioPermiso.disabled = false;	
+		fechaInicioPermiso.disabled = false;
+		cardDiasSolicitados.hidden = true;
 	}
 	
 	

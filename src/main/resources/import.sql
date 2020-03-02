@@ -8,32 +8,32 @@ INSERT INTO empleados (apellido1, apellido2, direccion, fecha_nacim, localidad, 
 
 /* Populate table Fichaje */
 
-INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, ip_origen, tiempo_total, finalizado) VALUES (2, '2020-01-23', '08:00', '16:00', '192.168.1.1', '08:00', true);
-INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, ip_origen, tiempo_total, finalizado) VALUES (2, '2020-01-13', '07:57', '16:00', '192.168.1.1', '08:03', true);
-INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, ip_origen, tiempo_total, finalizado) VALUES (2, '2020-01-14', '07:55', '15:58', '192.168.1.1', '08:03', true);
-INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, ip_origen, tiempo_total, finalizado) VALUES (2, '2020-01-15', '08:00', '16:03', '192.168.1.1', '08:03', true);
-INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, ip_origen, tiempo_total, finalizado) VALUES (2, '2020-01-16', '08:00', '16:02', '192.168.1.1', '08:02', true);
-INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, ip_origen, tiempo_total, finalizado) VALUES (2, '2020-01-17', '08:00', '15:50', '192.168.1.1', '07:50', true);
-INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, ip_origen, tiempo_total, finalizado) VALUES (4, '2020-02-04', '08:25', '16:00', '192.168.1.1', '07:35', true);
+INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, ip_origen, tiempo_total, tiene_permiso, tipo_permiso, finalizado) VALUES (2, '2020-01-23', '08:00', '16:00', '192.168.1.1', '08:00', false, '', true);
+INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, ip_origen, tiempo_total, tiene_permiso, tipo_permiso, finalizado) VALUES (2, '2020-01-13', '07:57', '16:00', '192.168.1.1', '08:03', false, '', true);
+INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, ip_origen, tiempo_total, tiene_permiso, tipo_permiso, finalizado) VALUES (2, '2020-01-14', '07:55', '15:58', '192.168.1.1', '08:03', false, '', true);
+INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, ip_origen, tiempo_total, tiene_permiso, tipo_permiso, finalizado) VALUES (2, '2020-01-15', '08:00', '16:03', '192.168.1.1', '08:03', false, '', true);
+INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, ip_origen, tiempo_total, tiene_permiso, tipo_permiso, finalizado) VALUES (2, '2020-01-16', '08:00', '16:02', '192.168.1.1', '08:02', false, '', true);
+INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, ip_origen, tiempo_total, tiene_permiso, tipo_permiso, finalizado) VALUES (2, '2020-01-17', '08:00', '15:50', '192.168.1.1', '07:50', false, '', true);
+INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, ip_origen, tiempo_total, tiene_permiso, tipo_permiso, finalizado) VALUES (4, '2020-02-04', '08:25', '16:00', '192.168.1.1', '07:35', false, '', true);
 
 
-INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, ip_origen, tiempo_total, finalizado) VALUES (3, '2020-01-13', '07:57', '16:00', '192.168.1.1', '08:03', true);
-INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, ip_origen, tiempo_total, finalizado) VALUES (3, '2020-01-14', '07:55', '15:58', '192.168.1.1', '08:03', true);
-INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, ip_origen, tiempo_total, finalizado) VALUES (3, '2020-01-15', '08:00', '16:03', '192.168.1.1', '08:03', true);
-INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, ip_origen, tiempo_total, finalizado) VALUES (3, '2020-01-16', '08:00', '16:02', '192.168.1.1', '08:02', true);
-INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, ip_origen, tiempo_total, finalizado) VALUES (3, '2020-01-17', '08:00', '15:50', '192.168.1.1', '07:50', true);
+INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, ip_origen, tiempo_total, tiene_permiso, tipo_permiso, finalizado) VALUES (3, '2020-01-13', '07:57', '16:00', '192.168.1.1', '08:03', false, '', true);
+INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, ip_origen, tiempo_total, tiene_permiso, tipo_permiso, finalizado) VALUES (3, '2020-01-14', '07:55', '15:58', '192.168.1.1', '08:03', false, '', true);
+INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, ip_origen, tiempo_total, tiene_permiso, tipo_permiso, finalizado) VALUES (3, '2020-01-15', '08:00', '16:03', '192.168.1.1', '08:03', false, '', true);
+INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, ip_origen, tiempo_total, tiene_permiso, tipo_permiso, finalizado) VALUES (3, '2020-01-16', '08:00', '16:02', '192.168.1.1', '08:02', false, '', true);
+INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, ip_origen, tiempo_total, tiene_permiso, tipo_permiso, finalizado) VALUES (3, '2020-01-17', '08:00', '15:50', '192.168.1.1', '07:50', false, '', true);
  
-INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, ip_origen, tiempo_total, finalizado) VALUES (4, '2020-01-13', '07:57', '16:00', '192.168.1.1', '08:03', true);
-INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, ip_origen, tiempo_total, finalizado) VALUES (4, '2020-01-14', '07:55', '15:58', '192.168.1.1', '08:03', true);
-INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, ip_origen, tiempo_total, finalizado) VALUES (4, '2020-01-15', '08:00', '16:03', '192.168.1.1', '08:03', true);
-INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, ip_origen, tiempo_total, finalizado) VALUES (4, '2020-01-16', '08:00', '16:02', '192.168.1.1', '08:02', true);
-INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, ip_origen, tiempo_total, finalizado) VALUES (4, '2020-01-17', '08:00', '15:50', '192.168.1.1', '07:50', true);
+INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, ip_origen, tiempo_total, tiene_permiso, tipo_permiso, finalizado) VALUES (4, '2020-01-13', '07:57', '16:00', '192.168.1.1', '08:03', false, '', true);
+INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, ip_origen, tiempo_total, tiene_permiso, tipo_permiso, finalizado) VALUES (4, '2020-01-14', '07:55', '15:58', '192.168.1.1', '08:03', false, '', true);
+INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, ip_origen, tiempo_total, tiene_permiso, tipo_permiso, finalizado) VALUES (4, '2020-01-15', '08:00', '16:03', '192.168.1.1', '08:03', false, '', true);
+INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, ip_origen, tiempo_total, tiene_permiso, tipo_permiso, finalizado) VALUES (4, '2020-01-16', '08:00', '16:02', '192.168.1.1', '08:02', false, '', true);
+INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, ip_origen, tiempo_total, tiene_permiso, tipo_permiso, finalizado) VALUES (4, '2020-01-17', '08:00', '15:50', '192.168.1.1', '07:50', false, '', true);
 
-INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, ip_origen, tiempo_total, finalizado) VALUES (5, '2020-01-13', '07:57', '16:00', '192.168.1.1', '08:03', true);
-INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, ip_origen, tiempo_total, finalizado) VALUES (5, '2020-01-14', '07:55', '15:58', '192.168.1.1', '08:03', true);
-INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, ip_origen, tiempo_total, finalizado) VALUES (5, '2020-01-15', '08:00', '16:03', '192.168.1.1', '08:03', true);
-INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, ip_origen, tiempo_total, finalizado) VALUES (5, '2020-01-16', '08:00', '16:02', '192.168.1.1', '08:02', true);
-INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, ip_origen, tiempo_total, finalizado) VALUES (5, '2020-01-17', '08:00', '15:50', '192.168.1.1', '07:50', true);
+INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, ip_origen, tiempo_total, tiene_permiso, tipo_permiso, finalizado) VALUES (5, '2020-01-13', '07:57', '16:00', '192.168.1.1', '08:03', false, '', true);
+INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, ip_origen, tiempo_total, tiene_permiso, tipo_permiso, finalizado) VALUES (5, '2020-01-14', '07:55', '15:58', '192.168.1.1', '08:03', false, '', true);
+INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, ip_origen, tiempo_total, tiene_permiso, tipo_permiso, finalizado) VALUES (5, '2020-01-15', '08:00', '16:03', '192.168.1.1', '08:03', false, '', true);
+INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, ip_origen, tiempo_total, tiene_permiso, tipo_permiso, finalizado) VALUES (5, '2020-01-16', '08:00', '16:02', '192.168.1.1', '08:02', false, '', true);
+INSERT INTO fichajes (empleado_cod_empl, fecha, hora_entrada, hora_salida, ip_origen, tiempo_total, tiene_permiso, tipo_permiso, finalizado) VALUES (5, '2020-01-17', '08:00', '15:50', '192.168.1.1', '07:50', false, '', true);
 
 /* Populate table Users and roles */
 INSERT INTO users (username, password, enabled, cod_empl) VALUES ('admin', '$2y$12$6vxcbhYOgxlfFQxbPuApwuIobHyJHfppJqja/ZNPJjO9yYDovSXpa', 1, 1);

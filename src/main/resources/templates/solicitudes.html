@@ -44,23 +44,30 @@
 						<div class="card mt-3" id="cardDatosAdicionales">
 						<h6 class="card-header text-center bg-dark text-white">Datos adicionales</h6>
 							<div class="card-body row">
-								<div class="form-group col-md-4 col-xs-12 text-center mt-2" style="align-self: center;">
+								<div class="form-group col-md-3 col-xs-12 text-center mt-2" style="align-self: center;">
 									<input type="checkbox" class="form-check-input" id="desplazamiento" 
 									 value="si"
 									 th:field="*{requiereDesplazamiento}">
 	    							<label class="form-check-label font-weight-bold h6" for="desplazamiento">¿Requiere desplazamiento?</label>
 								</div>								
-								<div class="form-group col-md-4 col-xs-12 text-center mt-2" >
+								<div class="form-group col-md-3 col-xs-12 text-center mt-4" >
 									 <label class="font-weight-bold" for="fechaInicio">Fecha de Inicio</label>
 									<input type="date" class="form-control text-center text-white" id="fechaInicioPermiso"
 									th:field="*{fecha}" style="background-color: #6c8ec2;">
 								</div>
 								
 									
-								<div class="form-group col-md-4 col-xs-12 text-center mt-2">
+								<div class="form-group col-md-3 col-xs-12 text-center mt-4">
 									<label class="font-weight-bold" for="tiempoNecesario">Tiempo necesario</label>
 									<input type="number" class="form-control text-center text-white" id="tiempoNecesario"
 									th:field="*{tiempoNecesario}" style="background-color: #6c8ec2;">
+								</div>
+								
+								<div id="cardDiasSolicitados" class="card border-0 col-md-3 col-xs-12 text-center mt-2">
+									<div class="card-body" style="align-self: center;">
+										<h5 class="font-weight-bold">Días solicitados</h5>
+										<h4>0</h4>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -70,11 +77,11 @@
 							<div class="card-body col-md-12 col-xs-12">
 								<div class="row mt-2">
 									<div class="col-md-8 col-xs-12" style="margin: auto;">
-									 	<div id='calendar'></div>
-									</div>
-									<div class="col-md-2 col-xs-12">
-									 	<input type="text" class="form-control" id="inicioVacaciones" th:field="*{inicioVacaciones}" />
-									 	<input type="text" class="form-control" id="finVacaciones" th:field="*{finVacaciones}" />									 	
+										<label class="text-center" for="inicioVacaciones" id="labelInicioVacaciones" hidden="true">Fecha de inicio de las vacaciones: </label>
+									 	<input type="text" class="form-control" id="inicioVacaciones" th:field="*{inicioVacaciones}" hidden="true"/>
+										<label class="text-center" for="finVacaciones" id="labelFinVacaciones" hidden="true">Fecha de fin de las vacaciones: (Día de incorporación) </label>
+										<input type="text" class="form-control" id="finVacaciones" th:field="*{finVacaciones}" hidden="true" />									 	
+									 	<div id='calendar' class="mt-4"></div>								
 									</div>
 								</div>
 							</div>				
@@ -111,7 +118,7 @@
 										<thead class="text-center bg-dark text-white">
 										<tr>
 											<th>Usuario</th>
-											<th>Fecha</th>
+											<th>Fecha Solicitud</th>
 											<th>Tipo</th>
 											<th>Estado</th>
 											<th>Descripción</th>
@@ -124,7 +131,8 @@
 											th:title="${solicitud.empleado.nombre} +' '+${solicitud.empleado.apellido1}+' '+${solicitud.empleado.apellido2}"
 											 th:text="${solicitud.empleado.usuario.username}"></td>
 	
-											<td th:text="${solicitud.fecha}"></td>
+											<td th:text="${solicitud.fecha}" data-toggle="tooltip" data-placement="bottom" data-type="primary"
+											   th:title="'La fecha de solicitud corresponde al momento de realización de la gestión no a los días efectivos del permiso (consultar descripción)'"></td>
 											
 											<td
 												
@@ -234,7 +242,6 @@
         	 daysOfWeek: [1, 2, 3, 4, 5]
           },
           select: function(info) {
-             alert('selected ' + info.startStr + ' to ' + info.endStr);
              $('#inicioVacaciones').val(info.startStr);
              $('#finVacaciones').val(info.endStr);
           }
