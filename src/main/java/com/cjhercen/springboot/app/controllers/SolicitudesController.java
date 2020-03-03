@@ -142,10 +142,16 @@ public class SolicitudesController implements ConstantesSolicitudes{
 		if(obtenerTipo(formSolicitud).equals(TIPO_NACIMIENTO) || obtenerTipo(formSolicitud).equals(TIPO_OPERACION_FAMILIAR)){
 			solicitud.setNecesitaDesplazamiento(formSolicitud.getRequiereDesplazamiento());
 			solicitud.setFechaInicioPermiso(formSolicitud.getFecha());
+			//En el caso de nacimiento u operacion de un familiar se establecen 2 o 4 dias laborables segun el desplazamiento
+			solicitud.setDiasTotales(obtenerDiasTotales(formSolicitud));
 		}
 		
 		if(obtenerTipo(formSolicitud).equals(TIPO_ENFERMEDAD) || obtenerTipo(formSolicitud).equals(TIPO_MATRIMONIO)) {	
 			solicitud.setFechaInicioPermiso(formSolicitud.getFecha());
+			//En el caso de matrimonio se establecen los 15 dias naturales
+			if(obtenerTipo(formSolicitud).equals(TIPO_MATRIMONIO)) {
+				solicitud.setDiasTotales(obtenerDiasTotales(formSolicitud));
+			}
 		}
 		
 		
@@ -207,7 +213,11 @@ public class SolicitudesController implements ConstantesSolicitudes{
 		return tipo;
 	}
 
-	
-	
+	//Metodo que devuelve los días totales de la solicitud 
+	private int obtenerDiasTotales(FormSolicitud solicitud) {
+		int retorno = 0;
+		
+		return retorno;
+	}
 	
 }

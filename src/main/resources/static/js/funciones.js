@@ -198,7 +198,7 @@ function abrirModalEditar(){
 
 /*
  * Método que controla en la vista solicitudes los formularios que aparecen o desaparecen según el tipo
- * seleccionado en el selectable
+ * seleccionado en el selectable y se modifican los dias seleccionados segun las opciones elegidas en el formulario
  */
 
 function cargarSolicitudSeleccionada(){
@@ -214,7 +214,10 @@ function cargarSolicitudSeleccionada(){
 	var finVacaciones = document.getElementById("finVacaciones");
 	var labelInicioVacaciones = document.getElementById("labelInicioVacaciones");
 	var labelFinVacaciones = document.getElementById("labelFinVacaciones");
+	
 	var cardDiasSolicitados = document.getElementById("cardDiasSolicitados");
+	var diasSolicitados = document.getElementById("diasSolicitados");
+	diasSolicitados.innerHTML = '0';
 	
 	//La tarjeta de vacaciones solo para la opción de vacaciones
 	if(seleccion == '1'){
@@ -239,6 +242,7 @@ function cargarSolicitudSeleccionada(){
 			cardDiasSolicitados.hidden = true;
 		} else{
 			cardDiasSolicitados.hidden = false;
+			diasSolicitados.innerHTML = '15 días naturales';
 		}	
 	}
 	
@@ -249,6 +253,7 @@ function cargarSolicitudSeleccionada(){
 		tiempoNecesario.disabled = true;
 		fechaInicioPermiso.disabled = false;
 		cardDiasSolicitados.hidden = false;
+		diasSolicitados.innerHTML = '2 días laborables';
 	}
 	
 	if(seleccion == '6' || seleccion == '7' || seleccion == '8'){
@@ -260,5 +265,17 @@ function cargarSolicitudSeleccionada(){
 		cardDiasSolicitados.hidden = true;
 	}
 	
+	
+}
+
+function modificarDiasTotales() {
+	var desplazamiento = document.getElementById("desplazamiento");
+	var diasSolicitados = document.getElementById("diasSolicitados");
+
+	if(desplazamiento.checked){
+		diasSolicitados.innerHTML = '4 días laborables';
+	} else{
+		diasSolicitados.innerHTML = '2 días laborables';
+	}
 	
 }

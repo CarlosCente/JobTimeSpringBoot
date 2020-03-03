@@ -18,10 +18,12 @@ import javax.validation.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.cjhercen.springboot.app.util.ConstantesSolicitudes;
+
 @Entity
 @IdClass(SolicitudId.class)
 @Table(name = "solicitudes")
-public class Solicitud implements Serializable{
+public class Solicitud implements Serializable,ConstantesSolicitudes{
 
 	private static final long serialVersionUID = 1L;
 
@@ -68,6 +70,7 @@ public class Solicitud implements Serializable{
 	@Column(name = "fechaFinVacaciones")
 	private Date fechaFinVacaciones;
 	
+	private int diasTotales;
 	
 	public Empleado getEmpleado() {
 		return empleado;
@@ -147,6 +150,14 @@ public class Solicitud implements Serializable{
 
 	public void setFechaFinVacaciones(Date fechaFinVacaciones) {
 		this.fechaFinVacaciones = fechaFinVacaciones;
+	}
+
+	public int getDiasTotales() {
+		return diasTotales;
+	}
+
+	public void setDiasTotales(int diasTotales) {
+		this.diasTotales = diasTotales;
 	}
 	
 	
