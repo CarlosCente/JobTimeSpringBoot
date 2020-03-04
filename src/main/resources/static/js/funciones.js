@@ -269,13 +269,19 @@ function cargarSolicitudSeleccionada(){
 }
 
 function modificarDiasTotales() {
+	var seleccion = document.getElementById("tipoSolicitud").value;
 	var desplazamiento = document.getElementById("desplazamiento");
 	var diasSolicitados = document.getElementById("diasSolicitados");
-
+	diasSolicitados.innerHTML = '0';
+	
 	if(desplazamiento.checked){
-		diasSolicitados.innerHTML = '4 días laborables';
+		if(seleccion == '3' || seleccion == '5'){
+			diasSolicitados.innerHTML = '4 días laborables';
+		}
 	} else{
-		diasSolicitados.innerHTML = '2 días laborables';
+		if(seleccion == '3' || seleccion == '5'){
+			diasSolicitados.innerHTML = '2 días laborables';
+		}
 	}
 	
 }
