@@ -110,7 +110,7 @@
 		 -->
 		<div th:if="${esAdmin}" class="card mt-2">	
 			<div class="card-header bg-dark text-white">
-				<h5 th:text="'Listado de solicitudes abiertas'"></h5>
+				<h5 th:text="'Listado de Solicitudes'"></h5>
 			</div>		
 			<div class="card-body table-responsive">
 						
@@ -121,7 +121,6 @@
 											<th>Fecha Solicitud</th>
 											<th>Tipo</th>
 											<th>Estado</th>
-											<th>Descripción</th>
 											<th>Acciones</th>
 										</tr>
 									</thead>
@@ -144,12 +143,22 @@
 													th:text="${solicitud.estado == '1' ? '&nbspAbierta&nbsp' : solicitud.estado == '2' ? '&nbspAceptada&nbsp' :'&nbspRechazada&nbsp'}">
 												</span>
 											</td>
-											<td>																		
-												<a href="#" class="btn-lg">
-													<i class="fas fa-search-plus" style="color: black;"></i>
-												</a>		
+											<td>
+												<a href="#"
+													 class="btn-lg" style="text-decoration:none;">
+													<i class="fas fa-check text-success"></i>
+												</a>
+												
+												<a href="#"
+													 class="btn-lg" style="text-decoration:none;">
+													<i class="fas fa-times text-danger"></i>
+												</a>
+											
+												<a href="#" onclick="return confirm('¿Estás seguro que quieres eliminar la solicitud?');"
+													 class="btn-lg">
+													<i class="fas fa-trash-alt"></i>
+												</a>
 											</td>
-											<td></td>
 
 									</tr>
 								</tbody>
