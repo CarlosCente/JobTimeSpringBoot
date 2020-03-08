@@ -142,11 +142,6 @@ public class EmpleadoController implements ConstantesUtils {
 	@RequestMapping(value = "/form", method = RequestMethod.POST)
 	public String guardar(@Valid Empleado empleado, BindingResult result, Model model,
 			RedirectAttributes flash, SessionStatus status) {
-		if (result.hasErrors()) {
-			model.addAttribute("titulo", "Formulario de Empleado");
-			return "form";
-		}
-
 		
 		empleadoService.save(empleado);
 		

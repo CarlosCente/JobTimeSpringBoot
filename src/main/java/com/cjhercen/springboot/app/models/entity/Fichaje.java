@@ -9,7 +9,6 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.ManyToOne;
-import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -56,11 +55,6 @@ public class Fichaje implements Serializable {
 	@Column(name = "tipoPermiso")
 	private String tipoPermiso;
 	
-	@PrePersist
-	public void prePersist() {
-		fecha = new Date();
-	}
-
 	public Date getFecha() {
 		return fecha;
 	}

@@ -83,10 +83,14 @@ public class PerfilController implements ConstantesUtils {
 			//Se guardan las modificaciones
 			empleadoService.save(empleadoBD);
 
-			flash.addFlashAttribute("success", "Has editado tu información correctamente");
+			log.info("Se ha editado correctamente la información del empleado " + empleadoBD.toString());
+			flash.addFlashAttribute("tipo", "Información");
+			flash.addFlashAttribute("message", "Has editado tu información correctamente");
 
 		} else {
-			flash.addFlashAttribute("error", "Error, no se encuentra al empleado");
+			log.info("Error, no se encuentra al empleado en el sistema");
+			flash.addFlashAttribute("tipo", "Error");
+			flash.addFlashAttribute("message", "No se encuentra al empleado en el sistema");
 		}
 
 		return "redirect:/perfil";
@@ -102,7 +106,9 @@ public class PerfilController implements ConstantesUtils {
 		if(!incidenciaDatosPersonales.isHayNombre() && !incidenciaDatosPersonales.isHayApellido1() && 
 				!incidenciaDatosPersonales.isHayApellido2() && !incidenciaDatosPersonales.isHayFechaNacimiento()) {
 			
-			flash.addFlashAttribute("error", "Error, no se puede crear una incidencia vacía");
+			log.info("Error, no se puede crear una incidencia vacía");
+			flash.addFlashAttribute("tipo", "Error");
+			flash.addFlashAttribute("message", "No se puede crear una incidencia vacía");
 			return "redirect:/perfil";
 			
 		}
@@ -134,10 +140,13 @@ public class PerfilController implements ConstantesUtils {
 			log.info("Se ha generado una incidencia de tipo '"+ INCIDENCIA_PERFIL +"' al querer modificar "
 					+ "el empleado sus datos personales del perfil.");
 			
-			flash.addFlashAttribute("success", "Incidencia añadida correctamente");
+			flash.addFlashAttribute("tipo", "Información");
+			flash.addFlashAttribute("message", "Se ha creado la incidencia correctamente");
 
 		} else {
-			flash.addFlashAttribute("error", "Error, no se ha podido crear la incidencia");
+			log.info("Error, no se encuentra al empleado en el sistema");
+			flash.addFlashAttribute("tipo", "Error");
+			flash.addFlashAttribute("message", "No se ha podido crear la incidencia, el empleado no existe en el sistema");
 		}
 		
 		return "redirect:/perfil";

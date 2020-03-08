@@ -1,5 +1,6 @@
 package com.cjhercen.springboot.app.controllers;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -11,14 +12,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.cjhercen.springboot.app.models.entity.Empleado;
 import com.cjhercen.springboot.app.models.entity.Solicitud;
 import com.cjhercen.springboot.app.models.entity.Usuario;
 import com.cjhercen.springboot.app.models.object.FormSolicitud;
+import com.cjhercen.springboot.app.models.service.impl.EmpleadoServiceImpl;
 import com.cjhercen.springboot.app.models.service.impl.SolicitudServiceImpl;
 import com.cjhercen.springboot.app.models.service.impl.UsuarioServiceImpl;
 import com.cjhercen.springboot.app.util.ConstantesSolicitudes;
@@ -30,6 +34,9 @@ public class SolicitudesController implements ConstantesSolicitudes{
 	
 	@Autowired
 	UsuarioServiceImpl usuarioService;
+	
+	@Autowired
+	EmpleadoServiceImpl empleadoService;
 	
 	@Autowired
 	private SolicitudServiceImpl solicitudService;
@@ -175,7 +182,34 @@ public class SolicitudesController implements ConstantesSolicitudes{
 		
 		return "redirect:solicitudes";
 	}
+	
+	@RequestMapping(value = "/solicitudes/eliminar/{tipo}/{cod_empl}/{fecha}")
+	public String eliminarSolicitud(@PathVariable(value = "tipo") String tipo,
+			@PathVariable(value = "cod_empl") Long cod_empl ,
+			@PathVariable(value = "fecha") String fecha,
+			RedirectAttributes flash) {
 
+		if(log.isDebugEnabled()) {
+			log.debug("Entrando en eliminarSolicitud()...");
+		}
+		
+		Date fechaSolicitud = fechaUtils.obtenerFechaApartirString(fecha);
+		Empleado empleado = empleadoService.findOne(cod_empl);
+		Solicitud solicitudABorrar = solicitudService.findByEmpleadoAndFechaAndTipo(empleado, fechaSolicitud, tipo);
+		
+		solicitudService.delete(solicitudABorrar);
+
+		if(log.isDebugEnabled()) {
+			log.debug("Saliendo de eliminarSolicitud()... ");
+		}
+		
+		log.info("Se ha borrado correctamente la solicitud " + solicitudABorrar.toString());
+		flash.addFlashAttribute("tipo", "Información");
+		flash.addFlashAttribute("message", "La solicitud se ha eliminado correctamente");
+
+		return "redirect:/solicitudes";
+	}
+	
 	//Metodo que devuelve el tipo de la solicitud elegida en el formulario
 	private String obtenerTipo(@Valid FormSolicitud formSolicitud) {
 		String tipo = "";

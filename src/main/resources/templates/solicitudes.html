@@ -121,6 +121,7 @@
 											<th>Fecha Solicitud</th>
 											<th>Tipo</th>
 											<th>Estado</th>
+											<th>Descripción</th>
 											<th>Acciones</th>
 										</tr>
 									</thead>
@@ -144,6 +145,11 @@
 												</span>
 											</td>
 											<td>
+												<a href="#" class="btn-lg">
+												<i class="fas fa-search-plus" style="color: black;"></i>
+												</a>
+											</td>
+											<td>
 												<a href="#"
 													 class="btn-lg" style="text-decoration:none;">
 													<i class="fas fa-check text-success"></i>
@@ -154,7 +160,12 @@
 													<i class="fas fa-times text-danger"></i>
 												</a>
 											
-												<a href="#" onclick="return confirm('¿Estás seguro que quieres eliminar la solicitud?');"
+												<a th:href="@{/solicitudes/eliminar/} + 
+																	${solicitud.tipo} + '/' +
+																 	${solicitud.empleado.cod_empl} +
+																 	 '/' + 
+																 	${solicitud.fecha}"
+													 onclick="return confirm('¿Estás seguro que quieres eliminar la solicitud?');"
 													 class="btn-lg">
 													<i class="fas fa-trash-alt"></i>
 												</a>

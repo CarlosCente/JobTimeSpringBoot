@@ -11,6 +11,76 @@
 			<div class="card-header bg-dark text-white">
 				<h5 th:text="${titulo}"></h5>
 			</div>
+			
+			<div class="row">			
+					<div class="col-sm text-center mt-2 ">
+						<a href="#" data-toggle="modal" data-target="#modalCrearFichaje" 
+						class="btn btn-primary mt-3 font-weight-bold text-white">Crear un nuevo
+							Fichaje</a>
+					</div>
+					
+					<div class="modal fade" id="modalCrearFichaje" tabindex="-1"
+			role="dialog" aria-labelledby="modalCrearFichaje" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered modal-md"
+				role="document">
+				<div class="modal-content">
+					<div class="modal-header bg-dark text-white">
+						<p class="modal-title w-100 text-center"
+							id="exampleModalLongTitle">Crear Fichaje del Empleado</p>
+						<button type="button" class="close text-white"
+							data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					
+					<form th:action="@{/formFichaje}" th:object="${formNuevoFichaje}" method="post">
+					<div class="modal-body">
+						<div class="row">
+							<div class="col-md-12">
+							
+								<div class="form-group">
+									<span class="input-group-addon font-weight-bold">Usuario</span>
+									<input type="text" class="form-control" th:field="*{usuario}"
+										th:errorclass="'form-control alert-danger'">
+									<small
+										class="form-text text-danger"
+										th:if="${#fields.hasErrors('usuario')}" th:errors="*{usuario}"></small>
+								</div>
+								<div class="form-group">
+									<span class="input-group-addon font-weight-bold">Fecha</span>
+									<input type="date" class="form-control" th:field="*{fecha}">
+								</div>
+								<div class="form-group">
+									<span class="input-group-addon font-weight-bold">Ip de Origen</span>
+									<input type="text" class="form-control" value="Creado por admin" disabled="disabled">
+								</div>
+								<div class="form-group">
+									<span class="input-group-addon font-weight-bold">Hora de Entrada</span>
+									<input type="text" class="form-control" id="horaEntradaControlFichaje" th:field="*{horaEntrada}">
+								</div>
+								<div class="form-group">
+									<span class="input-group-addon font-weight-bold">Hora de Salida</span>
+									<input type="text" class="form-control" id="horaSalidaControlFichaje" th:field="*{horaSalida}">
+								</div>					
+					
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-danger"
+							data-dismiss="modal">Cerrar</button>
+						<button type="reset" class="btn btn-warning text-white">Limpiar</button>
+						<button type="submit" class="btn btn-primary text-white"
+							>Crear</button>
+					</div>
+					</form>
+				</div>
+			</div>
+		</div>
+							
+				</div>
+			
+			
 			<div class="card-body table-responsive">
 	                
 	        	<table id="tablaFichajes" class="table-hover table-borderless dataTables_length" >
@@ -36,7 +106,7 @@
 							<td th:text="${fichaje.horaSalida}"></td>
 							<td><span class="badge badge-pill badge-success" th:text="${fichaje.tiempoTotal}"></span></td>
 							<td class="align-middle">
-								<a id="botonEditar" href="#" onclick="abrirModalEditar()" class="btn-lg">
+								<a id="botonEditar" href="#" onclick="abrirModalEditar()" class="btn-lg" style="text-decoration:none;">
 									<i class="far fa-edit" style="color: #007bff;"></i>
 								</a>
 						
@@ -244,6 +314,8 @@
 	
 
 	  $(function () {
+          $('#horaEntradaControlFichaje').timepicker();
+          $('#horaSalidaControlFichaje').timepicker();
           $('#horaEntradaControl').timepicker();
           $('#horaSalidaControl').timepicker();
       });
