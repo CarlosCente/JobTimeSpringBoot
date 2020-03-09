@@ -124,8 +124,9 @@ public class ControlHorarioController {
 			}
 
 			fichajeService.save(fichajeModif);
-			
-			
+			log.error("El fichaje se ha modificado correctamente " + fichajeModif.toString());
+			flash.addFlashAttribute("tipo", "Información");
+			flash.addFlashAttribute("message", "El fichaje se ha modificado correctamente");
 		}
 		
 		return "redirect:/controlhorario";

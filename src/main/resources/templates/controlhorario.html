@@ -41,14 +41,14 @@
 								<div class="form-group">
 									<span class="input-group-addon font-weight-bold">Usuario</span>
 									<input type="text" class="form-control" th:field="*{usuario}"
-										th:errorclass="'form-control alert-danger'">
+										th:errorclass="'form-control alert-danger'" required="required">
 									<small
 										class="form-text text-danger"
 										th:if="${#fields.hasErrors('usuario')}" th:errors="*{usuario}"></small>
 								</div>
 								<div class="form-group">
 									<span class="input-group-addon font-weight-bold">Fecha</span>
-									<input type="date" class="form-control" th:field="*{fecha}">
+									<input type="date" class="form-control" th:field="*{fecha}" required="required">
 								</div>
 								<div class="form-group">
 									<span class="input-group-addon font-weight-bold">Ip de Origen</span>
