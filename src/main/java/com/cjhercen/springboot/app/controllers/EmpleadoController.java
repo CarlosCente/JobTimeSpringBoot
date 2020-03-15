@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -184,22 +185,23 @@ public class EmpleadoController implements ConstantesUtils {
 		return "redirect:listar";
 	}
 
-	@RequestMapping(value = "/eliminar/{id}")
-	public String eliminar(@PathVariable(value = "id") Long id, RedirectAttributes flash) {
+	@RequestMapping(value = "/listar/eliminar")
+	public String eliminar(@RequestParam(value = "username") String username , RedirectAttributes flash) {
 
-		if (id > 0) {
+		if (username.length() > 0) {
 			
 			//Primero se borra el Usuario del empleado
-			Empleado empleado = empleadoService.findOne(id);
-			Usuario usuario = usuarioService.findByUsername(empleado.getUsuario().getUsername());
+			Usuario usuario = usuarioService.findByUsername(username);
 			usuarioService.delete(usuario);
 			
 			//Se borra el empleado
-			empleadoService.delete(id);
-			log.info("Se ha eliminado correctamente el empleado " + empleado.toString());
+			Empleado empleado = usuario.getEmpleado();
+			empleadoService.delete(empleado.getCod_empl());
+			log.info("Se ha eliminado correctamente el empleado " + username);
 			flash.addFlashAttribute("tipo", "Información");
 			flash.addFlashAttribute("message", "El empleado se ha eliminado correctamente");
 		}
+		
 		return "redirect:/listar";
 	}
 	
