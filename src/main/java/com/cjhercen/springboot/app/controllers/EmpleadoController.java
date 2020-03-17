@@ -186,7 +186,7 @@ public class EmpleadoController implements ConstantesUtils {
 	}
 
 	@RequestMapping(value = "/listar/eliminar")
-	public String eliminar(@RequestParam(value = "username") String username , RedirectAttributes flash) {
+	public String eliminar(@RequestParam(value = "username") String username) {
 
 		if (username.length() > 0) {
 			
@@ -198,8 +198,6 @@ public class EmpleadoController implements ConstantesUtils {
 			Empleado empleado = usuario.getEmpleado();
 			empleadoService.delete(empleado.getCod_empl());
 			log.info("Se ha eliminado correctamente el empleado " + username);
-			flash.addFlashAttribute("tipo", "Información");
-			flash.addFlashAttribute("message", "El empleado se ha eliminado correctamente");
 		}
 		
 		return "redirect:/listar";

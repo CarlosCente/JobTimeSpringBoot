@@ -60,8 +60,7 @@ public class ControlHorarioController {
 	
 	@RequestMapping(value = "/controlhorario/eliminar")
 	public String eliminarFichaje(@RequestParam(value = "username") String username,
-			@RequestParam(value = "fecha") String fecha,
-			RedirectAttributes flash) {
+			@RequestParam(value = "fecha") String fecha) {
 		Date fechaFichaje = fechaUtils.obtenerFechaApartirString(fecha);
 		Usuario usuario = usuarioService.findByUsername(username);
 		Empleado empleado = usuario.getEmpleado();
@@ -72,8 +71,6 @@ public class ControlHorarioController {
 		log.info("Se ha borrado correctamente el fichaje con fecha " + fichajeABorrar.getFecha() + " del empleado: "
 				+ fichajeABorrar.getEmpleado().getNombre() + " " + fichajeABorrar.getEmpleado().getApellido1() + 
 				" " + fichajeABorrar.getEmpleado().getApellido2());
-		flash.addFlashAttribute("tipo", "Información");
-		flash.addFlashAttribute("message", "Fichaje borrado con éxito");
 		
 		return "redirect:/controlhorario";
 	}
