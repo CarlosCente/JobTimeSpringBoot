@@ -5,13 +5,10 @@
 
 	<header th:replace="layout/layout :: header"></header>
 	<div class="container-fluid py-3  col-md-10 col-sm-12">
-		<div class="mt-2 mb-3">
-			<h4 class="text-center" th:text="${titulo}"></h4>
-		</div>
 		
 		<div class="row">
-			<div class="col-md-4 col-xs-12 col-xl-4">
-				<div class="card bg-c-blue text-white">
+			<div class="col-md-12 col-xs-12 col-xl-4">
+				<div class="card h-100 bg-c-blue text-white">
 					<div class="card-body">
 					<div class="row">
 						<div class="col-md-12 text-center">
@@ -33,36 +30,152 @@
 					</div>
 					</div>
 				</div>
-
 			</div>
-			<div class="col-md-8 col-xs-12 col-xl-8">
-				<div class="card h-100 text-white" style="background-color: #36689c;">
-					<div class="card-body">
+			
+			
+			<div class="col-md-12 col-sm-12 col-lg-8">
+	
+				<div class="card h-100">
+			
+							<div class="card-body" style="display: flex; align-items: center; justify-content: center;">
 						
-						<div class="row text-center">
-							<div class="col-md-4 col-xl-4 col-xs-12">
-								<h5>Hora de Entrada</h5>
-								<hr class="bg-white" />
-								<h4 class="text-white font-weight-bold" th:text="${horaEntrada}"></h4>
+						<!-- #######################################################################################  -->
+						<!-- ########################## OPCION PARA EL FICHAJE DE ENTRADA ##########################  -->
+						<!-- #######################################################################################  -->
+						<div class="row col-md-12 col-xs-12" >
+							
+							<div class="col-md-6 text-center">
+								<button th:disabled="${hayEntrada}" 
+								
+								class="btn btn-success btn-block rounded-pill mb-2 h-100"
+									data-toggle="modal" data-target="#modalEntrada"> 
+									<span class="fas fa-sign-in-alt h3"> &nbsp; Entrada</span>
+									
+								</button>
 							</div>
-							<div class="col-md-4 col-xl-4 col-xs-12">
-								<h5>Hora de Salida</h5>
-								<hr class="bg-white" />
-								<h4 class="text-white font-weight-bold" th:text="${horaSalida}"></h4>
+		
+							<div class="modal fade" id="modalEntrada" tabindex="-1"
+								role="dialog" aria-labelledby="modalEntrada" aria-hidden="true">
+								<div class="modal-dialog modal-dialog-centered modal-md"
+									role="document">
+									<div class="modal-content">
+										<div class="modal-header bg-dark text-white">
+											<p class="modal-title w-100 text-center"
+												id="exampleModalLongTitle">¿Está seguro de realizar el
+												fichaje de entrada?</p>
+											<button type="button" class="close text-white"
+												data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div class="modal-body">
+		
+											<div class="row text-center">
+												<div class="col-md-12 text-center">
+													<h2>
+														<i class="fas fa-user-clock"></i>
+													</h2>
+		
+													<div
+														th:text="${empleado.nombre} +' '+ ${empleado.apellido1} +' ' + ${empleado.apellido2}"></div>
+												</div>
+											</div>
+											<br>
+											<div class="row text-center">
+												<div class="col-md-12 font-weight-bold text-primary">
+													<p>Fichaje de Entrada</p>
+												</div>
+											</div>
+		
+											<div class="row text-center">
+												<div class="col-md-12" th:text="${fechaHora}"></div>
+											</div>
+		
+											<div class="row text-center">
+												<div class="col-md-12" th:text="${ip_cliente}"></div>
+											</div>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-danger"
+												data-dismiss="modal">Cerrar</button>
+											<a type="button" class="btn btn-primary"
+												th:href="@{/fichar/entrada/}">Aceptar</a>
+										</div>
+									</div>
+								</div>
 							</div>
-							<div class="col-md-4 col-xl-4 col-xs-12">
-								<h5>Total del día</h5>
-								<hr class="bg-white" />
-								<h4 class="text-white font-weight-bold" th:text="${totalTiempo}"></h4>
+		
+		
+							<!-- #######################################################################################  -->
+							<!-- ########################## OPCION PARA EL FICHAJE DE SALIDA ##########################  -->
+							<!-- #######################################################################################  -->
+		
+							<div class="col-md-6 text-center">
+								<button th:disabled="${haySalida}" 
+								class="btn btn-danger btn-block rounded-pill mb-2 h-100"
+								
+									data-toggle="modal" data-target="#modalSalida"> 
+									<span class="fas fa-sign-out-alt h3"> &nbsp; Salida</span>
+								</button>
 							</div>
-						
+		
+							<div class="modal fade" id="modalSalida" tabindex="-1"
+								role="dialog" aria-labelledby="modalSalida" aria-hidden="true">
+								<div class="modal-dialog modal-dialog-centered modal-md"
+									role="document">
+									<div class="modal-content">
+										<div class="modal-header bg-dark text-white">
+											<p class="modal-title w-100 text-center"
+												id="exampleModalLongTitle">¿Está seguro de realizar el
+												fichaje de salida?</p>
+											<button type="button" class="close text-white"
+												data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div class="modal-body">
+		
+											<div class="row text-center">
+												<div class="col-md-12 text-center">
+													<h2>
+														<i class="fas fa-user-clock"></i>
+													</h2>
+		
+													<div
+														th:text="${empleado.nombre} +' '+ ${empleado.apellido1} +' ' + ${empleado.apellido2}"></div>
+												</div>
+											</div>
+											<br>
+											<div class="row text-center">
+												<div class="col-md-12 font-weight-bold text-danger">
+													<p>Fichaje de Salida</p>
+												</div>
+											</div>
+		
+											<div class="row text-center">
+												<div class="col-md-12" th:text="${fechaHora}"></div>
+											</div>
+		
+											<div class="row text-center">
+												<div class="col-md-12" th:text="${ip_cliente}"></div>
+											</div>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-danger"
+												data-dismiss="modal">Cerrar</button>
+											<a type="button" class="btn btn-primary"
+												th:href="@{/fichar/salida/}">Aceptar</a>
+										</div>
+									</div>
+								</div>
+							</div>
+							
 						</div>
-						
-						
 					</div>
 				</div>
-
-			</div>
+		</div>
+			
+			
 
 
 		</div>
@@ -72,155 +185,38 @@
 		<!-- ########################## OPERACIONES DISPONIBLES FICHAJE ############################  -->
 		<!-- #######################################################################################  -->
 		<div class="row mt-4">
-		<div class="col-md-12 col-sm-12 col-lg-6">
-	
-		<div class="card h-100">
-			<h5 class=" card-header bg-dark text-white text-center">Fichajes</h5>
-			<div class="card-body" style="display: flex; align-items: center; justify-content: center;">
-				
-				<!-- #######################################################################################  -->
-				<!-- ########################## OPCION PARA EL FICHAJE DE ENTRADA ##########################  -->
-				<!-- #######################################################################################  -->
-				<div class="row col-md-12 col-xs-12" >
-					
-					<div class="col-md-6 text-center">
-						<button th:disabled="${hayEntrada}" 
-						style="height: 80px"
-						class="btn btn-success btn-block rounded-pill mb-2"
-							data-toggle="modal" data-target="#modalEntrada"> 
-							<span class="fas fa-sign-in-alt h3"> &nbsp; Entrada</span>
-							
-						</button>
-					</div>
-
-					<div class="modal fade" id="modalEntrada" tabindex="-1"
-						role="dialog" aria-labelledby="modalEntrada" aria-hidden="true">
-						<div class="modal-dialog modal-dialog-centered modal-md"
-							role="document">
-							<div class="modal-content">
-								<div class="modal-header bg-dark text-white">
-									<p class="modal-title w-100 text-center"
-										id="exampleModalLongTitle">¿Está seguro de realizar el
-										fichaje de entrada?</p>
-									<button type="button" class="close text-white"
-										data-dismiss="modal" aria-label="Close">
-										<span aria-hidden="true">&times;</span>
-									</button>
-								</div>
-								<div class="modal-body">
-
-									<div class="row text-center">
-										<div class="col-md-12 text-center">
-											<h2>
-												<i class="fas fa-user-clock"></i>
-											</h2>
-
-											<div
-												th:text="${empleado.nombre} +' '+ ${empleado.apellido1} +' ' + ${empleado.apellido2}"></div>
-										</div>
-									</div>
-									<br>
-									<div class="row text-center">
-										<div class="col-md-12 font-weight-bold text-primary">
-											<p>Fichaje de Entrada</p>
-										</div>
-									</div>
-
-									<div class="row text-center">
-										<div class="col-md-12" th:text="${fechaHora}"></div>
-									</div>
-
-									<div class="row text-center">
-										<div class="col-md-12" th:text="${ip_cliente}"></div>
-									</div>
-								</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-danger"
-										data-dismiss="modal">Cerrar</button>
-									<a type="button" class="btn btn-primary"
-										th:href="@{/fichar/entrada/}">Aceptar</a>
-								</div>
+		<div class="col-md-12 col-xs-12 col-xl-6 mt-2">
+				<div class="card h-100">
+				<h5 class=" card-header bg-dark text-white text-center">Fichajes</h5>
+					<div class="card-body" style="display: flex; align-items: center; justify-content: center;" >
+						
+						<div class="row text-center col-md-12 col-xs-12">
+							<div class="col-md-4 col-xl-4 col-xs-12 mt-2">
+								<h5>Entrada</h5>
+								<hr />
+								<h4 class="font-weight-bold" th:text="${horaEntrada}"></h4>
 							</div>
-						</div>
-					</div>
-
-
-					<!-- #######################################################################################  -->
-					<!-- ########################## OPCION PARA EL FICHAJE DE SALIDA ##########################  -->
-					<!-- #######################################################################################  -->
-
-					<div class="col-md-6 text-center">
-						<button th:disabled="${haySalida}" 
-						class="btn btn-danger btn-block rounded-pill mb-2"
-						style="height: 80px"
-							data-toggle="modal" data-target="#modalSalida"> 
-							<span class="fas fa-sign-out-alt h3"> &nbsp; Salida</span>
-						</button>
-					</div>
-
-					<div class="modal fade" id="modalSalida" tabindex="-1"
-						role="dialog" aria-labelledby="modalSalida" aria-hidden="true">
-						<div class="modal-dialog modal-dialog-centered modal-md"
-							role="document">
-							<div class="modal-content">
-								<div class="modal-header bg-dark text-white">
-									<p class="modal-title w-100 text-center"
-										id="exampleModalLongTitle">¿Está seguro de realizar el
-										fichaje de salida?</p>
-									<button type="button" class="close text-white"
-										data-dismiss="modal" aria-label="Close">
-										<span aria-hidden="true">&times;</span>
-									</button>
-								</div>
-								<div class="modal-body">
-
-									<div class="row text-center">
-										<div class="col-md-12 text-center">
-											<h2>
-												<i class="fas fa-user-clock"></i>
-											</h2>
-
-											<div
-												th:text="${empleado.nombre} +' '+ ${empleado.apellido1} +' ' + ${empleado.apellido2}"></div>
-										</div>
-									</div>
-									<br>
-									<div class="row text-center">
-										<div class="col-md-12 font-weight-bold text-danger">
-											<p>Fichaje de Salida</p>
-										</div>
-									</div>
-
-									<div class="row text-center">
-										<div class="col-md-12" th:text="${fechaHora}"></div>
-									</div>
-
-									<div class="row text-center">
-										<div class="col-md-12" th:text="${ip_cliente}"></div>
-									</div>
-								</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-danger"
-										data-dismiss="modal">Cerrar</button>
-									<a type="button" class="btn btn-primary"
-										th:href="@{/fichar/salida/}">Aceptar</a>
-								</div>
+							<div class="col-md-4 col-xl-4 col-xs-12 mt-2">
+								<h5>Salida</h5>
+								<hr />
+								<h4 class="font-weight-bold" th:text="${horaSalida}"></h4>
 							</div>
+							<div class="col-md-4 col-xl-4 col-xs-12 mt-2">
+								<h5>Total</h5>
+								<hr />
+								<h4 class="font-weight-bold" th:text="${totalTiempo}"></h4>
+							</div>
+						
 						</div>
+						
+						
 					</div>
-
-					<span class="form-text small text-muted mt-4 text-center">
-                         Solamente puede realizar un fichaje de salida y otro de entrada. 
-                         Si tiene cualquier problema debe abrir una incidencia.
-                    </span>
-					
 				</div>
+
 			</div>
-		</div>
-		</div>
 		
 	
-		<div class="col-md-12 col-lg-6 col-sm-12">
+		<div class="col-md-12 col-lg-6 col-sm-12 mt-2">
 			
 			<div class="card h-100">
 				<h5 class=" card-header bg-dark text-white text-center">Informes</h5>

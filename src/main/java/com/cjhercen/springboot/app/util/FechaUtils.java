@@ -190,7 +190,7 @@ public class FechaUtils {
 		String tiempoTotalFichaje = "";
 
 		// Si solo se ha fichado la entrada
-		if ((horaEntrada != null || !"".equals(horaEntrada)) && (horaSalida == null || "".equals(horaSalida))) {
+		if ((horaEntrada != null && !"".equals(horaEntrada)) && (horaSalida == null || "".equals(horaSalida))) {
 
 			String horaActual = obtenerHoraEnFormatoCadena();
 			int tiempoActual = obtenerHoraEnMinutos(horaActual);
@@ -200,7 +200,7 @@ public class FechaUtils {
 			tiempoTotalFichaje = obtenerFechaStringDesdeInt(tiempoTotal);
 
 			// Si ya se ha fichado tanto la entrada como la salida
-		} else if (horaEntrada != null || !"".equals(horaEntrada) && horaSalida != null || !"".equals(horaSalida)) {
+		} else if (horaEntrada != null && !"".equals(horaEntrada) && horaSalida != null || !"".equals(horaSalida)) {
 
 			int tiempoEntrada = obtenerHoraEnMinutos(horaEntrada);
 			int tiempoSalida = obtenerHoraEnMinutos(horaSalida);
@@ -214,19 +214,26 @@ public class FechaUtils {
 	}
 
 	public String formatearFechas2digitos(String tiempoTotalFichaje) {
-		String[] partes = tiempoTotalFichaje.split(":");
-		String horas = partes[0].trim();
-		String minutos = partes[1].trim();
-
-		if (horas.length() == 1) {
-			horas = "0" + horas;
-		}
-
-		if (minutos.length() == 1) {
-			minutos = "0" + minutos;
-		}
 		
-		return horas + ":" + minutos;
+		if(!"".equals(tiempoTotalFichaje)) {
+			
+			String[] partes = tiempoTotalFichaje.split(":");
+			String horas = partes[0].trim();
+			String minutos = partes[1].trim();
+	
+			if (horas.length() == 1) {
+				horas = "0" + horas;
+			}
+	
+			if (minutos.length() == 1) {
+				minutos = "0" + minutos;
+			}
+			
+			return horas + ":" + minutos;
+			
+		}else {
+			return "00:00";
+		}
 	}
 
 }

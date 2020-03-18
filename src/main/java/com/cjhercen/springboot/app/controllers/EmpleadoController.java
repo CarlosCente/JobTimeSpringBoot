@@ -6,6 +6,8 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -38,24 +41,20 @@ public class EmpleadoController implements ConstantesUtils {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
-	//private final Logger log = LoggerFactory.getLogger(getClass());
+	private final Logger log = LoggerFactory.getLogger(getClass());
 
 	@RequestMapping(value = "/listar", method = RequestMethod.GET)
 	public String listar(Model model) {
 
 		ArrayList<Empleado> empleados = (ArrayList<Empleado>) empleadoService.findAll();
-
+		int totalEmpleados = empleados.size();
+		
+		
+		Empleado empleado = new Empleado();
+		model.addAttribute("totalEmpleados", totalEmpleados);
+		model.addAttribute("empleado", empleado);
 		model.addAttribute("empleados", empleados);
 		return "listar";
-	}
-
-	@RequestMapping(value = "/form")
-	public String crear(Map<String, Object> model) {
-
-		Empleado empleado = new Empleado();
-		model.put("empleado", empleado);
-		model.put("titulo", "Creación de un Empleado");
-		return "form";
 	}
 
 	@GetMapping(value = "/editar/{id}")
@@ -66,11 +65,13 @@ public class EmpleadoController implements ConstantesUtils {
 		if (id > 0) {
 			empleado = empleadoService.findOne(id);
 			if (empleado == null) {
-				flash.addFlashAttribute("error", "El ID del empleado no existe en la BBDD!");
+				flash.addFlashAttribute("tipo", "Error");
+				flash.addFlashAttribute("message", "No se encuentra el id del empleado");
 				return "redirect:/listar";
 			}
 		} else {
-			flash.addFlashAttribute("error", "El ID del empleado no puede ser cero!");
+			flash.addFlashAttribute("tipo", "Error");
+			flash.addFlashAttribute("message", "El id del empleado no puede ser cero");
 			return "redirect:/listar";
 		}
 
@@ -126,10 +127,14 @@ public class EmpleadoController implements ConstantesUtils {
 			Usuario usuarioBD = usuarioService.findByUsername(empleadoBD.getUsuario().getUsername());
 			gestionarEdicionPermisos(usuarioBD, empleado.isEsAdmin());
 			
-			flash.addFlashAttribute("success", "El empleado se ha editado correctamente!");
+			log.info("Se ha editado correctamente el empleado " + empleado.toString());
+			flash.addFlashAttribute("tipo", "Información");
+			flash.addFlashAttribute("message", "El empleado se ha editado correctamente");
 
 		} else {
-			flash.addFlashAttribute("error", "No se encuentra el ID del empleado");
+			log.info("No se encuentra el id del empleado " + id);
+			flash.addFlashAttribute("tipo", "Error");
+			flash.addFlashAttribute("message", "No se encuentra el id del empleado");
 		}
 
 		return "redirect:/listar";
@@ -138,13 +143,7 @@ public class EmpleadoController implements ConstantesUtils {
 	@RequestMapping(value = "/form", method = RequestMethod.POST)
 	public String guardar(@Valid Empleado empleado, BindingResult result, Model model,
 			RedirectAttributes flash, SessionStatus status) {
-		if (result.hasErrors()) {
-			model.addAttribute("titulo", "Formulario de Empleado");
-			return "form";
-		}
-
-		String mensajeFlash = "Empleado creado con éxito!";
-
+		
 		empleadoService.save(empleado);
 		
 		//Se crea el usuario asociado al empleado que se acaba de crear
@@ -180,24 +179,27 @@ public class EmpleadoController implements ConstantesUtils {
 		usuarioService.save(usuario);
 		
 		status.setComplete();
-		flash.addFlashAttribute("success", mensajeFlash);
+		log.info("Se ha creado correctamente el empleado " + empleado.toString());
+		flash.addFlashAttribute("tipo", "Información");
+		flash.addFlashAttribute("message", "El empleado se ha creado correctamente");
 		return "redirect:listar";
 	}
 
-	@RequestMapping(value = "/eliminar/{id}")
-	public String eliminar(@PathVariable(value = "id") Long id, RedirectAttributes flash) {
+	@RequestMapping(value = "/listar/eliminar")
+	public String eliminar(@RequestParam(value = "username") String username) {
 
-		if (id > 0) {
+		if (username.length() > 0) {
 			
 			//Primero se borra el Usuario del empleado
-			Empleado empleado = empleadoService.findOne(id);
-			Usuario usuario = usuarioService.findByUsername(empleado.getUsuario().getUsername());
+			Usuario usuario = usuarioService.findByUsername(username);
 			usuarioService.delete(usuario);
 			
 			//Se borra el empleado
-			empleadoService.delete(id);
-			flash.addFlashAttribute("success", "Empleado eliminado con éxito");
+			Empleado empleado = usuario.getEmpleado();
+			empleadoService.delete(empleado.getCod_empl());
+			log.info("Se ha eliminado correctamente el empleado " + username);
 		}
+		
 		return "redirect:/listar";
 	}
 	

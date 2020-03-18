@@ -13,8 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.cjhercen.springboot.app.models.entity.Empleado;
@@ -103,11 +103,11 @@ public class AjustesController {
 	}
 	
 	
-	@RequestMapping(value = "/ajustes/eliminar/{mensaje}/{cod_empl}/{fecha}")
-	public String eliminarIncidencia(@PathVariable(value = "mensaje") String mensaje,
-			@PathVariable(value = "cod_empl") Long cod_empl ,
-			@PathVariable(value = "fecha") String fecha,
-			RedirectAttributes flash) {
+	@RequestMapping(value = "/ajustes/eliminar")
+	public String eliminarIncidencia(
+			@RequestParam(value = "username") String username ,
+			@RequestParam(value = "fecha") String fecha,
+			@RequestParam(value = "mensaje") String mensaje) {
 
 		Date fechaIncidencia = fechaUtils.obtenerFechaApartirString(fecha);
 		Usuario usuarioConectado = usuarioService.findByUsername(usuarioService.getUsername());
@@ -118,8 +118,6 @@ public class AjustesController {
 		incidenciaService.delete(incidenciaABorrar);
 
 		log.info("Se ha borrado correctamente la incidencia " + incidenciaABorrar.toString());
-		flash.addFlashAttribute("tipo", "Información");
-		flash.addFlashAttribute("message", "La incidencia se ha eliminado correctamente");
 
 		return "redirect:/ajustes";
 	}

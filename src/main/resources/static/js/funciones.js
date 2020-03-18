@@ -173,6 +173,115 @@ function modificarFichaje(){
 		
 }
 
+
+function abrirModalEditar(){
+	
+	var table = $('#tablaFichajes').DataTable();
+	$('#tablaFichajes tbody').one('click', 'tr', function () {
+        var data = table.row( this ).data();
+        var usuario=data[0];
+        var fecha=data[1];
+    	var ipOrigen=data[2];
+    	var horaDeEntrada=data[3];
+    	var horaDeSalida=data[4];
+    	
+    		
+    	$('#modalEditar').modal('show');
+    	$('#eUsuario').val(usuario);
+    	$('#eFecha').val(fecha);
+    	$('#eIp').val(ipOrigen);
+    	$('#horaEntradaControl').val(horaDeEntrada);
+    	$('#horaSalidaControl').val(horaDeSalida);
+	});
+
+}
+
 /*
- * JAVASCRIPT DE LA VISTA controlHorario
+ * Método que controla en la vista solicitudes los formularios que aparecen o desaparecen según el tipo
+ * seleccionado en el selectable y se modifican los dias seleccionados segun las opciones elegidas en el formulario
  */
+
+function cargarSolicitudSeleccionada(){
+	
+	var seleccion = document.getElementById("tipoSolicitud").value;
+	var cardAdicionales = document.getElementById("cardDatosAdicionales");
+	var cardVacacioness = document.getElementById("cardVacaciones");
+	
+	var desplazamiento = document.getElementById("desplazamiento");
+	var fechaInicioPermiso = document.getElementById("fechaInicioPermiso");
+	var tiempoNecesario = document.getElementById("tiempoNecesario");
+	var inicioVacaciones = document.getElementById("inicioVacaciones");
+	var finVacaciones = document.getElementById("finVacaciones");
+	var labelInicioVacaciones = document.getElementById("labelInicioVacaciones");
+	var labelFinVacaciones = document.getElementById("labelFinVacaciones");
+	
+	var cardDiasSolicitados = document.getElementById("cardDiasSolicitados");
+	var diasSolicitados = document.getElementById("diasSolicitados");
+	diasSolicitados.innerHTML = '0';
+	
+	//La tarjeta de vacaciones solo para la opción de vacaciones
+	if(seleccion == '1'){
+		cardVacacioness.hidden = false;
+		cardAdicionales.hidden = true;
+		desplazamiento.disabled = true;
+		tiempoNecesario.disabled = true;
+		fechaInicioPermiso.disabled = true;
+		inicioVacaciones.hidden = false;
+		finVacaciones.hidden = false;
+		labelInicioVacaciones.hidden = false;
+		labelFinVacaciones.hidden = false;
+	}
+	
+	if(seleccion == '2' || seleccion == '4'){
+		cardAdicionales.hidden = false;
+		cardVacaciones.hidden = true;
+		desplazamiento.disabled = true;
+		tiempoNecesario.disabled = true;
+		fechaInicioPermiso.disabled = false;
+		if(seleccion == '2'){
+			cardDiasSolicitados.hidden = true;
+		} else{
+			cardDiasSolicitados.hidden = false;
+			diasSolicitados.innerHTML = '15 días naturales';
+		}	
+	}
+	
+	if(seleccion == '3' || seleccion == '5'){
+		cardAdicionales.hidden = false;
+		cardVacaciones.hidden = true;
+		desplazamiento.disabled = false;
+		tiempoNecesario.disabled = true;
+		fechaInicioPermiso.disabled = false;
+		cardDiasSolicitados.hidden = false;
+		diasSolicitados.innerHTML = '2 días laborables';
+	}
+	
+	if(seleccion == '6' || seleccion == '7' || seleccion == '8'){
+		cardAdicionales.hidden = false;
+		cardVacaciones.hidden = true;
+		desplazamiento.disabled = true;
+		tiempoNecesario.disabled = false;
+		fechaInicioPermiso.disabled = false;
+		cardDiasSolicitados.hidden = true;
+	}
+	
+	
+}
+
+function modificarDiasTotales() {
+	var seleccion = document.getElementById("tipoSolicitud").value;
+	var desplazamiento = document.getElementById("desplazamiento");
+	var diasSolicitados = document.getElementById("diasSolicitados");
+	diasSolicitados.innerHTML = '0';
+	
+	if(desplazamiento.checked){
+		if(seleccion == '3' || seleccion == '5'){
+			diasSolicitados.innerHTML = '4 días laborables';
+		}
+	} else{
+		if(seleccion == '3' || seleccion == '5'){
+			diasSolicitados.innerHTML = '2 días laborables';
+		}
+	}
+	
+}
