@@ -54,7 +54,7 @@ public class Fichaje implements Serializable {
 	
 	@Column(name = "tipoPermiso")
 	private String tipoPermiso;
-	
+
 	public Date getFecha() {
 		return fecha;
 	}

@@ -13,7 +13,28 @@
 			</div>
 			<div class="card-body table-responsive">
 			<!-- form card change password -->
-                    <div class="card card-outline-secondary">
+				<div sec:authorize="!hasRole('ROLE_ADMIN')" class="card card-outline-secondary">
+                        <div class="card-header">
+                            <h6 class="mb-0">Opciones Adicionales</h6>
+                        </div>
+                        <div class="card-body">
+                            <form class="form" th:action="@{/ajustes/fichajeSeguro}" role="form" autocomplete="off" th:object="${formAjustes}">
+                                 <div class="form-group text-center" style="align-self: center;">
+									<input type="checkbox" class="form-check-input float-left" id="fichajeSeguro" 
+									 value="si"
+									 th:field="*{fichajeSeguro}">
+	    							<label class="form-check-label font-weight-bold" for="fichajeSeguro">¿Fichaje Seguro?</label>
+	    							<br />
+	    							<span class="small text-muted">(Si se habilita, se mostrará una ventana para confirmar el fichaje, en caso de desactivarlo se fichará en un click)</span>
+								</div>	
+								<div class="form-group">
+									<input value="Guardar cambios" type="submit"
+									class="btn btn-sm btn-primary float-right" />
+								</div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card card-outline-secondary mt-4">
                         <div class="card-header">
                             <h6 class="mb-0">Cambiar Contraseña</h6>
                         </div>
@@ -41,7 +62,7 @@
                                         </span>
                                 </div>
                                 <div class="form-group">
-                                    <button type="submit" class="btn btn-success float-right">Guardar cambios</button>
+                                    <button type="submit" class="btn btn-sm btn-success float-right">Guardar cambios</button>
                                 </div>
                             </form>
                         </div>
