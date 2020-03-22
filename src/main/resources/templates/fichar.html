@@ -44,7 +44,7 @@
 						<!-- #######################################################################################  -->
 						<div class="row col-md-12 col-xs-12" >
 							
-							<div th:if="!${empleado.fichajeSeguro}" class="col-md-6 text-center">
+							<div th:if="!${empleado.fichajeSeguro}" class="col-md-6 text-center mb-2">
 								<a th:disabled="${hayEntrada}" 
 									class="btn btn-success btn-block rounded-pill mb-2 h-100"
 									th:href="@{/fichar/entrada/}"> 
@@ -52,7 +52,7 @@
 								</a>
 							</div>
 							
-							<div th:if="${empleado.fichajeSeguro}" class="col-md-6 text-center">
+							<div th:if="${empleado.fichajeSeguro}" class="col-md-6 text-center mb-2">
 								<button th:disabled="${hayEntrada}" 
 									class="btn btn-success btn-block rounded-pill mb-2 h-100"
 									data-toggle="modal" data-target="#modalEntrada"> 
@@ -117,7 +117,7 @@
 							<!-- #######################################################################################  -->
 		
 							
-							<div th:if="!${empleado.fichajeSeguro}" class="col-md-6 text-center">
+							<div th:if="!${empleado.fichajeSeguro}" class="col-md-6 text-center mb-2">
 								<a th:disabled="${haySalida}" 
 								class="btn btn-danger btn-block rounded-pill mb-2 h-100"
 								th:href="@{/fichar/salida/}">
@@ -125,7 +125,7 @@
 								</a>
 							</div>
 		
-							<div th:if="${empleado.fichajeSeguro}" class="col-md-6 text-center">
+							<div th:if="${empleado.fichajeSeguro}" class="col-md-6 text-center mb-2">
 								<button th:disabled="${haySalida}" 
 								class="btn btn-danger btn-block rounded-pill mb-2 h-100"
 								

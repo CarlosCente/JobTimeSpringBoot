@@ -159,10 +159,12 @@
 	</div>
 			
 	<footer th:replace="layout/layout :: footer"></footer>
+	<input type="hidden" id="urlAjaxEliminarInciAjustes" th:value="@{'/ajustes/eliminar'}" />
 	
 <script>
 	
 	$(document).ready( function () {
+
 		 var table = $('#tablaAjustesIncidencias').DataTable({
 			 	"pagingType": "numbers",
 		        "language": {
@@ -192,6 +194,14 @@
 <script th:inline="javascript">
 
 	$(document).ready( function () {
+		var fichajeSeguro =  /*[[${fichajeSeguroCheck}]]*/;
+		var checkFichaje = document.getElementById("fichajeSeguro");
+		if(fichajeSeguro){
+			checkFichaje.checked=true;
+		} else{
+			checkFichaje.checked=false;	
+		}
+		
 		var message = /*[[${message}]]*/;
 		if(message.length > 0){
 			$('#modalFlash').modal('show');
@@ -203,7 +213,7 @@
 	<script>
 
 	function mostrarConfirmacion(){
-		
+		var urlAjax = $("#urlAjaxEliminarInciAjustes").val();
 		var table = $('#tablaAjustesIncidencias').DataTable();
 		$('#tablaAjustesIncidencias tbody').one('click', 'tr', function () {
 	        var data = table.row( this ).data();
@@ -233,7 +243,7 @@
 				
 				    $.ajax({
 						type: "GET",
-						url: "/ajustes/eliminar",
+						url: urlAjax,
 						data: {
 							"username" : usuario,
 							"fecha" : fecha,

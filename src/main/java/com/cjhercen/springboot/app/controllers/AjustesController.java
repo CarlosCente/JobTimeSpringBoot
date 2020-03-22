@@ -62,7 +62,8 @@ public class AjustesController {
 		ArrayList<Incidencia> incidenciasAbiertas = obtenerAbiertas(listaIncidencias);
 		
 		FormAjustes formAjustes = new FormAjustes();
-		
+		log.info("FICHAJE SEGURO DEL EMPLEADO: " + empleado.getFichajeSeguro());
+		model.addAttribute("fichajeSeguroCheck", empleado.getFichajeSeguro());
 		model.addAttribute("formAjustes", formAjustes);
 		model.addAttribute("incidenciasAbiertas", incidenciasAbiertas);
 		model.addAttribute("titulo", "Configuraciones disponibles");
