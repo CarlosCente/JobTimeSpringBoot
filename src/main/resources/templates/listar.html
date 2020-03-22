@@ -269,7 +269,7 @@
 		</div>
 
 	<footer th:replace="layout/layout :: footer"></footer>
-	
+	<input type="hidden" id="urlAjaxEliminarEmpleado" th:value="@{'/listar/eliminar'}" />
 	<script th:inline="javascript">
 
 	$(document).ready( function () {
@@ -309,6 +309,7 @@
 
 	function mostrarConfirmacion(){
 		
+		var urlAjax = $("#urlAjaxEliminarEmpleado").val();
 		var table = $('#tablaListar').DataTable();
 		$('#tablaListar tbody').one('click', 'tr', function () {
 	        var data = table.row( this ).data();
@@ -336,7 +337,7 @@
 				
 				    $.ajax({
 						type: "GET",
-						url: "/listar/eliminar",
+						url: urlAjax,
 						data: {
 							"username" : usuario
 						}

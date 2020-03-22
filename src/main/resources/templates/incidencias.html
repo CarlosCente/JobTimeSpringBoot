@@ -214,7 +214,7 @@
 	
 	
 	<footer th:replace="layout/layout :: footer"></footer>
-
+	<input type="hidden" id="urlAjaxEliminarIncidencia" th:value="@{'/incidencias/eliminar'}" />
 	<script>
 	
 	$(document).ready( function () {
@@ -291,7 +291,7 @@
 <script>
 
 	function mostrarConfirmacion(){
-		
+		var urlAjax = $("#urlAjaxEliminarIncidencia").val(); 
 		var table = $('#tablaIncidencias').DataTable();
 		$('#tablaIncidencias tbody').one('click', 'tr', function () {
 	        var data = table.row( this ).data();
@@ -321,7 +321,7 @@
 				
 				    $.ajax({
 						type: "GET",
-						url: "/incidencias/eliminar",
+						url: urlAjax,
 						data: {
 							"username" : usuario,
 							"fecha" : fecha,

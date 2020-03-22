@@ -20,7 +20,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.cjhercen.springboot.app.models.entity.Empleado;
 import com.cjhercen.springboot.app.models.entity.Incidencia;
 import com.cjhercen.springboot.app.models.entity.Usuario;
+import com.cjhercen.springboot.app.models.object.FormAjustes;
 import com.cjhercen.springboot.app.models.object.FormCambioPassword;
+import com.cjhercen.springboot.app.models.service.impl.EmpleadoServiceImpl;
 import com.cjhercen.springboot.app.models.service.impl.UsuarioServiceImpl;
 import com.cjhercen.springboot.app.models.service.interfaces.IIncidenciaService;
 import com.cjhercen.springboot.app.util.ConstantesUtils;
@@ -40,6 +42,9 @@ public class AjustesController {
 	@Autowired
 	IIncidenciaService incidenciaService;
 	
+	@Autowired
+	EmpleadoServiceImpl empleadoService;
+	
 
 	FechaUtils fechaUtils = new FechaUtils();
 	
@@ -56,6 +61,10 @@ public class AjustesController {
 		ArrayList<Incidencia> listaIncidencias = (ArrayList<Incidencia>) incidenciaService.findByEmpleado(empleado);
 		ArrayList<Incidencia> incidenciasAbiertas = obtenerAbiertas(listaIncidencias);
 		
+		FormAjustes formAjustes = new FormAjustes();
+		log.info("FICHAJE SEGURO DEL EMPLEADO: " + empleado.getFichajeSeguro());
+		model.addAttribute("fichajeSeguroCheck", empleado.getFichajeSeguro());
+		model.addAttribute("formAjustes", formAjustes);
 		model.addAttribute("incidenciasAbiertas", incidenciasAbiertas);
 		model.addAttribute("titulo", "Configuraciones disponibles");
 		return "ajustes";
@@ -101,6 +110,31 @@ public class AjustesController {
 		
 		return "redirect:/ajustes";
 	}
+	
+	@RequestMapping("/ajustes/fichajeSeguro")
+	public String cambioPassword(Model model, @Valid FormAjustes formAjustes, BindingResult result, RedirectAttributes flash) {
+		
+		Usuario usuarioConectado = usuarioService.findByUsername(usuarioService.getUsername());
+		Empleado empleado = usuarioConectado.getEmpleado();
+		
+		if("si".equals(formAjustes.getFichajeSeguro())) {
+			log.info("Habilitando fichaje seguro para el usuario..." + usuarioConectado);
+			flash.addFlashAttribute("tipo", "Información");
+			flash.addFlashAttribute("message", "Se ha habilitado el fichaje seguro");
+			empleado.setFichajeSeguro(true);
+			empleadoService.save(empleado);
+			
+		} else {
+			log.info("Desactivando el fichaje seguro para el usuario..." + usuarioConectado);
+			flash.addFlashAttribute("tipo", "Información");
+			flash.addFlashAttribute("message", "Se ha deshabilitado el fichaje seguro");
+			empleado.setFichajeSeguro(false);
+			empleadoService.save(empleado);
+		}
+		
+		return "redirect:/ajustes";
+	}
+	
 	
 	
 	@RequestMapping(value = "/ajustes/eliminar")

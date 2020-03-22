@@ -213,7 +213,7 @@
 
 
 	<footer th:replace="layout/layout :: footer"></footer>
-
+	<input type="hidden" id="urlAjaxEliminarFichaje" th:value="@{'/controlhorario/eliminar'}" />
 <script th:inline="javascript">
 
 	$(document).ready( function () {
@@ -325,6 +325,7 @@
 
 	function mostrarConfirmacion(){
 		
+		var urlAjax = $("#urlAjaxEliminarFichaje").val();
 		var table = $('#tablaFichajes').DataTable();
 		$('#tablaFichajes tbody').one('click', 'tr', function () {
 	        var data = table.row( this ).data();
@@ -353,7 +354,7 @@
 				
 				    $.ajax({
 						type: "GET",
-						url: "/controlhorario/eliminar",
+						url: urlAjax,
 						data: {
 							"username" : usuario,
 							"fecha" : fecha

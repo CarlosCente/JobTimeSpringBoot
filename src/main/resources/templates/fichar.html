@@ -44,13 +44,19 @@
 						<!-- #######################################################################################  -->
 						<div class="row col-md-12 col-xs-12" >
 							
-							<div class="col-md-6 text-center">
+							<div th:if="!${empleado.fichajeSeguro}" class="col-md-6 text-center mb-2">
+								<a th:disabled="${hayEntrada}" 
+									class="btn btn-success btn-block rounded-pill mb-2 h-100"
+									th:href="@{/fichar/entrada/}"> 
+									<span class="fas fa-sign-in-alt h3"> &nbsp; Entrada</span>
+								</a>
+							</div>
+							
+							<div th:if="${empleado.fichajeSeguro}" class="col-md-6 text-center mb-2">
 								<button th:disabled="${hayEntrada}" 
-								
-								class="btn btn-success btn-block rounded-pill mb-2 h-100"
+									class="btn btn-success btn-block rounded-pill mb-2 h-100"
 									data-toggle="modal" data-target="#modalEntrada"> 
 									<span class="fas fa-sign-in-alt h3"> &nbsp; Entrada</span>
-									
 								</button>
 							</div>
 		
@@ -110,7 +116,16 @@
 							<!-- ########################## OPCION PARA EL FICHAJE DE SALIDA ##########################  -->
 							<!-- #######################################################################################  -->
 		
-							<div class="col-md-6 text-center">
+							
+							<div th:if="!${empleado.fichajeSeguro}" class="col-md-6 text-center mb-2">
+								<a th:disabled="${haySalida}" 
+								class="btn btn-danger btn-block rounded-pill mb-2 h-100"
+								th:href="@{/fichar/salida/}">
+									<span class="fas fa-sign-out-alt h3"> &nbsp; Salida</span>
+								</a>
+							</div>
+		
+							<div th:if="${empleado.fichajeSeguro}" class="col-md-6 text-center mb-2">
 								<button th:disabled="${haySalida}" 
 								class="btn btn-danger btn-block rounded-pill mb-2 h-100"
 								

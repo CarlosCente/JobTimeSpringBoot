@@ -1,10 +1,10 @@
 /* Populate table empleados */
-INSERT INTO empleados (apellido1, apellido2, direccion, fecha_nacim, localidad, nombre, pais, provincia, es_admin) VALUES('Hernández', 'Centenero', 'Plaza Juan Pablo II', '1992-12-13', 'Valladolid', 'Carlos', 'España', 'Valladolid', 1);
-INSERT INTO empleados (apellido1, apellido2, direccion, fecha_nacim, localidad, nombre, pais, provincia, es_admin) VALUES('Ruiz', 'Fernández', 'Plaza Juan Pablo II', '1993-09-29', 'Valladolid', 'Laura', 'España', 'Valladolid', 0);
-INSERT INTO empleados (apellido1, apellido2, direccion, fecha_nacim, localidad, nombre, pais, provincia, es_admin) VALUES('Estebanez', 'Fernández', 'Calle la Nave', '1992-01-03', 'Villanueva del Campo', 'Juan', 'España', 'Zamora', 0);
-INSERT INTO empleados (apellido1, apellido2, direccion, fecha_nacim, localidad, nombre, pais, provincia, es_admin) VALUES('Hernández', 'Centenero', 'Calle Huerta del Rey', '1999-12-24' , 'Valladolid', 'Miguel' , 'España' ,'Valladolid', 0);
-INSERT INTO empleados (apellido1, apellido2, direccion, fecha_nacim, localidad, nombre, pais, provincia, es_admin) VALUES('Vega', 'Ejemplo', 'Calle de Ejemplo', '1992-12-10', 'Valladolid' , 'Leticia', 'España', 'Valladolid', 0);
-INSERT INTO empleados (apellido1, apellido2, direccion, fecha_nacim, localidad, nombre, pais, provincia, es_admin) VALUES('Gutierrez', 'Ejemplo', 'Calle de Ejemplo', '1992-12-10', 'Valladolid' , 'Pepe', 'España', 'Valladolid', 0);
+INSERT INTO empleados (apellido1, apellido2, direccion, fecha_nacim, fichaje_seguro, localidad, nombre, pais, provincia, es_admin) VALUES('Hernández', 'Centenero', 'Plaza Juan Pablo II', '1992-12-13', true, 'Valladolid', 'Carlos', 'España', 'Valladolid', 1);
+INSERT INTO empleados (apellido1, apellido2, direccion, fecha_nacim, fichaje_seguro, localidad, nombre, pais, provincia, es_admin) VALUES('Ruiz', 'Fernández', 'Plaza Juan Pablo II', '1993-09-29', true, 'Valladolid', 'Laura', 'España', 'Valladolid', 0);
+INSERT INTO empleados (apellido1, apellido2, direccion, fecha_nacim, fichaje_seguro, localidad, nombre, pais, provincia, es_admin) VALUES('Estebanez', 'Fernández', 'Calle la Nave', '1992-01-03', true, 'Villanueva del Campo', 'Juan', 'España', 'Zamora', 0);
+INSERT INTO empleados (apellido1, apellido2, direccion, fecha_nacim, fichaje_seguro, localidad, nombre, pais, provincia, es_admin) VALUES('Hernández', 'Centenero', 'Calle Huerta del Rey', '1999-12-24' , true, 'Valladolid', 'Miguel' , 'España' ,'Valladolid', 0);
+INSERT INTO empleados (apellido1, apellido2, direccion, fecha_nacim, fichaje_seguro,localidad, nombre, pais, provincia, es_admin) VALUES('Vega', 'Ejemplo', 'Calle de Ejemplo', '1992-12-10', true, 'Valladolid' , 'Leticia', 'España', 'Valladolid', 0);
+INSERT INTO empleados (apellido1, apellido2, direccion, fecha_nacim, fichaje_seguro, localidad, nombre, pais, provincia, es_admin) VALUES('Gutierrez', 'Ejemplo', 'Calle de Ejemplo', '1992-12-10', true, 'Valladolid' , 'Pepe', 'España', 'Valladolid', 0);
 
 /* Populate table Fichaje */
 
