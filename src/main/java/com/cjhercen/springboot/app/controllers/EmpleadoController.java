@@ -151,7 +151,6 @@ public class EmpleadoController implements ConstantesUtils {
 		
 		//Se obtiene el numero total de usuarios para asignarle el siguiente ID
 		ArrayList<Usuario> totalUsuarios = usuarioService.findAll();
-		Long idUsuarioNuevo = (long) (totalUsuarios.size() + 1);
 		
 		//Nombre de usuario se genera con las 3 primeras letras del nombre + 3 primeras letras del primer apellido
 		// + 3 primeras letras del segundo apellido
@@ -173,7 +172,7 @@ public class EmpleadoController implements ConstantesUtils {
 		role.setId(empleado.getCod_empl());
 		listaRol.add(role);
 		usuario.setRoles(listaRol);
-		usuario.setId(idUsuarioNuevo);
+		usuario.setId(empleado.getCod_empl());
 		usuario.setEnabled(true);
 		usuario.setEmpleado(empleado);
 		usuarioService.save(usuario);

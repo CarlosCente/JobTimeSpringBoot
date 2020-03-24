@@ -36,11 +36,11 @@ public class Empleado implements Serializable {
 	private String nombre;
 
 	@NotEmpty
-	@Length(min = 2, max = 20)
+	@Length(min = 2, max = 30)
 	private String apellido1;
 
 	@NotEmpty
-	@Length(min = 2, max = 20)
+	@Length(min = 2, max = 30)
 	private String apellido2;
 
 	@Temporal(TemporalType.DATE)
