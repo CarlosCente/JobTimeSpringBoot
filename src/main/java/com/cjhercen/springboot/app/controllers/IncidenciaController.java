@@ -52,7 +52,7 @@ public class IncidenciaController {
 		int totalAdvertencias = calcularIncidenciasAdvertencias(incidenciasPresentes);
 		int totalSolucionadas = calcularIncidenciasSolucionadas(incidenciasPresentes);
 		int totalAbiertas = calcularIncidenciasAbiertas(incidenciasPresentes);
-		
+			
 		model.put("incidencias", incidenciasPresentes);
 		model.put("totalErrores", totalErrores);
 		model.put("totalAdvertencias", totalAdvertencias);

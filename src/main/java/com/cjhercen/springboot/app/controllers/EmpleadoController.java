@@ -1,5 +1,6 @@
 package com.cjhercen.springboot.app.controllers;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -43,12 +44,13 @@ public class EmpleadoController implements ConstantesUtils {
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
+	//private FechaUtils fechaUtils = new FechaUtils();
+	
 	@RequestMapping(value = "/listar", method = RequestMethod.GET)
-	public String listar(Model model) {
+	public String listar(Model model) throws ParseException {
 
 		ArrayList<Empleado> empleados = (ArrayList<Empleado>) empleadoService.findAll();
 		int totalEmpleados = empleados.size();
-		
 		
 		Empleado empleado = new Empleado();
 		model.addAttribute("totalEmpleados", totalEmpleados);
@@ -150,7 +152,7 @@ public class EmpleadoController implements ConstantesUtils {
 		Usuario usuario = new Usuario();
 		
 		//Se obtiene el numero total de usuarios para asignarle el siguiente ID
-		ArrayList<Usuario> totalUsuarios = usuarioService.findAll();
+		//ArrayList<Usuario> totalUsuarios = usuarioService.findAll();
 		
 		//Nombre de usuario se genera con las 3 primeras letras del nombre + 3 primeras letras del primer apellido
 		// + 3 primeras letras del segundo apellido
