@@ -51,7 +51,7 @@ public class Incidencia implements Serializable {
 	@Lob
 	@Column(name = "descripcion")
 	private String descripcion;
-	
+		
 	public Empleado getEmpleado() {
 		return empleado;
 	}
@@ -100,6 +100,7 @@ public class Incidencia implements Serializable {
 		this.descripcion = descripcion;
 	}
 	
+
 	@Override
 	public String toString() {
 		

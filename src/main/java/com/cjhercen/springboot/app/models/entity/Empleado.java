@@ -76,7 +76,7 @@ public class Empleado implements Serializable {
 	
 	@Column(name = "fichajeSeguro")
 	private boolean fichajeSeguro = true;
-	
+
 	public Empleado() {
 
 	}
@@ -193,7 +193,7 @@ public class Empleado implements Serializable {
 	public void setEsAdmin(boolean esAdmin) {
 		this.esAdmin = esAdmin;
 	}
-
+	
 	/*
 	 * Para añadir un fichaje en la lista de fichajes
 	 */
@@ -214,5 +214,6 @@ public class Empleado implements Serializable {
 	public void setFichajeSeguro(boolean fichajeSeguro) {
 		this.fichajeSeguro = fichajeSeguro;
 	}
+	
 
 }
