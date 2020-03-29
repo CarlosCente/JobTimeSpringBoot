@@ -7,6 +7,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Utilidades para trabajar con las fechas y horas de los fichajes
  * 
@@ -15,6 +18,8 @@ import java.util.Locale;
  */
 public class FechaUtils {
 
+	private final Logger log = LoggerFactory.getLogger(getClass());
+	
 	public FechaUtils() {
 
 	}
@@ -236,4 +241,40 @@ public class FechaUtils {
 		}
 	}
 
+	/*
+	 * Método para obtener el numero de la semana dentro del año, para añadir en la BBDD junto al fichaje
+	 */
+	public int obtenerSemana(Date fecha) {
+		int semana = 0;
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(fecha);
+		semana = calendar.get(Calendar.WEEK_OF_YEAR);
+		return semana;
+	}
+	
+	/*
+	 * Método para comprobar si el dia de la semana es domingo
+	 */
+	public Boolean esDomingo(Date fecha) {
+		Boolean esDomingo = false;
+		
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(fecha);
+		int diaSemana = calendar.get(Calendar.DAY_OF_WEEK);
+		
+		if(diaSemana == 1) {
+			esDomingo = true;
+			log.info("Hoy es domingo, el usuario no puede fichar");
+		}
+		return esDomingo;
+	}
+	
+	public int obtenerMesActual(Date fecha) {
+		int semana = 0;
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(fecha);
+		semana = calendar.get(Calendar.MONTH)+1;
+		return semana;
+	}
+	
 }

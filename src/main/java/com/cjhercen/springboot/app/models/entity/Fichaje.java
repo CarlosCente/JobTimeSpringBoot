@@ -55,6 +55,9 @@ public class Fichaje implements Serializable {
 	@Column(name = "tipoPermiso")
 	private String tipoPermiso;
 
+	@Column(name = "semana")
+	private int semanaDelAnnio;
+	
 	public Date getFecha() {
 		return fecha;
 	}
@@ -119,6 +122,23 @@ public class Fichaje implements Serializable {
 	public void setTienePermiso(boolean tienePermiso) {
 		this.tienePermiso = tienePermiso;
 	}
+
+	public String getTipoPermiso() {
+		return tipoPermiso;
+	}
+
+	public void setTipoPermiso(String tipoPermiso) {
+		this.tipoPermiso = tipoPermiso;
+	}
+
+	public int getSemanaDelAnnio() {
+		return semanaDelAnnio;
+	}
+
+	public void setSemanaDelAnnio(int semanaDelAnnio) {
+		this.semanaDelAnnio = semanaDelAnnio;
+	}
+	
 	
 
 }
