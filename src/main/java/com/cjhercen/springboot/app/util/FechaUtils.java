@@ -76,6 +76,20 @@ public class FechaUtils {
 		return dateFormat.format(fecha);
 
 	}
+	
+	/**
+	 * Obtener la hora en formato yyyy-MM-dd como un String
+	 * 
+	 * @param fecha fecha que se quiere transformar en cadena al formato yyyy-MM-dd
+	 * @return hora en el formato yyyy-MM-dd
+	 */
+	public String obtenerFechaParametroEnFormatoSQL(Date fecha) {
+
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+		return dateFormat.format(fecha);
+
+	}
 
 	/**
 	 * Obtener la fecha actual en formato dd-MM-yyyy como un Date

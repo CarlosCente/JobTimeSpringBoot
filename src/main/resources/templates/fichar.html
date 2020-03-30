@@ -256,7 +256,8 @@
 						<div class="col-md-4">
 							<div>
 								<h6>Personalizado</h6>
-								<a type="button" th:href="@{/informe/fechas}">
+								<a type="button"  data-toggle="modal"
+									data-target="#modalInforme">
 								<img th:src="@{/images/report3.png}" class="img-responsive w-75 mt-2">
 								</a>
 							</div>
@@ -366,6 +367,38 @@
 			</div>
 		</div>
 </div>
+ 
+ 	<!-- Modal -->
+	<div class="modal fade" id="modalInforme" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header bg-dark text-white">
+	        <div class="modal-title" id="exampleModalLongTitle">
+	        	Introduzca los parámetros necesarios
+	        </div>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	      <form th:object="${formInforme}" th:action="@{/informe/personalizado}" method="post">
+	      	<div class="form-group">
+	      		<label for="fechaInicioInforme">Desde</label>
+				<input class="form-control" th:field="*{fechaDesde}" id="fechaInicioInforme" type="date" required/>
+			</div>
+			<div class="form-group">
+				<label for="fechaFinInforme">Hasta</label>
+				<input class="form-control" th:field="*{fechaHasta}" id="fechaFinInforme" type="date" required/>
+			</div>
+			<hr/>
+	        <button type="submit" class="btn btn-primary">Aceptar</button>
+	        <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+	        </form>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+ 
  
  		<!-- Modal -->
 	<div class="modal fade" id="modalFlash" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
