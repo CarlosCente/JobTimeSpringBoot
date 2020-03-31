@@ -8,7 +8,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +24,6 @@ import com.cjhercen.springboot.app.models.entity.Fichaje;
 import com.cjhercen.springboot.app.models.entity.Incidencia;
 import com.cjhercen.springboot.app.models.entity.Usuario;
 import com.cjhercen.springboot.app.models.object.FormInforme;
-import com.cjhercen.springboot.app.models.object.FormNuevoFichaje;
 import com.cjhercen.springboot.app.models.object.IncidenciaFichaje;
 import com.cjhercen.springboot.app.models.service.impl.EmpleadoServiceImpl;
 import com.cjhercen.springboot.app.models.service.impl.IncidenciaServiceImpl;
