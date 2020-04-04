@@ -96,6 +96,7 @@
 FROM fichajes A, empleados B 
 WHERE A.empleado_cod_empl = B.cod_empl
 AND empleado_cod_empl = $P{COD_EMPL}
+AND A.finalizado = '1'
 $P!{condicionTipoInforme}]]>
 		</queryString>
 		<field name="fecha" class="java.sql.Date">
