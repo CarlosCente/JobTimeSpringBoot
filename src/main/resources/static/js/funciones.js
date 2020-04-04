@@ -149,6 +149,7 @@ function obtenerMensaje(){
 
 function modificarFichaje(){
 	
+	var urlAjax = $("#urlAjaxModificarFichaje").val();
 	var usuario=$('#eUsuario').val();
     var fecha=$('#eFecha').val();
 	var ipOrigen=$('#eIp').val();
@@ -157,7 +158,7 @@ function modificarFichaje(){
 	
 	$.ajax({
 		type: "GET",
-		url: "/controlhorario/editarFichaje",
+		url: urlAjax,
 		data: {
 			"username" : usuario,
 			"fecha" : fecha,
