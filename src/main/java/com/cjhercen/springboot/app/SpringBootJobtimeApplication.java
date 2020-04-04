@@ -14,7 +14,8 @@ public class SpringBootJobtimeApplication implements CommandLineRunner{
 	@Autowired
 	IUploadFileService uploadFileService;
 	
-	public static void main(String[] args) {
+	public static void main(String[] args){
+
 		SpringApplication.run(SpringBootJobtimeApplication.class, args);
 	}
 	
