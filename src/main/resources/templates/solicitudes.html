@@ -42,13 +42,10 @@
 							id="tipoSolicitud" name="tipo" th:field="*{tipo}" style="background-color: #6c8ec2;">
 							    <option value="">Seleccione una opción</option>
 								<option value="1">Vacaciones</option>
-								<option value="2">Enfermedad</option>
-								<option value="3">Operación de un familiar</option>
-								<option value="4">Matrimonio</option>
-								<option value="5">Nacimiento de un hijo</option>
-								<option value="6">Examen</option>
-								<option value="7">Cita médica</option>
-								<option value="8">Asistencia a formación</option>
+								<option value="2">Operación de un familiar</option>
+								<option value="3">Matrimonio</option>
+								<option value="4">Nacimiento de un hijo</option>
+
 							</select>
 						</div>
 						<small
@@ -60,7 +57,7 @@
 							<div class="card-body row">
 								<div class="form-group col-md-3 col-xs-12 text-center mt-2" style="align-self: center;">
 									<input type="checkbox" class="form-check-input" id="desplazamiento" 
-									 value="si" onChange="modificarDiasTotales()"
+									 value="Si" onChange="modificarDiasTotales()"
 									 th:field="*{requiereDesplazamiento}">
 	    							<label class="form-check-label font-weight-bold h6" for="desplazamiento">¿Requiere desplazamiento?</label>
 								</div>								
@@ -69,14 +66,7 @@
 									<input type="date" class="form-control text-center text-white" id="fechaInicioPermiso"
 									th:field="*{fecha}" style="background-color: #6c8ec2;">
 								</div>
-								
-									
-								<div class="form-group col-md-3 col-xs-12 text-center mt-4">
-									<label class="font-weight-bold" for="tiempoNecesario">Tiempo necesario</label>
-									<input type="number" class="form-control text-center text-white" id="tiempoNecesario"
-									th:field="*{tiempoNecesario}" style="background-color: #6c8ec2;">
-								</div>
-								
+													
 								<div id="cardDiasSolicitados" class="card border-0 col-md-3 col-xs-12 text-center mt-2">
 									<div class="card-body" style="align-self: center;">
 										<h5 class="font-weight-bold">Días solicitados</h5>
@@ -91,10 +81,8 @@
 							<div class="card-body col-md-12 col-xs-12">
 								<div class="row mt-2">
 									<div class="col-md-8 col-xs-12" style="margin: auto;">
-										<label class="text-center" for="inicioVacaciones" id="labelInicioVacaciones" hidden="true">Fecha de inicio de las vacaciones: </label>
-									 	<input type="text" class="form-control" id="inicioVacaciones" th:field="*{inicioVacaciones}" hidden="true"/>
-										<label class="text-center" for="finVacaciones" id="labelFinVacaciones" hidden="true">Fecha de fin de las vacaciones: (Día de incorporación) </label>
-										<input type="text" class="form-control" id="finVacaciones" th:field="*{finVacaciones}" hidden="true" />									 	
+									 	<input type="hidden" class="form-control" id="inicioVacaciones" th:field="*{inicioVacaciones}" hidden="true"/>
+										<input type="hidden" class="form-control" id="finVacaciones" th:field="*{finVacaciones}" hidden="true" />									 	
 									 	<div id='calendar' class="mt-4"></div>								
 									</div>
 								</div>
@@ -145,8 +133,7 @@
 											th:title="${solicitud.empleado.nombre} +' '+${solicitud.empleado.apellido1}+' '+${solicitud.empleado.apellido2}"
 											 th:text="${solicitud.empleado.usuario.username}"></td>
 	
-											<td th:text="${solicitud.fecha}" data-toggle="tooltip" data-placement="bottom" data-type="primary"
-											   th:title="'La fecha de solicitud corresponde al momento de realización de la gestión no a los días efectivos del permiso (consultar descripción)'"></td>
+											<td th:text="${solicitud.fecha}"></td>
 											
 											<td
 												
@@ -165,16 +152,24 @@
 											</td>
 											<td>
 												<a href="#"
+													data-toggle="tooltip" data-placement="bottom" data-type="primary"
+											   		th:title="'Aceptar'"
+											   		onclick="return mostrarConfirmacionAceptar()"
 													 class="btn-lg" style="text-decoration:none;">
 													<i class="fas fa-check text-success"></i>
 												</a>
 												
 												<a href="#"
+													 data-toggle="tooltip" data-placement="bottom" data-type="primary"
+											  		 th:title="'Rechazar'"
+											  		 onclick="return mostrarConfirmacionCancelar()"
 													 class="btn-lg" style="text-decoration:none;">
 													<i class="fas fa-times text-danger"></i>
 												</a>
 											
 												<a href="#"
+												 	data-toggle="tooltip" data-placement="bottom" data-type="primary"
+											  		 th:title="'Eliminar Solicitud'"
 													 onclick="return mostrarConfirmacion()"
 													 class="btn-lg">
 													<i class="fas fa-trash-alt"></i>
@@ -215,7 +210,9 @@
 	</div>
 	
 	<footer th:replace="layout/layout :: footer"></footer>
-	
+	<input type="hidden" id="urlAjaxAceptarSolicitud" th:value="@{'/solicitudes/aceptar'}" />
+	<input type="hidden" id="urlAjaxRechazarSolicitud" th:value="@{'/solicitudes/rechazar'}" />
+	<input type="hidden" id="urlAjaxEliminarSolicitud" th:value="@{'/solicitudes/eliminar'}" />
 	<script th:inline="javascript">
 
 	$(document).ready( function () {
@@ -284,7 +281,7 @@
     <script>
 
 	function mostrarConfirmacion(){
-		
+		var urlAjax = $("#urlAjaxEliminarSolicitud").val();
 		var table = $('#tablaSolicitudes').DataTable();
 		$('#tablaSolicitudes tbody').one('click', 'tr', function () {
 	        var data = table.row( this ).data();
@@ -314,7 +311,7 @@
 				
 				    $.ajax({
 						type: "GET",
-						url: "/solicitudes/eliminar",
+						url: urlAjax,
 						data: {
 							"username" : usuario,
 							"fecha" : fecha,
@@ -326,6 +323,94 @@
 		});
 	};
 
+	</script>
+	
+	<script>
+	function mostrarConfirmacionCancelar(){
+		var urlAjax = $("#urlAjaxRechazarSolicitud").val();
+		var table = $('#tablaSolicitudes').DataTable();
+		$('#tablaSolicitudes tbody').one('click', 'tr', function () {
+	        var data = table.row( this ).data();
+	        var usuario=data[0];
+	        var fecha=data[1];
+	        var tipo=data[2];
+		
+			Swal.fire({
+				  title: '¿Estás seguro de rechazar la solicitud?',
+				  icon: 'info',
+				  showCancelButton: true,
+				  confirmButtonColor: '#3085d6',
+				  cancelButtonColor: '#d33',
+				  confirmButtonText: 'Si'
+				}).then((result) => {
+				  if (result.value) {
+				    Swal.fire({
+				      icon: 'success',
+				      title: 'Solicitud Rechazada.',
+				      showConfirmButton: false,
+				      timer: 1500,
+				      onClose: () => {
+				    	  location.reload();
+				   	  }
+				    })  
+				
+				    $.ajax({
+						type: "GET",
+						url: urlAjax,
+						data: {
+							"username" : usuario,
+							"fecha" : fecha,
+							"tipo" : tipo
+						}
+					});
+				  }
+			})
+		});
+	};
+	</script>
+	
+	<script>
+	function mostrarConfirmacionAceptar(){
+		var urlAjax = $("#urlAjaxAceptarSolicitud").val();
+		var table = $('#tablaSolicitudes').DataTable();
+		$('#tablaSolicitudes tbody').one('click', 'tr', function () {
+	        var data = table.row( this ).data();
+	        var usuario=data[0];
+	        var fecha=data[1];
+	        var tipo=data[2];
+		
+			Swal.fire({
+				  title: '¿Estás seguro de aceptar la solicitud?',
+				  icon: 'info',
+				  showCancelButton: true,
+				  confirmButtonColor: '#3085d6',
+				  cancelButtonColor: '#d33',
+				  confirmButtonText: 'Si'
+				}).then((result) => {
+				  if (result.value) {
+				    Swal.fire({
+				      icon: 'success',
+				      title: 'Solicitud Aceptada.',
+				      showConfirmButton: false,
+				      timer: 1500,
+				      onClose: () => {
+				    	  location.reload();
+				   	  }
+				    })  
+				
+				    $.ajax({
+						type: "GET",
+						url: urlAjax,
+						data: {
+							"username" : usuario,
+							"fecha" : fecha,
+							"tipo" : tipo
+						}
+					});
+				  }
+			})
+		});
+	};
 	</script>
     
 </body>

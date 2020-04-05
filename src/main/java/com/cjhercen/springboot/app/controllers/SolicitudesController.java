@@ -1,5 +1,6 @@
 package com.cjhercen.springboot.app.controllers;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -19,10 +20,12 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.cjhercen.springboot.app.models.entity.Empleado;
+import com.cjhercen.springboot.app.models.entity.Fichaje;
 import com.cjhercen.springboot.app.models.entity.Solicitud;
 import com.cjhercen.springboot.app.models.entity.Usuario;
 import com.cjhercen.springboot.app.models.object.FormSolicitud;
 import com.cjhercen.springboot.app.models.service.impl.EmpleadoServiceImpl;
+import com.cjhercen.springboot.app.models.service.impl.FichajeServiceImpl;
 import com.cjhercen.springboot.app.models.service.impl.SolicitudServiceImpl;
 import com.cjhercen.springboot.app.models.service.impl.UsuarioServiceImpl;
 import com.cjhercen.springboot.app.util.ConstantesSolicitudes;
@@ -37,6 +40,9 @@ public class SolicitudesController implements ConstantesSolicitudes{
 	
 	@Autowired
 	EmpleadoServiceImpl empleadoService;
+	
+	@Autowired
+	FichajeServiceImpl fichajeService;
 	
 	@Autowired
 	private SolicitudServiceImpl solicitudService;
@@ -88,7 +94,7 @@ public class SolicitudesController implements ConstantesSolicitudes{
 			 }
 		}
 		
-		if(obtenerTipo(formSolicitud).equals(TIPO_ENFERMEDAD) || obtenerTipo(formSolicitud).equals(TIPO_MATRIMONIO)) {	
+		if(obtenerTipo(formSolicitud).equals(TIPO_MATRIMONIO)) {	
 			if(formSolicitud.getFecha() == null) {
 				log.info("No se ha introducido la fecha de inicio del permiso");
 				flash.addFlashAttribute("tipo", "Error");
@@ -108,18 +114,7 @@ public class SolicitudesController implements ConstantesSolicitudes{
 			}
 			
 		}
-		
-		if(obtenerTipo(formSolicitud).equals(TIPO_EXAMEN) || obtenerTipo(formSolicitud).equals(TIPO_FORMACION) ||
-				obtenerTipo(formSolicitud).equals(TIPO_CITA_MEDICA)) {	
-			if(formSolicitud.getFecha() == null || formSolicitud.getTiempoNecesario() <= 0 || formSolicitud.getTiempoNecesario() > 8) {
-				log.info("No se ha introducido la fecha de inicio o las horas necesarias para el permiso");
-				flash.addFlashAttribute("tipo", "Error");
-				flash.addFlashAttribute("message", "Los campos de fecha de inicio y las horas necesarias son necesarias para"
-						+ " los permisos de examen, cita médica o asistencia a formación");
-				return "redirect:solicitudes";
-			}
-		}
-		
+			
 		
 		//Se obtiene el usuario conectado
 		String username = usuarioService.getUsername();
@@ -137,11 +132,11 @@ public class SolicitudesController implements ConstantesSolicitudes{
 		if(obtenerTipo(formSolicitud).equals(TIPO_VACACIONES)) {
 			solicitud.setFechaInicioVacaciones(formSolicitud.getInicioVacaciones());
 			solicitud.setFechaFinVacaciones(formSolicitud.getFinVacaciones());
+			solicitud.setDiasTotales(obtenerDiasTotales(formSolicitud));
 		}
 		
 		/*
 		 * PERMISOS DE DIAS COMPLETOS
-		 * Enfermedad --> Hasta que se coja el alta, indicar fecha de inicio
 		 * Matrimonio --> Indicar día de inicio (15 días) y fecha de inicio
 		 * Operación de un familiar --> Indicar si requiere desplazamiento (2 o 4 dias) y fecha de inicio
 		 * Nacimiento de un hijo --> Indicar si requiere desplazamiento (2 o 4 dias) y fecha de inicio
@@ -153,34 +148,77 @@ public class SolicitudesController implements ConstantesSolicitudes{
 			solicitud.setDiasTotales(obtenerDiasTotales(formSolicitud));
 		}
 		
-		if(obtenerTipo(formSolicitud).equals(TIPO_ENFERMEDAD) || obtenerTipo(formSolicitud).equals(TIPO_MATRIMONIO)) {	
+		if(obtenerTipo(formSolicitud).equals(TIPO_MATRIMONIO)) {	
 			solicitud.setFechaInicioPermiso(formSolicitud.getFecha());
-			//En el caso de matrimonio se establecen los 15 dias naturales
-			if(obtenerTipo(formSolicitud).equals(TIPO_MATRIMONIO)) {
-				solicitud.setDiasTotales(obtenerDiasTotales(formSolicitud));
-			}
+			solicitud.setDiasTotales(15);
 		}
 		
-		
-		/*
-		 * PERMISOS DE HORAS O PARCIALES
-		 * Examen --> Indicar horas necesarias y el dia de inicio
-		 * Cita médica --> Indicar horas necesarias y el dia de inicio
-		 * Asistencia a formación --> Indicar horas necesarias y el dia de inicio
-		 */
-		if(obtenerTipo(formSolicitud).equals(TIPO_EXAMEN) || obtenerTipo(formSolicitud).equals(TIPO_FORMACION) ||
-				obtenerTipo(formSolicitud).equals(TIPO_CITA_MEDICA)) {	
-			solicitud.setTiempoNecesario(formSolicitud.getTiempoNecesario());
-			solicitud.setFechaInicioPermiso(formSolicitud.getFecha());
-		}
-		
-		
+				
 		solicitudService.save(solicitud);
 		log.info("La solicitud se ha creado con éxito");
 		flash.addFlashAttribute("tipo", "Informacion");
 		flash.addFlashAttribute("message", "La solicitud se ha creado con éxito");
 		
 		return "redirect:solicitudes";
+	}
+	
+	@RequestMapping(value = "/solicitudes/aceptar")
+	public String aceptarSolicitud(@RequestParam(value = "username") String username ,
+			@RequestParam(value = "fecha") String fecha,
+			@RequestParam(value = "tipo") String tipo) {
+
+		if(log.isDebugEnabled()) {
+			log.debug("Entrando en aceptarSolicitud()...");
+		}
+		
+		Date fechaSolicitud = fechaUtils.obtenerFechaApartirString(fecha);
+		Usuario usuario = usuarioService.findByUsername(username);
+		Empleado empleado = usuario.getEmpleado();
+		Solicitud solicitudAceptar = solicitudService.findByEmpleadoAndFechaAndTipo(empleado, fechaSolicitud, tipo);
+		
+		//Se marca la solicitud como aceptada
+		solicitudAceptar.setEstado(SOLICITUD_ACEPTADA);
+		
+		//Se tratan las fechas implicadas en la solicitud segun el tipo de solicitud
+		tratarSolicitudFichajes(solicitudAceptar);
+
+		solicitudService.save(solicitudAceptar);
+		
+		if(log.isDebugEnabled()) {
+			log.debug("Saliendo de aceptarSolicitud()... ");
+		}
+		
+		log.info("Se ha aceptado correctamente la solicitud " + solicitudAceptar.toString());
+
+		return "redirect:/solicitudes";
+	}
+	
+	
+	@RequestMapping(value = "/solicitudes/rechazar")
+	public String rechazarSolicitud(@RequestParam(value = "username") String username ,
+			@RequestParam(value = "fecha") String fecha,
+			@RequestParam(value = "tipo") String tipo) {
+
+		if(log.isDebugEnabled()) {
+			log.debug("Entrando en rechazarSolicitud()...");
+		}
+		
+		Date fechaSolicitud = fechaUtils.obtenerFechaApartirString(fecha);
+		Usuario usuario = usuarioService.findByUsername(username);
+		Empleado empleado = usuario.getEmpleado();
+		Solicitud solicitudArechazar = solicitudService.findByEmpleadoAndFechaAndTipo(empleado, fechaSolicitud, tipo);
+		
+		solicitudArechazar.setEstado(SOLICITUD_RECHAZADA);
+		
+		solicitudService.save(solicitudArechazar);
+
+		if(log.isDebugEnabled()) {
+			log.debug("Saliendo de rechazarSolicitud()... ");
+		}
+		
+		log.info("Se ha rechazado correctamente la solicitud " + solicitudArechazar.toString());
+
+		return "redirect:/solicitudes";
 	}
 	
 	@RequestMapping(value = "/solicitudes/eliminar")
@@ -217,25 +255,13 @@ public class SolicitudesController implements ConstantesSolicitudes{
 			tipo = TIPO_VACACIONES;
 			break;
 		case "2":
-			tipo = TIPO_ENFERMEDAD;
-			break;
-		case "3":
 			tipo = TIPO_OPERACION_FAMILIAR;
 			break;
-		case "4":
+		case "3":
 			tipo = TIPO_MATRIMONIO;
 			break;
-		case "5":
+		case "4":
 			tipo = TIPO_NACIMIENTO;
-			break;
-		case "6":
-			tipo = TIPO_EXAMEN;
-			break;
-		case "7":
-			tipo = TIPO_CITA_MEDICA;
-			break;
-		case "8":
-			tipo = TIPO_FORMACION;
 			break;
 		default:
 			tipo = "";
@@ -249,7 +275,138 @@ public class SolicitudesController implements ConstantesSolicitudes{
 	private int obtenerDiasTotales(FormSolicitud solicitud) {
 		int retorno = 0;
 		
+		//NACIMIENTO DE UN HIJO Y OPERACION DE UN FAMILIAR
+		if(solicitud.getTipo().equals("2") || solicitud.getTipo().equals("4")) {
+			if("Si".equals(solicitud.getRequiereDesplazamiento())){
+				retorno = 4;
+			} else {
+				retorno = 2;
+			}
+			
+		//VACACIONES
+		} else if (solicitud.getTipo().equals("1")) {
+			//Recoger fecha de inicio y fecha de fin para poder sacar los dias que hay entre ellos,
+			//para ello tendría que restar los fines de semana ya que solo se contarán los días laborales
+			//O puedo cogerlos todos e ir apuntando los dias que se han seleccionado, todos sin excepcion
+			Date fechaInicio = solicitud.getInicioVacaciones();
+			Date fechaFin = solicitud.getFinVacaciones();
+
+			int dias=(int) ((fechaFin.getTime()-fechaInicio.getTime())/86400000);
+			retorno = dias;
+		}
+		
 		return retorno;
+	}
+	
+	/*
+	 * Método que introduce los fichajes necesarios en base de datos que se ven ligados a la solicitud 
+	 */
+	private void tratarSolicitudFichajes(Solicitud solicitudAceptar) {
+				
+		String tipo = solicitudAceptar.getTipo();
+		//Casos Nacimiento de un hijo y Operacion de un familiar, dispone de los días necesarios que pueden ser 2 o 4
+		if(tipo.equals(TIPO_NACIMIENTO) || tipo.equals(TIPO_OPERACION_FAMILIAR)) {
+			
+			//Obtengo los dias totales del permiso y desde cuando se inicia el mismo para crear los fichajes necesarios
+			int totalDias = solicitudAceptar.getDiasTotales();
+			Date fechaInicioPermiso = solicitudAceptar.getFechaInicioPermiso();
+			log.debug("Vamos a entrar en while para tratar la solicitud de nacimiento u de operacion de un familiar,"
+					+ " dias totales: " + totalDias);
+
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(fechaInicioPermiso);
+			Date fechaContador = calendar.getTime();
+			while(totalDias >0) {
+				//Creo los fichajes necesarios para rellenar los dias
+				Empleado empleado = solicitudAceptar.getEmpleado();
+				Fichaje fichajeConPermiso = new Fichaje();
+						
+				fichajeConPermiso.setEmpleado(empleado);
+				fichajeConPermiso.setFecha(fechaContador);
+				fichajeConPermiso.setIp("Creado por admin");
+				fichajeConPermiso.setFinalizado(true);
+				fichajeConPermiso.setTiempoTotal("08:00");
+				fichajeConPermiso.setSemanaDelAnnio(fechaUtils.obtenerSemana(fechaContador));
+				fichajeConPermiso.setTienePermiso(true);
+				fichajeConPermiso.setTipoPermiso(solicitudAceptar.getTipo());
+						
+				if(!fechaUtils.esFinDeSemana(fechaContador)){
+					totalDias--;
+					fichajeService.save(fichajeConPermiso);
+				}
+				
+				fechaContador = fechaUtils.sumarDias(fechaContador, 1);
+			}//Fin while
+			
+		} else if(tipo.equals(TIPO_MATRIMONIO)) {
+			//Obtengo los dias totales del permiso y desde cuando se inicia el mismo para crear los fichajes necesarios
+			int totalDias = solicitudAceptar.getDiasTotales();
+			Date fechaInicioPermiso = solicitudAceptar.getFechaInicioPermiso();
+			log.debug("Vamos a entrar en while para tratar la solicitud de matrimonio, dias totales: " + totalDias);
+
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(fechaInicioPermiso);
+			Date fechaContador = calendar.getTime();
+			while(totalDias >0) {
+				//Creo los fichajes necesarios para rellenar los dias
+				Empleado empleado = solicitudAceptar.getEmpleado();
+				Fichaje fichajeConPermiso = new Fichaje();
+						
+				fichajeConPermiso.setEmpleado(empleado);
+				fichajeConPermiso.setFecha(fechaContador);
+				fichajeConPermiso.setIp("Creado por admin");
+				fichajeConPermiso.setFinalizado(true);
+				fichajeConPermiso.setTiempoTotal("08:00");
+				fichajeConPermiso.setSemanaDelAnnio(fechaUtils.obtenerSemana(fechaContador));
+				fichajeConPermiso.setTienePermiso(true);
+				fichajeConPermiso.setTipoPermiso(solicitudAceptar.getTipo());
+					
+				//En este caso serán 15 dias naturales por lo que no se mira si es o no fin de semana
+				totalDias--;
+				
+				//Se controla para que no se creen fichajes los sabados ni los domingos
+				if(!fechaUtils.esFinDeSemana(fechaContador)) {
+					fichajeService.save(fichajeConPermiso);
+				}
+				
+				fechaContador = fechaUtils.sumarDias(fechaContador, 1);
+			}//Fin while
+		
+		} else if(tipo.equals(TIPO_VACACIONES)) {
+			//Obtengo los dias totales del permiso y desde cuando se inicia el mismo para crear los fichajes necesarios
+			int totalDias = solicitudAceptar.getDiasTotales();
+			Date fechaInicioVacaciones = solicitudAceptar.getFechaInicioVacaciones();
+			log.debug("Vamos a entrar en while para tratar la solicitud de matrimonio, dias totales: " + totalDias);
+
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(fechaInicioVacaciones);
+			Date fechaContador = calendar.getTime();
+			while(totalDias >0) {
+				//Creo los fichajes necesarios para rellenar los dias
+				Empleado empleado = solicitudAceptar.getEmpleado();
+				Fichaje fichajeConPermiso = new Fichaje();
+						
+				fichajeConPermiso.setEmpleado(empleado);
+				fichajeConPermiso.setFecha(fechaContador);
+				fichajeConPermiso.setIp("Creado por admin");
+				fichajeConPermiso.setFinalizado(true);
+				fichajeConPermiso.setTiempoTotal("08:00");
+				fichajeConPermiso.setSemanaDelAnnio(fechaUtils.obtenerSemana(fechaContador));
+				fichajeConPermiso.setTienePermiso(true);
+				fichajeConPermiso.setTipoPermiso(solicitudAceptar.getTipo());
+					
+				//En este caso serán 15 dias naturales por lo que no se mira si es o no fin de semana
+				totalDias--;
+				
+				//Se controla para que no se creen fichajes los sabados ni los domingos
+				if(!fechaUtils.esFinDeSemana(fechaContador)) {
+					fichajeService.save(fichajeConPermiso);
+				}
+				
+				fechaContador = fechaUtils.sumarDias(fechaContador, 1);
+			}//Fin while
+		}
+		
 	}
 	
 }

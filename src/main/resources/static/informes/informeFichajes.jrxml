@@ -68,7 +68,7 @@
 			<rightPen lineWidth="0.5" lineColor="#000000"/>
 		</box>
 	</style>
-	<style name="Table 2_CH" mode="Opaque" backcolor="#FFFFFF">
+	<style name="Table 2_CH" mode="Opaque" backcolor="#BFE1FF">
 		<box>
 			<pen lineWidth="0.5" lineColor="#000000"/>
 			<topPen lineWidth="0.5" lineColor="#000000"/>
@@ -77,7 +77,7 @@
 			<rightPen lineWidth="0.5" lineColor="#000000"/>
 		</box>
 	</style>
-	<style name="Table 2_TD" mode="Opaque" backcolor="#D4847D">
+	<style name="Table 2_TD" mode="Opaque" backcolor="#FFFFFF">
 		<box>
 			<pen lineWidth="0.5" lineColor="#000000"/>
 			<topPen lineWidth="0.5" lineColor="#000000"/>
@@ -157,6 +157,29 @@ GROUP BY semana]]>
 		<group name="semana">
 			<groupExpression><![CDATA[$F{semana}]]></groupExpression>
 		</group>
+	</subDataset>
+	<subDataset name="DatasetPermisos" uuid="c659c8a0-923c-4ab4-87ea-c7da4401ef0c">
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Jobtime"/>
+		<parameter name="COD_EMPL" class="java.lang.String"/>
+		<queryString language="SQL">
+			<![CDATA[SELECT tipo, fecha_inicio_permiso, dias_totales
+FROM solicitudes
+WHERE tipo != 'Vacaciones'
+AND empleado_cod_empl = $P{COD_EMPL}]]>
+		</queryString>
+		<field name="tipo" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="tipo"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="solicitudes"/>
+		</field>
+		<field name="fecha_inicio_permiso" class="java.sql.Date">
+			<property name="com.jaspersoft.studio.field.label" value="fecha_inicio_permiso"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="solicitudes"/>
+		</field>
+		<field name="dias_totales" class="java.lang.Integer">
+			<property name="com.jaspersoft.studio.field.label" value="dias_totales"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="solicitudes"/>
+		</field>
 	</subDataset>
 	<parameter name="COD_EMPL" class="java.lang.String"/>
 	<parameter name="SEMANAL" class="java.lang.String"/>
@@ -271,10 +294,10 @@ WHERE cod_empl = $P{COD_EMPL}]]>
 		</band>
 	</pageHeader>
 	<detail>
-		<band height="247" splitType="Stretch">
+		<band height="143" splitType="Stretch">
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<componentElement>
-				<reportElement positionType="Float" x="0" y="80" width="555" height="45" uuid="934e8715-8a08-4502-ac66-e3323e03186f">
+				<reportElement positionType="Float" x="0" y="90" width="555" height="45" uuid="934e8715-8a08-4502-ac66-e3323e03186f">
 					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
 					<property name="com.jaspersoft.studio.table.style.table_header" value="Table 1_TH"/>
 					<property name="com.jaspersoft.studio.table.style.column_header" value="Table 1_CH"/>
@@ -391,7 +414,7 @@ WHERE cod_empl = $P{COD_EMPL}]]>
 				</jr:table>
 			</componentElement>
 			<textField>
-				<reportElement x="0" y="0" width="555" height="20" isRemoveLineWhenBlank="true" uuid="2e6aa770-a949-427d-a004-15f6cad8d9ce">
+				<reportElement x="0" y="10" width="555" height="20" isRemoveLineWhenBlank="true" uuid="2e6aa770-a949-427d-a004-15f6cad8d9ce">
 					<printWhenExpression><![CDATA[$V{haySemanal}]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -400,7 +423,7 @@ WHERE cod_empl = $P{COD_EMPL}]]>
 				<textFieldExpression><![CDATA["Fichajes de la semana: " + $P{SEMANA}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="20" width="555" height="20" isRemoveLineWhenBlank="true" uuid="f89f17cc-5162-4977-bf4d-5ee72ea98124">
+				<reportElement x="0" y="30" width="555" height="20" isRemoveLineWhenBlank="true" uuid="f89f17cc-5162-4977-bf4d-5ee72ea98124">
 					<printWhenExpression><![CDATA[$V{hayMensual}]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -409,7 +432,7 @@ WHERE cod_empl = $P{COD_EMPL}]]>
 				<textFieldExpression><![CDATA["1".equals($P{MES}) ? "Fichajes de Enero" : "2".equals($P{MES}) ? "Fichajes de Febrero" : "3".equals($P{MES}) ? "Fichajes de Marzo" : "4".equals($P{MES}) ? "Fichajes de Abril" : "5".equals($P{MES}) ? "Fichajes de Mayo" : "6".equals($P{MES}) ? "Fichajes de Junio" : "7".equals($P{MES}) ? "Fichajes de Julio" : "8".equals($P{MES}) ? "Fichajes de Agosto" : "9".equals($P{MES}) ? "Fichajes de Septiembre" : "10".equals($P{MES}) ? "Fichajes de Octubre" : "11".equals($P{MES}) ? "Fichajes de Noviembre" : "12".equals($P{MES}) ? "Fichajes de Diciembre" : ""]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="40" width="555" height="20" isRemoveLineWhenBlank="true" uuid="dbbe36d9-9c45-49ae-82bf-e4f82a277886">
+				<reportElement x="0" y="50" width="555" height="20" isRemoveLineWhenBlank="true" uuid="dbbe36d9-9c45-49ae-82bf-e4f82a277886">
 					<printWhenExpression><![CDATA[$V{hayPersonalizado}]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -419,14 +442,14 @@ WHERE cod_empl = $P{COD_EMPL}]]>
 				<patternExpression><![CDATA["dd-MM-yyyy"]]></patternExpression>
 			</textField>
 			<staticText>
-				<reportElement x="91" y="60" width="80" height="20" isRemoveLineWhenBlank="true" uuid="5acea1c9-be77-47e1-b22f-8c16b81127a9">
+				<reportElement x="91" y="70" width="80" height="20" isRemoveLineWhenBlank="true" uuid="5acea1c9-be77-47e1-b22f-8c16b81127a9">
 					<printWhenExpression><![CDATA[$V{hayPersonalizado}]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<text><![CDATA[Desde:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="170" y="60" width="80" height="20" isRemoveLineWhenBlank="true" uuid="bfe9f8f6-7264-4d34-8ddf-9905930e60f7">
+				<reportElement x="170" y="70" width="80" height="20" isRemoveLineWhenBlank="true" uuid="bfe9f8f6-7264-4d34-8ddf-9905930e60f7">
 					<printWhenExpression><![CDATA[$V{hayPersonalizado}]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
@@ -434,22 +457,24 @@ WHERE cod_empl = $P{COD_EMPL}]]>
 				<patternExpression><![CDATA["dd-MM-yyyy"]]></patternExpression>
 			</textField>
 			<staticText>
-				<reportElement x="270" y="60" width="60" height="20" isRemoveLineWhenBlank="true" uuid="7dfaa5d5-ce35-4ba0-9ea0-b159aceb6626">
+				<reportElement x="270" y="70" width="60" height="20" isRemoveLineWhenBlank="true" uuid="7dfaa5d5-ce35-4ba0-9ea0-b159aceb6626">
 					<printWhenExpression><![CDATA[$V{hayPersonalizado}]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<text><![CDATA[Hasta:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="330" y="60" width="100" height="20" isRemoveLineWhenBlank="true" uuid="b33640fe-d7c9-4c8f-a54f-2829b8a8fbc7">
+				<reportElement x="330" y="70" width="100" height="20" isRemoveLineWhenBlank="true" uuid="b33640fe-d7c9-4c8f-a54f-2829b8a8fbc7">
 					<printWhenExpression><![CDATA[$V{hayPersonalizado}]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$P{HASTA}]]></textFieldExpression>
 				<patternExpression><![CDATA["dd-MM-yyyy"]]></patternExpression>
 			</textField>
+		</band>
+		<band height="110">
 			<frame>
-				<reportElement positionType="Float" x="0" y="130" width="555" height="110" uuid="092451f5-a497-4292-a74c-8124cb0eceea"/>
+				<reportElement positionType="Float" x="0" y="0" width="555" height="110" uuid="092451f5-a497-4292-a74c-8124cb0eceea"/>
 				<frame>
 					<reportElement positionType="Float" mode="Opaque" x="0" y="10" width="555" height="30" backcolor="#C9342C" uuid="51cbd170-ed31-4d49-9b98-518451fb159e">
 						<property name="com.jaspersoft.studio.unit.y" value="px"/>
@@ -497,7 +522,7 @@ WHERE cod_empl = $P{COD_EMPL}]]>
 									<text><![CDATA[Semana]]></text>
 								</staticText>
 							</jr:columnHeader>
-							<jr:detailCell style="Table 2_CH" height="20">
+							<jr:detailCell height="20">
 								<textField>
 									<reportElement x="0" y="0" width="80" height="20" uuid="fae4834b-4e85-488f-9fba-48ab6f48ba1d"/>
 									<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -518,7 +543,7 @@ WHERE cod_empl = $P{COD_EMPL}]]>
 									<text><![CDATA[Tiempo total]]></text>
 								</staticText>
 							</jr:columnHeader>
-							<jr:detailCell style="Table 2_CH" height="20">
+							<jr:detailCell height="20">
 								<textField>
 									<reportElement x="0" y="0" width="120" height="20" uuid="3b4cc915-0201-474e-b113-2930990346e6"/>
 									<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -532,9 +557,129 @@ WHERE cod_empl = $P{COD_EMPL}]]>
 				</componentElement>
 			</frame>
 		</band>
+		<band height="121">
+			<frame>
+				<reportElement positionType="Float" x="0" y="0" width="275" height="110" uuid="c6467821-d1c0-45cb-afca-37a4e3b00f32"/>
+				<frame>
+					<reportElement positionType="Float" mode="Opaque" x="0" y="10" width="275" height="30" backcolor="#C9342C" uuid="5b0cd797-03d8-45d0-a87f-5c052dc2e386">
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+						<pen lineWidth="0.0"/>
+					</box>
+					<staticText>
+						<reportElement x="0" y="2" width="275" height="25" forecolor="#FFFFFF" backcolor="#C9342C" uuid="818494aa-01e6-4a8c-b1cf-9ba8406573be">
+							<property name="com.jaspersoft.studio.unit.y" value="px"/>
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						</reportElement>
+						<textElement textAlignment="Center" verticalAlignment="Middle">
+							<font size="14"/>
+						</textElement>
+						<text><![CDATA[Permisos]]></text>
+					</staticText>
+				</frame>
+				<componentElement>
+					<reportElement x="0" y="50" width="275" height="60" uuid="516043e8-941e-4a98-b606-4d7482d1077d">
+						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+						<property name="com.jaspersoft.studio.table.style.table_header" value="Table 2_TH"/>
+						<property name="com.jaspersoft.studio.table.style.column_header" value="Table 2_CH"/>
+						<property name="com.jaspersoft.studio.table.style.detail" value="Table 2_TD"/>
+					</reportElement>
+					<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+						<datasetRun subDataset="DatasetPermisos" uuid="b54ec5b5-6ce5-4ddf-9bbb-0416f92d8f0f">
+							<datasetParameter name="COD_EMPL">
+								<datasetParameterExpression><![CDATA[$P{COD_EMPL}]]></datasetParameterExpression>
+							</datasetParameter>
+							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+						</datasetRun>
+						<jr:column width="130" uuid="ec2a4a28-c4fd-4598-b565-2a0c0ee48dcd">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+							<jr:columnHeader style="Table 1_CH" height="30">
+								<staticText>
+									<reportElement x="0" y="0" width="130" height="30" uuid="777bc0cd-a90e-409c-8808-105dfb734dd0"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font size="12"/>
+									</textElement>
+									<text><![CDATA[Tipo de permiso]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="Table 2_TD" height="30">
+								<textField>
+									<reportElement x="0" y="0" width="130" height="30" uuid="86bc432c-e60a-4cd1-9c06-a975e786740f"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle"/>
+									<textFieldExpression><![CDATA[$F{tipo}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="70" uuid="f3a4b3af-74ec-4bb6-900b-f2e9d9ceae84">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+							<jr:columnHeader style="Table 1_CH" height="30">
+								<staticText>
+									<reportElement x="0" y="0" width="70" height="30" uuid="2d8fb4de-d245-46ff-bba1-af6adfb779c8"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font size="12"/>
+									</textElement>
+									<text><![CDATA[Fecha Inicio]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="Table 2_TD" height="30">
+								<textField>
+									<reportElement x="0" y="0" width="70" height="30" uuid="acfb04f2-5aec-43f4-bac9-a7e1345fa2b3"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle"/>
+									<textFieldExpression><![CDATA[$F{fecha_inicio_permiso}]]></textFieldExpression>
+									<patternExpression><![CDATA["dd-MM-yyyy"]]></patternExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="75" uuid="00eb3ee8-341f-4cae-a19d-31a0c1e93bae">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+							<jr:columnHeader style="Table 1_CH" height="30">
+								<staticText>
+									<reportElement x="0" y="0" width="75" height="30" uuid="44ff0954-76f2-479c-9217-30e412de109e"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font size="12"/>
+									</textElement>
+									<text><![CDATA[Dias totales]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="Table 2_TD" height="30">
+								<textField>
+									<reportElement x="0" y="0" width="75" height="30" uuid="3dd6fc83-9496-4d6a-82e2-9646080f28f1"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle"/>
+									<textFieldExpression><![CDATA[$F{dias_totales}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+					</jr:table>
+				</componentElement>
+			</frame>
+			<frame>
+				<reportElement positionType="Float" x="280" y="0" width="275" height="110" uuid="ffcc7d48-1993-424f-9ec0-53195e7fe663"/>
+				<frame>
+					<reportElement positionType="Float" mode="Opaque" x="0" y="10" width="275" height="30" backcolor="#C9342C" uuid="fab2ee73-6b8a-46d6-8ac5-3b17a0da3ac5">
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+						<pen lineWidth="0.0"/>
+					</box>
+					<staticText>
+						<reportElement x="0" y="2" width="275" height="25" forecolor="#FFFFFF" backcolor="#C9342C" uuid="93d11e4a-0484-401f-8f02-ba10fd88f796">
+							<property name="com.jaspersoft.studio.unit.y" value="px"/>
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						</reportElement>
+						<textElement textAlignment="Center" verticalAlignment="Middle">
+							<font size="14"/>
+						</textElement>
+						<text><![CDATA[Vacaciones]]></text>
+					</staticText>
+				</frame>
+			</frame>
+		</band>
 	</detail>
 	<pageFooter>
-		<band height="46" splitType="Stretch">
+		<band height="24" splitType="Stretch">
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<textField>
 				<reportElement x="0" y="0" width="160" height="20" uuid="04817433-3afb-4261-8f4a-8fc46227cc76">

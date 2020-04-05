@@ -233,21 +233,18 @@ function cargarSolicitudSeleccionada(){
 		labelFinVacaciones.hidden = false;
 	}
 	
-	if(seleccion == '2' || seleccion == '4'){
+	if(seleccion == '3'){
 		cardAdicionales.hidden = false;
 		cardVacaciones.hidden = true;
 		desplazamiento.disabled = true;
 		tiempoNecesario.disabled = true;
 		fechaInicioPermiso.disabled = false;
-		if(seleccion == '2'){
-			cardDiasSolicitados.hidden = true;
-		} else{
-			cardDiasSolicitados.hidden = false;
-			diasSolicitados.innerHTML = '15 días naturales';
-		}	
+		cardDiasSolicitados.hidden = false;
+		diasSolicitados.innerHTML = '15 días naturales';
+		
 	}
 	
-	if(seleccion == '3' || seleccion == '5'){
+	if(seleccion == '2' || seleccion == '4'){
 		cardAdicionales.hidden = false;
 		cardVacaciones.hidden = true;
 		desplazamiento.disabled = false;
@@ -255,15 +252,6 @@ function cargarSolicitudSeleccionada(){
 		fechaInicioPermiso.disabled = false;
 		cardDiasSolicitados.hidden = false;
 		diasSolicitados.innerHTML = '2 días laborables';
-	}
-	
-	if(seleccion == '6' || seleccion == '7' || seleccion == '8'){
-		cardAdicionales.hidden = false;
-		cardVacaciones.hidden = true;
-		desplazamiento.disabled = true;
-		tiempoNecesario.disabled = false;
-		fechaInicioPermiso.disabled = false;
-		cardDiasSolicitados.hidden = true;
 	}
 	
 	
@@ -276,11 +264,11 @@ function modificarDiasTotales() {
 	diasSolicitados.innerHTML = '0';
 	
 	if(desplazamiento.checked){
-		if(seleccion == '3' || seleccion == '5'){
+		if(seleccion == '2' || seleccion == '4'){
 			diasSolicitados.innerHTML = '4 días laborables';
 		}
 	} else{
-		if(seleccion == '3' || seleccion == '5'){
+		if(seleccion == '2' || seleccion == '4'){
 			diasSolicitados.innerHTML = '2 días laborables';
 		}
 	}
