@@ -367,7 +367,7 @@ WHERE cod_empl = $P{COD_EMPL}]]>
 		</band>
 	</pageHeader>
 	<detail>
-		<band height="175" splitType="Stretch">
+		<band height="135" splitType="Stretch">
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<componentElement>
 				<reportElement positionType="Float" x="0" y="85" width="555" height="45" isRemoveLineWhenBlank="true" uuid="934e8715-8a08-4502-ac66-e3323e03186f">
@@ -551,8 +551,11 @@ WHERE cod_empl = $P{COD_EMPL}]]>
 				<textFieldExpression><![CDATA[$P{HASTA}]]></textFieldExpression>
 				<patternExpression><![CDATA["dd-MM-yyyy"]]></patternExpression>
 			</textField>
+		</band>
+		<band height="41" splitType="Stretch">
+			<printWhenExpression><![CDATA[$F{fichajes} <= 0]]></printWhenExpression>
 			<staticText>
-				<reportElement x="0" y="135" width="555" height="30" isRemoveLineWhenBlank="true" uuid="2cfbdee0-417c-4f66-8bb5-75859120b27a">
+				<reportElement x="0" y="5" width="555" height="30" isRemoveLineWhenBlank="true" uuid="2cfbdee0-417c-4f66-8bb5-75859120b27a">
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					<printWhenExpression><![CDATA[$F{fichajes} <= 0]]></printWhenExpression>
 				</reportElement>
@@ -562,11 +565,12 @@ WHERE cod_empl = $P{COD_EMPL}]]>
 				<text><![CDATA[No hay fichajes en las fechas seleccionadas]]></text>
 			</staticText>
 		</band>
-		<band height="190">
+		<band height="115">
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<frame>
-				<reportElement positionType="Float" x="0" y="0" width="555" height="105" isRemoveLineWhenBlank="true" uuid="092451f5-a497-4292-a74c-8124cb0eceea">
+				<reportElement positionType="Float" mode="Transparent" x="0" y="0" width="555" height="107" isRemoveLineWhenBlank="true" uuid="092451f5-a497-4292-a74c-8124cb0eceea">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="ShowOutOfBoundContent" value="true"/>
 					<printWhenExpression><![CDATA[$F{fichajes} > 0]]></printWhenExpression>
 				</reportElement>
 				<frame>
@@ -650,20 +654,27 @@ WHERE cod_empl = $P{COD_EMPL}]]>
 					</jr:table>
 				</componentElement>
 			</frame>
+		</band>
+		<band height="87" splitType="Stretch">
+			<printWhenExpression><![CDATA[$F{fichajes} <= 0]]></printWhenExpression>
 			<frame>
-				<reportElement x="0" y="105" width="555" height="80" isRemoveLineWhenBlank="true" uuid="4827f2d8-65e7-4e11-954e-d6d4a2f39462">
+				<reportElement positionType="Float" x="0" y="10" width="555" height="70" isRemoveLineWhenBlank="true" uuid="5cb7da1d-a16b-4b9a-91a9-53361e861424">
+					<property name="ShowOutOfBoundContent" value="false"/>
 					<printWhenExpression><![CDATA[$F{fichajes} <= 0]]></printWhenExpression>
 				</reportElement>
 				<staticText>
-					<reportElement x="0" y="40" width="555" height="30" uuid="67e7dff9-63a6-495c-abdc-db651b90db15"/>
+					<reportElement x="0" y="40" width="555" height="30" isRemoveLineWhenBlank="true" uuid="d868d6db-ce18-4049-92dc-bbb84a8a556d">
+						<printWhenExpression><![CDATA[$F{fichajes} <= 0]]></printWhenExpression>
+					</reportElement>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="11" isBold="false" isItalic="true"/>
 					</textElement>
 					<text><![CDATA[No hay datos totales en las fechas seleccionadas]]></text>
 				</staticText>
 				<staticText>
-					<reportElement mode="Opaque" x="0" y="2" width="555" height="25" forecolor="#FFFFFF" backcolor="#C9342C" uuid="70d43235-ef45-4cc6-bc80-b0573a98ee67">
+					<reportElement mode="Opaque" x="0" y="2" width="555" height="25" isRemoveLineWhenBlank="true" forecolor="#FFFFFF" backcolor="#C9342C" uuid="4af2678f-b377-42be-b0d1-eff603433d42">
 						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<printWhenExpression><![CDATA[$F{fichajes} <= 0]]></printWhenExpression>
 					</reportElement>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="14"/>
@@ -672,7 +683,7 @@ WHERE cod_empl = $P{COD_EMPL}]]>
 				</staticText>
 			</frame>
 		</band>
-		<band height="185">
+		<band height="104" splitType="Stretch">
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<frame>
 				<reportElement positionType="Float" x="0" y="0" width="275" height="100" isRemoveLineWhenBlank="true" uuid="c6467821-d1c0-45cb-afca-37a4e3b00f32">
@@ -877,12 +888,14 @@ WHERE cod_empl = $P{COD_EMPL}]]>
 					</jr:table>
 				</componentElement>
 			</frame>
+		</band>
+		<band height="95" splitType="Stretch">
 			<frame>
-				<reportElement x="0" y="100" width="275" height="80" isRemoveLineWhenBlank="true" uuid="39556868-c607-4955-80fe-a1528875eed1">
+				<reportElement x="0" y="10" width="275" height="80" isRemoveLineWhenBlank="true" uuid="79aefe51-a9d7-44b2-9c94-33e1eb3995f7">
 					<printWhenExpression><![CDATA[$F{permisos} <= 0]]></printWhenExpression>
 				</reportElement>
 				<staticText>
-					<reportElement mode="Opaque" x="0" y="8" width="275" height="25" forecolor="#FFFFFF" backcolor="#C9342C" uuid="8d45d589-402d-4e82-a180-ead4caf0ff04">
+					<reportElement mode="Opaque" x="0" y="8" width="275" height="25" forecolor="#FFFFFF" backcolor="#C9342C" uuid="57b7ac15-6f58-4faf-9650-277b2b806aab">
 						<property name="com.jaspersoft.studio.unit.y" value="px"/>
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -892,7 +905,7 @@ WHERE cod_empl = $P{COD_EMPL}]]>
 					<text><![CDATA[Permisos]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="0" y="40" width="275" height="30" uuid="189abcdd-342d-4276-ab1e-ef48a8a5f475"/>
+					<reportElement x="0" y="40" width="275" height="30" uuid="328c2ad2-0faf-4d6c-a929-b501c1d57e76"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="11" isBold="false" isItalic="true"/>
 					</textElement>
@@ -900,11 +913,11 @@ WHERE cod_empl = $P{COD_EMPL}]]>
 				</staticText>
 			</frame>
 			<frame>
-				<reportElement x="280" y="100" width="275" height="80" isRemoveLineWhenBlank="true" uuid="b14f6985-0fab-4f25-9e00-917418f132db">
+				<reportElement x="280" y="10" width="275" height="80" isRemoveLineWhenBlank="true" uuid="725dc192-c659-4b34-905a-2b40ad73f45e">
 					<printWhenExpression><![CDATA[$F{vacaciones} <= 0]]></printWhenExpression>
 				</reportElement>
 				<staticText>
-					<reportElement mode="Opaque" x="0" y="8" width="275" height="25" forecolor="#FFFFFF" backcolor="#C9342C" uuid="fdd6d470-b966-4bc5-83cf-f98373c4cac1">
+					<reportElement mode="Opaque" x="0" y="8" width="275" height="25" forecolor="#FFFFFF" backcolor="#C9342C" uuid="e4e845be-7f7f-4edc-8ae1-be6b3ba4d92e">
 						<property name="com.jaspersoft.studio.unit.y" value="px"/>
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					</reportElement>
@@ -914,7 +927,7 @@ WHERE cod_empl = $P{COD_EMPL}]]>
 					<text><![CDATA[Vacaciones]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="0" y="40" width="275" height="30" uuid="3645fccc-ebf6-4e0c-820c-beb73e682cc0"/>
+					<reportElement x="0" y="40" width="275" height="30" uuid="5f5e61e8-d991-447b-888b-5e54739ebbf0"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="11" isBold="false" isItalic="true"/>
 					</textElement>
