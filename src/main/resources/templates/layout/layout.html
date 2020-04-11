@@ -84,6 +84,9 @@
 						id="tab_controlhorario"
 						class="nav-item"><a
 						class="nav-link ml-2 mr-2" th:href="@{/controlhorario}">Control Horario</a></li>
+					<li sec:authorize="hasRole('ROLE_ADMIN')" 
+						id="tab_informes"
+						class="nav-item"><a class="nav-link ml-2 mr-2" th:href="@{/informes}">Informes</a></li>
 					<li sec:authorize="!hasRole('ROLE_ADMIN')"
 						id="tab_perfil"
 						 class="nav-item"><a class="nav-link ml-2 mr-2" th:href="@{/perfil}">Perfil del empleado</a>
@@ -118,7 +121,7 @@
 	
 				/// Elementos de li
 				const tabs = ["incidencias", "listar", "solicitudes", "fichar",
-					"controlhorario", "perfil", "ajustes"];
+					"controlhorario", "informes", "perfil", "ajustes"];
 	
 				tabs.forEach(e => {
 				    /// Agregar .php y ver si lo contiene en la url

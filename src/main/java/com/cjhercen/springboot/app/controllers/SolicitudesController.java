@@ -86,15 +86,38 @@ public class SolicitudesController implements ConstantesSolicitudes{
 		
 		//En caso de que sea una solicitud de tipo "VACACIONES" hay que controlar que se seleccionan los días
 		if(obtenerTipo(formSolicitud).equals(TIPO_VACACIONES)) {
-			 if (formSolicitud.getInicioVacaciones() == null || formSolicitud.getFinVacaciones() == null) {
+			
+			Date fechaInicioVacaciones = formSolicitud.getInicioVacaciones();
+			Date fechaFinVacaciones = formSolicitud.getFinVacaciones();
+			Date fechaHoy = new Date();
+			
+			 if (fechaInicioVacaciones == null || fechaFinVacaciones == null) {
 					log.info("No se han seleccionado los días en el calendario");
 					flash.addFlashAttribute("tipo", "Error");
 					flash.addFlashAttribute("message", "No se han seleccionado los días en el calendario");
 					return "redirect:solicitudes";
 			 }
+ 
+			 if(fechaFinVacaciones.before(fechaInicioVacaciones)) {
+				 log.info("La fecha fin de las vacaciones no puede ser anterior a la de inicio");
+					flash.addFlashAttribute("tipo", "Error");
+					flash.addFlashAttribute("message", "La fecha fin de las vacaciones no puede ser anterior a la de inicio");
+					return "redirect:solicitudes";
+			 }
+			 
+			 if(fechaInicioVacaciones.before(fechaHoy)) {
+				 log.info("La fecha de inicio de las vacaciones no puede ser anterior a la fecha de hoy");
+					flash.addFlashAttribute("tipo", "Error");
+					flash.addFlashAttribute("message", "La fecha de inicio de las vacaciones no puede ser anterior a la fecha de hoy");
+					return "redirect:solicitudes";
+			 }
+			 
 		}
 		
-		if(obtenerTipo(formSolicitud).equals(TIPO_MATRIMONIO)) {	
+		if(obtenerTipo(formSolicitud).equals(TIPO_MATRIMONIO)) {
+			Date fechaInicio = formSolicitud.getFecha();
+			Date fechaHoy = new Date();
+			
 			if(formSolicitud.getFecha() == null) {
 				log.info("No se ha introducido la fecha de inicio del permiso");
 				flash.addFlashAttribute("tipo", "Error");
@@ -102,9 +125,20 @@ public class SolicitudesController implements ConstantesSolicitudes{
 				return "redirect:solicitudes";
 				
 			}	
+			
+			 if(fechaInicio.before(fechaHoy)) {
+				 log.info("La fecha de inicio de la solicitud no puede ser anterior a la fecha de hoy");
+					flash.addFlashAttribute("tipo", "Error");
+					flash.addFlashAttribute("message", "La fecha de inicio de la solicitud no puede ser anterior a la fecha de hoy");
+					return "redirect:solicitudes";
+			 }
+			
 		}
 		
 		if(obtenerTipo(formSolicitud).equals(TIPO_NACIMIENTO) || obtenerTipo(formSolicitud).equals(TIPO_OPERACION_FAMILIAR)){
+			Date fechaInicio = formSolicitud.getFecha();
+			Date fechaHoy = new Date();
+			
 			if (formSolicitud.getFecha() == null) {
 				log.info("No se ha introducido la fecha de inicio ni si es necesario desplazamiento para el permiso");
 				flash.addFlashAttribute("tipo", "Error");
@@ -112,6 +146,13 @@ public class SolicitudesController implements ConstantesSolicitudes{
 						+ "para el permiso por nacimiento de un hijo/a o por matrimonio");
 				return "redirect:solicitudes";
 			}
+			
+			 if(fechaInicio.before(fechaHoy)) {
+				 log.info("La fecha de inicio de la solicitud no puede ser anterior a la fecha de hoy");
+					flash.addFlashAttribute("tipo", "Error");
+					flash.addFlashAttribute("message", "La fecha de inicio de la solicitud no puede ser anterior a la fecha de hoy");
+					return "redirect:solicitudes";
+			 }
 			
 		}
 			
@@ -292,7 +333,7 @@ public class SolicitudesController implements ConstantesSolicitudes{
 			Date fechaFin = solicitud.getFinVacaciones();
 
 			int dias=(int) ((fechaFin.getTime()-fechaInicio.getTime())/86400000);
-			retorno = dias;
+			retorno = dias+1;
 		}
 		
 		return retorno;

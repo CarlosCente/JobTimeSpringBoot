@@ -210,25 +210,27 @@ function cargarSolicitudSeleccionada(){
 	
 	var desplazamiento = document.getElementById("desplazamiento");
 	var fechaInicioPermiso = document.getElementById("fechaInicioPermiso");
-	var tiempoNecesario = document.getElementById("tiempoNecesario");
 	var inicioVacaciones = document.getElementById("inicioVacaciones");
 	var finVacaciones = document.getElementById("finVacaciones");
+	var diasSolicitadosVacaciones = document.getElementById("diasSolicitadosVacaciones");
 	var labelInicioVacaciones = document.getElementById("labelInicioVacaciones");
 	var labelFinVacaciones = document.getElementById("labelFinVacaciones");
 	
 	var cardDiasSolicitados = document.getElementById("cardDiasSolicitados");
 	var diasSolicitados = document.getElementById("diasSolicitados");
 	diasSolicitados.innerHTML = '0';
+	diasSolicitadosVacaciones.innerHTML = '0 días naturales';
 	
 	//La tarjeta de vacaciones solo para la opción de vacaciones
 	if(seleccion == '1'){
 		cardVacacioness.hidden = false;
 		cardAdicionales.hidden = true;
 		desplazamiento.disabled = true;
-		tiempoNecesario.disabled = true;
 		fechaInicioPermiso.disabled = true;
 		inicioVacaciones.hidden = false;
 		finVacaciones.hidden = false;
+		inicioVacaciones.disabled = false;
+		finVacaciones.disabled = false;
 		labelInicioVacaciones.hidden = false;
 		labelFinVacaciones.hidden = false;
 	}
@@ -237,9 +239,10 @@ function cargarSolicitudSeleccionada(){
 		cardAdicionales.hidden = false;
 		cardVacaciones.hidden = true;
 		desplazamiento.disabled = true;
-		tiempoNecesario.disabled = true;
 		fechaInicioPermiso.disabled = false;
 		cardDiasSolicitados.hidden = false;
+		inicioVacaciones.disabled = true;
+		finVacaciones.disabled = true;
 		diasSolicitados.innerHTML = '15 días naturales';
 		
 	}
@@ -248,10 +251,16 @@ function cargarSolicitudSeleccionada(){
 		cardAdicionales.hidden = false;
 		cardVacaciones.hidden = true;
 		desplazamiento.disabled = false;
-		tiempoNecesario.disabled = true;
 		fechaInicioPermiso.disabled = false;
 		cardDiasSolicitados.hidden = false;
+		inicioVacaciones.disabled = true;
+		finVacaciones.disabled = true;
 		diasSolicitados.innerHTML = '2 días laborables';
+	}
+	
+	if(seleccion == '0'){
+		cardAdicionales.hidden = true;
+		cardVacaciones.hidden = true;
 	}
 	
 	
@@ -272,5 +281,32 @@ function modificarDiasTotales() {
 			diasSolicitados.innerHTML = '2 días laborables';
 		}
 	}
+	
+}
+
+function calcularDiasTotales() {
+	var inicioVacaciones = document.getElementById("inicioVacaciones").value;
+	var finVacaciones = document.getElementById("finVacaciones").value;
+	var diasSolicitadosVacaciones = document.getElementById("diasSolicitadosVacaciones");
+	
+	if(inicioVacaciones.length == 0 || finVacaciones.length == 0){
+		diasSolicitadosVacaciones.innerHTML = '0 días naturales';
+	}
+	
+	if(inicioVacaciones.length > 0 && finVacaciones.length > 0){
+		var fechaIni = new Date(inicioVacaciones);
+		var fechaFin = new Date(finVacaciones);
+		var diasDif = fechaFin.getTime() - fechaIni.getTime();		
+		var contdias = Math.round(diasDif/(1000*60*60*24)) + 1;
+		
+		if(contdias > 0){
+			diasSolicitadosVacaciones.innerHTML = contdias + ' días naturales';
+		} else{
+			diasSolicitadosVacaciones.innerHTML = '0 días naturales';
+		}
+		
+	}
+
+	
 	
 }
