@@ -283,12 +283,43 @@ public class FechaUtils {
 		return esDomingo;
 	}
 	
+	/*
+	 * Metodo para comprobar si el dia es laboral (que no sea sabado ni domingo)
+	 */
+	public Boolean esFinDeSemana(Date fecha) {
+		Boolean esFinDeSemana = false;
+		
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(fecha);
+		int diaSemana = calendar.get(Calendar.DAY_OF_WEEK);
+		
+		if(diaSemana ==1 || diaSemana == 7) {
+			esFinDeSemana = true;
+			log.info("Es fin de semana, no cuenta para el permiso o solicitud");
+		}
+		
+		return esFinDeSemana;
+	}
+	
+	
 	public int obtenerMesActual(Date fecha) {
 		int semana = 0;
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(fecha);
 		semana = calendar.get(Calendar.MONTH)+1;
 		return semana;
+	}
+	
+	/*
+	 * Método que suma x dias a la fecha que se pase como parámetro
+	 */
+	public Date sumarDias(Date fecha, int dias) {
+		
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(fecha);
+		calendar.add(Calendar.DAY_OF_YEAR, dias);
+		return calendar.getTime();
+		
 	}
 	
 }

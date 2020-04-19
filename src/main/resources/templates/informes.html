@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+<body class="bg-light">
+<header th:replace="layout/layout :: header"></header>
+<div class="container-fluid py-3 col-md-10 col-sm-12">
+	<div class="card h-100">
+				<h5 class=" card-header bg-dark text-white text-center">Informes Disponibles</h5>
+				<div class="card-body"  style="display: flex; align-items: center; justify-content: center;">
+					<div class="row text-center">
+						<div class="col-md-4">
+							<div>
+								<h5>Informe Semanal</h5>
+								<a type="button"  data-toggle="modal"
+									data-target="#modalInformeSemanal">
+								<img th:src="@{/images/report.png}" class="img-responsive w-50 mt-2">		
+								</a>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div>
+								<h5>Informe Mensual</h5>
+								<a type="button"  data-toggle="modal"
+									data-target="#modalInformeMensual">
+								<img th:src="@{/images/report2.png}" class="img-responsive w-50 mt-2">
+								</a>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div>
+								<h5>Informe Personalizado</h5>
+								<a type="button"  data-toggle="modal"
+									data-target="#modalInformePersonalizado">
+								<img th:src="@{/images/report3.png}" class="img-responsive w-50 mt-2">
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+<!-- Modales -->
+<!-- SEMANAL -->
+	<div class="modal fade" id="modalInformeSemanal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header bg-dark text-white">
+	        <div class="modal-title" id="exampleModalLongTitle">
+	        	Introduzca el usuario para el que sacar el informe
+	        </div>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	      <form th:object="${formInforme}" th:action="@{/informes/semanal}" method="post">
+	     	
+	     	<div class="autocomplete">
+	     		<label for="usuarioInforme">Usuario</label>
+    			<select class="form-control" th:field="*{usuarioInforme}">
+                         <option value=""> -- </option>
+                         <option th:each="usuario : ${listaUsuarios}"
+                            th:value="${usuario.username}"
+                            th:utext="${usuario.username}"/>
+                  </select>
+ 
+  			</div>
+	      				
+			<hr/>
+	        <button type="submit" class="btn btn-primary">Aceptar</button>
+	        <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+	        </form>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+<!-- MENSUAL -->
+	<div class="modal fade" id="modalInformeMensual" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header bg-dark text-white">
+	        <div class="modal-title" id="exampleModalLongTitle">
+	        	Introduzca el usuario para el que sacar el informe
+	        </div>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	      <form th:object="${formInforme}" th:action="@{/informes/mensual}" method="post">
+	     	<div class="autocomplete">
+	     		<label for="usuarioInforme">Usuario</label>
+    			<select class="form-control" th:field="*{usuarioInforme}">
+                         <option value=""> -- </option>
+                         <option th:each="usuario : ${listaUsuarios}"
+                            th:value="${usuario.username}"
+                            th:utext="${usuario.username}"/>
+                  </select>
+ 
+  			</div>
+			<hr/>
+	        <button type="submit" class="btn btn-primary">Aceptar</button>
+	        <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+	        </form>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+<!-- PERSONALIZADO -->
+	<div class="modal fade" id="modalInformePersonalizado" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header bg-dark text-white">
+	        <div class="modal-title" id="exampleModalLongTitle">
+	        	Introduzca los parámetros necesarios
+	        </div>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	      <form th:object="${formInforme}" th:action="@{/informes/personalizado}" method="post">
+	     	<div class="form-group">
+	      		<label for="usuarioInforme">Usuario</label>
+    			<select class="form-control" th:field="*{usuarioInforme}">
+                         <option value=""> -- </option>
+                         <option th:each="usuario : ${listaUsuarios}"
+                            th:value="${usuario.username}"
+                            th:utext="${usuario.username}"/>
+                  </select>
+			</div>
+	      	<div class="form-group">
+	      		<label for="fechaInicioInforme">Desde</label>
+				<input class="form-control" th:field="*{fechaDesde}" id="fechaInicioInforme" type="date" required/>
+			</div>
+			<div class="form-group">
+				<label for="fechaFinInforme">Hasta</label>
+				<input class="form-control" th:field="*{fechaHasta}" id="fechaFinInforme" type="date" required/>
+			</div>
+			<hr/>
+	        <button type="submit" class="btn btn-primary">Aceptar</button>
+	        <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+	        </form>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+<footer th:replace="layout/layout :: footer"></footer>
+</body>
+</html>

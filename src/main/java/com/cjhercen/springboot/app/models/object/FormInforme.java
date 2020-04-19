@@ -12,12 +12,22 @@ public class FormInforme {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date fechaHasta;
 
+	private String usuarioInforme;
+	
 	public Date getFechaDesde() {
 		return fechaDesde;
 	}
 
 	public void setFechaDesde(Date fechaDesde) {
 		this.fechaDesde = fechaDesde;
+	}
+
+	public String getUsuarioInforme() {
+		return usuarioInforme;
+	}
+
+	public void setUsuarioInforme(String usuarioInforme) {
+		this.usuarioInforme = usuarioInforme;
 	}
 
 	public Date getFechaHasta() {

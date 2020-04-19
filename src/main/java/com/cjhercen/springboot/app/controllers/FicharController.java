@@ -303,6 +303,9 @@ public class FicharController implements ConstantesUtils {
 		listaParametros.put("COD_EMPL", cod_empl);
 		listaParametros.put("SEMANAL", "1");
 		listaParametros.put("SEMANA", String.valueOf(fechaUtils.obtenerSemana(fechaActual)));
+		listaParametros.put("CONSULTA_FICHAJES","AND WEEK(fecha)='"+  String.valueOf(fechaUtils.obtenerSemana(fechaActual)) +"'");
+		listaParametros.put("CONSULTA_PERMISOS","AND WEEK(fecha_inicio_permiso)='"+  String.valueOf(fechaUtils.obtenerSemana(fechaActual)) +"'");
+		listaParametros.put("CONSULTA_VACACIONES", "AND WEEK(fecha_inicio_vacaciones)='"+  String.valueOf(fechaUtils.obtenerSemana(fechaActual)) +"'");
 	
 		try {
 			informesUtils.crearInformePDF(response, listaParametros);
@@ -336,6 +339,9 @@ public class FicharController implements ConstantesUtils {
 		listaParametros.put("COD_EMPL", cod_empl);
 		listaParametros.put("MENSUAL", "1");
 		listaParametros.put("MES", String.valueOf(fechaUtils.obtenerMesActual(fechaActual)));
+		listaParametros.put("CONSULTA_FICHAJES","AND MONTH(fecha)='"+  String.valueOf(fechaUtils.obtenerMesActual(fechaActual)) +"'");
+		listaParametros.put("CONSULTA_PERMISOS","AND MONTH(fecha_inicio_permiso)='"+  String.valueOf(fechaUtils.obtenerMesActual(fechaActual)) +"'");
+		listaParametros.put("CONSULTA_VACACIONES", "AND MONTH(fecha_inicio_vacaciones)='"+  String.valueOf(fechaUtils.obtenerMesActual(fechaActual)) +"'");
 	
 		try {
 			informesUtils.crearInformePDF(response, listaParametros);
@@ -377,6 +383,9 @@ public class FicharController implements ConstantesUtils {
 		String fechaHasta = fechaUtils.obtenerFechaParametroEnFormatoSQL(formInforme.getFechaHasta());
 		listaParametros.put("DESDE_FORMATO_SQL", fechaDesde);
 		listaParametros.put("HASTA_FORMATO_SQL", fechaHasta);
+		listaParametros.put("CONSULTA_FICHAJES","AND fecha BETWEEN '"+ fechaDesde +"' AND '"+ fechaHasta + "'" );
+		listaParametros.put("CONSULTA_PERMISOS","AND fecha_inicio_permiso BETWEEN '"+ fechaDesde +"' AND '"+ fechaHasta + "'" );
+		listaParametros.put("CONSULTA_VACACIONES","AND fecha_inicio_vacaciones BETWEEN '"+ fechaDesde +"' AND '"+ fechaHasta + "'" );
 		
 		try {
 			informesUtils.crearInformePDF(response, listaParametros);

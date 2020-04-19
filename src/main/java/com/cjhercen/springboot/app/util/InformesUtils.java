@@ -59,7 +59,7 @@ public class InformesUtils {
 
             response.setContentType("application/pdf");
             response.setHeader("Content-Length", String.valueOf(pdfReportStream.size()));
-            response.addHeader("Content-Disposition", "attachment; filename=jasper.pdf;");
+            response.addHeader("Content-Disposition", "attachment; filename=informeFichajes.pdf;");
             
             OutputStream responseOutputStream = response.getOutputStream();
             responseOutputStream.write(pdfReportStream.toByteArray());
@@ -71,6 +71,6 @@ public class InformesUtils {
         }
    
     }
-	
+
 	
 }

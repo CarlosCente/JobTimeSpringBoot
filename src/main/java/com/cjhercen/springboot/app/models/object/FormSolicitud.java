@@ -2,8 +2,6 @@ package com.cjhercen.springboot.app.models.object;
 
 import java.util.Date;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -17,10 +15,6 @@ public class FormSolicitud {
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	Date fecha;
-	
-	@Min(0)
-	@Max(8)
-	int tiempoNecesario;
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	Date inicioVacaciones;
@@ -42,14 +36,6 @@ public class FormSolicitud {
 
 	public void setRequiereDesplazamiento(String requiereDesplazamiento) {
 		this.requiereDesplazamiento = requiereDesplazamiento;
-	}
-
-	public int getTiempoNecesario() {
-		return tiempoNecesario;
-	}
-
-	public void setTiempoNecesario(int tiempoNecesario) {
-		this.tiempoNecesario = tiempoNecesario;
 	}
 
 	public Date getInicioVacaciones() {

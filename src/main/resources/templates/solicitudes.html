@@ -34,50 +34,40 @@
 				<h5 th:text="'Creación de solicitudes'"></h5>
 			</div>
 			<div class="card-body">
-				<div class="col-md-12 col-xs-12">
+				<div class="col-md-12 col-xs-12 p-2">
 					<form th:action="@{/solicitud}" th:object="${formSolicitud}" method="post">
 						<div class="row">
 							<label for="tipo">Tipo de solicitud / Ausencia</label>		
 							<select onChange="cargarSolicitudSeleccionada()" class="form-control text-white" 
 							id="tipoSolicitud" name="tipo" th:field="*{tipo}" style="background-color: #6c8ec2;">
-							    <option value="">Seleccione una opción</option>
+							    <option value="0">Seleccione una opción</option>
 								<option value="1">Vacaciones</option>
-								<option value="2">Enfermedad</option>
-								<option value="3">Operación de un familiar</option>
-								<option value="4">Matrimonio</option>
-								<option value="5">Nacimiento de un hijo</option>
-								<option value="6">Examen</option>
-								<option value="7">Cita médica</option>
-								<option value="8">Asistencia a formación</option>
+								<option value="2">Operación de un familiar</option>
+								<option value="3">Matrimonio</option>
+								<option value="4">Nacimiento de un hijo</option>
+
 							</select>
 						</div>
 						<small
 							class="form-text text-danger"
 							th:if="${#fields.hasErrors('tipo')}" th:errors="*{tipo}"></small>
 						
-						<div class="card mt-3" id="cardDatosAdicionales">
+						<div class="card mt-3" id="cardDatosAdicionales" hidden="true">
 						<h6 class="card-header text-center bg-dark text-white">Datos adicionales</h6>
 							<div class="card-body row">
-								<div class="form-group col-md-3 col-xs-12 text-center mt-2" style="align-self: center;">
+								<div class="form-group col-md-4 col-xs-12 text-center mt-2" style="align-self: center;">
 									<input type="checkbox" class="form-check-input" id="desplazamiento" 
-									 value="si" onChange="modificarDiasTotales()"
+									 value="Si" onChange="modificarDiasTotales()"
 									 th:field="*{requiereDesplazamiento}">
 	    							<label class="form-check-label font-weight-bold h6" for="desplazamiento">¿Requiere desplazamiento?</label>
 								</div>								
-								<div class="form-group col-md-3 col-xs-12 text-center mt-4" >
+								<div class="form-group col-md-4 col-xs-12 text-center mt-4" >
 									 <label class="font-weight-bold" for="fechaInicio">Fecha de Inicio</label>
 									<input type="date" class="form-control text-center text-white" id="fechaInicioPermiso"
 									th:field="*{fecha}" style="background-color: #6c8ec2;">
 								</div>
-								
-									
-								<div class="form-group col-md-3 col-xs-12 text-center mt-4">
-									<label class="font-weight-bold" for="tiempoNecesario">Tiempo necesario</label>
-									<input type="number" class="form-control text-center text-white" id="tiempoNecesario"
-									th:field="*{tiempoNecesario}" style="background-color: #6c8ec2;">
-								</div>
-								
-								<div id="cardDiasSolicitados" class="card border-0 col-md-3 col-xs-12 text-center mt-2">
+													
+								<div id="cardDiasSolicitados" class="card border-0 col-md-4 col-xs-12 text-center mt-2">
 									<div class="card-body" style="align-self: center;">
 										<h5 class="font-weight-bold">Días solicitados</h5>
 										<h5 id="diasSolicitados" class="text-success">0</h5>
@@ -86,24 +76,35 @@
 							</div>
 						</div>
 						
-						<div class="card mt-3" id="cardVacaciones">
-						<h6 class="card-header text-center bg-dark text-white">Selección de días para las vacaciones</h6>
+						<div class="card mt-3 " id="cardVacaciones" hidden="true">
+						<h6 class="card-header text-center bg-dark text-white">Seleccionar días de vacaciones</h6>
 							<div class="card-body col-md-12 col-xs-12">
 								<div class="row mt-2">
-									<div class="col-md-8 col-xs-12" style="margin: auto;">
-										<label class="text-center" for="inicioVacaciones" id="labelInicioVacaciones" hidden="true">Fecha de inicio de las vacaciones: </label>
-									 	<input type="text" class="form-control" id="inicioVacaciones" th:field="*{inicioVacaciones}" hidden="true"/>
-										<label class="text-center" for="finVacaciones" id="labelFinVacaciones" hidden="true">Fecha de fin de las vacaciones: (Día de incorporación) </label>
-										<input type="text" class="form-control" id="finVacaciones" th:field="*{finVacaciones}" hidden="true" />									 	
-									 	<div id='calendar' class="mt-4"></div>								
+									<div class="col-md-12 col-xs-12 row" style="margin: auto;">
+										<div class="form-group col-md-4 col-xs-12 text-center mt-4" >
+											 <label class="font-weight-bold" for="inicioVacaciones">Inicio Vacaciones</label>
+									 		<input type="date" class="form-control text-center text-white" 
+									 		 onChange="calcularDiasTotales()"	id="inicioVacaciones" 
+									 		 style="background-color: #6c8ec2;" th:field="*{inicioVacaciones}" required />
+										</div>
+										<div class="form-group col-md-4 col-xs-12 text-center mt-4" >
+											 <label class="font-weight-bold" for="finVacaciones">Fin Vacaciones</label>
+											<input type="date" class="form-control text-center text-white" 
+											onChange="calcularDiasTotales()"	id="finVacaciones" 
+											  style="background-color: #6c8ec2;" th:field="*{finVacaciones}" required />									 	
+									 	</div>
+										<div class="form-group col-md-4 col-xs-12 text-center mt-4" >
+											<h5 class="font-weight-bold">Días solicitados</h5>
+											<h5 id="diasSolicitadosVacaciones" class="text-success">0</h5>
+										</div>							
 									</div>
 								</div>
 							</div>				
 						</div>
 						
 						<div class="row mt-3">
-							<div class="col-md-11">
-								<div class="row float-right ">
+							<div class="col-md-12">
+								<div class="row float-right">
 									<div class="form-group">
 										<input value="Crear Solicitud" type="submit"
 											class="btn btn-primary" />
@@ -136,7 +137,7 @@
 											<th>Tipo</th>
 											<th>Estado</th>
 											<th>Descripción</th>
-											<th>Acciones</th>
+											<th>Eliminar</th>
 										</tr>
 									</thead>
 									<tbody class="text-center">
@@ -145,8 +146,7 @@
 											th:title="${solicitud.empleado.nombre} +' '+${solicitud.empleado.apellido1}+' '+${solicitud.empleado.apellido2}"
 											 th:text="${solicitud.empleado.usuario.username}"></td>
 	
-											<td th:text="${solicitud.fecha}" data-toggle="tooltip" data-placement="bottom" data-type="primary"
-											   th:title="'La fecha de solicitud corresponde al momento de realización de la gestión no a los días efectivos del permiso (consultar descripción)'"></td>
+											<td th:text="${solicitud.fecha}"></td>
 											
 											<td
 												
@@ -159,25 +159,20 @@
 												</span>
 											</td>
 											<td>
-												<a href="#" class="btn-lg">
+												<a th:href="@{/solicitudes/descripcionSolicitud/} + 
+																	${solicitud.empleado.cod_empl} + '/' +
+																 	${solicitud.fecha} +
+																 	 '/' + 
+																 	${solicitud.tipo}" class="btn-lg">
 												<i class="fas fa-search-plus" style="color: black;"></i>
 												</a>
 											</td>
 											<td>
-												<a href="#"
-													 class="btn-lg" style="text-decoration:none;">
-													<i class="fas fa-check text-success"></i>
-												</a>
-												
-												<a href="#"
-													 class="btn-lg" style="text-decoration:none;">
-													<i class="fas fa-times text-danger"></i>
-												</a>
 											
 												<a href="#"
 													 onclick="return mostrarConfirmacion()"
 													 class="btn-lg">
-													<i class="fas fa-trash-alt"></i>
+													<i class="fas fa-trash-alt" style="color: red;"></i>
 												</a>
 											</td>
 
@@ -215,7 +210,7 @@
 	</div>
 	
 	<footer th:replace="layout/layout :: footer"></footer>
-	
+	<input type="hidden" id="urlAjaxEliminarSolicitud" th:value="@{'/solicitudes/eliminar'}" />
 	<script th:inline="javascript">
 
 	$(document).ready( function () {
@@ -255,36 +250,10 @@
 	});
 	</script>
 	
-	<script>
-
-      document.addEventListener('DOMContentLoaded', function() {
-        var calendarEl = document.getElementById('calendar');
-		var inicioVacaciones = document.getElementById('inicioVacaciones');
-		var finVacaciones = document.getElementById('finVacaciones');
-
-        
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-          plugins: [ 'interaction', 'dayGrid' ],
-          locale: 'es',
-          firstDay: 1,
-          selectable: true,
-          businessHours: {
-        	 daysOfWeek: [1, 2, 3, 4, 5]
-          },
-          select: function(info) {
-             $('#inicioVacaciones').val(info.startStr);
-             $('#finVacaciones').val(info.endStr);
-          }
-        });
-
-        calendar.render();
-      });
-
-    </script>
     <script>
 
 	function mostrarConfirmacion(){
-		
+		var urlAjax = $("#urlAjaxEliminarSolicitud").val();
 		var table = $('#tablaSolicitudes').DataTable();
 		$('#tablaSolicitudes tbody').one('click', 'tr', function () {
 	        var data = table.row( this ).data();
@@ -314,7 +283,7 @@
 				
 				    $.ajax({
 						type: "GET",
-						url: "/solicitudes/eliminar",
+						url: urlAjax,
 						data: {
 							"username" : usuario,
 							"fecha" : fecha,
