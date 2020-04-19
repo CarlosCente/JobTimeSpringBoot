@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+<body class="bg-light">
+
+	<header th:replace="layout/layout :: header"></header>
+
+	<div class="container-fluid py-2 col-md-11 col-sm-12">
+
+		<div class="card bg-light">
+			<div class="card-header text-center font-weight-bold bg-dark text-white" th:text="${titulo}"></div>
+			<div class="card-body table-responsive">
+			
+				<div class="row">
+					<div class="col-xs-12 col-md-3 col-lg-3">
+								<div class="form-group text-center">
+										<label class="col-md-12 col-form-label font-weight-bold">Usuario</label>
+										 <div class="col-md-12 mt-2" th:text="${solicitud.empleado.usuario.username}"> </div>
+								</div>			
+					</div>
+					<div class="col-xs-12 col-md-3 col-lg-3">
+								<div class="form-group text-center">
+										<label class="col-md-12 col-form-label font-weight-bold">Fecha de
+											apertura </label>
+										 <div class="col-md-12 mt-2" th:text="${solicitud.fecha}"> </div>
+								</div>			
+					</div>
+					<div class="col-xs-12 col-md-3 col-lg-3">
+								<div class="form-group text-center">
+										<label class="col-md-12 col-form-label font-weight-bold">Tipo</label>
+										 <div class="col-md-12 mt-2" th:text="${solicitud.tipo}"> </div>
+								</div>			
+					</div>
+					<div class="col-xs-12 col-md-3 col-lg-3">
+								<div th:if="${solicitud.estado == '1'}" class="form-group text-center">
+										<label class="col-md-12 col-form-label font-weight-bold">Estado</label>
+										 <div class="text-primary font-weight-bold col-md-12 mt-2">Abierta</div>
+								</div>	
+								<div th:if="${solicitud.estado == '2'}" class="form-group text-center">
+										<label class="col-md-12 col-form-label font-weight-bold">Estado</label>
+										 <div class="text-success font-weight-bold col-md-12 mt-2">Aceptada</div>
+								</div>	
+								<div th:if="${solicitud.estado == '3'}" class="form-group text-center">
+										<label class="col-md-12 col-form-label font-weight-bold">Estado</label>
+										 <div class="text-danger font-weight-bold col-md-12 mt-2">Rechazada</div>
+								</div>			
+					</div>
+					
+			</div>
+	
+			<div th:if="${solicitud.tipo == 'Vacaciones'}" class="row mt-5">
+				<div class="col-md-3"></div>
+				<table class="table table-bordered col-md-6 col-lg-6 text-center">
+					<thead class="bg-dark text-white">
+						<tr>
+							<th>Fecha de Inicio</th>
+							<th>Fecha de Fin</th>
+							<th>Días Totales</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><span th:text="${solicitud.fechaInicioVacaciones}"></span></td>
+							<td><span th:text="${solicitud.fechaFinVacaciones}"></span></td>
+							<td><span th:text="${solicitud.diasTotales}"></span></td>
+						</tr>
+					</tbody>
+				</table>	
+				<div class="col-md-3"></div>
+			</div>
+				
+			<div th:if="${solicitud.tipo == 'Operación de un familiar'}" class="row mt-5">
+				<div class="col-md-3"></div>
+				<table class="table table-bordered col-md-6 col-lg-6 text-center">
+					<thead class="bg-dark text-white">
+						<tr>
+							<th>Fecha de Inicio</th>
+							<th>¿Necesita desplazamiento?</th>
+							<th>Días Totales</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><span th:text="${solicitud.fechaInicioPermiso}"></span></td>
+							<td><span th:text="${solicitud.necesitaDesplazamiento}"></span></td>
+							<td><span th:text="${solicitud.diasTotales}"></span></td>
+						</tr>
+					</tbody>
+				</table>	
+				<div class="col-md-3"></div>
+			</div>
+				
+			<div th:if="${solicitud.tipo == 'Nacimiento de un hijo'}" class="row mt-5">
+				<div class="col-md-3"></div>
+				<table class="table table-bordered col-md-6 col-lg-6 text-center">
+					<thead class="bg-dark text-white">
+						<tr>
+							<th>Fecha de Inicio</th>
+							<th>¿Necesita desplazamiento?</th>
+							<th>Días Totales</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><span th:text="${solicitud.fechaInicioPermiso}"></span></td>
+							<td><span th:text="${solicitud.necesitaDesplazamiento}"></span></td>
+							<td><span th:text="${solicitud.diasTotales}"></span></td>
+						</tr>
+					</tbody>
+				</table>	
+				<div class="col-md-3"></div>
+			</div>
+				
+			<div th:if="${solicitud.tipo == 'Matrimonio'}" class="row mt-5">
+					<div class="col-md-3"></div>
+				<table class="table table-bordered col-md-6 col-lg-6 text-center">
+					<thead class="bg-dark text-white">
+						<tr>
+							<th>Fecha de Inicio</th>
+							<th>Días Totales</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><span th:text="${solicitud.fechaInicioPermiso}"></span></td>
+							<td><span th:text="${solicitud.diasTotales}"></span></td>
+						</tr>
+					</tbody>
+				</table>	
+				<div class="col-md-3"></div>
+			</div>
+					
+				
+		
+			<div th:if="${solicitud.estado != '1'}" class="row mt-2 text-center">
+					<h4 class="text-success col-md-12 col-xs-12 col-lg-12 mt-4">La solicitud ya ha sido tramitada </h4>
+			</div>
+			
+			</div>
+			<div class="card-footer mt-4">
+				<div class="col-md-12">
+					<div class="row">
+						<a class="col-md-1 col-lg-1"></a>
+						<button th:disabled="${solicitud.estado != '1'}"
+					   		onclick="return mostrarConfirmacionAceptar()"
+							 class="btn btn-success mt-2 mb-2 col-md-2 col-lg-2 col-sm-12">
+							Aceptar
+						</button>
+						
+						<a class="col-md-2 col-lg-2"></a>
+						
+						<button th:disabled="${solicitud.estado != '1'}"
+					  		 onclick="return mostrarConfirmacionCancelar()"
+							 class="btn btn-danger mt-2 mb-2 col-md-2 col-lg-2 col-sm-12">
+							Rechazar
+						</button>
+
+						<a class="col-md-2 col-lg-2"></a>
+
+						<a type="button"
+							class="btn btn-info mt-2 mb-2 col-md-2 col-lg-2 col-sm-12" th:href="@{/solicitudes}">
+							 Volver 
+						</a>					
+						<a class="col-md-1 col-lg-1"></a>
+					</div>
+				</div>
+			</div>
+	
+		</div>
+	</div>
+		<!-- Modal -->
+	<div class="modal fade" id="modalFlash" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered" role="document">
+	    <div class="modal-content">
+	      <div th:class="${tipo == 'Error'} ? 'modal-header bg-danger text-white' : 'modal-header bg-primary text-white'">
+	        <div class="modal-title" id="exampleModalLongTitle">
+	        	<i class="fas fa-exclamation-triangle"></i>
+	        	<span th:text="${tipo}"></span>
+	        </div>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	      	<h6 th:text="${message}"></h6>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+	<footer th:replace="layout/layout :: footer"></footer>
+	<input type="hidden" id="urlAjaxAceptarSolicitud" th:value="@{'/solicitudes/aceptar'}" />
+	<input type="hidden" id="urlAjaxRechazarSolicitud" th:value="@{'/solicitudes/rechazar'}" />
+	
+	<script th:inline="javascript">
+
+	$(document).ready( function () {
+		var message = /*[[${message}]]*/;
+		if(message.length > 0){
+			$('#modalFlash').modal('show');
+		}
+		
+	});
+	
+	</script>
+	
+	<script th:inline="javascript">
+	function mostrarConfirmacionCancelar(){
+		var usuario = /*[[${username}]]*/;
+		var fecha = /*[[${fecha}]]*/;
+		var tipo = /*[[${tipo}]]*/;
+		var urlAjax = $("#urlAjaxRechazarSolicitud").val();
+		
+			Swal.fire({
+				  title: '¿Estás seguro de rechazar la solicitud?',
+				  icon: 'info',
+				  showCancelButton: true,
+				  confirmButtonColor: '#3085d6',
+				  cancelButtonColor: '#d33',
+				  confirmButtonText: 'Si'
+				}).then((result) => {
+				  if (result.value) {
+				    Swal.fire({
+				      icon: 'success',
+				      title: 'Solicitud Rechazada.',
+				      showConfirmButton: false,
+				      timer: 1500,
+				      onClose: () => {
+				    	  location.reload();
+				   	  }
+				    })  
+				
+				    $.ajax({
+						type: "GET",
+						url: urlAjax,
+						data: {
+							"username" : usuario,
+							"fecha" : fecha,
+							"tipo" : tipo
+						}
+					});
+				  }
+			})
+	};
+	</script>
+	
+	<script th:inline="javascript">
+	function mostrarConfirmacionAceptar(){
+		var urlAjax = $("#urlAjaxAceptarSolicitud").val();
+		var usuario = /*[[${username}]]*/;
+		var fecha = /*[[${fecha}]]*/;
+		var tipo = /*[[${tipo}]]*/;
+			
+			Swal.fire({
+				  title: '¿Estás seguro de aceptar la solicitud?',
+				  icon: 'info',
+				  showCancelButton: true,
+				  confirmButtonColor: '#3085d6',
+				  cancelButtonColor: '#d33',
+				  confirmButtonText: 'Si'
+				}).then((result) => {
+				  if (result.value) {
+				    Swal.fire({
+				      icon: 'success',
+				      title: 'Solicitud Aceptada.',
+				      showConfirmButton: false,
+				      timer: 1500,
+				      onClose: () => {
+				    	  location.reload();
+				   	  }
+				    })  
+				
+				    $.ajax({
+						type: "GET",
+						url: urlAjax,
+						data: {
+							"username" : usuario,
+							"fecha" : fecha,
+							"tipo" : tipo
+						}
+					});
+				  }
+			})
+
+	};
+	</script>
+	
+</body>
+</html>

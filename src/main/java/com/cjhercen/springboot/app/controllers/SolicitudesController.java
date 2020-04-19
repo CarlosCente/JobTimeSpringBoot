@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -285,6 +286,27 @@ public class SolicitudesController implements ConstantesSolicitudes{
 		log.info("Se ha borrado correctamente la solicitud " + solicitudABorrar.toString());
 
 		return "redirect:/solicitudes";
+	}
+	
+	@RequestMapping(value = "/solicitudes/descripcionSolicitud/{cod_empl}/{fecha}/{tipo}")
+	public String getDescripcionSolicitud(Map<String, Object> model, 
+			@PathVariable(value = "cod_empl") Long cod_empl,
+			@PathVariable(value = "fecha") String fecha ,
+			@PathVariable(value = "tipo") String tipo) {
+		
+		Date fechaIncidencia = fechaUtils.obtenerFechaApartirString(fecha);
+		Empleado empleado = empleadoService.findOne(cod_empl);
+		Solicitud solicitud = solicitudService.findByEmpleadoAndFechaAndTipo(empleado, fechaIncidencia, tipo);
+		
+		model.put("solicitud", solicitud);
+		
+		model.put("username", solicitud.getEmpleado().getUsuario().getUsername());
+		model.put("fecha", solicitud.getFecha());
+		model.put("tipo", solicitud.getTipo());
+		
+		model.put("titulo", "Descripción de la Solicitud");
+		
+		return "/descripcionSolicitud";
 	}
 	
 	//Metodo que devuelve el tipo de la solicitud elegida en el formulario
