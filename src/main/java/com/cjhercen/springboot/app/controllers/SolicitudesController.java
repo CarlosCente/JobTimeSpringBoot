@@ -306,7 +306,7 @@ public class SolicitudesController implements ConstantesSolicitudes{
 		
 		model.put("titulo", "Descripción de la Solicitud");
 		
-		return "/descripcionSolicitud";
+		return "descripcionSolicitud";
 	}
 	
 	//Metodo que devuelve el tipo de la solicitud elegida en el formulario

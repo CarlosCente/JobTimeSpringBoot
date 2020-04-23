@@ -121,7 +121,7 @@ public class IncidenciaController {
 		model.put("incidencia",incidenciaAMostrar);
 		model.put("titulo", "Descripción de la Incidencia");
 		
-		return "/descripcionIncidencia";
+		return "descripcionIncidencia";
 	}
 	
 	@RequestMapping(value = "/incidencias/descripcionIncidencia/resolver/{mensaje}/{cod_empl}/{fecha}")
