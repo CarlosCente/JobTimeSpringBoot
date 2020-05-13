@@ -47,7 +47,7 @@ public class InformesUtils {
             logger.info("Report compiled");
 
             // It is possible to generate Jasper reports from a JSON source.
-            Connection conexion = DriverManager.getConnection ("jdbc:mysql://localhost/db_jobtime?serverTimezone=Europe/Madrid&useSSL=false&allowPublicKeyRetrieval=true","root", "j0bT1me*");
+            Connection conexion = DriverManager.getConnection ("jdbc:mysql://localhost/db_jobtime?serverTimezone=Europe/Madrid&useSSL=false&allowPublicKeyRetrieval=true","jobtime", "j0bT1me*");
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parametros, conexion);
             logger.info("JasperPrint" + jasperPrint);
 

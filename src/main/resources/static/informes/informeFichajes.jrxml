@@ -297,9 +297,6 @@ WHERE cod_empl = $P{COD_EMPL}]]>
 	<variable name="condicionVacaciones" class="java.lang.String">
 		<variableExpression><![CDATA[$V{haySemanal} ? "AND WEEK(fecha_inicio_vacaciones)=" + $P{SEMANA}  : $V{hayMensual} ? "AND month(fecha_inicio_vacaciones)=" + $P{MES} : $V{hayPersonalizado} ? "AND fecha_inicio_vacaciones BETWEEN '" + $P{DESDE_FORMATO_SQL} + "' AND '" + $P{HASTA_FORMATO_SQL} +"'" : ""]]></variableExpression>
 	</variable>
-	<background>
-		<band splitType="Stretch"/>
-	</background>
 	<title>
 		<band height="55" splitType="Stretch">
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
